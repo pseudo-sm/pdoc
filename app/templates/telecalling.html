@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en-US">
+{% load static %}
+{% include 'head.html' %}
+<body>
+    <style>
+        .loader {
+          border: 16px solid #f3f3f3; /* Light grey */
+          border-top: 16px solid #3498db; /* Blue */
+          border-radius: 50%;
+          width: 120px;
+          height: 120px;
+          animation: spin 2s linear infinite;
+        }
+
+        @keyframes spin {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }
+    </style>
+
+    {% include 'navigation.html' %}
+    <!-- // Header  -->
+    <div id="page-title" class="padding-tb-30px gradient-white">
+        <div class="container">
+            <ol class="breadcrumb opacity-5">
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Pages</a></li>
+                <li class="active">Doctors-Over-Call</li>
+            </ol>
+            <h1 class="font-weight-300">Doctors-Over-Call</h1>
+        </div>
+    </div>
+
+
+    <div class="margin-tb-30px ">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 results" >
+                    <div class="row">
+                        <!-- Doctor -->
+                        <!-- // Doctor -->
+                    </div>
+                    
+                    <ul class="pagination pagination-md ">
+                        <li class="page-item disabled"><a class="page-link rounded-0" href="#" tabindex="-1">Previous</a></li>
+                        <li class="page-item"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item"><a class="page-link rounded-0" href="#">Next</a></li>
+                    </ul>
+
+                </div>
+                <div class="col-lg-4">
+
+                    <div class="background-white border-radius-10 margin-bottom-45px">
+                        <div class="padding-25px">
+                            <h3 class="margin-lr-20px"><i class="fas fa-search margin-right-10px text-main-color"></i> Search Filter</h3>
+                            <!-- Listing Search -->
+                            <div class="listing-search">
+                                <div>
+                                    <div class="categories dropdown margin-bottom-20px">
+                                        <select class="listing-form d-block border-radius-10" id="type"  aria-haspopup="true" aria-expanded="false">
+                                            {% for type in types %}
+                                            <option class="dropdown-item text-up-small" data-value="{{type.id}}">{{type.name}}</option>
+                                            {% endfor %}
+                                        </select>
+                                    <button class="listing-bottom background-dark box-shadow border-radius-10" id="search" >Search Now</button>
+                                </div>
+                            </div>
+                            <!-- // Listing Search -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    {% include 'footer.html' %}
+</body>
+<script>
+    function calculate_experience(year){
+        var currentYear = (new Date).getFullYear();
+        year = parseInt(year);
+        return (currentYear-year);
+    }
+    function fetch(area_list,keyword,type){
+        $.ajax({
+        url: "{% url 'get_telecalldoctors' %}",
+        data : {
+            'type':type,
+            'experience':'0'
+        },
+        type: 'GET',
+        dataType: 'json',
+        success: function(res) {
+            $(".results").empty();
+            for(i=0;i<res.length;i++){
+            $(".results").append(
+                '<div class="col-lg-4 col-md-6 hvr-bob margin-bottom-45px"> \
+                            <div class="background-white box-shadow"> \
+                                <div class="padding-30px"> \
+                                    <h5 class="margin-tb-15px"><a class="text-dark" href="#">'+res[i].name+'</a></h5> \
+                                    <span class="text-grey-3">'+res[i].type_id__name+'</span><br> \
+                                    <span class="text-grey-3"> Experience : '+calculate_experience(res[i].practicing_year)+' Years</span><br> \
+                                    <span class="text-grey-4">'+res[i].education+'</span> \
+                                </div> \
+                                 <a href="tel:+91'+res[i].phone+'"><div class="btn btn-primary" style="width:100%;border-radius:0px;">Call Now</div></a>\
+                            </div> \
+                        </div>'
+            );
+            }
+
+        }
+    });
+    }
+    $("#search").click(function(){
+         $(".results").empty();
+         $(".results").append('<div class="loader"></div>');
+        area_list = [$("#area").find('option:selected').attr('data-value')];
+        keyword = $("#keywords").val();
+        type = $("#type").find('option:selected').attr('data-value');
+        fetch(area_list,keyword,type);
+
+    });
+    $(document).ready(function() {
+
+        fetch([],"","0");
+    });
+</script>
+{% include 'js.html' %}
+</html>

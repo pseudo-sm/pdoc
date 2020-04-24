@@ -1,0 +1,28 @@
+{% load static %}
+<header class="background-white box-shadow">
+        <div class="container header-in">
+                <div class="row">
+                    <div class="col-lg-2 col-md-12">
+                        <div id="logo" class="d-inline-block margin-tb-10px"  style="font-size:18px;color:#007bff;"><img src="{% static 'logo.png' %}" style="max-width:50%;" alt="pdoc"> PDoc</div>
+                        <a class="mobile-toggle padding-13px background-main-color" href="#"><i class="fas fa-bars"></i></a>
+                    </div>
+                    <div class="col-lg-7 col-md-12 position-inherit">
+                        <ul id="menu-main" class="nav-menu float-lg-right link-padding-tb-20px">
+<!--                            <li><a href="{% url 'index' %}">Home</a></li>-->
+                            <li><a href="#" onclick="alert('This service is temporarily not available.')">Doctors</a></li>
+                            <li><a href="{% url 'doctors_over_call' %}">Doctors-Over-Call</a></li>
+<!--                            <li><a href="#">Blog</a></li>-->
+<!--                            <li><a href="#">Conact Us</a></li>-->
+                        </ul>
+                    </div>
+                    <div class="col-lg-3 col-md-12">
+                        <hr class="margin-bottom-0px d-block d-sm-none">
+<!--                        <a href="dashboard-add-listing.html" class="btn btn-sm border-radius-30 margin-tb-15px text-white background-second-color  box-shadow float-right padding-lr-20px margin-left-30px">-->
+<!--                          <i class="fas fa-plus-circle"></i>  Add list-->
+<!--                        </a>-->
+<!--                        <a href="page-login.html" class="margin-tb-20px d-inline-block text-up-small float-left float-lg-right"><i class="far fa-user"></i>  Login</a>-->
+                    </div>
+                </div>
+
+        </div>
+    </header>

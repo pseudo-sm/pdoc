@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en-US">
+{% load static %}
+{% include 'head.html' %}
+<body>
+    <style>
+        .loader {
+          border: 16px solid #f3f3f3; /* Light grey */
+          border-top: 16px solid #3498db; /* Blue */
+          border-radius: 50%;
+          width: 120px;
+          height: 120px;
+          animation: spin 2s linear infinite;
+        }
+
+        @keyframes spin {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }
+    </style>
+
+    {% include 'navigation.html' %}
+    <!-- // Header  -->
+    <div id="page-title" class="padding-tb-30px gradient-white">
+        <div class="container">
+            <ol class="breadcrumb opacity-5">
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Pages</a></li>
+                <li class="active">Doctors List</li>
+            </ol>
+            <h1 class="font-weight-300">Doctors List</h1>
+        </div>
+    </div>
+
+
+    <div class="margin-tb-30px ">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 results" >
+                    <div class="row">
+                        <!-- Doctor -->
+                        <!-- // Doctor -->
+                    </div>
+                    
+                    <ul class="pagination pagination-md ">
+                        <li class="page-item disabled"><a class="page-link rounded-0" href="#" tabindex="-1">Previous</a></li>
+                        <li class="page-item"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item"><a class="page-link rounded-0" href="#">Next</a></li>
+                    </ul>
+
+                </div>
+                <div class="col-lg-4">
+
+                    <div class="background-white border-radius-10 margin-bottom-45px">
+                        <div class="padding-25px">
+                            <h3 class="margin-lr-20px"><i class="fas fa-search margin-right-10px text-main-color"></i> Search Filter</h3>
+                            <!-- Listing Search -->
+                            <div class="listing-search">
+                                <div>
+                                    <div class="keywords margin-bottom-20px">
+                                        <input class="listing-form first border-radius-10" id="keywords" type="text" placeholder="Keywords..." value="">
+                                    </div>
+                                    <div class="regions margin-bottom-20px">
+                                        <select class="listing-form border-radius-10" id="area" type="text" placeholder="All Regions" value="">
+                                            {% for area in areas %}
+                                            <option data-value="{{area.id}}">{{area.name}}</option>>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+
+                                    <div class="categories dropdown margin-bottom-20px">
+                                        <select class="listing-form d-block border-radius-10" id="type"  aria-haspopup="true" aria-expanded="false">
+                                            {% for type in types %}
+                                            <option class="dropdown-item text-up-small" data-value="{{type.id}}">{{type.name}}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <button class="listing-bottom background-dark box-shadow border-radius-10" id="search" >Search Now</button>
+                                </div>
+                            </div>
+                            <!-- // Listing Search -->
+                        </div>
+                    </div>
+
+
+                    <div class="featured-categorey">
+                        <div class="row">
+                            <div class="col-6 margin-bottom-30px wow fadeInUp">
+                                <a href="#" class="d-block border-radius-15 hvr-float hvr-sh2">
+                                    <div class="background-main-color text-white border-radius-15 padding-30px text-center opacity-hover-7">
+                                        <div class="icon margin-bottom-15px opacity-7">
+                                            <img src="assets/img/icon/categorie-1.png" alt="">
+                                        </div>
+                                        Doctors
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-6 margin-bottom-30px wow fadeInUp" data-wow-delay="0.2s">
+                                <a href="#" class="d-block border-radius-15 hvr-float hvr-sh2">
+                                    <div class="background-main-color text-white border-radius-15 padding-30px text-center opacity-hover-7">
+                                        <div class="icon margin-bottom-15px opacity-7">
+                                            <img src="assets/img/icon/categorie-2.png" alt="">
+                                        </div>
+                                        Clinics
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-6 wow fadeInUp" data-wow-delay="0.4s">
+                                <a href="#" class="d-block border-radius-15 hvr-float hvr-sh2">
+                                    <div class="background-main-color text-white border-radius-15 padding-30px text-center opacity-hover-7">
+                                        <div class="icon margin-bottom-15px">
+                                            <img src="assets/img/icon/categorie-3.png" alt="">
+                                        </div>
+                                        Labs
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-6 wow fadeInUp" data-wow-delay="0.6s">
+                                <a href="#" class="d-block border-radius-15 hvr-float hvr-sh2">
+                                    <div class="background-main-color text-white border-radius-15 padding-30px text-center opacity-hover-7">
+                                        <div class="icon margin-bottom-15px opacity-7">
+                                            <img src="assets/img/icon/categorie-4.png" alt="">
+                                        </div>
+                                        Pharmacies
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <footer class="padding-tb-100px background-main-color">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-2">
+                    <a class="d-inline-block margin-tb-15px"><img src="assets/img/logo-2.png" alt=""></a>
+                </div>
+                <div class="col-lg-4">
+                    <p class="text-white opacity-7">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s</p>
+                </div>
+                <div class="col-lg-6">
+                    <ul class="footer-menu margin-tb-15px margin-lr-0px padding-0px list-unstyled float-lg-right">
+                        <li><a href="#" class="text-white">Featured</a></li>
+                        <li><a href="#" class="text-white">Feedback</a></li>
+                        <li><a href="#" class="text-white">Ask a Question</a></li>
+                        <li><a href="#" class="text-white">Team</a></li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="border-white opacity-4 margin-tb-45px">
+            <div class="row">
+                <div class="col-lg-6">
+                    <p class="margin-0px text-white opacity-7 sm-mb-15px">© 2018 tabib Health Directory | All Right Reserved. </p>
+                </div>
+                <div class="col-lg-6">
+                    <ul class="social-icon style-2 float-lg-right">
+                        <li class="list-inline-item"><a class="facebook" href="#"><i class="fab fa-facebook-f"></i></a></li>
+                        <li class="list-inline-item"><a class="youtube" href="#"><i class="fab fa-youtube"></i></a></li>
+                        <li class="list-inline-item"><a class="linkedin" href="#"><i class="fab fa-linkedin"></i></a></li>
+                        <li class="list-inline-item"><a class="google" href="#"><i class="fab fa-google-plus"></i></a></li>
+                        <li class="list-inline-item"><a class="twitter" href="#"><i class="fab fa-twitter"></i></a></li>
+                        <li class="list-inline-item"><a class="rss" href="#"><i class="fa fa-rss" aria-hidden="true"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+<script>
+    function calculate_experience(year){
+        var currentYear = (new Date).getFullYear();
+        year = parseInt(year);
+        return (currentYear-year);
+    }
+    function fetch(area_list,keyword,type){
+        $.ajax({
+        url: "{% url 'get_doctors' %}",
+        data : {
+            'areas': JSON.stringify(area_list),
+            'keyword':keyword,
+            'type':type,
+            'experience':'0'
+        },
+        type: 'GET',
+        dataType: 'json',
+        success: function(res) {
+            $(".results").empty();
+            for(i=0;i<res.length;i++){
+            $(".results").append(
+                '<div class="col-lg-4 col-md-6 hvr-bob margin-bottom-45px"> \
+                            <div class="background-white box-shadow"> \
+                                <div class="thum"> \
+                                    <a href="/details/"><img src="http://127.0.0.1:8000/media/'+res[i].image+'" alt=""></a> \
+                                </div> \
+                                <div class="padding-30px"> \
+                                    <span class="text-grey-2">'+res[i].type_id__name+' ('+calculate_experience(res[i].practicing_year)+' Years)</span><br> \
+                                    <span class="text-grey-3">'+res[i].education+'</span> \
+                                    <h5 class="margin-tb-15px"><a class="text-dark" href="#">'+res[i].name+'</a></h5> \
+                                    <div class="rating clearfix"> \
+                                        <ul class="float-left"> \
+                                            <li class="active"></li> \
+                                            <li class="active"></li> \
+                                            <li class="active"></li> \
+                                            <li class="active"></li> \
+                                            <li></li> \
+                                        </ul> \
+                                    </div> \
+                                </div> \
+                            </div> \
+                        </div>'
+            );
+            }
+
+        }
+    });
+    }
+    $("#search").click(function(){
+         $(".results").empty();
+         $(".results").append('<div class="loader"></div>');
+        area_list = [$("#area").find('option:selected').attr('data-value')];
+        keyword = $("#keywords").val();
+        type = $("#type").find('option:selected').attr('data-value');
+        fetch(area_list,keyword,type);
+
+    });
+    $(document).ready(function() {
+
+        fetch([],"","0");
+    });
+</script>
+{% include 'js.html' %}
+</html>
