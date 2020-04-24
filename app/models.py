@@ -69,6 +69,8 @@ class TeleCallDoctors(models.Model):
     type = models.ForeignKey(Type,on_delete=models.CASCADE)
     education = models.CharField(max_length=200,null=True,blank=True)
     practicing_year = models.CharField(max_length=20,null=True,blank=True)
+    designation = models.CharField(max_length=200,null=True,blank=True)
+    hospital = models.CharField(max_length=200,null=True,blank=True)
     direct_contact = models.BooleanField(default=True)
 
     def __str__(self):

@@ -51,12 +51,7 @@ def get_telecalldoctors(request):
 
     doctors = TeleCallDoctors.objects.all()
     if request.GET.get("type") == "0":
-        return JsonResponse(list(doctors.values("name","type_id__name","education","practicing_year","direct_contact","phone")),safe=False)
+        return JsonResponse(list(doctors.values("name","type_id__name","education","practicing_year","direct_contact","phone","designation","hospital")),safe=False)
     type = request.GET.get("type")
-    experience = request.GET.get("experience")
     filtered_doctors = doctors.filter(type=type)
-    now = datetime.datetime.now()
-    for doc in filtered_doctors:
-        if int(now.year)-int(doc.practicing_year) < int(experience):
-            filtered_doctors = filtered_doctors.exclude(id=doc.id)
-    return JsonResponse(list(filtered_doctors.values("name","type_id__name","education","practicing_year","direct_contact","phone")),safe=False)
+    return JsonResponse(list(filtered_doctors.values("name","type_id__name","education","practicing_year","direct_contact","phone","designation","hospital")),safe=False)
