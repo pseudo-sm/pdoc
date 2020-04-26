@@ -61,6 +61,7 @@
                                 <div>
                                     <div class="categories dropdown margin-bottom-20px">
                                         <select class="listing-form d-block border-radius-10" id="type"  aria-haspopup="true" aria-expanded="false">
+                                            <option class="dropdown-item text-up-small" selected>--</option>
                                             {% for type in types %}
                                             <option class="dropdown-item text-up-small" data-value="{{type.id}}">{{type.name}}</option>
                                             {% endfor %}

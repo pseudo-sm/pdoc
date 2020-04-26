@@ -6,7 +6,7 @@ class Type(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=200)
     description = models.TextField()
-
+    status = models.BooleanField(default=False)
     def __str__(self):
         return self.name
 
@@ -72,6 +72,7 @@ class TeleCallDoctors(models.Model):
     designation = models.CharField(max_length=200,null=True,blank=True)
     hospital = models.CharField(max_length=200,null=True,blank=True)
     direct_contact = models.BooleanField(default=True)
+    status = models.BooleanField(default=False)
 
     def __str__(self):
         return self.name

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en-US">
+{% load static %}
+{% include 'head.html' %}
+
+<body>
+
+    {% include 'navigation.html' %}
+    <!-- // Header  -->
+
+    <div id="page-title" class="padding-tb-30px gradient-white">
+        <div class="container text-center">
+            <ol class="breadcrumb opacity-5">
+                <li><a href="#">Home</a></li>
+                <li class="active">Join Us</li>
+            </ol>
+            <h1 class="font-weight-300">Join Us</h1>
+        </div>
+    </div>
+
+    <div class="container margin-bottom-100px">
+        <!--======= log_in_page =======-->
+        <div id="log-in" class="site-form log-in-form box-shadow border-radius-10">
+
+            <div class="form-output">
+
+                    <div class="form-group label-floating">
+                        <label class="control-label" for="name">Your Name</label>
+                        <input class="form-control" placeholder="Dr. Your Name " id="name" type="email">
+                    </div>
+                    <div class="form-group label-floating" >
+                        <label class="control-label" for="designation">Your Designation</label>
+                        <input class="form-control" placeholder="Ex - Assoc. Professor" id="designation" type="text">
+                    </div>
+
+                    <div class="form-group label-floating">
+                        <label class="control-label" for="hospital">Hospital</label>
+                        <input class="form-control" placeholder="Hospital Name" id="hospital" type="text">
+                    </div>
+
+                    <div class="form-group label-floating">
+                        <label class="control-label" for="specialization">Specialization</label>
+                        <input class="form-control" placeholder="Ex - Orthopedic/Padeatric/General Medicine" id="specialization" type="text">
+                    </div>
+
+                    <div class="form-group label-floating">
+                        <label class="control-label" for="phone">Phone</label>
+                        <input class="form-control" placeholder="Mobile" type="text" id="phone">
+                    </div>
+
+<!--                    <div class="form-group label-floating is-select">-->
+<!--                        <label class="control-label">Your Gender</label>-->
+<!--                        <select class="selectpicker form-control">-->
+<!--						<option value="MA">Male</option>-->
+<!--						<option value="FE">Female</option>-->
+<!--					</select>-->
+                    </div>
+
+                    <center>
+                        <p>Don't worry , your phone number will not be made public.</p>
+                    </center>
+
+                    <button  class="btn btn-md btn-primary full-width" style="background-color:#0864b2;" id="submit">Submit</button>
+
+
+<!--                    <a href="#" class="btn btn-md bg-facebook full-width btn-icon-left"><i class="fab fa-facebook margin-right-8px" aria-hidden="true"></i> Login with Facebook</a>-->
+
+<!--                    <a href="#" class="btn btn-md bg-twitter full-width btn-icon-left"><i class="fab fa-twitter margin-right-8px" aria-hidden="true"></i> Login with Twitter</a>-->
+
+
+<!--                    <p>you have an account? <a href="page-login.html"> Sing in !</a> </p>-->
+
+            </div>
+        </div>
+        <!--======= // log_in_page =======-->
+
+    </div>
+
+    {% include 'footer.html' %}
+    <script>
+        $("#submit").on("click",function(){
+            name = $("#name").val();
+            designation = $("#designation").val();
+            hospital = $("#hospital").val();
+            specialization = $("#specialization").val();
+            phone = $("#phone").val();
+            $.ajax({
+              url: "{% url 'doctor_registration_action' %}",
+              type: "GET",
+              data: {
+                "name" : name,
+                "designation" : designation,
+                "hospital" : hospital,
+                "specialization" : specialization,
+                "phone" : phone,
+               },
+              dataType: "json",
+              success: function(html){
+                alert('Thank you for joining us. Our team will get in touch with you very soon');
+                location.reload();
+                $("#name").val("");
+                $("#designation").val("");
+                $("#hospital").val("");
+                $("#specialization").val("");
+                $("#phone").val("");
+              }
+            });
+        });
+    </script>
+    <script src="assets/js/sticky-sidebar.js"></script>
+    <script src="assets/js/YouTubePopUp.jquery.js"></script>
+    <script src="assets/js/owl.carousel.min.js"></script>
+    <script src="assets/js/imagesloaded.min.js"></script>
+    <script src="assets/js/wow.min.js"></script>
+    <script src="assets/js/custom.js"></script>
+    <script src="assets/js/popper.min.js"></script>
+    <script src="assets/js/bootstrap.min.js"></script>
+</body>
+
+
+<!-- Mirrored from nilethemes.com/html/tabib/sign-up.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 06 Mar 2020 16:39:01 GMT -->
+</html>
