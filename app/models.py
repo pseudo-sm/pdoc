@@ -71,7 +71,7 @@ class TeleCallDoctors(models.Model):
     practicing_year = models.CharField(max_length=20,null=True,blank=True)
     designation = models.CharField(max_length=200,null=True,blank=True)
     hospital = models.CharField(max_length=200,null=True,blank=True)
-    direct_contact = models.BooleanField(default=True)
+    direct_contact = models.BooleanField(default=False)
     status = models.BooleanField(default=False)
 
     def __str__(self):
