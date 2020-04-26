@@ -14,7 +14,7 @@
                 <li><a href="#">Home</a></li>
                 <li class="active">Join Us</li>
             </ol>
-            <h1 class="font-weight-300">Join Us</h1>
+            <h1 class="font-weight-300">Calling all Doctors to register who wants to be a part of PDOC</h1>
         </div>
     </div>
 
@@ -28,6 +28,12 @@
                         <label class="control-label" for="name">Your Name</label>
                         <input class="form-control" placeholder="Dr. Your Name " id="name" type="email">
                     </div>
+
+                    <div class="form-group label-floating">
+                        <label class="control-label" for="specialization">Specialization</label>
+                        <input class="form-control" placeholder="Ex - Orthopedic/Padeatric/General Medicine" id="specialization" type="text">
+                    </div>
+
                     <div class="form-group label-floating" >
                         <label class="control-label" for="designation">Your Designation</label>
                         <input class="form-control" placeholder="Ex - Assoc. Professor" id="designation" type="text">
@@ -38,9 +44,9 @@
                         <input class="form-control" placeholder="Hospital Name" id="hospital" type="text">
                     </div>
 
-                    <div class="form-group label-floating">
-                        <label class="control-label" for="specialization">Specialization</label>
-                        <input class="form-control" placeholder="Ex - Orthopedic/Padeatric/General Medicine" id="specialization" type="text">
+                     <div class="form-group label-floating">
+                        <label class="control-label" for="location">Location</label>
+                         <textarea class="form-control" placeholder="Address" id="location" ></textarea>
                     </div>
 
                     <div class="form-group label-floating">
@@ -84,6 +90,7 @@
             hospital = $("#hospital").val();
             specialization = $("#specialization").val();
             phone = $("#phone").val();
+            location1 = $("textarea#location").val();
             $.ajax({
               url: "{% url 'doctor_registration_action' %}",
               type: "GET",
@@ -93,6 +100,7 @@
                 "hospital" : hospital,
                 "specialization" : specialization,
                 "phone" : phone,
+                "location" : location1,
                },
               dataType: "json",
               success: function(html){
@@ -103,6 +111,7 @@
                 $("#hospital").val("");
                 $("#specialization").val("");
                 $("#phone").val("");
+                $("textarea#location").val("");
               }
             });
         });

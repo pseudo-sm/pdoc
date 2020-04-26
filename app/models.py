@@ -73,6 +73,7 @@ class TeleCallDoctors(models.Model):
     hospital = models.CharField(max_length=200,null=True,blank=True)
     direct_contact = models.BooleanField(default=False)
     status = models.BooleanField(default=False)
-
+    address = models.TextField(null=True,blank=True)
+    #doctors who want to register with
     def __str__(self):
         return self.name

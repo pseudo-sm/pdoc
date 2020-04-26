@@ -50,14 +50,14 @@ def doctors_over_call(request):
 def get_telecalldoctors(request):
 
     doctors = TeleCallDoctors.objects.filter(status=True)
-    all_doctors = doctors.values("name","type_id__name","education","practicing_year","direct_contact","phone","designation","hospital")
+    all_doctors = doctors.values("name","type_id__name","education","practicing_year","direct_contact","phone","designation","hospital","address")
     if request.GET.get("type") == "0":
         for doctor in all_doctors:
             if not doctor["direct_contact"]:
                 doctor["phone"] = "8917240913"
         return JsonResponse(list(all_doctors),safe=False)
     type = request.GET.get("type")
-    filtered_doctors = doctors.filter(type=type).values("name","type_id__name","education","practicing_year","direct_contact","phone","designation","hospital")
+    filtered_doctors = doctors.filter(type=type).values("name","type_id__name","education","practicing_year","direct_contact","phone","designation","hospital","address")
     print(filtered_doctors)
     for doctor in filtered_doctors:
         print(doctor["direct_contact"])
@@ -75,11 +75,12 @@ def doctor_registration_action(request):
     type = request.GET.get("specialization").lower()
     phone = request.GET.get("phone")
     designation = request.GET.get("designation")
+    location = request.GET.get("location")
     if len(Type.objects.filter(name=type)) == 0:
         type = Type(name=type,description=type)
         type.save()
     else:
         type = Type.objects.get(name=type)
-    new_doc = TeleCallDoctors(name=name,hospital=hospital,type=type,phone=phone,designation=designation)
+    new_doc = TeleCallDoctors(name=name,hospital=hospital,type=type,phone=phone,designation=designation,address=location)
     new_doc.save()
     return JsonResponse(True,safe=False)
