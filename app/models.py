@@ -71,9 +71,20 @@ class TeleCallDoctors(models.Model):
     practicing_year = models.CharField(max_length=20,null=True,blank=True)
     designation = models.CharField(max_length=200,null=True,blank=True)
     hospital = models.CharField(max_length=200,null=True,blank=True)
+    registration_id = models.CharField(max_length=200,null=True,blank=True)
+    availabel_from = models.CharField(max_length=200,null=True,blank=True)
+    availabel_to = models.CharField(max_length=200,null=True,blank=True)
     direct_contact = models.BooleanField(default=False)
     status = models.BooleanField(default=False)
     address = models.TextField(null=True,blank=True)
     #doctors who want to register with
     def __str__(self):
         return self.name
+
+class Links(models.Model):
+
+    title = models.CharField(max_length=100)
+    url = models.CharField(max_length=500)
+
+    def __str__(self):
+        return self.title

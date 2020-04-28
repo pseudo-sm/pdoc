@@ -54,6 +54,22 @@
                         <input class="form-control" placeholder="Mobile" type="text" id="phone">
                     </div>
 
+                    <h5>Availability</h5>
+                    <div class="form-group label-floating">
+                        <label class="control-label" for="from">From</label>
+                        <input class="form-control" type="time" id="from">
+                    </div>
+
+                    <div class="form-group label-floating">
+                        <label class="control-label" for="to">To</label>
+                        <input class="form-control"  type="time" id="to">
+                    </div>
+
+                    <div class="form-group label-floating">
+                        <label class="control-label" for="id">Registration Id</label>
+                        <input class="form-control" placeholder="Registration Id" type="text" id="id">
+                    </div>
+
 <!--                    <div class="form-group label-floating is-select">-->
 <!--                        <label class="control-label">Your Gender</label>-->
 <!--                        <select class="selectpicker form-control">-->
@@ -90,6 +106,9 @@
             hospital = $("#hospital").val();
             specialization = $("#specialization").val();
             phone = $("#phone").val();
+            from = $("#from").val();
+            to = $("#to").val();
+            id = $("#id").val();
             location1 = $("textarea#location").val();
             $.ajax({
               url: "{% url 'doctor_registration_action' %}",
@@ -100,6 +119,9 @@
                 "hospital" : hospital,
                 "specialization" : specialization,
                 "phone" : phone,
+                "from" : from,
+                "to" : to,
+                "id" : id,
                 "location" : location1,
                },
               dataType: "json",
@@ -111,6 +133,9 @@
                 $("#hospital").val("");
                 $("#specialization").val("");
                 $("#phone").val("");
+                $("#from").val("");
+                $("#to").val("");
+                $("#id").val("");
                 $("textarea#location").val("");
               }
             });

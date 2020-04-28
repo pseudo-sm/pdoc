@@ -72,15 +72,23 @@ def doctor_registration(request):
 def doctor_registration_action(request):
     name = request.GET.get("name")
     hospital = request.GET.get("hospital")
-    type = request.GET.get("specialization").lower()
+    type = request.GET.get("specialization")
     phone = request.GET.get("phone")
     designation = request.GET.get("designation")
     location = request.GET.get("location")
+    from1 = request.GET.get("from")
+    to = request.GET.get("to")
+    id = request.GET.get("id")
     if len(Type.objects.filter(name=type)) == 0:
         type = Type(name=type,description=type)
         type.save()
     else:
         type = Type.objects.get(name=type)
-    new_doc = TeleCallDoctors(name=name,hospital=hospital,type=type,phone=phone,designation=designation,address=location)
+    new_doc = TeleCallDoctors(name=name,hospital=hospital,type=type,phone=phone,designation=designation,address=location,availabel_from=from1,availabel_to=to,registration_id=id)
     new_doc.save()
     return JsonResponse(True,safe=False)
+
+def important_links(request):
+
+    links = Links.objects.all()
+    return render(request,"important-links.html",{"links":links})
