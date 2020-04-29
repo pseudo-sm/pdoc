@@ -2,7 +2,9 @@ from django.shortcuts import render
 from django.http import JsonResponse
 from .models import *
 import datetime
+from django.contrib import auth
 import json
+from django.db import IntegrityError
 from django.contrib.postgres.search import SearchVector
 # Create your views here.
 
@@ -92,3 +94,22 @@ def important_links(request):
 
     links = Links.objects.all()
     return render(request,"important-links.html",{"links":links})
+
+def signup_customer(request):
+
+    return render(request,"sign-up-customer.html")
+
+def signup_customer_action(request):
+    name = request.GET.get("name")
+    email = request.GET.get("email")
+    phone = request.GET.get("phone")
+    password = request.GET.get("password")
+    query = request.GET.get("query")
+    try:
+        user = User.objects.create_user(username=email,password=password)
+    except IntegrityError:
+        return JsonResponse({"error":True,"message" : "You have already Signed Up with us"})
+    auth.login(request,user=user)
+    new_customer = Customer(name=name,phone=phone,query=query,user_id=user)
+    new_customer.save()
+    return JsonResponse(True,safe=False)
