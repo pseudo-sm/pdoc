@@ -110,7 +110,7 @@
                                     <span class="text-grey-4">'+res[i].hospital+'</span> \
                                     <span class="text-grey-6">'+res[i].address+'</span> \
                                 </div> \
-                                 <a href="tel:+91'+res[i].phone+'"><div class="btn btn-primary" style="width:100%;border-radius:0px;">Call Now</div></a>\
+                                 <div data-phone="'+res[i].phone+'"  class="btn btn-primary call" style="width:100%;border-radius:0px;">Call Now</div></a>\
                             </div> \
                         </div>'
             );
@@ -133,5 +133,31 @@
         fetch([],"","0");
     });
 </script>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Terms & Conditions</h5>
+                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">×</span>
+                </button>
+                    </div>
+                    <div class="modal-body" style="overflow-y:hidden;">{{terms}}</div>
+                    <div class="modal-footer">
+                        <h7>Continuing to call will mean that you accept our Terms & Conditions</h7>
+                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                        <a class="btn btn-primary" id="call-now" href="">Call</a>
+                    </div>
+                </div>
+            </div>
+        </div>
 {% include 'js.html' %}
+<script>
+    $(document).on('click', '.call', function(){
+            phone= $(this).attr("data-phone");
+            $("#call-now").attr("href","tel:+91"+phone);
+            $('#exampleModal').modal('toggle');
+});
+</script>
 </html>

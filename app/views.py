@@ -47,7 +47,8 @@ def details(request):
 
 def doctors_over_call(request):
     type = Type.objects.filter(status=True)
-    return render(request,"telecalling.html",{"types":type})
+    terms = Others.objects.get(name="terms")
+    return render(request,"telecalling.html",{"types":type,"terms":terms})
 
 def get_telecalldoctors(request):
 
