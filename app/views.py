@@ -69,7 +69,7 @@ def get_telecalldoctors(request):
 
 def doctor_registration(request):
 
-    return render(request,"sign-up.html")
+    return render(request,"signup.html")
 
 def doctor_registration_action(request):
     name = request.GET.get("name")
@@ -112,4 +112,108 @@ def signup_customer_action(request):
     auth.login(request,user=user)
     new_customer = Customer(name=name,phone=phone,query=query,user_id=user)
     new_customer.save()
+    return JsonResponse(True,safe=False)
+
+def paramedic_health_and_fitness_advisor(request):
+    return render(request,"paramedics/health-and-fitness-advisor.html")
+
+def paramedic_health_and_fitness_advisor_action(request):
+    name = request.GET.get("name")
+    qualification = request.GET.get("qualifications")
+    designation = request.GET.get("designation")
+    address = request.GET.get("location")
+    phone = request.GET.get("phone")
+    available_from = request.GET.get("from")
+    available_to = request.GET.get("to")
+    achievements = request.GET.get("achievements")
+    about = request.GET.get("about")
+    new_paramedic_health_and_fitness_advisor = HealthFitnessAdvisor(name=name,qualifications=qualification,designation=designation,address=address,phone=phone,achievements=achievements,available_to=available_to,available_from=available_from,about=about)
+    new_paramedic_health_and_fitness_advisor.save()
+    return JsonResponse(True,safe=False)
+
+def paramedic_yoga_guru(request):
+
+    return render(request,"paramedics/yoga-guru.html")
+
+def paramedic_yoga_guru_action(request):
+    name = request.GET.get("name")
+    qualification = request.GET.get("qualifications")
+    organization = request.GET.get("organization")
+    address = request.GET.get("location")
+    phone = request.GET.get("phone")
+    available_from = request.GET.get("from")
+    available_to = request.GET.get("to")
+    achievements = request.GET.get("achievements")
+    about = request.GET.get("about")
+    new_paramedic_yoga_guru = YogaGuru(name=name,qualifications=qualification,address=address,available_to=available_to,available_from=available_from,phone=phone,achievements=achievements,about=about,organization=organization)
+    new_paramedic_yoga_guru.save()
+    return JsonResponse(True,safe=False)
+
+def paramedic_physiotherapy(request):
+
+    return render(request,"paramedics/physiotherapy.html")
+
+def paramedic_physiotherapy_action(request):
+    name = request.GET.get("name")
+    qualification = request.GET.get("qualifications")
+    designation = request.GET.get("designation")
+    address = request.GET.get("location")
+    phone = request.GET.get("phone")
+    available_from = request.GET.get("from")
+    available_to = request.GET.get("to")
+    achievements = request.GET.get("achievements")
+    about = request.GET.get("about")
+    organization = request.GET.get("organization")
+    new_physiotherapist = Physiotherapist(name=name,qualifications=qualification,designation=designation,address=address,phone=phone,available_from=available_from,available_to=available_to,achievements=achievements,about=about,organization=organization)
+    new_physiotherapist.save()
+    return JsonResponse(True,safe=False)
+
+def paramedic_clinical_pscyhiatry(request):
+
+    return render(request,"paramedics/clinical-psychiatry.html")
+
+def paramedic_clinical_pscyhiatry_action(request):
+    name = request.GET.get("name")
+    qualification = request.GET.get("qualifications")
+    designation = request.GET.get("designation")
+    address = request.GET.get("location")
+    phone = request.GET.get("phone")
+    available_from = request.GET.get("from")
+    available_to = request.GET.get("to")
+    achievements = request.GET.get("achievements")
+    about = request.GET.get("about")
+    organization = request.GET.get("organization")
+    new_clinical_psychiatrist = ClinicalPsychiatry(name=name,qualifications=qualification,designation=designation,address=address,phone=phone,available_from=available_from,available_to=available_to,achievements=achievements,about=about,organization=organization)
+    new_clinical_psychiatrist.save()
+    return JsonResponse(True,safe=False)
+
+def paramedic_drug_house(request):
+
+    return render(request,"paramedics/drug-house.html")
+
+def paramedic_drug_house_action(request):
+    name = request.GET.get("name")
+    license = request.GET.get("license")
+    address = request.GET.get("location")
+    phone = request.GET.get("phone")
+    about = request.GET.get("about")
+    new_drug_house = DrugHouse(name=name,license_no=license,address=address,phone=phone,about=about)
+    new_drug_house.save()
+    return JsonResponse(True,safe=False)
+
+def paramedic_diagnostics(request):
+
+    return render(request,"paramedics/diagnostics.html")
+
+def paramedic_diagnostics_action(request):
+    name = request.GET.get("name")
+    pickup = request.GET.get("pickup")
+    address = request.GET.get("location")
+    phone = request.GET.get("phone")
+    if pickup=="Yes":
+        pickup = True
+    else:
+        pickup=False
+    new_diagnostic = Diagnostics(name=name,collection=pickup,address=address,phone=phone)
+    new_diagnostic.save()
     return JsonResponse(True,safe=False)

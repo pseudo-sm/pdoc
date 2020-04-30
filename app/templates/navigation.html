@@ -12,7 +12,16 @@
                             <li><a href="#" onclick="alert('This service is temporarily not available.')">Doctors</a></li>
                             <li><a href="{% url 'doctors_over_call' %}">Doctors-Over-Call</a></li>
                             <li><a href="{% url 'important_links' %}">Important Links</a></li>
-<!--                            <li><a href="#">Blog</a></li>-->
+                            <li class="has-dropdown"><a href="#">Paramdeics Signup</a>
+                                <ul class="sub-menu">
+                                    <li><a href="{% url 'paramedic_health_and_fitness_advisor' %}">Health & Fitness Advisor </a></li>
+                                    <li><a href="{% url 'paramedic_physiotherapy' %}">Physiotherapist</a></li>
+                                    <li><a href="{% url 'paramedic_clinical_pscyhiatry' %}">Clinical Psychiatry</a></li>
+                                    <li><a href="{% url 'paramedic_yoga_guru' %}">Yoga Guru</a></li>
+                                    <li><a href="{% url 'paramedic_drug_house' %}">Drug House</a></li>
+                                    <li><a href="{% url 'paramedic_diagnostics' %}">Diagnostics</a></li>
+                                </ul>
+                            </li>
 <!--                            <li><a href="#">Conact Us</a></li>-->
                         </ul>
                     </div>

@@ -72,8 +72,8 @@ class TeleCallDoctors(models.Model):
     designation = models.CharField(max_length=200,null=True,blank=True)
     hospital = models.CharField(max_length=200,null=True,blank=True)
     registration_id = models.CharField(max_length=200,null=True,blank=True)
-    availabel_from = models.CharField(max_length=200,null=True,blank=True)
-    availabel_to = models.CharField(max_length=200,null=True,blank=True)
+    available_from = models.CharField(max_length=200,null=True,blank=True)
+    available_to = models.CharField(max_length=200,null=True,blank=True)
     direct_contact = models.BooleanField(default=False)
     status = models.BooleanField(default=False)
     address = models.TextField(null=True,blank=True)
@@ -96,6 +96,69 @@ class Customer(models.Model):
     name = models.CharField(max_length=100)
     phone = models.CharField(max_length=20)
     query = models.TextField()
+
+    def __str__(self):
+        return self.name
+
+class Paramedics(models.Model):
+
+    id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=200)
+    qualifications = models.CharField(max_length=200)
+    phone = models.CharField(max_length=20)
+    available_from = models.CharField(max_length=200)
+    available_to = models.CharField(max_length=200)
+    achievements = models.CharField(max_length=200)
+    about = models.TextField()
+    address = models.TextField()
+
+class HealthFitnessAdvisor(Paramedics):
+
+    designation = models.CharField(max_length=200)
+
+    def __str__(self):
+        return self.name
+
+class Physiotherapist(Paramedics):
+
+    designation = models.CharField(max_length=200)
+    organization = models.CharField(max_length=200)
+
+    def __str__(self):
+        return self.name
+
+class ClinicalPsychiatry(Paramedics):
+
+    designation = models.CharField(max_length=200)
+    organization = models.CharField(max_length=200)
+
+    def __str__(self):
+        return self.name
+
+class YogaGuru(Paramedics):
+
+    organization = models.CharField(max_length=200)
+    def __str__(self):
+        return self.name
+
+class DrugHouse(models.Model):
+
+    id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=100)
+    license_no = models.CharField(max_length=100,unique=True)
+    about = models.TextField()
+    phone = models.CharField(max_length=200)
+    address = models.TextField()
+
+    def __str__(self):
+        return self.name
+
+class Diagnostics(models.Model):
+
+    name = models.CharField(max_length=200)
+    phone = models.CharField(max_length=20)
+    address = models.TextField()
+    collection = models.BooleanField()
 
     def __str__(self):
         return self.name

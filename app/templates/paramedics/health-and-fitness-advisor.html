@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en-US">
+{% load static %}
+{% include 'head.html' %}
+
+<body>
+
+    {% include 'navigation.html' %}
+    <!-- // Header  -->
+
+    <div id="page-title" class="padding-tb-30px gradient-white">
+        <div class="container text-center">
+            <ol class="breadcrumb opacity-5">
+                <li><a href="#">Home</a></li>
+                <li class="active">Join Us</li>
+            </ol>
+            <h1 class="font-weight-300">Health and fitness adviors</h1>
+        </div>
+    </div>
+
+    <div class="container margin-bottom-100px">
+        <!--======= log_in_page =======-->
+        <div id="log-in" class="site-form log-in-form box-shadow border-radius-10">
+
+            <div class="form-output">
+
+                    <div class="form-group label-floating">
+                        <label class="control-label" for="name">Your Name</label>
+                        <input class="form-control" placeholder="Dr. Your Name " id="name" type="text">
+                    </div>
+
+                    <div class="form-group label-floating">
+                        <label class="control-label" for="qualifications">Qualification</label>
+                        <input class="form-control" placeholder="Your qualifications" id="qualifications" type="text">
+                    </div>
+
+                    <div class="form-group label-floating" >
+                        <label class="control-label" for="designation">Your Designation</label>
+                        <input class="form-control" placeholder="Ex - Assoc. Professor" id="designation" type="text">
+                    </div>
+
+
+                     <div class="form-group label-floating">
+                        <label class="control-label" for="location">Address</label>
+                         <textarea class="form-control" placeholder="Address" id="location" ></textarea>
+                    </div>
+
+                    <div class="form-group label-floating">
+                        <label class="control-label" for="phone">Phone</label>
+                        <input class="form-control" placeholder="Mobile" type="text" id="phone">
+                    </div>
+
+                    <h5>Availability</h5>
+                    <div class="form-group label-floating">
+                        <label class="control-label" for="from">From</label>
+                        <input class="form-control" type="time" id="from">
+                    </div>
+
+                    <div class="form-group label-floating">
+                        <label class="control-label" for="to">To</label>
+                        <input class="form-control"  type="time" id="to">
+                    </div>
+
+                    <div class="form-group label-floating">
+                        <label class="control-label" for="achievements">Achievements</label>
+                        <input class="form-control" placeholder="Your achievements in the field" type="text" id="achievements">
+                    </div>
+
+                <div class="form-group label-floating">
+                    <label class="control-label" for="about">About</label>
+                     <textarea class="form-control" placeholder="Describe a bit about you and your profession" id="about" ></textarea>
+                </div>
+<!--                    <div class="form-group label-floating is-select">-->
+<!--                        <label class="control-label">Your Gender</label>-->
+<!--                        <select class="selectpicker form-control">-->
+<!--						<option value="MA">Male</option>-->
+<!--						<option value="FE">Female</option>-->
+<!--					</select>-->
+                    </div>
+
+                    <center>
+                        <p>Don't worry , your phone number will not be made public.</p>
+                    </center>
+
+                    <button  class="btn btn-md btn-primary full-width" style="background-color:#0864b2;" id="submit">Submit</button>
+
+
+<!--                    <a href="#" class="btn btn-md bg-facebook full-width btn-icon-left"><i class="fab fa-facebook margin-right-8px" aria-hidden="true"></i> Login with Facebook</a>-->
+
+<!--                    <a href="#" class="btn btn-md bg-twitter full-width btn-icon-left"><i class="fab fa-twitter margin-right-8px" aria-hidden="true"></i> Login with Twitter</a>-->
+
+
+<!--                    <p>you have an account? <a href="page-login.html"> Sing in !</a> </p>-->
+
+            </div>
+        </div>
+        <!--======= // log_in_page =======-->
+
+    </div>
+
+    {% include 'footer.html' %}
+    <script>
+        $("#submit").on("click",function(){
+            name = $("#name").val();
+            designation = $("#designation").val();
+            achievements = $("#achievements").val();
+            qualifications = $("#qualifications").val();
+            phone = $("#phone").val();
+            from = $("#from").val();
+            to = $("#to").val();
+            location1 = $("textarea#location").val();
+            about = $("textarea#about").val();
+            location1 = $("textarea#location").val();
+            status = "true";
+            if(name==""){
+                $("#name").css("border-color","red");
+                status="false";
+            }
+            if(name==""){
+                $("#designation").css("border-color","red");
+                status="false";
+            }
+            if(achievements==""){
+                $("#achievements").css("border-color","red");
+                status="false";
+            }
+            if(phone==""){
+                $("#phone").css("border-color","red");
+                status="false";
+            }
+            if(qualifications==""){
+                $("#qualifications").css("border-color","red");
+                status="false";
+            }
+            if(from==""){
+                $("#from").css("border-color","red");
+                status="false";
+            }
+            if(to==""){
+                $("#to").css("border-color","red");
+                status="false";
+            }
+            if(about==""){
+                $("textarea#about").css("border-color","red");
+                status="false";
+            }
+            if(location1==""){
+                $("textarea#location").css("border-color","red");
+                status="false";
+            }
+            if(status=="true"){
+            $.ajax({
+              url: "{% url 'paramedic_health_and_fitness_advisor_action' %}",
+              type: "GET",
+              data: {
+                "name" : name,
+                "designation" : designation,
+                "qualifications" : qualifications,
+                "achievements" : achievements,
+                "phone" : phone,
+                "from" : from,
+                "to" : to,
+                "location" : location1,
+                "about":about,
+               },
+              dataType: "json",
+              success: function(html){
+                alert('Thank you for joining us. Our team will get in touch with you very soon');
+                location.reload();
+                $("#name").val("");
+                $("#qualifications").val("");
+                $("#designation").val("");
+                $("#achievements").val("");
+                $("textarea#about").val("");
+                $("#phone").val("");
+                $("#from").val("");
+                $("#to").val("");
+                $("textarea#location").val("");
+              }
+            });
+            }
+        });
+    </script>
+{% include 'js.html' %}
+</body>
+
+
+<!-- Mirrored from nilethemes.com/html/tabib/health-and-fitness-advisor.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 06 Mar 2020 16:39:01 GMT -->
+</html>

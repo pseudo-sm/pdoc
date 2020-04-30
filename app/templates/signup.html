@@ -12,9 +12,9 @@
         <div class="container text-center">
             <ol class="breadcrumb opacity-5">
                 <li><a href="#">Home</a></li>
-                <li class="active">Signup</li>
+                <li class="active">Join Us</li>
             </ol>
-<!--            <h1 class="font-weight-300">Calling all Doctors to register who wants to be a part of PDOC</h1>-->
+            <h1 class="font-weight-300">Calling all Doctors to register who wants to be a part of PDOC</h1>
         </div>
     </div>
 
@@ -23,20 +23,30 @@
         <div id="log-in" class="site-form log-in-form box-shadow border-radius-10">
 
             <div class="form-output">
-                    <p style="color:red;display:none;" class="warning">Please make sure you have filled all fields!!</p>
+
                     <div class="form-group label-floating">
                         <label class="control-label" for="name">Your Name</label>
-                        <input class="form-control" placeholder="Your Full Name" id="name" type="text">
+                        <input class="form-control" placeholder="Dr. Your Name " id="name" type="text">
                     </div>
 
                     <div class="form-group label-floating">
-                        <label class="control-label" for="email">Email</label>
-                        <input class="form-control" placeholder="ex - yourname@gmail.com" id="email" type="email">
+                        <label class="control-label" for="specialization">Specialization</label>
+                        <input class="form-control" placeholder="Ex - Orthopedic/Padeatric/General Medicine" id="specialization" type="text">
+                    </div>
+
+                    <div class="form-group label-floating" >
+                        <label class="control-label" for="designation">Your Designation</label>
+                        <input class="form-control" placeholder="Ex - Assoc. Professor" id="designation" type="text">
                     </div>
 
                     <div class="form-group label-floating">
-                        <label class="control-label" for="password">Password</label>
-                        <input class="form-control" placeholder="password"  id="password" type="password">
+                        <label class="control-label" for="hospital">Hospital</label>
+                        <input class="form-control" placeholder="Hospital Name" id="hospital" type="text">
+                    </div>
+
+                     <div class="form-group label-floating">
+                        <label class="control-label" for="location">Location</label>
+                         <textarea class="form-control" placeholder="Address" id="location" ></textarea>
                     </div>
 
                     <div class="form-group label-floating">
@@ -44,9 +54,20 @@
                         <input class="form-control" placeholder="Mobile" type="text" id="phone">
                     </div>
 
+                    <h5>Availability</h5>
                     <div class="form-group label-floating">
-                        <label class="control-label" for="query">Query</label>
-                        <textarea class="form-control" placeholder="Describe the problem in detail.."  id="query"></textarea>
+                        <label class="control-label" for="from">From</label>
+                        <input class="form-control" type="time" id="from">
+                    </div>
+
+                    <div class="form-group label-floating">
+                        <label class="control-label" for="to">To</label>
+                        <input class="form-control"  type="time" id="to">
+                    </div>
+
+                    <div class="form-group label-floating">
+                        <label class="control-label" for="id">Registration Id</label>
+                        <input class="form-control" placeholder="Registration Id" type="text" id="id">
                     </div>
 
 <!--                    <div class="form-group label-floating is-select">-->
@@ -58,7 +79,7 @@
                     </div>
 
                     <center>
-<!--                        <p>Don't worry , your phone number will not be made public.</p>-->
+                        <p>Don't worry , your phone number will not be made public.</p>
                     </center>
 
                     <button  class="btn btn-md btn-primary full-width" style="background-color:#0864b2;" id="submit">Submit</button>
@@ -81,54 +102,43 @@
     <script>
         $("#submit").on("click",function(){
             name = $("#name").val();
-            email = $("#email").val();
-            password = $("#password").val();
+            designation = $("#designation").val();
+            hospital = $("#hospital").val();
+            specialization = $("#specialization").val();
             phone = $("#phone").val();
-            query = $("textarea#query").val();
-            status = "true";
-            if(name == ""){
-                $("#name").css("border-color","red");
-                status = "false";
-            }
-            if(email == ""){
-                $("#email").css("border-color","red");
-                status = "false";
-            }
-            if(password == ""){
-                $("#password").css("border-color","red");
-                status = false;
-            }
-            if(phone == ""){
-                $("#phone").css("border-color","red");
-                status = "false";
-            }
-            if(query == ""){
-                $("textarea#query").css("border-color","red");
-                status = "false";
-            }
-            if(status=="true") {
+            from = $("#from").val();
+            to = $("#to").val();
+            id = $("#id").val();
+            location1 = $("textarea#location").val();
             $.ajax({
-              url: "{% url 'signup_customer_action' %}",
+              url: "{% url 'doctor_registration_action' %}",
               type: "GET",
               data: {
                 "name" : name,
-                "email" : email,
-                "password" : password,
+                "designation" : designation,
+                "hospital" : hospital,
+                "specialization" : specialization,
                 "phone" : phone,
-                "query" : query,
+                "from" : from,
+                "to" : to,
+                "id" : id,
+                "location" : location1,
                },
               dataType: "json",
               success: function(html){
                 alert('Thank you for joining us. Our team will get in touch with you very soon');
                 location.reload();
                 $("#name").val("");
-                $("#email").val("");
-                $("#password").val("");
-                $("textarea#query").val("");
+                $("#designation").val("");
+                $("#hospital").val("");
+                $("#specialization").val("");
                 $("#phone").val("");
+                $("#from").val("");
+                $("#to").val("");
+                $("#id").val("");
+                $("textarea#location").val("");
               }
             });
-            }
         });
     </script>
 {% include 'js.html' %}
