@@ -35,8 +35,8 @@ def get_doctors(request):
     return JsonResponse(list(filtered_doctors.values("name","type_id__name","image","education","practicing_year")),safe=False)
 
 def index(request):
-
-    return render(request,"index.html")
+    all_links = Links.objects.all()
+    return render(request,"index.html",{"links":all_links})
 
 def search(request):
     area = Area.objects.all()
@@ -221,3 +221,7 @@ def paramedic_diagnostics_action(request):
     new_diagnostic = Diagnostics(name=name,collection=pickup,address=address,phone=phone)
     new_diagnostic.save()
     return JsonResponse(True,safe=False)
+
+def fitness_advisor_show(request):
+    health_advisor = HealthFitnessAdvisor.objects.all()
+    return render(request,"paramedics-show/fitness-advisors.html",{"health_advisor":health_advisor})

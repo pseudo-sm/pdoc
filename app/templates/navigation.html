@@ -1,4 +1,9 @@
 {% load static %}
+<style>
+    li {
+        font-weight:bold;
+    }
+</style>
 <header class="background-white box-shadow">
         <div class="container header-in">
                 <div class="row">
@@ -8,11 +13,11 @@
                     </div>
                     <div class="col-lg-7 col-md-12 position-inherit">
                         <ul id="menu-main" class="nav-menu float-lg-right link-padding-tb-20px">
-<!--                            <li><a href="{% url 'index' %}">Home</a></li>-->
-                            <li><a href="{% url 'index' %}">Doctors</a></li>
-                            <li><a href="{% url 'doctors_over_call' %}">Doctors-Over-Call</a></li>
-                            <li><a href="{% url 'important_links' %}">Important Links</a></li>
-                            <li class="has-dropdown"><a href="#">Paramedic Signup</a>
+                            <li><a href="{% url 'index' %}" style="font-weight:bold;">Home</a></li>
+<!--                            <li><a href="{% url 'index' %}">Doctors</a></li>-->
+                            <li><a href="{% url 'doctors_over_call' %}" style="font-weight:bold;">Doctors-Over-Call</a></li>
+                            <li><a href="{% url 'important_links' %}" style="font-weight:bold;">Important Links</a></li>
+                            <li class="has-dropdown"><a href="#" style="font-weight:bold;">Paramedic Signup</a>
                                 <ul class="sub-menu">
                                     <li><a href="{% url 'paramedic_health_and_fitness_advisor' %}">Health & Fitness Advisors </a></li>
                                     <li><a href="{% url 'paramedic_physiotherapy' %}">Physiotherapist</a></li>

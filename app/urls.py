@@ -27,7 +27,7 @@ urlpatterns = [
         path("doctor-registration/",views.doctor_registration,name="doctor_registration"),
         path("doctor-registration-action/",views.doctor_registration_action,name="doctor_registration_action"),
         path("details/",views.details,name="details"),
-        path("health-and-fitness-advisor/",views.paramedic_health_and_fitness_advisor,name="paramedic_health_and_fitness_advisor"),
+        path("health-and-fitness-advisor-signup/",views.paramedic_health_and_fitness_advisor,name="paramedic_health_and_fitness_advisor"),
         path("health-and-fitness-advisor-action/",views.paramedic_health_and_fitness_advisor_action,name="paramedic_health_and_fitness_advisor_action"),
         path("yoga-guru/",views.paramedic_yoga_guru,name="paramedic_yoga_guru"),
         path("yoga-guru-action/",views.paramedic_yoga_guru_action,name="paramedic_yoga_guru_action"),
@@ -42,6 +42,7 @@ urlpatterns = [
         path("diagnostics-action/",views.paramedic_diagnostics_action,name="paramedic_diagnostics_action"),
         path("important-links/",views.important_links,name="important_links"),
         path("doctors-over-call/",views.doctors_over_call,name="doctors_over_call"),
+        path("health-and-fitness-advisors/",views.fitness_advisor_show,name="fitness_advisor_show"),
         path("",views.index,name="index"),
 ]
 

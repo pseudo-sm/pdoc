@@ -37,11 +37,22 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-8 col-sm-push-8 results" >
+                    {% for advisor in health_advisor %}
                     <div class="row">
-                        <!-- Doctor -->
-                        <!-- // Doctor -->
+                        <div class="col-lg-6 col-md-6 hvr-bob margin-bottom-45px">
+                            <div class="background-white box-shadow">
+                                <div class="padding-30px">
+                                    <h5 class="margin-tb-15px"><a class="text-dark" href="#">{{advisor.name}}</a></h5>
+                                    <span class="text-grey-3"><b>{{advisor.qualifications}}</b></span><br>
+                                    <span class="text-black-3">{{advisor.achievments}}</span><br>
+                                    <span class="text-grey-4">{{advisor.about}}</span>
+                                    <span class="text-grey-6">{{advisor.address}}</span>
+                                </div>
+                                 <div data-phone="'+res[i].phone+'"  class="btn btn-primary call" style="width:100%;border-radius:0px;">Call Now</div></a>
+                            </div>
+                        </div>
                     </div>
-                    
+                    {% endfor %}
                     <ul class="pagination pagination-md ">
                         <li class="page-item disabled"><a class="page-link rounded-0" href="#" tabindex="-1">Previous</a></li>
                         <li class="page-item"><a class="page-link" href="#">1</a></li>
@@ -81,58 +92,6 @@
 
     {% include 'footer.html' %}
 </body>
-<script>
-    function calculate_experience(year){
-        var currentYear = (new Date).getFullYear();
-        year = parseInt(year);
-        return (currentYear-year);
-    }
-    function fetch(area_list,keyword,type){
-        $.ajax({
-        url: "{% url 'get_telecalldoctors' %}",
-        data : {
-            'type':type,
-            'experience':'0'
-        },
-        type: 'GET',
-        dataType: 'json',
-
-        success: function(res) {
-            $(".results").empty();
-            for(i=0;i<res.length;i++){
-            $(".results").append(
-                '<div class="col-lg-6 col-md-6 hvr-bob margin-bottom-45px"> \
-                            <div class="background-white box-shadow"> \
-                                <div class="padding-30px"> \
-                                    <h5 class="margin-tb-15px"><a class="text-dark" href="#">'+res[i].name+'</a></h5> \
-                                    <span class="text-grey-3"><b>'+res[i].type_id__name+'</b></span><br> \
-                                    <span class="text-black-6" style="font-weight:bold;">'+res[i].designation+'</span><br> \
-                                    <span class="text-grey-4">'+res[i].hospital+'</span> \
-                                    <span class="text-grey-6">'+res[i].address+'</span> \
-                                </div> \
-                                 <div data-phone="'+res[i].phone+'"  class="btn btn-primary call" style="width:100%;border-radius:0px;">Call Now</div></a>\
-                            </div> \
-                        </div>'
-            );
-            }
-
-        }
-    });
-    }
-    $("#search").click(function(){
-         $(".results").empty();
-         $(".results").append('<div class="loader"></div>');
-        area_list = [$("#area").find('option:selected').attr('data-value')];
-        keyword = $("#keywords").val();
-        type = $("#type").find('option:selected').attr('data-value');
-        fetch(area_list,keyword,type);
-
-    });
-    $(document).ready(function() {
-
-        fetch([],"","0");
-    });
-</script>
 
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-scrollable" role="document">
