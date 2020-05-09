@@ -8,6 +8,8 @@ from django.db import IntegrityError
 from django.contrib.postgres.search import SearchVector
 # Create your views here.
 
+
+
 def get_doctors(request):
     doctors = Doctor.objects.all()
     if request.GET.get("type") == "0":
@@ -88,7 +90,7 @@ def doctor_registration_action(request):
         type.save()
     else:
         type = Type.objects.get(name=type)
-    new_doc = TeleCallDoctors(name=name,hospital=hospital,type=type,phone=phone,designation=designation,address=location,availabel_from=from1,availabel_to=to,registration_id=id)
+    new_doc = TeleCallDoctors(name=name,hospital=hospital,type=type,phone=phone,designation=designation,address=location,available_from=from1,available_to=to,registration_id=id)
     new_doc.save()
     return JsonResponse(True,safe=False)
 

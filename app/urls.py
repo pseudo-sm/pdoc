@@ -41,7 +41,7 @@ urlpatterns = [
         path("diagnostics/",views.paramedic_diagnostics,name="paramedic_diagnostics"),
         path("diagnostics-action/",views.paramedic_diagnostics_action,name="paramedic_diagnostics_action"),
         path("important-links/",views.important_links,name="important_links"),
-        path("",views.doctors_over_call,name="doctors_over_call"),
+        path("doctors-over-call/",views.doctors_over_call,name="doctors_over_call"),
         path("",views.index,name="index"),
 ]
 
