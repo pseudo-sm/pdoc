@@ -7,14 +7,14 @@
     <!-- // Header  -->
     <marquee> Important Links & Updates :
             {% for link in links %}
-                {{link.title}} - {{link.url}}
+        <a href="{{link.url}}" style="color:blue;text-decoration-line:underline;">{{link.title}}</a>
             &nbsp;&nbsp;| &nbsp;&nbsp;{% endfor %}
     </marquee>
-    <section class="banner padding-tb-100px sm-ptb-80px background-overlay" style="background-image: url({% static 'bg.png' %});">
+    <section class="banner padding-tb-100px sm-ptb-80px background-overlay" style="background-image: url({% static 'bg.png' %});background-size: cover;background-repeat: no-repeat;background-position: 50% 50%;">
         <div class="container z-index-2 position-relative">
             <div class="title">
                 <img src="{% static 'logo.png' %}" style="max-width:20%;margin-left:-5%;" alt="pdoc">
-                <h1 class="text-title-large text-main-color font-weight-300 margin-bottom-15px" style="color:white;">Pdoc</h1>
+                <h6 class="text-title-small text-main-color font-weight-3 margin-tb-15px" style="color:white;">EDOC Medical Services Pvt Ltd &nbsp;|&nbsp; U74999OR2019PTC030248</h6>
                 <h4 class="font-weight-300 text-main-color text-up-small" style="color:white;">Now find the best doctors around in just <b>1</b> click !!</h4>
             </div>
             <div class="row margin-tb-60px">
@@ -43,79 +43,79 @@
                                 </div>
                             </div>
                             <div class="col-md-3">
-                                <a class="listing-bottom background-second-color box-shadow" onclick="alert('This service is temporarily unavailbale !!');" >Search Now</a>
+                                <a class="listing-bottom background-second-color box-shadow" onclick="alert('This service is temporarily unavailbale !!');" style="color:white;cursor:pointer;" >Search Now</a>
                             </div>
                         </form>
                     </div>
                 </div>
             </div>
             <div class="row">
-                <div class="col-lg-12">
+                <div class="col-lg-6">
                     <div class="row" >
-                        <div class="col-md-3 col-6 sm-mb-30px wow fadeInUp" style="margin-bottom:15px;">
+                        <div class="col-md-6 col-6 sm-mb-30px wow fadeInUp" style="margin-bottom:15px;">
                             <a href="{% url 'doctors_over_call' %}" class="d-block border-radius-15 hvr-float hvr-sh2">
                                 <div class="background-main-color text-white border-radius-15 padding-20px text-center opacity-hover-7">
-                                    <div class="icon margin-bottom-15px opacity-7">
+                                    <div class="icon margin-bottom-15px opacity-9">
                                         <img src="{% static 'img/icon/categorie-1.png' %}" alt="">
                                     </div>
                                     Doctors
                                 </div>
                             </a>
                         </div>
-                        <div class="col-md-3 col-6 sm-mb-30px wow fadeInUp" data-wow-delay="0.2s" style="margin-bottom:15px;">
+                        <div class="col-md-6 col-6 sm-mb-30px wow fadeInUp" data-wow-delay="0.2s" style="margin-bottom:15px;">
                             <a href="{% url 'fitness_advisor_show' %}"  class="d-block border-radius-15 hvr-float hvr-sh2">
                                 <div class="background-main-color text-white border-radius-15 padding-20px text-center opacity-hover-7">
-                                    <div class="icon margin-bottom-15px opacity-7">
+                                    <div class="icon margin-bottom-15px opacity-9">
                                         <img src="{% static 'img/icon/h&f.png' %}" style="max-width:25%" alt="">
                                     </div>
                                     Fitness Advisors
                                 </div>
                             </a>
                         </div>
-                        <div class="col-md-3 col-6 wow fadeInUp" data-wow-delay="0.4s" style="margin-bottom:15px;">
-                            <a href="#" onclick="alert('This service is temporarily unavailable')" class="d-block border-radius-15 hvr-float hvr-sh2">
+                        <div class="col-md-6 col-6 wow fadeInUp" data-wow-delay="0.3s" style="margin-bottom:15px;">
+                            <a href="{% url 'diagonistic_show' %}"  class="d-block border-radius-15 hvr-float hvr-sh2">
                                 <div class="background-main-color text-white border-radius-15 padding-20px text-center opacity-hover-7">
-                                    <div class="icon margin-bottom-15px">
+                                    <div class="icon margin-bottom-15px opacity-9">
                                         <img src="{% static 'img/icon/categorie-3.png' %}" alt="">
                                     </div>
                                     Diagnostics
                                 </div>
                             </a>
                         </div>
-                        <div class="col-md-3 col-6 wow fadeInUp" data-wow-delay="0.4s" style="margin-bottom:15px;">
-                            <a href="#" onclick="alert('This service is temporarily unavailable')" class="d-block border-radius-15 hvr-float hvr-sh2">
+                        <div class="col-md-6 col-6 wow fadeInUp" data-wow-delay="0.3s" style="margin-bottom:15px;">
+                            <a href="{% url 'yoga_guru_show' %}"  class="d-block border-radius-15 hvr-float hvr-sh2">
                                 <div class="background-main-color text-white border-radius-15 padding-20px text-center opacity-hover-7">
-                                    <div class="icon margin-bottom-15px">
+                                    <div class="icon margin-bottom-15px opacity-9">
                                         <img src="{% static 'img/icon/yoga.png' %}" style="max-width:25%" alt="yoga guru">
                                     </div>
                                     Yoga Guru
                                 </div>
                             </a>
                         </div>
-                        <div class="col-md-3 col-6 wow fadeInUp" data-wow-delay="0.4s" style="margin-bottom:15px;">
-                            <a href="#" onclick="alert('This service is temporarily unavailable')" class="d-block border-radius-15 hvr-float hvr-sh2">
+                        <div class="col-md-6 col-6 wow fadeInUp" data-wow-delay="0.3s" style="margin-bottom:15px;">
+                            <a href="{% url 'physiotherapist_show' %}"  class="d-block border-radius-15 hvr-float hvr-sh2">
                                 <div class="background-main-color text-white border-radius-15 padding-20px text-center opacity-hover-7">
-                                    <div class="icon margin-bottom-15px">
+                                    <div class="icon margin-bottom-15px opacity-9">
                                         <img src="{% static 'img/icon/physitotherapy.png' %}" style="width:25%;" alt="physiotherapy">
                                     </div>
                                     Physiotherapist
                                 </div>
                             </a>
                         </div>
-                        <div class="col-md-3 col-6 wow fadeInUp" data-wow-delay="0.4s" style="margin-bottom:15px;">
-                            <a href="#" onclick="alert('This service is temporarily unavailable')" class="d-block border-radius-15 hvr-float hvr-sh2">
+                        <div class="col-md-6 col-6 wow fadeInUp" data-wow-delay="0.3s" style="margin-bottom:15px;">
+                            <a href="{% url 'clinical_psychiatry_show' %}"  class="d-block border-radius-15 hvr-float hvr-sh2">
                                 <div class="background-main-color text-white border-radius-15 padding-20px text-center opacity-hover-7">
-                                    <div class="icon margin-bottom-15px">
+                                    <div class="icon margin-bottom-15px opacity-9">
                                         <img src="{% static 'img/icon/psychiatry.png' %}" style="max-width:25%;" alt="">
                                     </div>
                                     Clinical Psychiatry
                                 </div>
                             </a>
                         </div>
-                        <div class="col-md-3 col-6 wow fadeInUp" data-wow-delay="0.6s" style="margin-bottom:15px;">
-                            <a href="#" onclick="alert('This service is temporarily unavailable')" class="d-block border-radius-15 hvr-float hvr-sh2">
+                        <div class="col-md-6 col-6 wow fadeInUp" data-wow-delay="0.6s" style="margin-bottom:15px;">
+                            <a href="{% url 'pharmacies_show' %}"  class="d-block border-radius-15 hvr-float hvr-sh2">
                                 <div class="background-main-color text-white border-radius-15 padding-20px text-center opacity-hover-7">
-                                    <div class="icon margin-bottom-15px opacity-7">
+                                    <div class="icon margin-bottom-15px opacity-9">
                                         <img src="{% static 'img/icon/categorie-4.png' %}" alt="">
                                     </div>
                                     Pharmacies
@@ -140,7 +140,7 @@
                             <img src="{% static 'img/icon/service-1.png' %}" alt="">
                         </div>
                         <h3 class="text-second-color">Reliable Places</h3>
-                        <p class="text-grey-2">PDoc assures you to take you to the most reliable Doctors, Paramedics, Pharmacies and Diagnostics.</p>
+                        <p class="text-grey-2">PDOC assures you to take you to the most reliable Doctors, Paramedics, Pharmacies and Diagnostics.</p>
                     </div>
                 </div>
 
@@ -151,18 +151,18 @@
                             <img src="{% static 'img/icon/service-2.png' %}" alt="">
                         </div>
                         <h3 class="text-second-color">High Credibility</h3>
-                        <p class="text-grey-2">PDoc is an organization intitated and governed by a community of doctors. All processes and activites are practiced by quality and experienced doctors.</p>
+                        <p class="text-grey-2">PDOC is an organization intitated and governed by a community of doctors. All processes and activites are practiced by quality and experienced doctors.</p>
                     </div>
                 </div>
 
 
-                <div class="col-lg-4 col-md-6 sm-mb-30px wow fadeInUp" data-wow-delay="0.4s">
+                <div class="col-lg-4 col-md-6 sm-mb-30px wow fadeInUp" data-wow-delay="0.3s">
                     <div class="service text-center opacity-hover-7 hvr-bob">
                         <div class="icon margin-bottom-10px">
                             <img src="{% static 'img/icon/service-3.png' %}" alt="">
                         </div>
                         <h3 class="text-second-color">Quick search</h3>
-                        <p class="text-grey-2">The Pdochealth platform provides quick search facilities so that you are now one click away from the right medical professional.</p>
+                        <p class="text-grey-2">The PDOC-health platform provides quick search facilities so that you are now one click away from the right medical professional.</p>
                     </div>
                 </div>
 

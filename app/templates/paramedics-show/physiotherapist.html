@@ -26,9 +26,9 @@
             <ol class="breadcrumb opacity-5">
                 <li><a href="#">Home</a></li>
                 <li><a href="#">Paramedics</a></li>
-                <li class="active">Health & Fitness Advisors </li>
+                <li class="active">Physiotherapists </li>
             </ol>
-            <h1 class="font-weight-300">Health & Fitness Advisors</h1>
+            <h1 class="font-weight-300">Physiotherapists</h1>
         </div>
     </div>
 
@@ -38,20 +38,20 @@
             <div class="row">
                 <div class="col-md-8 col-sm-push-8 results" >
                     <div class="row">
-                        {% for advisor in health_advisor %}
+                    {% for physiotherapist in physiotherapists %}
                         <div class="col-lg-6 col-md-6 hvr-bob margin-bottom-45px">
                             <div class="background-white box-shadow">
                                 <div class="padding-30px">
-                                    <h5 class="margin-tb-15px"><a class="text-dark" href="#">{{advisor.name}} ({{advisor.qualifications}})</a></h5>
-                                    <span class="text-grey-3"><b>{{advisor.designation}}</b></span><br>
-                                    <span class="text-grey-3"><b>{{advisor.achievements}}</b></span><br>
-                                    <strong>About</strong> : <span class="text-grey-4">{{advisor.about}}<br>
-                                    <strong>Address</strong> : <span class="text-grey-6">{{advisor.address}}</span>
+                                    <h5 class="margin-tb-15px"><a class="text-dark" href="#">{{physiotherapist.name}} ({{physiotherapist.qualifications}})</a></h5>
+                                    <span class="text-grey-3"><b>{{physiotherapist.designation}} | {{physiotherapist.organization}}</b></span><br>
+                                    <strong>Achievements : </strong><span class="text-black-3">{{physiotherapist.achievements}}</span><br>
+                                    <strong>About : </strong><span class="text-grey-4">{{physiotherapist.about}}</span><br>
+                                    <strong>Address : </strong><span class="text-grey-6">{{physiotherapist.address}}</span>
                                 </div>
                                  <div data-phone="'+res[i].phone+'"  class="btn btn-primary call" style="width:100%;border-radius:0px;">Call Now</div></a>
                             </div>
                         </div>
-                        {% endfor %}
+                    {% endfor %}
                     </div>
 <!--                    <ul class="pagination pagination-md ">-->
 <!--                        <li class="page-item disabled"><a class="page-link rounded-0" href="#" tabindex="-1">Previous</a></li>-->
@@ -66,6 +66,7 @@
         </div>
     </div>
         {% include 'paramedics-show/other-services.html' %}
+
 
     {% include 'footer.html' %}
 </body>
