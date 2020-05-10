@@ -26,9 +26,9 @@
             <ol class="breadcrumb opacity-5">
                 <li><a href="#">Home</a></li>
                 <li><a href="#">Paramedics</a></li>
-                <li class="active">Health & Fitness Advisors </li>
+                <li class="active">Yoga Guru </li>
             </ol>
-            <h1 class="font-weight-300">Health & Fitness Advisors</h1>
+            <h1 class="font-weight-300">Yoga Guru</h1>
         </div>
     </div>
 
@@ -38,15 +38,15 @@
             <div class="row">
                 <div class="col-md-8 col-sm-push-8 results" >
                     <div class="row">
-                        {% for advisor in health_advisor %}
+                    {% for yoga_guru in yoga_gurus %}
                         <div class="col-lg-6 col-md-6 hvr-bob margin-bottom-45px">
                             <div class="background-white box-shadow">
                                 <div class="padding-30px">
-                                    <h5 class="margin-tb-15px"><a class="text-dark" href="#">{{advisor.name}} ({{advisor.qualifications}})</a></h5>
-                                    <span class="text-grey-3"><b>{{advisor.designation}}</b></span><br>
-                                    <span class="text-grey-3"><b>{{advisor.achievements}}</b></span><br>
-                                    <strong>About</strong> : <span class="text-grey-4">{{advisor.about}}<br>
-                                    <strong>Address</strong> : <span class="text-grey-6">{{advisor.address}}</span>
+                                    <h5 class="margin-tb-15px"><a class="text-dark" href="#">{{yoga_guru.name}} ({{yoga_guru.qualifications}})</a></h5>
+                                    <span class="text-grey-3"><b>{{yoga_guru.organization}}</b></span><br>
+                                    <strong>About : </strong><span class="text-grey-4">{{yoga_guru.about}}</span> <br>
+                                    <strong>Achievements : </strong><span class="text-grey-4">{{yoga_guru.achievements}}</span><br>
+                                    <strong>Address : </strong><span class="text-grey-6">{{yoga_guru.address}}</span>
                                 </div>
                                  <div data-phone="'+res[i].phone+'"  class="btn btn-primary call" style="width:100%;border-radius:0px;">Call Now</div></a>
                             </div>
@@ -65,8 +65,8 @@
 
         </div>
     </div>
-        {% include 'paramedics-show/other-services.html' %}
 
+    {% include 'paramedics-show/other-services.html' %}
     {% include 'footer.html' %}
 </body>
 

@@ -225,3 +225,23 @@ def paramedic_diagnostics_action(request):
 def fitness_advisor_show(request):
     health_advisor = HealthFitnessAdvisor.objects.all()
     return render(request,"paramedics-show/fitness-advisors.html",{"health_advisor":health_advisor})
+
+def physiotherapist_show(request):
+    physiotherapist = Physiotherapist.objects.all()
+    return render(request,"paramedics-show/physiotherapist.html",{"physiotherapists":physiotherapist})
+
+def clinical_psychiatry_show(request):
+    clinical_psychiatry = ClinicalPsychiatry.objects.all()
+    return render(request,"paramedics-show/clinical-psychiatry.html",{"clinical_psychiatrys":clinical_psychiatry})
+
+def diagonistic_show(request):
+    diagonistics = Diagnostics.objects.all()
+    return render(request,"paramedics-show/diagnostics.html",{"diagonistics":diagonistics})
+
+def yoga_guru_show(request):
+    yoga_gurus = YogaGuru.objects.all()
+    return render(request,"paramedics-show/yoga-guru.html",{"yoga_gurus":yoga_gurus})
+
+def pharamacies_show(request):
+    pharmacies = DrugHouse.objects.all()
+    return render(request,"paramedics-show/drughouse.html",{"pharmacies":pharmacies})
