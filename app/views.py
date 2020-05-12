@@ -192,7 +192,8 @@ def paramedic_clinical_pscyhiatry_action(request):
     return JsonResponse(True,safe=False)
 
 def paramedic_drug_house(request):
-
+    type = Type.objects.filter(status=True)
+    terms = Others.objects.get(name="terms")
     return render(request,"paramedics/drug-house.html")
 
 def paramedic_drug_house_action(request):
@@ -203,6 +204,8 @@ def paramedic_drug_house_action(request):
     about = request.GET.get("about")
     new_drug_house = DrugHouse(name=name,license_no=license,address=address,phone=phone,about=about)
     new_drug_house.save()
+    type = Type.objects.filter(status=True)
+    terms = Others.objects.get(name="terms")
     return JsonResponse(True,safe=False)
 
 def paramedic_diagnostics(request):
@@ -224,24 +227,31 @@ def paramedic_diagnostics_action(request):
 
 def fitness_advisor_show(request):
     health_advisor = HealthFitnessAdvisor.objects.all()
-    return render(request,"paramedics-show/fitness-advisors.html",{"health_advisor":health_advisor})
+    terms = Others.objects.get(name="terms")
+    return render(request,"paramedics-show/fitness-advisors.html",{"health_advisor":health_advisor,"terms":terms,"phone":"8917240913"})
 
 def physiotherapist_show(request):
     physiotherapist = Physiotherapist.objects.all()
-    return render(request,"paramedics-show/physiotherapist.html",{"physiotherapists":physiotherapist})
+    terms = Others.objects.get(name="terms")
+
+    return render(request,"paramedics-show/physiotherapist.html",{"physiotherapists":physiotherapist,"terms":terms,"phone":"8917240913"})
 
 def clinical_psychiatry_show(request):
     clinical_psychiatry = ClinicalPsychiatry.objects.all()
-    return render(request,"paramedics-show/clinical-psychiatry.html",{"clinical_psychiatrys":clinical_psychiatry})
+    terms = Others.objects.get(name="terms")
+    return render(request,"paramedics-show/clinical-psychiatry.html",{"clinical_psychiatrys":clinical_psychiatry,"terms":terms,"phone":"8917240913"})
 
 def diagonistic_show(request):
     diagonistics = Diagnostics.objects.all()
-    return render(request,"paramedics-show/diagnostics.html",{"diagonistics":diagonistics})
+    terms = Others.objects.get(name="terms")
+    return render(request,"paramedics-show/diagnostics.html",{"diagonistics":diagonistics,"terms":terms,"phone":"8917240913"})
 
 def yoga_guru_show(request):
     yoga_gurus = YogaGuru.objects.all()
-    return render(request,"paramedics-show/yoga-guru.html",{"yoga_gurus":yoga_gurus})
+    terms = Others.objects.get(name="terms")
+    return render(request,"paramedics-show/yoga-guru.html",{"yoga_gurus":yoga_gurus,"terms":terms,"phone":"8917240913"})
 
 def pharamacies_show(request):
     pharmacies = DrugHouse.objects.all()
-    return render(request,"paramedics-show/drughouse.html",{"pharmacies":pharmacies})
+    terms = Others.objects.get(name="terms")
+    return render(request,"paramedics-show/drughouse.html",{"pharmacies":pharmacies,"terms":terms,"phone":"8917240913"})
