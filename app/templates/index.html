@@ -485,9 +485,43 @@
 
 <!--        </div>-->
 <!--    </section>-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+<script type="text/javascript">
+    $(window).on('load',function(){
+    if($.cookie("seen")==null)
+    {
+        $.cookie("seen","1",{ expires : 1 });
+        $('#myModal').modal('show');
+    }
 
+    });
 
+</script>
+<!--    Modal-->
+    <div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+                  <h6 class="modal-title">PODC is now a Recognized as an Innovative Startup by Startup Odisha !</h6>
+
+        <img src="http://127.0.0.1:8000/static/page1.jpg">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+<!--    Modal Ends-->
     {% include 'footer.html' %}
+<!--Start of Tawk.to Script-->
+{% include 'tawk.html' %}
 </body>
 
 {% include 'js.html' %}
