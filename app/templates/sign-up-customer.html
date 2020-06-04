@@ -1,3 +1,17 @@
+{% for message in messages %}
+    <script>
+    function remove_alert() {
+            alert = document.getElementsByClassName("alert")[0];
+            alert.remove();
+        }
+    </script>
+    <div class="alert alert-danger">
+        <a class="close" id="close" href="#" data-dismiss="alert" onclick="remove_alert()">×</a>
+        {{ message }}
+    </div>
+    {% endfor %}
+
+
 <!DOCTYPE html>
 <html lang="en-US">
 {% load static %}
@@ -12,15 +26,54 @@
         <div class="container text-center">
             <ol class="breadcrumb opacity-5">
                 <li><a href="#">Home</a></li>
-                <li class="active">Signup</li>
+                <li class="active">Signup / Login</li>
             </ol>
 <!--            <h1 class="font-weight-300">Calling all Doctors to register who wants to be a part of PDOC</h1>-->
         </div>
     </div>
-
+    <div class="row">
+    <div class="col-lg-6">
     <div class="container margin-bottom-100px">
         <!--======= log_in_page =======-->
         <div id="log-in" class="site-form log-in-form box-shadow border-radius-10">
+            <form action="{% url 'login' %}" method="post" >
+                {% csrf_token %}
+            <div class="form-output">
+                    <p style="color:red;display:none;" class="warning">Please make sure you have filled all fields!!</p>
+
+                    <div class="form-group label-floating">
+                        <label class="control-label" for="email">Email</label>
+                        <input class="form-control" name="email" placeholder="ex - yourname@gmail.com" id="login-email" type="email">
+                    </div>
+
+                    <div class="form-group label-floating">
+                        <label class="control-label" for="password">Password</label>
+                        <input class="form-control" name="password" placeholder="password"  id="login-password" type="password">
+                    </div>
+
+                    </div>
+
+                    <center>
+<!--                        <p>Don't worry , your phone number will not be made public.</p>-->
+                    </center>
+
+                    <button  class="btn btn-md btn-primary full-width" style="background-color:#0864b2;" id="login">Login</button>
+            </form>
+
+<!--                    <a href="#" class="btn btn-md bg-facebook full-width btn-icon-left"><i class="fab fa-facebook margin-right-8px" aria-hidden="true"></i> Login with Facebook</a>-->
+
+<!--                    <a href="#" class="btn btn-md bg-twitter full-width btn-icon-left"><i class="fab fa-twitter margin-right-8px" aria-hidden="true"></i> Login with Twitter</a>-->
+
+
+<!--                    <p>you have an account? <a href="page-login.html"> Sing in !</a> </p>-->
+
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="container margin-bottom-100px">
+        <!--======= log_in_page =======-->
+        <div id="sign-up" class="site-form log-in-form box-shadow border-radius-10">
 
             <div class="form-output">
                     <p style="color:red;display:none;" class="warning">Please make sure you have filled all fields!!</p>
@@ -73,7 +126,10 @@
 
             </div>
         </div>
-        <!--======= // log_in_page =======-->
+    </div>
+    </div>
+        <!--===
+        ==== // log_in_page =======-->
 
     </div>
 
