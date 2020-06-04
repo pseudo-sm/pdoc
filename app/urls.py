@@ -48,6 +48,8 @@ urlpatterns = [
         path("yoga-guru/",views.yoga_guru_show,name="yoga_guru_show"),
         path("physiotherapists/",views.physiotherapist_show,name="physiotherapist_show"),
         path("pharmacies/",views.pharamacies_show,name="pharmacies_show"),
+        path("login/",views.login,name="login"),
+        path("patient-dashboard/",views.patient_dashboard,name="patient_dashboard"),
         path("",views.index,name="index"),
 ]
 

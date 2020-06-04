@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import JsonResponse
 from .models import *
 import datetime
@@ -7,7 +7,8 @@ import json
 from django.db import IntegrityError
 from django.contrib.postgres.search import SearchVector
 # Create your views here.
-
+from django.contrib import messages
+from django.http import HttpResponse
 
 
 def get_doctors(request):
@@ -56,14 +57,17 @@ def doctors_over_call(request):
 def get_telecalldoctors(request):
 
     doctors = TeleCallDoctors.objects.filter(status=True)
-    all_doctors = doctors.values("name","type_id__name","education","practicing_year","direct_contact","phone","designation","hospital","address")
+    all_doctors = doctors.values("name","type_id__name","education","practicing_year","direct_contact","phone","designation","hospital","address","available_from","available_to")
     if request.GET.get("type") == "0":
         for doctor in all_doctors:
             if not doctor["direct_contact"]:
                 doctor["phone"] = "8917240913"
+            if doctor["available_from"] is None:
+                doctor["available_from"] = "Available Time Slots"
+                doctor["available_to"] = "Not Mentioned"
         return JsonResponse(list(all_doctors),safe=False)
     type = request.GET.get("type")
-    filtered_doctors = doctors.filter(type=type).values("name","type_id__name","education","practicing_year","direct_contact","phone","designation","hospital","address")
+    filtered_doctors = doctors.filter(type=type).values("name","type_id__name","education","practicing_year","direct_contact","phone","designation","hospital","address","available_from","available_to")
     print(filtered_doctors)
     for doctor in filtered_doctors:
         print(doctor["direct_contact"])
@@ -255,3 +259,19 @@ def pharamacies_show(request):
     pharmacies = DrugHouse.objects.all()
     terms = Others.objects.get(name="terms")
     return render(request,"paramedics-show/drughouse.html",{"pharmacies":pharmacies,"terms":terms,"phone":"8917240913"})
+
+def login(request):
+    email = request.POST.get("email")
+    password = request.POST.get("password")
+    print(email,password)
+    customer = Customer.objects.filter(email=email,password=password)
+    if len(customer)>0:
+        customer = customer.first()
+    else:
+        messages.error(request, f"Invalid Username or password")
+        return redirect("/signup/")
+    return redirect("/patient-dashboard/")
+
+def patient_dashboard(request):
+
+    return render(request,"customer/dashboard.html")
