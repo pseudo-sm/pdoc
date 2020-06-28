@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html lang="en-US">
 {% load static %}
+{% load string_ops %}
 {% include 'head.html' %}
 <body>
     {% include 'navigation.html' %}
     <!-- // Header  -->
-    <marquee> Important Links & Updates :
+    <marquee style="background-color:#007cff;color:white;"> Important Links & Updates :
             {% for link in links %}
-        <a href="{{link.url}}" style="color:blue;text-decoration-line:underline;">{{link.title}}</a>
+        <a href="{{link.url}}" style="color:white;text-decoration-line:underline;">{{link.title}}</a>
             &nbsp;&nbsp;| &nbsp;&nbsp;{% endfor %}
     </marquee>
     <section class="banner padding-tb-100px sm-ptb-80px background-overlay" style="background-image: url({% static 'bg.png' %});background-size: cover;background-repeat: no-repeat;background-position: 50% 50%;">
@@ -52,76 +53,30 @@
             <div class="row">
                 <div class="col-lg-6">
                     <div class="row" >
-                        <div class="col-md-6 col-6 sm-mb-30px wow fadeInUp" style="margin-bottom:15px;">
-                            <a href="{% url 'doctors_over_call' %}" class="d-block border-radius-15 hvr-float hvr-sh2">
+                        {% for type in doctor_types %}
+                        <div class="col-md-4 col-4 sm-mb-30px wow fadeInUp" style="margin-bottom:15px;">
+                            <a href="{% url 'doctor_pages' slug=type.name|replace_filter %}" class="d-block border-radius-15 hvr-float hvr-sh2">
                                 <div class="background-main-color text-white border-radius-15 padding-20px text-center opacity-hover-7">
                                     <div class="icon margin-bottom-15px opacity-9">
-                                        <img src="{% static 'img/icon/categorie-1.png' %}" alt="">
+                                        <img src="{{type.image.url}}" style="max-width:25%;" alt="">
                                     </div>
-                                    Doctors
+                                    {{type.name}}
                                 </div>
                             </a>
                         </div>
-                        <div class="col-md-6 col-6 sm-mb-30px wow fadeInUp" data-wow-delay="0.2s" style="margin-bottom:15px;">
-                            <a href="{% url 'fitness_advisor_show' %}"  class="d-block border-radius-15 hvr-float hvr-sh2">
+                        {% endfor %}
+                        {% for type in paramedic_types %}
+                        <div class="col-md-4 col-4 sm-mb-30px wow fadeInUp" style="margin-bottom:15px;">
+                            <a href="{% url 'paramedic_pages' slug=type.name|replace_filter %}" class="d-block border-radius-15 hvr-float hvr-sh2">
                                 <div class="background-main-color text-white border-radius-15 padding-20px text-center opacity-hover-7">
                                     <div class="icon margin-bottom-15px opacity-9">
-                                        <img src="{% static 'img/icon/h&f.png' %}" style="max-width:25%" alt="">
+                                        <img src="{{type.image.url}}" style="max-width:25%;" alt="">
                                     </div>
-                                    Fitness Advisors
+                                    {{type.name}}
                                 </div>
                             </a>
                         </div>
-                        <div class="col-md-6 col-6 wow fadeInUp" data-wow-delay="0.3s" style="margin-bottom:15px;">
-                            <a href="{% url 'diagonistic_show' %}"  class="d-block border-radius-15 hvr-float hvr-sh2">
-                                <div class="background-main-color text-white border-radius-15 padding-20px text-center opacity-hover-7">
-                                    <div class="icon margin-bottom-15px opacity-9">
-                                        <img src="{% static 'img/icon/categorie-3.png' %}" alt="">
-                                    </div>
-                                    Diagnostics
-                                </div>
-                            </a>
-                        </div>
-                        <div class="col-md-6 col-6 wow fadeInUp" data-wow-delay="0.3s" style="margin-bottom:15px;">
-                            <a href="{% url 'yoga_guru_show' %}"  class="d-block border-radius-15 hvr-float hvr-sh2">
-                                <div class="background-main-color text-white border-radius-15 padding-20px text-center opacity-hover-7">
-                                    <div class="icon margin-bottom-15px opacity-9">
-                                        <img src="{% static 'img/icon/yoga.png' %}" style="max-width:25%" alt="yoga guru">
-                                    </div>
-                                    Yoga Guru
-                                </div>
-                            </a>
-                        </div>
-                        <div class="col-md-6 col-6 wow fadeInUp" data-wow-delay="0.3s" style="margin-bottom:15px;">
-                            <a href="{% url 'physiotherapist_show' %}"  class="d-block border-radius-15 hvr-float hvr-sh2">
-                                <div class="background-main-color text-white border-radius-15 padding-20px text-center opacity-hover-7">
-                                    <div class="icon margin-bottom-15px opacity-9">
-                                        <img src="{% static 'img/icon/physitotherapy.png' %}" style="width:25%;" alt="physiotherapy">
-                                    </div>
-                                    Physiotherapist
-                                </div>
-                            </a>
-                        </div>
-                        <div class="col-md-6 col-6 wow fadeInUp" data-wow-delay="0.3s" style="margin-bottom:15px;">
-                            <a href="{% url 'clinical_psychiatry_show' %}"  class="d-block border-radius-15 hvr-float hvr-sh2">
-                                <div class="background-main-color text-white border-radius-15 padding-20px text-center opacity-hover-7">
-                                    <div class="icon margin-bottom-15px opacity-9">
-                                        <img src="{% static 'img/icon/psychiatry.png' %}" style="max-width:25%;" alt="">
-                                    </div>
-                                    Clinical Psychiatry
-                                </div>
-                            </a>
-                        </div>
-                        <div class="col-md-6 col-6 wow fadeInUp" data-wow-delay="0.6s" style="margin-bottom:15px;">
-                            <a href="{% url 'pharmacies_show' %}"  class="d-block border-radius-15 hvr-float hvr-sh2">
-                                <div class="background-main-color text-white border-radius-15 padding-20px text-center opacity-hover-7">
-                                    <div class="icon margin-bottom-15px opacity-9">
-                                        <img src="{% static 'img/icon/categorie-4.png' %}" alt="">
-                                    </div>
-                                    Pharmacies
-                                </div>
-                            </a>
-                        </div>
+                        {% endfor %}
                     </div>
                 </div>
             </div>

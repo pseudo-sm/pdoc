@@ -1,12 +1,14 @@
 from django.db import models
 from django.contrib.auth.models import User
 # Create your models here.
-
+from tinymce.models import HTMLField
 class Type(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=200)
     description = models.TextField()
     status = models.BooleanField(default=False)
+    type_category = models.CharField(max_length=3)
+    image = models.ImageField(upload_to="types/",default="types/default.png")
     def __str__(self):
         return self.name
 
@@ -33,24 +35,31 @@ class Area(models.Model):
     def __str__(self):
         return self.name
 
-class Doctor(User):
+class Doctor(models.Model):
 
     name = models.CharField(max_length=200)
     address = models.TextField()
     education = models.TextField()
-    practicing_year = models.CharField(max_length=100)
-    image = models.ImageField(upload_to="doctors/")
-    gender = models.CharField(max_length=100)
-    description = models.TextField()
-    lat = models.CharField(max_length=100)
-    lon = models.CharField(max_length=100)
-    phone = models.CharField(max_length=100)
+    practicing_year = models.CharField(max_length=100,null=True,blank=True)
+    image = models.ImageField(upload_to="doctors/",null=True,blank=True)
+    gender = models.CharField(max_length=100,null=True,blank=True)
+    description = models.TextField(null=True,blank=True)
+    lat = models.CharField(max_length=100,null=True,blank=True)
+    lon = models.CharField(max_length=100,null=True,blank=True)
+    phone = models.CharField(max_length=100,null=True,blank=True)
     type = models.ForeignKey(Type,on_delete=models.CASCADE)
     city = models.ForeignKey(City,on_delete=models.CASCADE)
     area = models.ForeignKey(Area,on_delete=models.CASCADE)
     state = models.ForeignKey(State,on_delete=models.CASCADE)
     status = models.BooleanField(default=False)
-
+    videoconferencing = models.BooleanField(default=False)
+    telecalling = models.BooleanField(default=False)
+    available_from = models.TimeField()
+    available_to = models.TimeField()
+    signuptime = models.DateTimeField(auto_now=True)
+    direct_contact = models.BooleanField(default=False)
+    designation = models.CharField(max_length=300,null=True,blank=True)
+    hospital = models.CharField(max_length=300)
     class Meta:
         verbose_name = "Doctor"
         verbose_name_plural = "Doctors"
@@ -105,70 +114,71 @@ class Paramedics(models.Model):
 
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=200)
-    qualifications = models.CharField(max_length=200)
+    qualifications = models.CharField(max_length=200,null=True,blank=True)
     phone = models.CharField(max_length=20)
-    available_from = models.CharField(max_length=200)
-    available_to = models.CharField(max_length=200)
-    achievements = models.CharField(max_length=200)
-    about = models.TextField()
-    address = models.TextField()
-
-class HealthFitnessAdvisor(Paramedics):
-
-    designation = models.CharField(max_length=200)
-
-    def __str__(self):
-        return self.name
-
-class Physiotherapist(Paramedics):
-
-    designation = models.CharField(max_length=200)
-    organization = models.CharField(max_length=200)
+    available_from = models.CharField(max_length=200,null=True,blank=True)
+    available_to = models.CharField(max_length=200,null=True,blank=True)
+    achievements = models.CharField(max_length=200,null=True,blank=True)
+    about = models.TextField(null=True,blank=True)
+    address = models.TextField(null=True,blank=True)
+    designation = models.CharField(max_length=200,null=True,blank=True)
+    organization = models.CharField(max_length=200,null=True,blank=True)
+    license_no = models.CharField(max_length=100,unique=True,null=True,blank=True)
+    collection = models.BooleanField(null=True,blank=True)
+    type = models.ForeignKey(Type,on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.name
+        return self.name + " ("+str(self.type)+")"
 
-class ClinicalPsychiatry(Paramedics):
 
-    designation = models.CharField(max_length=200)
-    organization = models.CharField(max_length=200)
-
-    def __str__(self):
-        return self.name
-
-class YogaGuru(Paramedics):
-
-    organization = models.CharField(max_length=200)
-    def __str__(self):
-        return self.name
-
-class DrugHouse(models.Model):
-
-    id = models.AutoField(primary_key=True)
-    name = models.CharField(max_length=100)
-    license_no = models.CharField(max_length=100,unique=True)
-    about = models.TextField()
-    phone = models.CharField(max_length=200)
-    address = models.TextField()
-
-    def __str__(self):
-        return self.name
-
-class Diagnostics(models.Model):
-
-    name = models.CharField(max_length=200)
-    phone = models.CharField(max_length=20)
-    address = models.TextField()
-    collection = models.BooleanField()
-
-    def __str__(self):
-        return self.name
 
 class Others(models.Model):
 
     name = models.CharField(max_length=100)
-    value = models.TextField(null=True,blank=True)
+    value = HTMLField(null=True,blank=True)
     image = models.ImageField(null=True,blank=True)
 
     def __str__(self):
         return self.name
+
+class Article(models.Model):
+
+    title = models.CharField(max_length=300)
+    article = HTMLField()
+    slug = models.SlugField()
+    datetime = models.DateTimeField(auto_now=True)
+    author = models.CharField(max_length=100)
+    image = models.ImageField(upload_to="articles",null=True,blank=True)
+
+    def __str__(self):
+        return self.title
+
+class Appointments(models.Model):
+
+    id = models.AutoField(primary_key=True)
+    doctor = models.ForeignKey(Doctor,on_delete=models.CASCADE)
+    customer = models.ForeignKey(Customer,null=True,blank=True,on_delete=models.CASCADE)
+    name = models.CharField(max_length=200,blank=True,null=True)
+    phone = models.CharField(max_length=200,blank=True,null=True)
+    query = models.TextField()
+    type = models.CharField(max_length=3)
+    datetime = models.DateTimeField(auto_now=True)
+    status = models.CharField(max_length=2,default=0)
+    def __str__(self):
+        return str(self.id)
+
+class ParamedicBookings(models.Model):
+
+    id = models.AutoField(primary_key=True)
+    paramedic = models.ForeignKey(Paramedics,on_delete=models.CASCADE)
+    customer = models.ForeignKey(Customer,null=True,blank=True,on_delete=models.CASCADE)
+    name = models.CharField(max_length=200,blank=True,null=True)
+    phone = models.CharField(max_length=200,blank=True,null=True)
+    query = models.TextField()
+    type = models.CharField(max_length=3)
+    datetime = models.DateTimeField(auto_now=True)
+    status = models.CharField(max_length=2,default=0)
+    def __str__(self):
+        return str(self.id)
+
+
