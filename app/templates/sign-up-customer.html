@@ -16,9 +16,29 @@
 <html lang="en-US">
 {% load static %}
 {% include 'head.html' %}
-
+<head>
+    <script src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
+     <script src="https://cdn.jsdelivr.net/npm/connectycube@x.x.x/dist/connectycube.min.js"></script>
+</head>
 <body>
+    <script>
+           const CREDENTIALS = {
+  appId: 2671,
+  authKey: "SYV6fw6DLk86t3v",
+  authSecret: "Nq3KJNcmpn9u3Mj"
+};
 
+ConnectyCube.init(CREDENTIALS);
+
+
+ConnectyCube.createSession()
+  .then((session) => {
+    console.log('session intiated');
+  })
+  .catch((error) => {
+    console.log('some error happened');
+  });
+    </script>
     {% include 'navigation.html' %}
     <!-- // Header  -->
 
@@ -163,6 +183,16 @@
                 status = "false";
             }
             if(status=="true") {
+            // conectyccube
+                const userProfile = {
+                  login: email,
+                  password: password,
+                  email: email,
+                  full_name: name,
+                };
+
+                ConnectyCube.users.signup(userProfile, (error, user) => {});
+             // conectyccube
             $.ajax({
               url: "{% url 'signup_customer_action' %}",
               type: "GET",

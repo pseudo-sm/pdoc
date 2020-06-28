@@ -10,6 +10,13 @@ from django.contrib.postgres.search import SearchVector
 from django.contrib import messages
 from django.http import HttpResponse
 
+doctor_types = Type.objects.filter(type_category=1)
+paramedic_types = Type.objects.filter(type_category=2)
+
+def handler404(request, exception, template_name="404.html"):
+    response = render(template_name)
+    response.status_code = 404
+    return response
 
 def get_doctors(request):
     doctors = Doctor.objects.all()
@@ -37,7 +44,7 @@ def get_doctors(request):
 
 def index(request):
     all_links = Links.objects.all()
-    return render(request,"index.html",{"links":all_links})
+    return render(request,"index.html",{"links":all_links,"doctor_types":doctor_types,"paramedic_types":paramedic_types})
 
 def search(request):
     area = Area.objects.all()
@@ -49,15 +56,79 @@ def details(request):
     return render(request,"details.html")
 
 def doctors_over_call(request):
-    type = Type.objects.filter(status=True)
+    type = Type.objects.all()
     terms = Others.objects.get(name="terms")
     print(terms)
     return render(request,"telecalling.html",{"types":type,"terms":terms})
 
+def doctors(request):
+    type = Type.objects.filter(type_category="1")
+    terms = Others.objects.get(name="terms")
+    print(terms)
+    return render(request,"doctors.html",{"types":type,"terms":terms,"doctor_types":doctor_types,"paramedic_types":paramedic_types})
+
+def doctors_cat(request):
+    category = request.GET.get("category")
+    print(category)
+    if category != "all":
+        type = Type.objects.get(id=int(category))
+        doctors = Doctor.objects.filter(type=type)
+    else:
+        doctors = Doctor.objects.all()
+    doctors = doctors.values("id","name","type_id__name","education","practicing_year","direct_contact","phone","designation","hospital","address","available_from","available_to")
+    for doctor in doctors:
+        if not doctor["direct_contact"]:
+            doctor["phone"] = "8917240913"
+        if doctor["available_from"] is None:
+            doctor["available_from"] = "Available Time Slots"
+            doctor["available_to"] = "Not Mentioned"
+    return JsonResponse(list(doctors),safe=False)
+
+def paramedics_cat(request):
+    category = request.GET.get("category")
+    if category != "all":
+        type = Type.objects.get(id=int(category))
+        paramedics = Paramedics.objects.filter(type=type,)
+    else:
+        paramedics = Paramedics.objects.all()
+    print(paramedics)
+    paramedics = paramedics.values("id","name","type_id__name","qualifications","achievements","organization","phone","designation","address","available_from","available_to")
+    for paramedic in paramedics:
+        if paramedic["available_from"] is None:
+            paramedic["available_from"] = "Available Time Slots"
+            paramedic["available_to"] = "Not Mentioned"
+    return JsonResponse(list(paramedics),safe=False)
+
+
+def doctor_pages(request,slug):
+    category = slug.replace("-"," ")
+    type = Type.objects.filter(type_category="1")
+    terms = Others.objects.get(name="terms")
+    this_type = Type.objects.get(name=category)
+    doctors = Doctor.objects.filter(type=this_type)
+    return render(request,"doctors-pages.html",{"types":type,"terms":terms,"doctor_types":doctor_types,"paramedic_types":paramedic_types,"req_category":this_type.id})
+
+def paramedic_pages(request,slug):
+    category = slug.replace("-"," ")
+    type = Type.objects.filter(type_category="2")
+    terms = Others.objects.get(name="terms")
+    this_type = Type.objects.get(name=category)
+    paramedics = Paramedics.objects.filter(type=this_type)
+    return render(request,"paramedics-pages.html",{"types":type,"terms":terms,"doctor_types":doctor_types,"paramedic_types":paramedic_types,"req_category":this_type.id})
+
+
+def paramedics(request):
+    type = Type.objects.filter(type_category="2")
+    terms = Others.objects.get(name="terms")
+    print(terms)
+    return render(request,"paramedics.html",{"types":type,"terms":terms,"doctor_types":doctor_types,"paramedic_types":paramedic_types})
+
+
 def get_telecalldoctors(request):
 
-    doctors = TeleCallDoctors.objects.filter(status=True)
+    doctors = Doctor.objects.filter(status=True)
     all_doctors = doctors.values("name","type_id__name","education","practicing_year","direct_contact","phone","designation","hospital","address","available_from","available_to")
+    print(all_doctors)
     if request.GET.get("type") == "0":
         for doctor in all_doctors:
             if not doctor["direct_contact"]:
@@ -77,7 +148,7 @@ def get_telecalldoctors(request):
 
 def doctor_registration(request):
 
-    return render(request,"signup.html")
+    return render(request,"signup.html",{"doctor_types":doctor_types,"paramedic_types":paramedic_types})
 
 def doctor_registration_action(request):
     name = request.GET.get("name")
@@ -101,11 +172,11 @@ def doctor_registration_action(request):
 def important_links(request):
 
     links = Links.objects.all()
-    return render(request,"important-links.html",{"links":links})
+    return render(request,"important-links.html",{"links":links,"doctor_types":doctor_types,"paramedic_types":paramedic_types})
 
 def signup_customer(request):
 
-    return render(request,"sign-up-customer.html")
+    return render(request,"sign-up-customer.html",{"doctor_types":doctor_types,"paramedic_types":paramedic_types})
 
 def signup_customer_action(request):
     name = request.GET.get("name")
@@ -118,7 +189,7 @@ def signup_customer_action(request):
     except IntegrityError:
         return JsonResponse({"error":True,"message" : "You have already Signed Up with us"})
     auth.login(request,user=user)
-    new_customer = Customer(name=name,phone=phone,query=query,user_id=user)
+    new_customer = Customer(name=name,phone=phone,query=query,user_id=user,email=email,password=password)
     new_customer.save()
     return JsonResponse(True,safe=False)
 
@@ -135,7 +206,8 @@ def paramedic_health_and_fitness_advisor_action(request):
     available_to = request.GET.get("to")
     achievements = request.GET.get("achievements")
     about = request.GET.get("about")
-    new_paramedic_health_and_fitness_advisor = HealthFitnessAdvisor(name=name,qualifications=qualification,designation=designation,address=address,phone=phone,achievements=achievements,available_to=available_to,available_from=available_from,about=about)
+    type = Type.objects.get(name="Health and Fitness Advisor")
+    new_paramedic_health_and_fitness_advisor = Paramedics(name=name,qualifications=qualification,designation=designation,address=address,phone=phone,achievements=achievements,available_to=available_to,available_from=available_from,about=about,type=type)
     new_paramedic_health_and_fitness_advisor.save()
     return JsonResponse(True,safe=False)
 
@@ -153,7 +225,8 @@ def paramedic_yoga_guru_action(request):
     available_to = request.GET.get("to")
     achievements = request.GET.get("achievements")
     about = request.GET.get("about")
-    new_paramedic_yoga_guru = YogaGuru(name=name,qualifications=qualification,address=address,available_to=available_to,available_from=available_from,phone=phone,achievements=achievements,about=about,organization=organization)
+    type = Type.objects.get(name="Yoga Guru")
+    new_paramedic_yoga_guru = Paramedics(name=name,qualifications=qualification,address=address,available_to=available_to,available_from=available_from,phone=phone,achievements=achievements,about=about,organization=organization,type=type)
     new_paramedic_yoga_guru.save()
     return JsonResponse(True,safe=False)
 
@@ -172,7 +245,8 @@ def paramedic_physiotherapy_action(request):
     achievements = request.GET.get("achievements")
     about = request.GET.get("about")
     organization = request.GET.get("organization")
-    new_physiotherapist = Physiotherapist(name=name,qualifications=qualification,designation=designation,address=address,phone=phone,available_from=available_from,available_to=available_to,achievements=achievements,about=about,organization=organization)
+    type = Type.objects.get(name="Physiotherapist")
+    new_physiotherapist = Paramedics(name=name,qualifications=qualification,designation=designation,address=address,phone=phone,available_from=available_from,available_to=available_to,achievements=achievements,about=about,organization=organization,type=type)
     new_physiotherapist.save()
     return JsonResponse(True,safe=False)
 
@@ -191,7 +265,8 @@ def paramedic_clinical_pscyhiatry_action(request):
     achievements = request.GET.get("achievements")
     about = request.GET.get("about")
     organization = request.GET.get("organization")
-    new_clinical_psychiatrist = ClinicalPsychiatry(name=name,qualifications=qualification,designation=designation,address=address,phone=phone,available_from=available_from,available_to=available_to,achievements=achievements,about=about,organization=organization)
+    type = Type.objects.get(name="Clinical Therapist")
+    new_clinical_psychiatrist = Paramedics(name=name,qualifications=qualification,designation=designation,address=address,phone=phone,available_from=available_from,available_to=available_to,achievements=achievements,about=about,organization=organization,type=type)
     new_clinical_psychiatrist.save()
     return JsonResponse(True,safe=False)
 
@@ -206,7 +281,8 @@ def paramedic_drug_house_action(request):
     address = request.GET.get("location")
     phone = request.GET.get("phone")
     about = request.GET.get("about")
-    new_drug_house = DrugHouse(name=name,license_no=license,address=address,phone=phone,about=about)
+    type = Type.objects.get(name="Drug House")
+    new_drug_house = Paramedics(name=name,license_no=license,address=address,phone=phone,about=about,type=type)
     new_drug_house.save()
     type = Type.objects.filter(status=True)
     terms = Others.objects.get(name="terms")
@@ -225,7 +301,8 @@ def paramedic_diagnostics_action(request):
         pickup = True
     else:
         pickup=False
-    new_diagnostic = Diagnostics(name=name,collection=pickup,address=address,phone=phone)
+    type = Type.objects.get(name="Diagnostics")
+    new_diagnostic = Paramedics(name=name,collection=pickup,address=address,phone=phone,type=type)
     new_diagnostic.save()
     return JsonResponse(True,safe=False)
 
@@ -274,4 +351,77 @@ def login(request):
 
 def patient_dashboard(request):
 
-    return render(request,"customer/dashboard.html")
+    vdoctors = Doctor.objects.filter(videoconferencing=True)
+    return render(request,"customer/dashboard.html",{"vdoctors":vdoctors,"doctor_types":doctor_types,"paramedic_types":paramedic_types})
+
+def blog_list(request):
+    articles = Article.objects.all()
+    return render(request,"blog-list.html",{"articles":articles,"doctor_types":doctor_types,"paramedic_types":paramedic_types})
+
+def blog_single(request,slug):
+    article = Article.objects.get(slug=slug)
+    return render(request,"blog-single.html",{"article":article,"doctor_types":doctor_types,"paramedic_types":paramedic_types})
+
+def zonal_admin(request):
+    appointments = Appointments.objects.filter(status="0")
+    paramedic_bookings = ParamedicBookings.objects.filter(status="0")
+    appointments = appointments.values("id","name","phone","datetime","doctor__name","doctor__phone","query")
+    paramedic_bookings = paramedic_bookings.values("id","name","phone","datetime","paramedic__name","paramedic__phone","query")
+    return render(request,"Zonal Admin/index.html",{"appointments":appointments,"paramedic_bookings":paramedic_bookings})
+
+def video_calling(request):
+
+    return render(request,"videocalling.html")
+
+def request_video_calling(request):
+    doctor = request.GET.get("doctor")
+    patient = request.user.id
+    print(doctor,patient)
+    return JsonResponse(True,safe=False)
+
+
+def get_doctor_categories(request):
+    doctor_types = Type.objects.filter(type_category=1)
+    print(doctor_types)
+    return JsonResponse(True,safe=False)
+
+def terms(request):
+    terms = Others.objects.get(name="terms")
+    all_links = Links.objects.all()
+    return render(request,"terms.html",{"terms":terms,"links":all_links,"doctor_types":doctor_types,"paramedic_types":paramedic_types})
+
+def book_appointment(request):
+    doctor = request.GET.get("doctor")
+    name = request.GET.get("name")
+    phone = request.GET.get("phone")
+    query = request.GET.get("query")
+    type = request.GET.get("type")
+    doctor = Doctor.objects.get(id=doctor)
+    new_appointment = Appointments(doctor=doctor,name=name,phone=phone,query=query,type=type)
+    new_appointment.save()
+    return JsonResponse(True,safe=False)
+
+def book_appointment_paramedic(request):
+    paramedic = request.GET.get("paramedic")
+    name = request.GET.get("name")
+    phone = request.GET.get("phone")
+    query = request.GET.get("query")
+    type = request.GET.get("type")
+    paramedic = Paramedics.objects.get(id=paramedic)
+    new_appointment = ParamedicBookings(paramedic=paramedic,name=name,phone=phone,query=query,type=type)
+    new_appointment.save()
+    return JsonResponse(True,safe=False)
+
+def done_appointment(request):
+    id = request.GET.get("id")
+    type = request.GET.get("type")
+    if type=="doctor":
+       appointment = Appointments.objects.get(id=id)
+       appointment.status="1"
+       appointment.save()
+    else:
+        appointment = ParamedicBookings.objects.get(id=id)
+        appointment.status="1"
+        appointment.save()
+    print(appointment)
+    return JsonResponse(True,safe=False)

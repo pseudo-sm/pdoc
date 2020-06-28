@@ -37,7 +37,7 @@
     <script src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
     <!-- fontawesome  -->
     <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/connectycube@x.x.x/dist/connectycube.min.js"></script>
 
 </head>
 
@@ -52,17 +52,17 @@
         <div class="container-fluid overflow-hidden">
             <div class="row margin-tb-90px margin-lr-10px sm-mrl-0px">
 
-                <div class="col-xl-3 col-md-6 margin-bottom-30px">
+                <div class="col-xl-3 col-md-6 margin-bottom-30px" id="medical-records">
                     <a class="d-block padding-30px background-main-color box-shadow border-radius-10 hvr-float">
                         <h6 class="text-white margin-0px font-weight-400">
                             <i class="fas fa-folder text-icon-large margin-bottom-10px opacity-5 d-block"></i>
                             <span class="font-2 text-extra-large">0</span>
-                            <span class="margin-left-10px">Added Listings</span>
+                            <span class="margin-left-10px">Medical Records</span>
                         </h6>
                     </a>
                 </div>
 
-                <div class="col-xl-3 col-md-6 margin-bottom-30px">
+                <div class="col-xl-3 col-md-6 margin-bottom-30px" id="video-consultancy">
                     <a class="d-block padding-30px background-lime box-shadow border-radius-10 hvr-float">
                         <h6 class="text-white margin-0px font-weight-400">
                             <i class="fas fa-video text-icon-large margin-bottom-10px opacity-5 d-block"></i>
@@ -248,8 +248,27 @@
 <!--                        </div>-->
                 </div>
             </div>
-
-
+            <div class="video-doctors" style="display:none;">
+                <div class="card p-3 mb-3">
+                    <span>Scheduled Calls - No calls Scheduled</span>
+                </div>
+                <div class="row">
+                {% for vdoctor in vdoctors %}
+                <div class="col-lg-6 col-md-6 hvr-bob margin-bottom-45px">
+                        <div class="background-white box-shadow">
+                            <div class="padding-30px">
+                                <h5 class="margin-tb-15px"><a class="text-dark" href="#">Dr. {{vdoctor.name}}</a></h5>
+                                <span class="text-grey-3"><b>{{vdoctor.type}}</b></span><br>
+                                <span class="text-black-6" style="font-weight:bold;">{{vdoctor.education}}</span><br>
+<!--                                <span class="text-grey-4">Central Medico</span>-->
+                                <span class="text-grey-6">{{vdoctor.address}}</span>
+                            </div>
+                             <div  class="btn btn-primary request-video" id="{{vdoctor.id}}" style="width:100%;border-radius:0px;">Request Video Call</div>
+                        </div>
+                    </div>
+                 {% endfor %}
+                </div>
+            </div>
                 </div>
             </div>
 
@@ -280,16 +299,40 @@
             </div>
         </div>
 
-    <script src="assets/js/sticky-sidebar.js"></script>
-    <script src="assets/js/YouTubePopUp.jquery.js"></script>
-    <script src="assets/js/owl.carousel.min.js"></script>
-    <script src="assets/js/imagesloaded.min.js"></script>
-    <script src="assets/js/wow.min.js"></script>
-    <script src="assets/js/custom.js"></script>
-    <script src="assets/js/popper.min.js"></script>
-    <script src="assets/js/bootstrap.min.js"></script>
+    <script src="{% static 'js/sticky-sidebar.js' %}"></script>
+    <script src="{% static 'js/YouTubePopUp.jquery.js' %}"></script>
+    <script src="{% static 'js/owl.carousel.min.js' %}"></script>
+    <script src="{% static 'js/imagesloaded.min.js' %}"></script>
+    <script src="{% static 'js/wow.min.js' %}"></script>
+    <script src="{% static 'js/custom.js' %}"></script>
+    <script src="{% static 'js/popper.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
 
         {% include 'footer.html' %}
+    <script>
+        $("#video-consultancy").on('click',function(){
+            $(".files").css('display','none');
+            $(".video-doctors").css('display','block');
+        });
+        $("#medical-records").on('click',function(){
+            $(".files").css('display','block');
+            $(".video-doctors").css('display','none');
+        });
+        $(".request-video").on('click',function(){
+            doctor = $(this).attr("id");
+            $.ajax({
+                url: "{% url 'request_video_calling' %}",
+                data : {
+                    'doctor':doctor,
+                },
+                type: 'GET',
+                dataType: 'json',
+                success: function(res) {
+                    console.log(res);
+                }
+          });
+        });
+    </script>
 
 </body>
 

@@ -16,13 +16,21 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from . import views
+from django.conf.urls import (handler400, handler403, handler404, handler500)
 from django.conf import settings
-from django.conf.urls.static import static
+
 urlpatterns = [
         path("get-doctors/",views.get_doctors,name="get_doctors"),
         path("get-telecall-doctors/",views.get_telecalldoctors,name="get_telecalldoctors"),
-        path("doctors/",views.search,name="doctors"),
+        path("doctors/",views.doctors,name="doctors"),
+        path("doctors/<slug:slug>",views.doctor_pages,name="doctor_pages"),
+        path("paramedics/<slug:slug>",views.paramedic_pages,name="paramedic_pages"),
+        path("doctors-cat/",views.doctors_cat,name="doctors_cat"),
+        path("paramedics-cat/",views.paramedics_cat,name="paramedics_cat"),
+        path("paramedics/",views.paramedics,name="paramedics"),
         path("signup/",views.signup_customer,name="signup_customer"),
+        path("articles/",views.blog_list,name="blog_list"),
+        path("article/<slug:slug>",views.blog_single,name="blog_single"),
         path("signup-action/",views.signup_customer_action,name="signup_customer_action"),
         path("doctor-registration/",views.doctor_registration,name="doctor_registration"),
         path("doctor-registration-action/",views.doctor_registration_action,name="doctor_registration_action"),
@@ -49,8 +57,17 @@ urlpatterns = [
         path("physiotherapists/",views.physiotherapist_show,name="physiotherapist_show"),
         path("pharmacies/",views.pharamacies_show,name="pharmacies_show"),
         path("login/",views.login,name="login"),
+        path("zonal-admin-8249619206/",views.zonal_admin,name="zonal_admin"),
+        path("done-appointment/",views.done_appointment,name="done_appointment"),
         path("patient-dashboard/",views.patient_dashboard,name="patient_dashboard"),
+        path("video-calling/",views.video_calling,name="video_calling"),
+        path("request-video-calling/",views.request_video_calling,name="request_video_calling"),
+        path("terms-and-conditions",views.terms,name="terms"),
+        path("book-appointment/",views.book_appointment,name="book_appointment"),
+        path("book-appointment-paramedic/",views.book_appointment_paramedic,name="book_appointment_paramedic"),
         path("",views.index,name="index"),
 ]
+from django.conf.urls.static import static
 
 urlpatterns += static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
+handler404 = "app.views.handler404"

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en-US">
+{% load static %}
+{% include 'head.html' %}
+<body>
+<!--<script src="https://kit.fontawesome.com/abca28b1e6.js" crossorigin="anonymous"></script>-->
+    <style>
+        .loader {
+          border: 16px solid #f3f3f3; /* Light grey */
+          border-top: 16px solid #3498db; /* Blue */
+          border-radius: 50%;
+          width: 120px;
+          height: 120px;
+          animation: spin 2s linear infinite;
+        }
+
+        @keyframes spin {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }
+    </style>
+
+    {% include 'navigation.html' %}
+<marquee style="background-color:#007cff;color:white;"> Important Links & Updates :
+            {% for link in links %}
+        <a href="{{link.url}}" style="color:white;text-decoration-line:underline;">{{link.title}}</a>
+            &nbsp;&nbsp;| &nbsp;&nbsp;{% endfor %}
+    </marquee>
+    <div class="container p-3 m-3">
+        {{terms.value|safe}}
+    </div>
+    {% include 'footer.html' %}
+
+</body>
+</html>
