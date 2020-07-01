@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '=nzn$skkael#*sm1(_=wwo)#fo0hw!5u*%$%ttw9xf@u^0(iia'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ["*"]
 
@@ -77,8 +77,8 @@ WSGI_APPLICATION = 'pdoc.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
-from pymongo import MongoClient
-from urllib.parse import quote_plus
+# from pymongo import MongoClient
+# from urllib.parse import quote_plus
 # mongodb+srv://root:<password>@cluster0-j6ctp.mongodb.net/test?retryWrites=true&w=majority
 # DATABASES = {
 #     'default': {
