@@ -54,13 +54,13 @@
                 <div class="col-lg-6">
                     <div class="row" >
                         {% for type in doctor_types %}
-                        <div class="col-md-4 col-4 sm-mb-30px wow fadeInUp" style="margin-bottom:15px;">
+                        <div class="col-md-4 col-sm-6 sm-mb-30px wow fadeInUp" style="margin-bottom:15px;">
                             <a href="{% url 'doctor_pages' slug=type.name|replace_filter %}" class="d-block border-radius-15 hvr-float hvr-sh2">
                                 <div class="background-main-color text-white border-radius-15 padding-20px text-center opacity-hover-7">
                                     <div class="icon margin-bottom-15px opacity-9">
                                         <img src="{{type.image.url}}" style="max-width:25%;" alt="">
                                     </div>
-                                    {{type.name}}
+                                    <span style="font-size:.75em;word-wrap: break-word;">{{type.name}}</span>
                                 </div>
                             </a>
                         </div>
@@ -72,7 +72,7 @@
                                     <div class="icon margin-bottom-15px opacity-9">
                                         <img src="{{type.image.url}}" style="max-width:25%;" alt="">
                                     </div>
-                                    {{type.name}}
+                                    <span style="word-wrap: break-word;font-size:.75em;">{{type.name}}</span>
                                 </div>
                             </a>
                         </div>

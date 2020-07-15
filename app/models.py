@@ -100,13 +100,13 @@ class Links(models.Model):
 
 
 class Customer(models.Model):
-
     user_id = models.ForeignKey(User,on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
     phone = models.CharField(max_length=20)
     query = models.TextField()
     email = models.CharField(max_length=100)
     password = models.CharField(max_length=100)
+    razor_pay_order_id = models.CharField(max_length=1000,null=True,blank=True)
     def __str__(self):
         return self.name
 
@@ -164,6 +164,8 @@ class Appointments(models.Model):
     type = models.CharField(max_length=3)
     datetime = models.DateTimeField(auto_now=True)
     status = models.CharField(max_length=2,default=0)
+    time = models.DateTimeField(null=True,blank=True)
+    slug = models.SlugField(auto_created=True)
     def __str__(self):
         return str(self.id)
 

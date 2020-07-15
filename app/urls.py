@@ -20,6 +20,7 @@ from django.conf.urls import (handler400, handler403, handler404, handler500)
 from django.conf import settings
 
 urlpatterns = [
+        path("logout/",views.logout,name="logout"),
         path("get-doctors/",views.get_doctors,name="get_doctors"),
         path("get-telecall-doctors/",views.get_telecalldoctors,name="get_telecalldoctors"),
         path("doctors/",views.doctors,name="doctors"),
@@ -60,11 +61,14 @@ urlpatterns = [
         path("zonal-admin-8249619206/",views.zonal_admin,name="zonal_admin"),
         path("done-appointment/",views.done_appointment,name="done_appointment"),
         path("patient-dashboard/",views.patient_dashboard,name="patient_dashboard"),
-        path("video-calling/",views.video_calling,name="video_calling"),
+        path("video-calling/<slug:slug>",views.video_calling,name="video_calling"),
         path("request-video-calling/",views.request_video_calling,name="request_video_calling"),
         path("terms-and-conditions",views.terms,name="terms"),
         path("book-appointment/",views.book_appointment,name="book_appointment"),
+        path("appointment-close/",views.appointment_close,name="appointment_close"),
         path("book-appointment-paramedic/",views.book_appointment_paramedic,name="book_appointment_paramedic"),
+        path("payment/",views.payment,name="payment"),
+        path("payment-status/",views.payment_status,name="payment_status"),
         path("",views.index,name="index"),
 ]
 from django.conf.urls.static import static

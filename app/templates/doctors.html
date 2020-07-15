@@ -2,6 +2,7 @@
 <html lang="en-US">
 {% load static %}
 {% include 'head.html' %}
+<link rel="stylesheet" href="{% static 'css/flag-icon.min.css' %}">
 <body>
 <!--<script src="https://kit.fontawesome.com/abca28b1e6.js" crossorigin="anonymous"></script>-->
     <style>
@@ -151,7 +152,7 @@
                                     <span class="text-grey-6">'+res[i].address+'</span> \
                                     <span class="text-grey-6"><b>('+res[i].available_from+' - '+res[i].available_to+' )</b></span> \
                                 </div> \
-                                <div class="m-3" style="color:#007bff"><i class="fa fa-video-camera" aria-hidden="true"></i><i class="fa fa-phone" aria-hidden="true"></i></div> \
+                                <div class="m-3" style="color:#007bff"><i class="fa fa-video" aria-hidden="true"></i><i class="fa fa-phone" aria-hidden="true"></i></div> \
                                  <div doctor-id="'+res[i].id+'" class="btn btn-primary schedule-call" style="width:100%;border-radius:0px;">Schedule Call</div></a>\
                             </div> \
                         </div>'
@@ -226,8 +227,14 @@
         type: 'GET',
         dataType: 'json',
         success: function(res) {
-            $('#exampleModal').modal('toggle');
-            alert('You appointment has been scheduled. PDOC Health will contact you shortly for confirmation!!');
+            if(res){
+                $('#exampleModal').modal('toggle');
+                alert('You appointment has been scheduled. PDOC Health will contact you shortly for confirmation!!');
+            }
+            else{
+                alert("Please create an account first.");
+                window.location = "/signup/";
+            }
         }
     });
 

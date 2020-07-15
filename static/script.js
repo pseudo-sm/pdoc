@@ -1,5 +1,5 @@
 if (!location.hash) {
-  location.hash = location.hash = window.location.pathname.split("/")[window.location.pathname.split("/").length-1];
+  location.hash = window.location.pathname.split("/")[window.location.pathname.split("/").length-1];
 }
 const roomHash = window.location.pathname.split("/")[window.location.pathname.split("/").length-1];
   
@@ -54,7 +54,7 @@ function startWebRTC(isOfferer) {
   
   // 'onicecandidate' notifies us whenever an ICE agent needs to deliver a
   // message to the other peer through the signaling server
-  pc.onicecandidate = event => {stream
+  pc.onicecandidate = event => {
     if (event.candidate) {
       sendMessage({'candidate': event.candidate});
     }
@@ -113,20 +113,3 @@ function localDescCreated(desc) {
     onError
   );
 }
-
-$("#end").click(function(){
-  if (confirm("End Meeting?")) {
-    $.ajax({
-        url: "/appointment-close/",
-        data : {
-            'appointment':roomHash,
-        },
-        type: 'GET',
-        dataType: 'json',
-        success: function(res) {
-            window.location="/patient-dashboard/";
-        }
-    });
-
-  }
-})

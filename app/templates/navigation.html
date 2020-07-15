@@ -1,6 +1,6 @@
 {% load static %}
 {% load string_ops %}
-
+<link rel="stylesheet" href="{% static 'css/flag-icon.min.css' %}">
 <header class="background-white box-shadow">
         <div class="container header-in">
                 <div class="row">
@@ -21,9 +21,15 @@
                     </div>
                     <div class="col-lg-3 col-md-12">
                         <hr class="margin-bottom-0px d-block d-sm-none">
+                        {% if logout %}
+                        <a href="{% url 'logout' %}" class="btn btn-sm border-radius-30 margin-tb-15px text-white background-second-color  box-shadow float-right padding-lr-20px margin-left-30px">
+                            Logout
+                        </a>
+                        {% else %}
                         <a href="{% url 'signup_customer' %}" class="btn btn-sm border-radius-30 margin-tb-15px text-white background-second-color  box-shadow float-right padding-lr-20px margin-left-30px">
                             Patient Corner
                         </a>
+                        {% endif %}
                         <a href="{% url 'doctor_registration' %}" class="margin-tb-20px d-inline-block text-up-small float-left float-lg-right"><i class="fas fa-stethoscope"></i>  Join Us</a>
                     </div>
                 </div>

@@ -137,6 +137,7 @@ ConnectyCube.createSession()
                     <button  class="btn btn-md btn-primary full-width" style="background-color:#0864b2;" id="submit">Submit</button>
 
 
+
 <!--                    <a href="#" class="btn btn-md bg-facebook full-width btn-icon-left"><i class="fab fa-facebook margin-right-8px" aria-hidden="true"></i> Login with Facebook</a>-->
 
 <!--                    <a href="#" class="btn btn-md bg-twitter full-width btn-icon-left"><i class="fab fa-twitter margin-right-8px" aria-hidden="true"></i> Login with Twitter</a>-->
@@ -183,16 +184,6 @@ ConnectyCube.createSession()
                 status = "false";
             }
             if(status=="true") {
-            // conectyccube
-                const userProfile = {
-                  login: email,
-                  password: password,
-                  email: email,
-                  full_name: name,
-                };
-
-                ConnectyCube.users.signup(userProfile, (error, user) => {});
-             // conectyccube
             $.ajax({
               url: "{% url 'signup_customer_action' %}",
               type: "GET",
@@ -204,14 +195,9 @@ ConnectyCube.createSession()
                 "query" : query,
                },
               dataType: "json",
-              success: function(html){
-                alert('Thank you for joining us. Our team will get in touch with you very soon');
-                location.reload();
-                $("#name").val("");
-                $("#email").val("");
-                $("#password").val("");
-                $("textarea#query").val("");
-                $("#phone").val("");
+              success: function(order){
+                console.log(order);
+                window.location="http://127.0.0.1:8000/payment?order_id="+order.order_id.id;
               }
             });
             }

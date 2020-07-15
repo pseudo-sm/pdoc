@@ -4,6 +4,12 @@
 
 <!-- Mirrored from nilethemes.com/html/tabib/dashboard-home.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 06 Mar 2020 16:38:03 GMT -->
 <head>
+    {% if p %}
+        <script>
+            alert('Its not time yet :( !, If there is anything urgent please try to call an ambulance.');
+        </script>
+    {% endif %}
+
     <title>PDOC | Patient Corner</title>
     <meta name="author" content="Nile-Theme">
     <meta name="robots" content="index follow">
@@ -50,14 +56,23 @@
     <!-- Navigation-->
 
         <div class="container-fluid overflow-hidden">
+            {% for appointment in scheduled_appointments %}
+                <a class="card p-3" href="{% url 'video_calling' slug=appointment.slug %}">
+                    <center>Sheduled Meeting - <b>{{appointment.time}}</b> with Dr. {{appointment.doctor__name}} ({{appointment.doctor__type__name}} at {{appointment.doctor__hospital}})</center><button class="btn btn-primary mt-auto">Start</button>
+                </a>
+                {% endfor %}
+            {% if status %}
+            <div class="card p-3">
+                <p>Your account is not activated yet. Please Contact - 8249619206 for understanding the issue.</p>
+            </div>
+            {% endif %}
             <div class="row margin-tb-90px margin-lr-10px sm-mrl-0px">
-
-                <div class="col-xl-3 col-md-6 margin-bottom-30px" id="medical-records">
+                <div class="col-xl-3 col-md-6 margin-bottom-30px" id="tele-consultancy">
                     <a class="d-block padding-30px background-main-color box-shadow border-radius-10 hvr-float">
                         <h6 class="text-white margin-0px font-weight-400">
-                            <i class="fas fa-folder text-icon-large margin-bottom-10px opacity-5 d-block"></i>
-                            <span class="font-2 text-extra-large">0</span>
-                            <span class="margin-left-10px">Medical Records</span>
+                            <i class="fas fa-phone text-icon-large margin-bottom-10px opacity-5 d-block"></i>
+                            <span class="font-2 text-extra-large" id="tele-length">{{tdoctor}}</span>
+                            <span class="margin-left-10px">Tele Consultancy</span>
                         </h6>
                     </a>
                 </div>
@@ -66,40 +81,33 @@
                     <a class="d-block padding-30px background-lime box-shadow border-radius-10 hvr-float">
                         <h6 class="text-white margin-0px font-weight-400">
                             <i class="fas fa-video text-icon-large margin-bottom-10px opacity-5 d-block"></i>
-                            <span class="font-2 text-extra-large">450</span>
+                            <span class="font-2 text-extra-large">{{vdoctor}}</span>
                             <span class="margin-left-10px">Video Consultancy</span>
                         </h6>
                     </a>
                 </div>
 
-<!--                <div class="col-xl-3 col-md-6 margin-bottom-30px">-->
-<!--                    <a class="d-block padding-30px background-amber box-shadow border-radius-10 hvr-float">-->
-<!--                        <h6 class="text-white margin-0px font-weight-400">-->
-<!--                            <i class="far fa-star text-icon-large margin-bottom-10px opacity-5 d-block"></i>-->
-<!--                            <span class="font-2 text-extra-large">12,550</span>-->
-<!--                            <span class="margin-left-10px">Total Reviews</span>-->
-<!--                        </h6>-->
-<!--                    </a>-->
-<!--                </div>-->
+                <div class="col-xl-3 col-md-6 margin-bottom-30px" id="paramedic-consultancy">
+                    <a class="d-block padding-30px background-red box-shadow border-radius-10 hvr-float">
+                        <h6 class="text-white margin-0px font-weight-400">
+                            <i class="fas fa-folder text-icon-large margin-bottom-10px opacity-5 d-block"></i>
+                            <span class="font-2 text-extra-large">{{pmconsultancy}}</span>
+                            <span class="margin-left-10px">Paramedical Consultancy</span>
+                        </h6>
+                    </a>
+                </div>
 
-<!--                <div class="col-xl-3 col-md-6 margin-bottom-30px">-->
-<!--                    <a class="d-block padding-30px background-red box-shadow border-radius-10 hvr-float">-->
-<!--                        <h6 class="text-white margin-0px font-weight-400">-->
-<!--                            <i class="fas fa-chart-line text-icon-large margin-bottom-10px opacity-5 d-block"></i>-->
-<!--                            <span class="font-2 text-extra-large">2,560,456</span>-->
-<!--                            <span class="margin-left-10px">Visitors</span>-->
-<!--                        </h6>-->
-<!--                    </a>-->
-<!--                </div>-->
-
-                <div class="col-12">
-
-<!--                    <div class="alert alert-info  margin-bottom-35px border-radius-10 padding-30px">-->
-<!--                        <strong>Success!</strong> Indicates a successful or positive action.-->
-<!--                        <hr>-->
-<!--                        <p class="margin-0px">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s</p>-->
-<!--                    </div>-->
-            <div class="files">
+                <div class="col-xl-3 col-md-6 margin-bottom-30px" id="medical-records">
+                    <a class="d-block padding-30px background-blue box-shadow border-radius-10 hvr-float">
+                        <h6 class="text-white margin-0px font-weight-400">
+                            <i class="fas fa-folder text-icon-large margin-bottom-10px opacity-5 d-block"></i>
+                            <span class="font-2 text-extra-large">0</span>
+                            <span class="margin-left-10px">Medical Records</span>
+                        </h6>
+                    </a>
+                </div>
+        <div class="col-12">
+            <div class="files" style="display:none;">
                 <div class="row">
                     <div class="col-lg-12 margin-bottom-30px" >
                         <button class="btn btn-primary" style="width:100%;"> <i class="fas fa-plus"></i> New Folder</button>
@@ -134,139 +142,69 @@
                                         </div>
                                     </div>
                                 </div>
-<!--
-                                    <textarea class="form-control" placeholder="Enter  Admin Message  here" id="exampleTextarea" rows="3"></textarea>-->
-<!--                                <a href="#" class="btn btn-md border-0 border-radius-10 background-main-color padding-lr-20px text-white margin-tb-10px">Sent Now</a>-->
                             </div>
                         </div>
-
-                        <!-- -->
-<!--                            <div class="margin-bottom-30px">-->
-<!--                                <div class="padding-30px background-white border-radius-20 box-shadow">-->
-<!--                                    <h3><i class="far fa-bell margin-right-10px text-main-color"></i> Latest Activities </h3>-->
-<!--                                    <hr>-->
-<!--                                    <ul class="commentlist padding-0px margin-0px list-unstyled text-grey-3 clearfix">-->
-<!--                                        <li class="border-bottom-1 border-grey-1 margin-bottom-20px">-->
-<!--                                            <div class="padding-bottom-15px">-->
-<!--                                                <a class="d-block text-grey-2" href="#">-->
-<!--                                        <img src="assets/img/testimonial-1.png" class="height-30px margin-right-5px border-radius-30" alt="">-->
-<!--                                        <span class="text-black">Adel Alseed</span> Liked the last comment you </a>-->
-<!--                                                <span class="text-extra-small text-grey-4 margin-left-40px">Date :  <a href="#" class="text-grey-2">July 15, 2016</a></span>-->
-<!--                                            </div>-->
-<!--                                        </li>-->
-<!--                                        <li class="border-bottom-1 border-grey-1 margin-bottom-20px">-->
-<!--                                            <div class="padding-bottom-15px">-->
-<!--                                                <a class="d-block text-grey-2" href="#">-->
-<!--                                        <img src="assets/img/testimonial-2.png" class="height-30px margin-right-5px border-radius-30" alt="">-->
-<!--                                        <span class="text-black">Adel Alseed</span> Liked the last comment you </a>-->
-<!--                                                <span class="text-extra-small text-grey-4 margin-left-40px">Date :  <a href="#" class="text-grey-2">July 15, 2016</a></span>-->
-<!--                                            </div>-->
-<!--                                        </li>-->
-<!--                                        <li class="border-bottom-1 border-grey-1 margin-bottom-20px">-->
-<!--                                            <div class="padding-bottom-15px">-->
-<!--                                                <a class="d-block text-grey-3" href="#">-->
-<!--                                        <img src="assets/img/testimonial-3.png" class="height-30px margin-right-5px border-radius-30" alt="">-->
-<!--                                        <span class="text-black">Adel Alseed</span> Liked the last comment you </a>-->
-<!--                                                <span class="text-extra-small text-grey-4 margin-left-40px">Date :  <a href="#" class="text-grey-2">July 15, 2016</a></span>-->
-<!--                                            </div>-->
-<!--                                        </li>-->
-<!--                                        <li>-->
-<!--                                            <div class="padding-bottom-15px">-->
-<!--                                                <a class="d-block text-grey-2" href="#">-->
-<!--                                        <img src="assets/img/testimonial-4.png" class="height-30px margin-right-5px border-radius-30" alt="">-->
-<!--                                        <span class="text-black">Adel Alseed</span> Liked the last comment you </a>-->
-<!--                                                <span class="text-extra-small text-grey-4 margin-left-40px">Date :  <a href="#" class="text-grey-2">July 15, 2016</a></span>-->
-<!--                                            </div>-->
-<!--                                        </li>-->
-<!--                                    </ul>-->
-<!--                                </div>-->
-<!--                                &lt;!&ndash; &ndash;&gt;-->
-<!--                            </div>-->
                     </div>
-
-<!--                        <div class="col-lg-6">-->
-<!--                            &lt;!&ndash; &ndash;&gt;-->
-<!--                            <div class="margin-bottom-30px">-->
-<!--                                <div class="padding-30px background-white border-radius-20 box-shadow">-->
-<!--                                    <h3><i class="far fa-star margin-right-10px text-main-color"></i> Latest Reviews </h3>-->
-<!--                                    <hr>-->
-<!--                                    <ul class="commentlist padding-0px margin-0px list-unstyled text-grey-3">-->
-<!--                                        <li class="border-bottom-1 border-grey-1 margin-bottom-20px">-->
-<!--                                            <img src="assets/img/testimonial-1.png" class="float-left margin-right-20px border-radius-60 margin-bottom-20px" alt="">-->
-<!--                                            <div class="margin-left-85px">-->
-<!--                                                <a class="d-inline-block text-dark text-medium margin-right-20px" href="#">Bakhita alrawi </a>-->
-<!--                                                <span class="text-extra-small">Date :  <a href="#" class="text-main-color">July 15, 2016</a></span>-->
-<!--                                                <div class="rating">-->
-<!--                                                    <ul>-->
-<!--                                                        <li class="active"></li>-->
-<!--                                                        <li class="active"></li>-->
-<!--                                                        <li class="active"></li>-->
-<!--                                                        <li class="active"></li>-->
-<!--                                                        <li></li>-->
-<!--                                                    </ul>-->
-<!--                                                </div>-->
-<!--                                                <p class="margin-top-15px text-grey-2">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. </p>-->
-<!--                                            </div>-->
-<!--                                        </li>-->
-<!--                                        <li class="border-bottom-1 border-grey-1 margin-bottom-20px">-->
-<!--                                            <img src="assets/img/testimonial-2.png" class="float-left margin-right-20px border-radius-60 margin-bottom-20px" alt="">-->
-<!--                                            <div class="margin-left-85px">-->
-<!--                                                <a class="d-inline-block text-dark text-medium margin-right-20px" href="#">Rabie Elkheir </a>-->
-<!--                                                <span class="text-extra-small">Date :  <a href="#" class="text-main-color">July 15, 2016</a></span>-->
-<!--                                                <div class="rating">-->
-<!--                                                    <ul>-->
-<!--                                                        <li class="active"></li>-->
-<!--                                                        <li class="active"></li>-->
-<!--                                                        <li></li>-->
-<!--                                                        <li></li>-->
-<!--                                                        <li></li>-->
-<!--                                                    </ul>-->
-<!--                                                </div>-->
-<!--                                                <p class="margin-top-15px text-grey-2">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. </p>-->
-<!--                                            </div>-->
-<!--                                        </li>-->
-<!--                                        <li class="border-bottom-1 border-grey-1 margin-bottom-20px">-->
-<!--                                            <img src="assets/img/testimonial-3.png" class="float-left margin-right-20px border-radius-60 margin-bottom-20px" alt="">-->
-<!--                                            <div class="margin-left-85px">-->
-<!--                                                <a class="d-inline-block text-dark text-medium margin-right-20px" href="#">Adel Alsaeed </a>-->
-<!--                                                <span class="text-extra-small">Date :  <a href="#" class="text-main-color">July 15, 2016</a></span>-->
-<!--                                                <div class="rating">-->
-<!--                                                    <ul>-->
-<!--                                                        <li class="active"></li>-->
-<!--                                                        <li class="active"></li>-->
-<!--                                                        <li class="active"></li>-->
-<!--                                                        <li class="active"></li>-->
-<!--                                                        <li class="active"></li>-->
-<!--                                                    </ul>-->
-<!--                                                </div>-->
-<!--                                                <p class="margin-top-15px text-grey-2">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. </p>-->
-<!--                                            </div>-->
-<!--                                        </li>-->
-<!--                                    </ul>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                        </div>-->
+                </div>
+          </div>  </div>
+            <div class="video-doctors" style="display:none;">
+                <p>Filter by :
+                <button type="button" data-type="all" class="btn btn-default btn-xs btn-tag doctor-filter-type mt-2">All</button>
+                {% for type in doctor_types %}
+                  <button type="button" data-type="{{type.id}}" class="btn btn-primary btn-xs btn-tag doctor-filter-type mt-2">{{type}}</button>
+              {% endfor %}
+                </p>
+                <div class="row">
+                    <div class="video-results">
+<!--                Doctors-->
+                    </div>
                 </div>
             </div>
-            <div class="video-doctors" style="display:none;">
-                <div class="card p-3 mb-3">
-                    <span>Scheduled Calls - No calls Scheduled</span>
-                </div>
+            <div class="tele-doctors" >
+                <p>Filter by:
+      <button type="button" data-type="all" class="btn btn-default btn-xs btn-tag doctor-filter-type">All</button>
+      {% for type in doctor_types %}
+          <button type="button" data-type="{{type.id}}" class="btn btn-primary btn-xs btn-tag doctor-filter-type mt-2">{{type}}</button>
+      {% endfor %}
+      <script>
+          $(".doctor-filter-type").on('click',function(){
+                 id = $(this).attr('data-type');
+                fetch(id,'telecall');
+                fetch(id,'videocall');
+                $(".doctor-filter-type").addClass("btn-primary");
+                $(this).removeClass('btn-primary');
+                $(".doctor-filter-type").addClass("btn-default");
+
+          });
+      </script>
+      </p>
                 <div class="row">
-                {% for vdoctor in vdoctors %}
-                <div class="col-lg-6 col-md-6 hvr-bob margin-bottom-45px">
-                        <div class="background-white box-shadow">
-                            <div class="padding-30px">
-                                <h5 class="margin-tb-15px"><a class="text-dark" href="#">Dr. {{vdoctor.name}}</a></h5>
-                                <span class="text-grey-3"><b>{{vdoctor.type}}</b></span><br>
-                                <span class="text-black-6" style="font-weight:bold;">{{vdoctor.education}}</span><br>
-<!--                                <span class="text-grey-4">Central Medico</span>-->
-                                <span class="text-grey-6">{{vdoctor.address}}</span>
-                            </div>
-                             <div  class="btn btn-primary request-video" id="{{vdoctor.id}}" style="width:100%;border-radius:0px;">Request Video Call</div>
-                        </div>
+                    <div class="results">
+<!--                        //doctors-->
                     </div>
-                 {% endfor %}
+                </div>
+            </div>
+           <div class="paramedic-doctors" style="display:none;">
+                <p>Filter by:
+      <button type="button" data-type="all" class="btn btn-default btn-xs btn-tag paramedic-filter-type">All</button>
+      {% for type in paramedic_types %}
+          <button type="button" data-type="{{type.id}}" class="btn btn-primary btn-xs btn-tag paramedic-filter-type mt-2">{{type}}</button>
+      {% endfor %}
+       <script>
+          $(".paramedic-filter-type").on('click',function(){
+                 id = $(this).attr('data-type');
+                paramedic_fetch(id);
+                $(".paramedic-filter-type").addClass("btn-primary");
+                $(this).removeClass('btn-primary');
+                $(".doctor-filter-type").addClass("btn-default");
+
+          });
+      </script>
+      </p>
+                <div class="row">
+                    <div class="paramedic-results">
+<!--                        //doctors-->
+                    </div>
                 </div>
             </div>
                 </div>
@@ -281,23 +219,7 @@
           <i class="fa fa-angle-up"></i>
         </a>
         <!-- Logout Modal-->
-        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">×</span>
-                </button>
-                    </div>
-                    <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-                    <div class="modal-footer">
-                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                        <a class="btn btn-primary" href="page-login.html">Logout</a>
-                    </div>
-                </div>
-            </div>
-        </div>
+
 
     <script src="{% static 'js/sticky-sidebar.js' %}"></script>
     <script src="{% static 'js/YouTubePopUp.jquery.js' %}"></script>
@@ -313,10 +235,25 @@
         $("#video-consultancy").on('click',function(){
             $(".files").css('display','none');
             $(".video-doctors").css('display','block');
+            $(".tele-doctors").css('display','none');
         });
         $("#medical-records").on('click',function(){
             $(".files").css('display','block');
             $(".video-doctors").css('display','none');
+            $(".tele-doctors").css('display','none');
+            $(".paramedic-doctors").css('display','none');
+        });
+        $("#tele-consultancy").on('click',function(){
+            $(".files").css('display','none');
+            $(".video-doctors").css('display','none');
+            $(".tele-doctors").css('display','block');
+            $(".paramedic-doctors").css('display','none');
+        });
+        $("#paramedic-consultancy").on('click',function(){
+            $(".files").css('display','none');
+            $(".video-doctors").css('display','none');
+            $(".tele-doctors").css('display','none');
+            $(".paramedic-doctors").css('display','block');
         });
         $(".request-video").on('click',function(){
             doctor = $(this).attr("id");
@@ -333,9 +270,182 @@
           });
         });
     </script>
-
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Terms & Conditions</h5>
+                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">×</span>
+                </button>
+                    </div>
+                    <div class="modal-body" style="overflow-y:hidden;">
+                        <div class="form">
+                            <input class="form-control form-group" id="name" type="text" placeholder="Patient name" required>
+                            <input class="form-control form-group" id="phone" type="text" placeholder="Patient phone" required>
+                            <textarea class="form-control" type="text" id="query" placeholder="Describe your problem in short" required></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <h7>Continuing to call will mean that you accept our <a href="{% url 'terms' %}" style="text-decoration:underline;color:blue;">Terms & Conditions</a></h7>
+                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                        <a class="btn btn-primary" id="call-now" style="color:white;">Submit</a>
+                    </div>
+                </div>
+            </div>
+        </div>
 </body>
 
+<script>
+    function fetch(doctor_type,service_type){
+        $.ajax({
+        url: "{% url 'doctors_cat'  %}",
+        data : {
+            'category':doctor_type,
+            'type':service_type
+        },
+        type: 'GET',
+        dataType: 'json',
+        success: function(res) {
+            console.log(res);
+            if(service_type=="telecall")
+            {
+                result = $(".results");
+            }
+            else if(service_type=="videocall")
+            {
+                result = $(".video-results");
+            }
+            result.empty();
+            for(i=0;i<res.length;i++){
 
+            temp = '<div class="col-lg-6 col-md-6 hvr-bob margin-bottom-45px"> \
+                            <div class="background-white box-shadow"> \
+                                <div class="padding-30px"> \
+                                    <h5 class="margin-tb-15px"><a class="text-dark" href="#">'+res[i].name+'</a></h5> \
+                                    <span class="text-grey-3"><b>'+res[i].type_id__name+'</b></span><br> \
+                                    <span class="text-black-6" style="font-weight:bold;">'+res[i].designation+'</span><br> \
+                                    <span class="text-grey-4">'+res[i].hospital+'</span> \
+                                    <span class="text-grey-6">'+res[i].address+'</span> \
+                                    <span class="text-grey-6"><b>('+res[i].available_from+' - '+res[i].available_to+' )</b></span> \
+                                </div> \
+                                <div class="m-3" style="color:#007bff"><i class="fa fa-phone" aria-hidden="true"></i></div>'
+                            if(service_type=="telecall"){
+                                temp = temp+'<div doctor-id="'+res[i].id+'" data-type="1" class="btn btn-primary schedule-call" style="width:100%;border-radius:0px;">Schedule Call</div></a>\
+                                </div> \
+                            </div>'
+                            }
+                            else if (service_type="videocall")
+                            {
+                              temp = temp+'<div doctor-id="'+res[i].id+'" data-type="2" class="btn btn-primary schedule-call" style="width:100%;border-radius:0px;">Schedule Video Call</div></a>\
+                                </div> \
+                            </div>'
+                            }
+                            else {
+                                temp = temp;
+                            }
+            result.append(temp);
+            }
+
+        }
+    });
+    }
+    $(document).ready(function(){
+        fetch('all','telecall');
+        fetch('all','videocall');
+        paramedic_fetch('all');
+    });
+    $(document).on('click', '.schedule-call', function(){
+            doctor = $(this).attr("doctor-id");
+            type = $(this).attr("data-type");
+            $("#call-now").attr("doctor",doctor);
+            $("#call-now").attr("data-type",type);
+            $('#exampleModal').modal('toggle');
+    });
+</script>
+<script>
+    function paramedic_fetch(type){
+        $.ajax({
+        url: "{% url 'paramedics_cat'  %}",
+        data : {
+            'category':type,
+        },
+        type: 'GET',
+        dataType: 'json',
+        success: function(res) {
+            console.log('paramedics');
+            console.log(res);
+            $(".paramedic-results").empty();
+            for(i=0;i<res.length;i++){
+            temp = '<div class="col-lg-6 col-md-6 hvr-bob margin-bottom-45px"> \
+    <div class="background-white box-shadow"> \
+        <div class="padding-30px"> \
+            <h5 class="margin-tb-15px"><a class="text-dark" href="#">'+res[i].name+'</a></h5> \
+            <span class="text-grey-3"><b>'+res[i].type_id__name+'</b></span><br>'
+            if(res[i].available_from!=null)
+            {
+                temp = temp + '<span class="text-grey-6"><b>('+res[i].available_from+' - '+res[i].available_to+' )</b></span><br>'
+            }
+            if(res[i].organization!=null)
+            {
+                temp = temp + '<span class="text-grey-6">'+res[i].organization+'</span><br>'
+            }
+            if(res[i].qualifications!=null)
+            {
+                temp = temp + '<span class="text-grey-3">'+res[i].qualifications+'</span><br>'
+            }
+            if(res[i].achievements!=null)
+            {
+                temp = temp + 'Achievements : <span class="text-grey-2">'+res[i].achievements+'</span><br>'
+            }
+            if(res[i].address!=null)
+            {
+                temp = temp + '<span class="text-grey-1">'+res[i].address+'</span><br>'
+            }
+                  temp = temp+'</div> \
+                    <div class="m-3" style="color:#007bff"><i class="fa fa-video-camera" aria-hidden="true"></i><i class="fa fa-phone" aria-hidden="true"></i></div> \
+                     <div paramedic-id="'+res[i].id+'" class="btn btn-primary schedule-call" style="width:100%;border-radius:0px;">Schedule Call</div></a>\
+                </div> \
+            </div>'
+
+            $(".paramedic-results").append(temp);
+            }
+
+        }
+    });
+    }
+</script>
+<script>
+    $(document).on('click', '#call-now', function(){
+            doctor= $(this).attr("doctor");
+            name = $("#name").val();
+            phone = $("#phone").val();
+            query = $("textarea#query").val();
+            type = $(this).attr("data-type");
+            $.ajax({
+        url: "{% url 'book_appointment'  %}",
+        data : {
+            'doctor':doctor,
+            'name':name,
+            'phone':phone,
+            'query':query,
+            'type':type,
+        },
+        type: 'GET',
+        dataType: 'json',
+        success: function(res) {
+            if(res){
+                $('#exampleModal').modal('toggle');
+                alert('You appointment has been scheduled. PDOC Health will contact you shortly for confirmation!!');
+            }
+            else{
+                alert("Please create an account first.");
+                window.location = "/signup/";
+            }
+        }
+    });
+
+});
+</script>
 <!-- Mirrored from nilethemes.com/html/tabib/dashboard-home.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 06 Mar 2020 16:38:05 GMT -->
 </html>

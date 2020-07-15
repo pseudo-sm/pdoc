@@ -1,5 +1,12 @@
+import random
+import string
+
 from django.shortcuts import render, redirect
 from django.http import JsonResponse
+from django.utils.timezone import utc
+import razorpay
+from django.views.decorators.csrf import csrf_exempt
+
 from .models import *
 import datetime
 from django.contrib import auth
@@ -9,9 +16,10 @@ from django.contrib.postgres.search import SearchVector
 # Create your views here.
 from django.contrib import messages
 from django.http import HttpResponse
-
+from django.contrib.auth.decorators import login_required
 doctor_types = Type.objects.filter(type_category=1)
 paramedic_types = Type.objects.filter(type_category=2)
+client = razorpay.Client(auth=("rzp_live_7VShD4pzdX6r0m", "HFFXrT0KRIObgzB7SvU7JdZG"))
 
 def handler404(request, exception, template_name="404.html"):
     response = render(template_name)
@@ -69,12 +77,24 @@ def doctors(request):
 
 def doctors_cat(request):
     category = request.GET.get("category")
+    type_service = request.GET.get("type")
+
     print(category)
     if category != "all":
         type = Type.objects.get(id=int(category))
-        doctors = Doctor.objects.filter(type=type)
+        if type_service is None:
+            doctors = Doctor.objects.filter(type=type)
+        elif type_service=="telecall":
+            doctors = Doctor.objects.filter(type=type,telecalling=True)
+        elif type_service=="videocall":
+            doctors = Doctor.objects.filter(type=type,videoconferencing=True)
     else:
-        doctors = Doctor.objects.all()
+        if type_service is None:
+            doctors = Doctor.objects.all()
+        elif type_service=="telecall":
+            doctors = Doctor.objects.filter(telecalling=True)
+        elif type_service=="videocall":
+            doctors = Doctor.objects.filter(videoconferencing=True)
     doctors = doctors.values("id","name","type_id__name","education","practicing_year","direct_contact","phone","designation","hospital","address","available_from","available_to")
     for doctor in doctors:
         if not doctor["direct_contact"]:
@@ -91,7 +111,6 @@ def paramedics_cat(request):
         paramedics = Paramedics.objects.filter(type=type,)
     else:
         paramedics = Paramedics.objects.all()
-    print(paramedics)
     paramedics = paramedics.values("id","name","type_id__name","qualifications","achievements","organization","phone","designation","address","available_from","available_to")
     for paramedic in paramedics:
         if paramedic["available_from"] is None:
@@ -175,8 +194,19 @@ def important_links(request):
     return render(request,"important-links.html",{"links":links,"doctor_types":doctor_types,"paramedic_types":paramedic_types})
 
 def signup_customer(request):
-
+    if request.user.is_authenticated:
+        return redirect("/patient-dashboard/")
     return render(request,"sign-up-customer.html",{"doctor_types":doctor_types,"paramedic_types":paramedic_types})
+
+
+def payment(request):
+    order_id=request.GET.get("order_id")
+    customer = Customer.objects.get(razor_pay_order_id=order_id)
+    name = customer.name
+    phone = customer.phone
+    user_id = customer.user_id
+    date = datetime.datetime.now().strftime("%m/%d/%Y")
+    return render(request,"payment.html",{"order_id":order_id,"name":name,"phone":phone,"username":user_id,"date":date})
 
 def signup_customer_action(request):
     name = request.GET.get("name")
@@ -191,7 +221,18 @@ def signup_customer_action(request):
     auth.login(request,user=user)
     new_customer = Customer(name=name,phone=phone,query=query,user_id=user,email=email,password=password)
     new_customer.save()
-    return JsonResponse(True,safe=False)
+    data = {
+        "amount" : 100,
+        "currency" : "INR",
+        "receipt" : "1",
+        "payment_capture" : 1,
+
+    }
+    order_id = client.order.create(data=data)
+    new_customer.razor_pay_order_id=order_id["id"]
+    new_customer.save()
+    return JsonResponse({"order_id":order_id},safe=False)
+
 
 def paramedic_health_and_fitness_advisor(request):
     return render(request,"paramedics/health-and-fitness-advisor.html")
@@ -340,19 +381,34 @@ def pharamacies_show(request):
 def login(request):
     email = request.POST.get("email")
     password = request.POST.get("password")
-    print(email,password)
     customer = Customer.objects.filter(email=email,password=password)
     if len(customer)>0:
         customer = customer.first()
+        user = auth.authenticate(request,username=email,password=password)
+        auth.login(request,user)
     else:
         messages.error(request, f"Invalid Username or password")
         return redirect("/signup/")
     return redirect("/patient-dashboard/")
 
+@login_required(login_url="signup_customer")
 def patient_dashboard(request):
-
-    vdoctors = Doctor.objects.filter(videoconferencing=True)
-    return render(request,"customer/dashboard.html",{"vdoctors":vdoctors,"doctor_types":doctor_types,"paramedic_types":paramedic_types})
+    customer = Customer.objects.get(user_id=request.user.id)
+    if customer.razor_pay_order_id is not None:
+        status = False
+    else:
+        status = True
+    not_yet=request.GET.get("not_time")
+    user = User.objects.get(id=request.user.id)
+    customer = Customer.objects.get(user_id=user)
+    scheduled_appointments = Appointments.objects.filter(customer=customer,status="1")
+    scheduled_appointments=scheduled_appointments.values("doctor__name","doctor__type__name","doctor__hospital","time","slug")
+    vdoctor = len(list(Doctor.objects.filter(videoconferencing=True)))
+    tdoctor = len(list(Doctor.objects.filter(telecalling=True)))
+    pmconsultancy = len(list(Paramedics.objects.filter()))
+    if not_yet is not None:
+        return render(request,"customer/dashboard.html",{"p":"true","vdoctor":vdoctor,"tdoctor":tdoctor,"pmconsultancy":pmconsultancy,"doctor_types":doctor_types,"paramedic_types":paramedic_types,"scheduled_appointments":scheduled_appointments,"status":status,"logout":True})
+    return render(request,"customer/dashboard.html",{"vdoctor":vdoctor,"tdoctor":tdoctor,"pmconsultancy":pmconsultancy,"doctor_types":doctor_types,"paramedic_types":paramedic_types,"scheduled_appointments":scheduled_appointments,"status":status,"logout":True})
 
 def blog_list(request):
     articles = Article.objects.all()
@@ -369,9 +425,15 @@ def zonal_admin(request):
     paramedic_bookings = paramedic_bookings.values("id","name","phone","datetime","paramedic__name","paramedic__phone","query")
     return render(request,"Zonal Admin/index.html",{"appointments":appointments,"paramedic_bookings":paramedic_bookings})
 
-def video_calling(request):
-
-    return render(request,"videocalling.html")
+def video_calling(request,slug):
+    appointment = Appointments.objects.get(slug=slug)
+    now = datetime.datetime.utcnow().replace(tzinfo=utc)
+    delta = now - appointment.time - datetime.timedelta(minutes=20)
+    print(delta)
+    minutes = (delta.seconds//60)
+    if minutes < 20:
+        return render(request,"videocalling.html")
+    return redirect("/patient-dashboard/?not_time=true")
 
 def request_video_calling(request):
     doctor = request.GET.get("doctor")
@@ -391,37 +453,77 @@ def terms(request):
     return render(request,"terms.html",{"terms":terms,"links":all_links,"doctor_types":doctor_types,"paramedic_types":paramedic_types})
 
 def book_appointment(request):
-    doctor = request.GET.get("doctor")
-    name = request.GET.get("name")
-    phone = request.GET.get("phone")
-    query = request.GET.get("query")
-    type = request.GET.get("type")
-    doctor = Doctor.objects.get(id=doctor)
-    new_appointment = Appointments(doctor=doctor,name=name,phone=phone,query=query,type=type)
-    new_appointment.save()
-    return JsonResponse(True,safe=False)
-
+    if request.user.is_authenticated:
+        doctor = request.GET.get("doctor")
+        name = request.GET.get("name")
+        phone = request.GET.get("phone")
+        query = request.GET.get("query")
+        type = request.GET.get("type")
+        doctor = Doctor.objects.get(id=doctor)
+        customer_id = request.user.id
+        user = User.objects.get(id=customer_id)
+        customer = Customer.objects.get(user_id=user)
+        slug = ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(16))
+        new_appointment = Appointments(doctor=doctor,name=name,phone=phone,query=query,type=type,customer=customer,slug=slug)
+        new_appointment.save()
+        return JsonResponse(True,safe=False)
+    else:
+        return JsonResponse(False,safe=False)
 def book_appointment_paramedic(request):
-    paramedic = request.GET.get("paramedic")
-    name = request.GET.get("name")
-    phone = request.GET.get("phone")
-    query = request.GET.get("query")
-    type = request.GET.get("type")
-    paramedic = Paramedics.objects.get(id=paramedic)
-    new_appointment = ParamedicBookings(paramedic=paramedic,name=name,phone=phone,query=query,type=type)
-    new_appointment.save()
-    return JsonResponse(True,safe=False)
-
+    if request.user.is_authenticated:
+        paramedic = request.GET.get("paramedic")
+        name = request.GET.get("name")
+        phone = request.GET.get("phone")
+        query = request.GET.get("query")
+        type = request.GET.get("type")
+        paramedic = Paramedics.objects.get(id=paramedic)
+        new_appointment = ParamedicBookings(paramedic=paramedic,name=name,phone=phone,query=query,type=type)
+        new_appointment.save()
+        return JsonResponse(True,safe=False)
+    return JsonResponse(False,safe=False)
+import datetime
 def done_appointment(request):
     id = request.GET.get("id")
     type = request.GET.get("type")
+    datetime_str = request.GET.get("datetime")
+    date = datetime_str.split(" ")[0].split("-")
+    time = datetime_str.split(" ")[1].split(":")
+    year,month,date = int(date[0]),int(date[1]),int(date[2])
+    hour,minute = int(time[0]),int(time[1])
+    datetime_obj = datetime.datetime(year,month,date,hour,minute,0,0)
+    print(datetime_obj)
     if type=="doctor":
        appointment = Appointments.objects.get(id=id)
        appointment.status="1"
+       appointment.time=datetime_obj
        appointment.save()
     else:
         appointment = ParamedicBookings.objects.get(id=id)
         appointment.status="1"
         appointment.save()
-    print(appointment)
+    return JsonResponse(True,safe=False)
+
+def appointment_close(request):
+    appointment = request.GET.get("appointment")
+    appointment = Appointments.objects.get(slug=appointment)
+    appointment.status="2"
+    appointment.save()
+    return JsonResponse(True,safe=False)
+
+def logout(request):
+    auth.logout(request)
+    return redirect('/signup/')
+
+
+@csrf_exempt
+def payment_action(request):
+    order_id = request.POST.get("order_id")
+    customer = Customer.objects.get(razor_pay_order_id=order_id)
+    return signup_customer(request)
+
+def payment_status(request):
+    order_id = request.GET.get("order_id")
+    signature = request.GET.get("signature")
+    payment_id = request.GET.get("payment_id")
+    client.utility.verify_payment_signature({"razorpay_signature":signature,"razorpay_order_id":order_id,"razorpay_payment_id":payment_id})
     return JsonResponse(True,safe=False)

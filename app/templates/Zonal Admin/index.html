@@ -20,6 +20,7 @@
                 <th>Doctor Name</th>
                 <th>Doctor Contact</th>
                 <th>Query</th>
+                <th>Time</th>
                 <th>Status</th>
             </tr>
             {% for appointment in appointments %}
@@ -31,6 +32,7 @@
                 <td>{{appointment.doctor__name}}</td>
                 <td>{{appointment.doctor__phone}}</td>
                 <td>{{appointment.query}}</td>
+                <td><input type="date" id="date-{{appointment.id}}" name="date"><input type="time" id="time-{{appointment.id}}" name="time"></td>
                 <td>
                     <button class="btn btn-success done-appointment" data-doctor="{{appointment.id}}">Done</button>
                 </td>
@@ -75,19 +77,24 @@
     $(".done-appointment").on('click',function(){
         type = "doctor";
         id = $(this).attr("data-doctor");
-        done(type,id);
+        date = $("#date-"+id).val();
+        time = $("#time-"+id).val();
+        console.log("0----------------------------------------0");
+        datetime = date+" "+time;
+        done(type,id,datetime);
     });
     $(".done-paramedic").on('click',function(){
         type = "paramedic";
         id = $(this).attr("data-paramedic");
         done(type,id);
     });
-    function done(type,id){
+    function done(type,id,time){
         $.ajax({
         url: "{% url 'done_appointment'  %}",
         data : {
             'id':id,
             'type':type,
+            'datetime':datetime,
         },
         type: 'GET',
         dataType: 'json',
