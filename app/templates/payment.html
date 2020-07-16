@@ -34,12 +34,12 @@
 </div>
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 <script>
-var payment_id;
+var payment_id;pdochea
 var order_id;
 var signature;
 var options = {
-    "key": "rzp_live_7VShD4pzdX6r0m", // Enter the Key ID generated from the Dashboard
-    "amount": "50000", // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+    "key": "rzp_live_7VShD4pzdX6r0m",
+    "amount": "50000",
     "currency": "INR",
     "name": "PDOCHEALTH",
     "description": "Registration",
@@ -59,7 +59,7 @@ var options = {
                },
               dataType: "json",
               success: function(order){
-                window.location="http://127.0.0.1:8000/signup/";
+                window.location="http://www.pdochealth.com/signup/";
               }
             });
 

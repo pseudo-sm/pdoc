@@ -34,7 +34,7 @@ def get_doctors(request):
     education = request.GET.get("education")
     keyword = request.GET.get("keyword")
     type = request.GET.get("type")
-    experience = request.GET.get("experience")
+    experience = request.GET.get("e100xperience")
     areas = json.loads(areas)
     area = Area.objects.get(id=areas[0])
     filtered_doctors = doctors.filter(area=area)
@@ -222,7 +222,7 @@ def signup_customer_action(request):
     new_customer = Customer(name=name,phone=phone,query=query,user_id=user,email=email,password=password)
     new_customer.save()
     data = {
-        "amount" : 100,
+        "amount" : 5000,
         "currency" : "INR",
         "receipt" : "1",
         "payment_capture" : 1,
