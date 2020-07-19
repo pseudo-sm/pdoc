@@ -428,10 +428,10 @@ def zonal_admin(request):
 def video_calling(request,slug):
     appointment = Appointments.objects.get(slug=slug)
     now = datetime.datetime.utcnow().replace(tzinfo=utc)
-    delta = now - appointment.time - datetime.timedelta(minutes=20)
+    delta = appointment.time - now
     print(delta)
     minutes = (delta.seconds//60)
-    if minutes < 20:
+    if minutes < 20 or now > appointment.time:
         return render(request,"videocalling.html")
     return redirect("/patient-dashboard/?not_time=true")
 
