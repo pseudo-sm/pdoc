@@ -404,7 +404,7 @@
             }
                   temp = temp+'</div> \
                     <div class="m-3" style="color:#007bff"><i class="fa fa-video-camera" aria-hidden="true"></i><i class="fa fa-phone" aria-hidden="true"></i></div> \
-                     <div paramedic-id="'+res[i].id+'" class="btn btn-primary schedule-call" style="width:100%;border-radius:0px;">Schedule Call</div></a>\
+                     <div paramedic-id="'+res[i].id+'" class="btn btn-primary offline" style="width:100%;border-radius:0px;">Schedule Call</div></a>\
                 </div> \
             </div>'
 
@@ -416,6 +416,9 @@
     }
 </script>
 <script>
+    $(document).on('click', '.offline', function(){
+        alert('This Service Will Soon Be Online !!');
+    });
     $(document).on('click', '#call-now', function(){
             doctor= $(this).attr("doctor");
             name = $("#name").val();
@@ -435,8 +438,7 @@
         dataType: 'json',
         success: function(res) {
             if(res){
-                $('#exampleModal').modal('toggle');
-                alert('You appointment has been scheduled. PDOC Health will contact you shortly for confirmation!!');
+                window.location="http://www.pdochealth.com/payment-booking?order_id="+res.order_id.id;
             }
             else{
                 alert("Please create an account first.");

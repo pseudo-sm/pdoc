@@ -166,6 +166,7 @@ class Appointments(models.Model):
     status = models.CharField(max_length=2,default=0)
     time = models.DateTimeField(null=True,blank=True)
     slug = models.SlugField(auto_created=True)
+    razor_pay_order_id = models.CharField(max_length=100,null=True,blank=True)
     def __str__(self):
         return str(self.id)
 

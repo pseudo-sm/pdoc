@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     {% load static %}
+    {% load string_ops %}
     {% include 'head.html' %}
     <meta charset="UTF-8">
     <title>Title</title>
@@ -20,6 +21,7 @@
                 <th>Doctor Name</th>
                 <th>Doctor Contact</th>
                 <th>Query</th>
+                <th>Type</th>
                 <th>Time</th>
                 <th>Status</th>
             </tr>
@@ -32,6 +34,7 @@
                 <td>{{appointment.doctor__name}}</td>
                 <td>{{appointment.doctor__phone}}</td>
                 <td>{{appointment.query}}</td>
+                <td>{{appointment.type|type_convert}}</td>
                 <td><input type="date" id="date-{{appointment.id}}" name="date"><input type="time" id="time-{{appointment.id}}" name="time"></td>
                 <td>
                     <button class="btn btn-success done-appointment" data-doctor="{{appointment.id}}">Done</button>

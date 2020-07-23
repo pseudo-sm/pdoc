@@ -16,13 +16,13 @@
 <div class="section d-flex p-3 justify-content-center">
     <table class="table">
         <tr>
-            <td>One Time Registration Fees</td>
+            <td>Consultancy Fees</td>
             <td>Date</td>
             <td>Name</td>
             <td>Payment Status</td>
         </tr>
         <tr>
-            <td>Rs.50</td>
+            <td>Rs.250</td>
             <td>{{date}}</td>
             <td>{{name}}</td>
             <td>Not Paid</td>
@@ -39,7 +39,7 @@ var order_id;
 var signature;
 var options = {
     "key": "rzp_live_7VShD4pzdX6r0m",
-    "amount": "50000",
+    "amount": "250000",
     "currency": "INR",
     "name": "PDOCHEALTH",
     "description": "Registration",
@@ -59,7 +59,7 @@ var options = {
                },
               dataType: "json",
               success: function(order){
-                alert('Succesful ,Explore our services at patient-corner');
+                alert('Succesful , Team PDOC will contact you shortly!!');
                 window.location="http://www.pdochealth.com/signup/";
               }
             });

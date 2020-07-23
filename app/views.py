@@ -208,6 +208,16 @@ def payment(request):
     date = datetime.datetime.now().strftime("%m/%d/%Y")
     return render(request,"payment.html",{"order_id":order_id,"name":name,"phone":phone,"username":user_id,"date":date})
 
+def payment_booking(request):
+    order_id=request.GET.get("order_id")
+    customer = Appointments.objects.get(razor_pay_order_id=order_id).customer
+    name = customer.name
+    phone = customer.phone
+    user_id = customer.user_id
+    date = datetime.datetime.now().strftime("%m/%d/%Y")
+    return render(request,"payment-booking.html",{"order_id":order_id,"name":name,"phone":phone,"username":user_id,"date":date})
+
+
 def signup_customer_action(request):
     name = request.GET.get("name")
     email = request.GET.get("email")
@@ -421,7 +431,7 @@ def blog_single(request,slug):
 def zonal_admin(request):
     appointments = Appointments.objects.filter(status="0")
     paramedic_bookings = ParamedicBookings.objects.filter(status="0")
-    appointments = appointments.values("id","name","phone","datetime","doctor__name","doctor__phone","query")
+    appointments = appointments.values("id","name","phone","datetime","doctor__name","doctor__phone","query","type")
     paramedic_bookings = paramedic_bookings.values("id","name","phone","datetime","paramedic__name","paramedic__phone","query")
     return render(request,"Zonal Admin/index.html",{"appointments":appointments,"paramedic_bookings":paramedic_bookings})
 
@@ -464,9 +474,18 @@ def book_appointment(request):
         user = User.objects.get(id=customer_id)
         customer = Customer.objects.get(user_id=user)
         slug = ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(16))
+        data = {
+            "amount" : 25000,
+            "currency" : "INR",
+            "receipt" : "1",
+            "payment_capture" : 1,
+
+        }
+        order_id = client.order.create(data=data)
         new_appointment = Appointments(doctor=doctor,name=name,phone=phone,query=query,type=type,customer=customer,slug=slug)
+        new_appointment.razor_pay_order_id=order_id["id"]
         new_appointment.save()
-        return JsonResponse(True,safe=False)
+        return JsonResponse({"order_id":order_id},safe=False)
     else:
         return JsonResponse(False,safe=False)
 def book_appointment_paramedic(request):

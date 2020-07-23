@@ -67,6 +67,7 @@ urlpatterns = [
         path("book-appointment/",views.book_appointment,name="book_appointment"),
         path("appointment-close/",views.appointment_close,name="appointment_close"),
         path("book-appointment-paramedic/",views.book_appointment_paramedic,name="book_appointment_paramedic"),
+        path("payment-booking/",views.payment_booking,name="payment_booking"),
         path("payment/",views.payment,name="payment"),
         path("payment-status/",views.payment_status,name="payment_status"),
         path("",views.index,name="index"),
