@@ -1,6 +1,8 @@
 import random
 import string
 
+from django.conf import settings
+from django.core.mail import EmailMessage
 from django.shortcuts import render, redirect
 from django.http import JsonResponse
 from django.utils.timezone import utc
@@ -34,7 +36,7 @@ def get_doctors(request):
     education = request.GET.get("education")
     keyword = request.GET.get("keyword")
     type = request.GET.get("type")
-    experience = request.GET.get("e100xperience")
+    experience = request.GET.get("experience")
     areas = json.loads(areas)
     area = Area.objects.get(id=areas[0])
     filtered_doctors = doctors.filter(area=area)
@@ -485,6 +487,10 @@ def book_appointment(request):
         new_appointment = Appointments(doctor=doctor,name=name,phone=phone,query=query,type=type,customer=customer,slug=slug)
         new_appointment.razor_pay_order_id=order_id["id"]
         new_appointment.save()
+        doctor_name = doctor.name
+        patient_name = customer.name
+        phone = customer.phone
+        email_notify(patient_name,doctor_name,phone)
         return JsonResponse({"order_id":order_id},safe=False)
     else:
         return JsonResponse(False,safe=False)
@@ -545,4 +551,10 @@ def payment_status(request):
     signature = request.GET.get("signature")
     payment_id = request.GET.get("payment_id")
     client.utility.verify_payment_signature({"razorpay_signature":signature,"razorpay_order_id":order_id,"razorpay_payment_id":payment_id})
+    return JsonResponse(True,safe=False)
+
+def email_notify(patient,doctor,phone):
+    body = "A user name {} wants an appointment with Dr. {}".format(patient,doctor)
+    email_msg = EmailMessage("Important!! PDOC - You Have a New Appointment Request", body, settings.EMAIL_HOST_USER, ["saswathcommand@gmail.com"])
+    email_msg.send(fail_silently=False)
     return JsonResponse(True,safe=False)
