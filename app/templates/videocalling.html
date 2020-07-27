@@ -201,7 +201,7 @@
     <div class="row no-gutters">
       <header id="vd-head">
         <div class="overlay"></div>
-        <video id="remoteVideo" class="video-remote" playsinline="playsinline" autoplay="autoplay" muted="muted"
+        <video id="remoteVideo" class="video-remote" playsinline="playsinline" autoplay="autoplay"
           loop="loop">
           <source src="https://storage.googleapis.com/coverr-main/mp4/Mt_Baker.mp4" type="video/mp4">
         </video>
@@ -213,8 +213,10 @@
                   class="fa fa-microphone-slash"></i></button>
               <button id="video-off" class="min-btn" data-toggle="tooltip" data-placement="top" title="Video On/Off"><i
                   class="fa fa-pause"></i></button>
+              {% if doctor %}
               <button id="presc-btn" class="min-btn" data-toggle="tooltip" data-placement="top" title="Prescribe"><i
                   class="fa fa-pencil-square-o"></i></button>
+              {% endif %}
               <button id="end" class="min-btn-red " data-toggle="tooltip" data-placement="top" title="End"><i
                   class="fa fa-stop"></i></button>
             </div>
@@ -223,7 +225,7 @@
           <div class="d-flex h-100 text-center align-items-right" style="z-index: 99;">
             <div id="drag-area" class="w-100" style="z-index: 99;">
               <!-- Local Video -->
-              <video id="localVideo" class="video-local" playsinline="playsinline" autoplay="autoplay" muted="muted"
+              <video id="localVideo" class="video-local" playsinline="playsinline" autoplay="autoplay"
                 loop="loop">
                 <source src="https://storage.googleapis.com/coverr-main/mp4/Mt_Baker.mp4" type="video/mp4">
               </video>
@@ -281,10 +283,10 @@
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
     integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
   </script>
-  <script src="https://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"
-    integrity="sha512-0bEtK0USNd96MnO4XhH8jhv3nyRF0eK87pJke6pkYf3cM0uDIhNJy9ltuzqgypoIFXw3JSuiy04tVk4AjpZdZw=="
-    crossorigin="anonymous"></script>
+<!--  <script src="https://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>-->
+<!--  <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"-->
+<!--    integrity="sha512-0bEtK0USNd96MnO4XhH8jhv3nyRF0eK87pJke6pkYf3cM0uDIhNJy9ltuzqgypoIFXw3JSuiy04tVk4AjpZdZw=="-->
+<!--    crossorigin="anonymous"></script>-->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
     integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
   </script>
@@ -316,7 +318,13 @@
   <script>
 
   </script>
+<script src="https://www.gstatic.com/firebasejs/3.1.0/firebase.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+
 <script src="{% static 'script.js' %}"></script>
+
 </body>
 
 </html>

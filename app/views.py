@@ -441,10 +441,13 @@ def video_calling(request,slug):
     appointment = Appointments.objects.get(slug=slug)
     now = datetime.datetime.utcnow().replace(tzinfo=utc)
     delta = appointment.time - now
-    print(delta)
+    if request.user.is_authenticated:
+        doctor = False
+    else:
+        doctor = True
     minutes = (delta.seconds//60)
     if minutes < 20 or now > appointment.time:
-        return render(request,"videocalling.html")
+        return render(request,"videocalling.html",{"doctor":doctor})
     return redirect("/patient-dashboard/?not_time=true")
 
 def request_video_calling(request):

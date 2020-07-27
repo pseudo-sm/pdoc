@@ -1,3 +1,15 @@
+var firebaseConfig = {
+    apiKey: "AIzaSyCNtuLp9_8dTKGHGnYTQDvtc4sjdG6Al8Q",
+    authDomain: "pdochealth.firebaseapp.com",
+    databaseURL: "https://pdochealth.firebaseio.com",
+    projectId: "pdochealth",
+    storageBucket: "pdochealth.appspot.com",
+    messagingSenderId: "781169590792",
+    appId: "1:781169590792:web:247b3e1249dac8e0e8c7bd",
+    measurementId: "G-56VD6RED0L"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
 if (!location.hash) {
   location.hash = location.hash = window.location.pathname.split("/")[window.location.pathname.split("/").length-1];
 }
@@ -20,6 +32,17 @@ function onSuccess() {};
 function onError(error) {
   console.error(error);
 };
+
+var database = firebase.database();
+database.ref('meeting/' + roomHash).set({"summary":"Diagnosis summary"});
+database.ref('meeting/' + roomHash).set({"medicines":"medicines"});
+ref = database.ref("meeting/"+roomHash);
+ref.on("child_changed", function(snapshot) {
+  console.log(snapshot.val());
+}, function (errorObject) {
+  console.log("The read failed: " + errorObject.code);
+});
+
 
 drone.on('open', error => {
   if (error) {
@@ -74,7 +97,7 @@ function startWebRTC(isOfferer) {
 
   navigator.mediaDevices.getUserMedia({
     audio: true,
-    video: true,
+    video: true
   }).then(stream => {
     // Display your local video in #localVideo element
     localVideo.srcObject = stream;
@@ -130,3 +153,10 @@ $("#end").click(function(){
 
   }
 })
+
+function sendSignalingMessage(message) {
+  drone.publish({
+    room: roomName,
+    message
+  });
+}
