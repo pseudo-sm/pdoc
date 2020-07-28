@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+
+>>>>>>> backend
 var firebaseConfig = {
     apiKey: "AIzaSyCNtuLp9_8dTKGHGnYTQDvtc4sjdG6Al8Q",
     authDomain: "pdochealth.firebaseapp.com",
@@ -34,6 +38,7 @@ function onError(error) {
 };
 
 var database = firebase.database();
+<<<<<<< HEAD
 database.ref('meeting/' + roomHash).set({"summary":"Diagnosis summary"});
 database.ref('meeting/' + roomHash).set({"medicines":"medicines"});
 ref = database.ref("meeting/"+roomHash);
@@ -44,6 +49,16 @@ ref.on("child_changed", function(snapshot) {
 });
 
 
+=======
+ref = database.ref("meeting/"+roomHash+"/");
+$("#summary").keyup(function(){
+    summary = $(this).val();
+    ref.update({"summary":summary})
+});
+
+
+
+>>>>>>> backend
 drone.on('open', error => {
   if (error) {
     return console.error(error);
@@ -160,3 +175,120 @@ function sendSignalingMessage(message) {
     message
   });
 }
+<<<<<<< HEAD
+=======
+
+$(document).on("change",'.medicine',function(){
+    medicine_name = $(this).val();
+    m = $(this).parent().parent().find(".med-time").children(".M-medicine").is(':checked');
+    l = $(this).parent().parent().find(".med-time").children(".L-medicine").is(':checked');
+    s = $(this).parent().parent().find(".med-time").children(".S-medicine").is(':checked');
+    d = $(this).parent().parent().find(".med-time").children(".D-medicine").is(':checked');
+    aftFood = $(this).parent().parent().find(".aftFood-medicine").is(':checked');
+    befFood = $(this).parent().parent().find(".befFood-medicine").is(':checked');
+    quantity = $(this).parent().parent().find(".quantity-medicine").val();
+    period = $(this).parent().parent().find(".period-medicine").val();
+    remark = $(this).parent().parent().find(".remark-medicine").val();
+    medicine_object = {[medicine_name] : {"m":m,"l":l,"s":s,"d":"d","aftFood":aftFood,"befFood":befFood,"quantity":quantity,"period":period,"remark":remark}}
+    database.ref("meeting/"+roomHash+"/medicines/").update(medicine_object);
+});
+
+if(doctor!="True"){
+database.ref("meeting/"+roomHash).on("value", function(snapshot) {
+    data = snapshot.val()
+    summary = data["summary"];
+    console.log(data["medicines"]);
+    for(medicine in data["medicines"])
+    {
+
+        aftFood = data["medicines"][medicine]["aftFood"];
+        befFood = data["medicines"][medicine]["befFood"];
+        d = data["medicines"][medicine]["d"];
+        l = data["medicines"][medicine]["l"];
+        s = data["medicines"][medicine]["s"];
+        m = data["medicines"][medicine]["m"];
+        quantity = data["medicines"][medicine]["quantity"]
+        period = data["medicines"][medicine]["period"]
+        remark = data["medicines"][medicine]["remark"]
+        temp = '<div class="row no-gutters mt-1 mb-1 med-det"> \
+                                    <div class="col-md-4 col-sm-12 my-auto"> \
+                                        <input type="text" class="form-control medicine" value="'+medicine+'" placeholder="Enter Medicine Name"> \
+                                    </div> \
+                                    <div class="col-md-4 col-sm-12">M-<input type="checkbox" name="" id="" class="M-medicine">&nbsp;&nbsp;'
+
+        temp = temp + 'L-<input type="checkbox" name="" id="" class="L-medicine"';
+        if (l != false){temp = temp+'checked'};
+        temp = temp + '>&nbsp;&nbsp;'
+        temp = temp + 'S-<input type="checkbox" name="" id="" class="S-medicine"'
+        if (s != false){temp = temp+'checked'};
+        temp = temp + '>&nbsp;&nbsp;'
+        temp = temp + 'D-<input type="checkbox" name="" id="" class="D-medicine"'
+        if (d != false){temp = temp+'checked'};
+        temp = temp + '><br><div class="custom-control custom-radio custom-control-inline"> \
+        <input type="radio" id="customRadioInline1" name="customRadioInline1" class="custom-control-input aftFood-medicine" '
+        if (aftFood != false){temp = temp+'checked'};
+        temp = temp + '><label class="custom-control-label" for="customRadioInline1">Aft Food</label> \
+        </div> \
+        <div class="custom-control custom-radio custom-control-inline">'
+        temp = temp + '<input type="radio" id="customRadioInline2" name="customRadioInline1" class="custom-control-input befFood-medicine"'
+        if (befFood != false){temp = temp+'checked'};
+        temp = temp+'><label class="custom-control-label" for="customRadioInline2">Bef Food</label> \
+    </div> \
+    </div> \
+    <div class="col-6 col-md-2 col-sm-6 my-auto"> \
+        <input type="text" class="form-control quantity-medicine" value="'+quantity+'" placeholder="Quantity"> \
+    </div> \
+    <div class="col-6 col-md-2 col-sm-6 col-xs-3 my-auto"> \
+        <input type="text" class="form-control period-medicine" value="'+period+'" placeholder="Period"> \
+    </div> \
+    <div class="col-md-12 col-sm-12 my-auto"> \
+        <input type="text" class="form-control remark-medicine" value="'+remark+'" placeholder="Remark"> \
+    </div> \
+    </div> \
+                                    '
+        $(".med-repo").append(temp);
+    }
+    console.log(summary);
+    $("textarea#summary-patient").val(summary);
+
+}, function (errorObject) {
+  console.log("The read failed: " + errorObject.code);
+});
+
+}
+
+$("#prescribe-submit").click(function(){
+    console.log('clicked!!!!');
+    summary = $("#summary").val();
+    medicines = [];
+    $('.medicine').each(function() {
+        medicine = $(this).val();
+        m = $(this).parent().parent().find(".med-time").children(".M-medicine").is(':checked');
+        l = $(this).parent().parent().find(".med-time").children(".L-medicine").is(':checked');
+        s = $(this).parent().parent().find(".med-time").children(".S-medicine").is(':checked');
+        d = $(this).parent().parent().find(".med-time").children(".D-medicine").is(':checked');
+        aftFood = $(this).parent().parent().find(".aftFood-medicine").is(':checked');
+        befFood = $(this).parent().parent().find(".befFood-medicine").is(':checked');
+        quantity = $(this).parent().parent().find(".quantity-medicine").val();
+        period = $(this).parent().parent().find(".period-medicine").val();
+        remark = $(this).parent().parent().find(".remark-medicine").val();
+
+        medicines.push({"medicine":medicine,"m":m,"l":l,"s":s,"d":d,"aftFood":aftFood,"befFood":befFood,"quantity":quantity,"period":period,"remark":remark});
+        });
+
+        $.ajax({
+        url: "/prescription-submit/",
+        data : {
+            'summary':summary,
+            'medicines':JSON.stringify(medicines),
+            'roomhash':roomHash,
+        },
+        type: 'GET',
+        dataType: 'json',
+        success: function(res) {
+            alert("Submitted!!");
+        }
+    });
+
+});
+>>>>>>> backend

@@ -36,7 +36,7 @@ class Area(models.Model):
         return self.name
 
 class Doctor(models.Model):
-
+    practice_id = models.CharField(max_length=100,default="null")
     name = models.CharField(max_length=200)
     address = models.TextField()
     education = models.TextField()
@@ -167,6 +167,7 @@ class Appointments(models.Model):
     time = models.DateTimeField(null=True,blank=True)
     slug = models.SlugField(auto_created=True)
     razor_pay_order_id = models.CharField(max_length=100,null=True,blank=True)
+    count = models.CharField(max_length=10,default=0)
     def __str__(self):
         return str(self.id)
 
@@ -185,3 +186,17 @@ class ParamedicBookings(models.Model):
         return str(self.id)
 
 
+class Prescription(models.Model):
+
+    appointment = models.ForeignKey(Appointments,on_delete=models.CASCADE)
+    date = models.DateField(auto_now=True)
+    medicine = models.CharField(max_length=300)
+    morning = models.BooleanField(max_length=10)
+    lunch = models.BooleanField(max_length=10)
+    evening = models.BooleanField(max_length=10)
+    dinner = models.BooleanField(max_length=10)
+    afterFood = models.BooleanField(max_length=300)
+    period = models.CharField(max_length=300)
+    quantity = models.CharField(max_length=300)
+    remarks = models.TextField()
+    summary = models.TextField()

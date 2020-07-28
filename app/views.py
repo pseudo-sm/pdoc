@@ -1,13 +1,16 @@
 import random
 import string
-
+import os
+from django.views.static import serve
 from django.conf import settings
 from django.core.mail import EmailMessage
 from django.shortcuts import render, redirect
-from django.http import JsonResponse
+from django.http import JsonResponse, Http404
 from django.utils.timezone import utc
 import razorpay
 from django.views.decorators.csrf import csrf_exempt
+from docx.shared import Cm
+from docxtpl import DocxTemplate
 
 from .models import *
 import datetime
@@ -234,7 +237,7 @@ def signup_customer_action(request):
     new_customer = Customer(name=name,phone=phone,query=query,user_id=user,email=email,password=password)
     new_customer.save()
     data = {
-        "amount" : 5000,
+        "amount" : 3000,
         "currency" : "INR",
         "receipt" : "1",
         "payment_capture" : 1,
@@ -414,13 +417,21 @@ def patient_dashboard(request):
     user = User.objects.get(id=request.user.id)
     customer = Customer.objects.get(user_id=user)
     scheduled_appointments = Appointments.objects.filter(customer=customer,status="1")
+    prescriptions = scheduled_appointments.filter(count__gte=1)
     scheduled_appointments=scheduled_appointments.values("doctor__name","doctor__type__name","doctor__hospital","time","slug")
+    shortlisted_scheduled_appointments = []
+    for appointment in scheduled_appointments:
+        now = datetime.datetime.utcnow().replace(tzinfo=utc)
+        delta = now - appointment["time"]
+        print("timedelta : ------------------------------")
+        if delta.days < 30 :
+            shortlisted_scheduled_appointments.append(appointment)
     vdoctor = len(list(Doctor.objects.filter(videoconferencing=True)))
     tdoctor = len(list(Doctor.objects.filter(telecalling=True)))
     pmconsultancy = len(list(Paramedics.objects.filter()))
     if not_yet is not None:
-        return render(request,"customer/dashboard.html",{"p":"true","vdoctor":vdoctor,"tdoctor":tdoctor,"pmconsultancy":pmconsultancy,"doctor_types":doctor_types,"paramedic_types":paramedic_types,"scheduled_appointments":scheduled_appointments,"status":status,"logout":True})
-    return render(request,"customer/dashboard.html",{"vdoctor":vdoctor,"tdoctor":tdoctor,"pmconsultancy":pmconsultancy,"doctor_types":doctor_types,"paramedic_types":paramedic_types,"scheduled_appointments":scheduled_appointments,"status":status,"logout":True})
+        return render(request,"customer/dashboard.html",{"p":"true","vdoctor":vdoctor,"tdoctor":tdoctor,"pmconsultancy":pmconsultancy,"doctor_types":doctor_types,"paramedic_types":paramedic_types,"scheduled_appointments":shortlisted_scheduled_appointments,"status":status,"logout":True,"prescriptions":prescriptions})
+    return render(request,"customer/dashboard.html",{"vdoctor":vdoctor,"tdoctor":tdoctor,"pmconsultancy":pmconsultancy,"doctor_types":doctor_types,"paramedic_types":paramedic_types,"scheduled_appointments":shortlisted_scheduled_appointments,"status":status,"logout":True,"prescriptions":prescriptions})
 
 def blog_list(request):
     articles = Article.objects.all()
@@ -441,6 +452,10 @@ def video_calling(request,slug):
     appointment = Appointments.objects.get(slug=slug)
     now = datetime.datetime.utcnow().replace(tzinfo=utc)
     delta = appointment.time - now
+<<<<<<< HEAD
+=======
+    print(delta)
+>>>>>>> backend
     if request.user.is_authenticated:
         doctor = False
     else:
@@ -497,6 +512,7 @@ def book_appointment(request):
         return JsonResponse({"order_id":order_id},safe=False)
     else:
         return JsonResponse(False,safe=False)
+
 def book_appointment_paramedic(request):
     if request.user.is_authenticated:
         paramedic = request.GET.get("paramedic")
@@ -534,7 +550,7 @@ def done_appointment(request):
 def appointment_close(request):
     appointment = request.GET.get("appointment")
     appointment = Appointments.objects.get(slug=appointment)
-    appointment.status="2"
+    appointment.count=int(appointment.count)+1
     appointment.save()
     return JsonResponse(True,safe=False)
 
@@ -561,3 +577,71 @@ def email_notify(patient,doctor,phone):
     email_msg = EmailMessage("Important!! PDOC - You Have a New Appointment Request", body, settings.EMAIL_HOST_USER, ["saswathcommand@gmail.com"])
     email_msg.send(fail_silently=False)
     return JsonResponse(True,safe=False)
+
+def prescription_submit(request):
+    medicines = request.GET.get("medicines")
+    summary = request.GET.get("summary")
+    roomhash = request.GET.get("roomhash")
+    medicines = json.loads(medicines)
+    appointment = Appointments.objects.get(slug=roomhash)
+    Prescription.objects.filter(appointment=appointment).delete()
+    for medicine in medicines:
+        prescription = Prescription(appointment=appointment,medicine=medicine["medicine"],morning=medicine["m"],lunch=medicine["l"],evening=medicine["s"],dinner=medicine["d"],afterFood=medicine["aftFood"],period=medicine["period"],quantity=medicine["quantity"],remarks=medicine["remark"],summary=summary)
+        prescription.save()
+    return JsonResponse(True,safe=False)
+
+def create_prescription_document(request,appointment):
+    appointment = Appointments.objects.get(slug=appointment)
+    medicines = []
+    prescriptions = Prescription.objects.filter(appointment=appointment)
+    sl = 1
+    doctor_id = appointment.doctor.practice_id
+    for prescription in prescriptions:
+        temp = {
+                    "sl":str(sl),
+                    "name":prescription.medicine,
+                    "remarks":prescription.remarks,
+                    "summary" : prescription.summary,
+                }
+
+        if prescription.afterFood:
+            food = "After Food"
+        else:
+            food = "Before Food"
+        if prescription.morning:
+            temp["morning"] = food
+        else:
+            temp["morning"] = "no"
+        if prescription.lunch:
+            temp["lunch"] = food
+        else:
+            temp["lunch"] = "no"
+        if prescription.evening:
+            temp["evening"] = food
+        else:
+            temp["evening"] = "no"
+        if prescription.dinner:
+            temp["dinner"] = food
+        else:
+            temp["dinner"] = "no"
+        medicines.append(temp)
+        sl = sl+1
+    context = {
+
+        'date': prescriptions[0].date,
+        'doctor_id': doctor_id,
+        'medicines': medicines
+    }
+    count = appointment.count
+    tpl = DocxTemplate("app/template.docx")
+    tpl.render(context)
+    name = "prescription-"+str(appointment.id)+"-"+str(count)+".docx"
+    filepath = 'app/prescriptions/'+name
+    tpl.save(filepath)
+    if os.path.exists(filepath):
+        with open(filepath, 'rb') as fh:
+            response = HttpResponse(fh.read(), content_type="application/vnd.ms-docx")
+            response['Content-Disposition'] = 'inline; filename=' + os.path.basename(filepath)
+            return response
+    raise Http404
+
