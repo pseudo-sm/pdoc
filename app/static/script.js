@@ -186,13 +186,12 @@ $(document).on("change",'.medicine',function(){
 });
 
 if(doctor!="True"){
-database.ref("meeting/"+roomHash).on("value", function(snapshot) {
+    database.ref("meeting/"+roomHash).on("value", function(snapshot) {
     data = snapshot.val()
     summary = data["summary"];
     console.log(data["medicines"]);
     for(medicine in data["medicines"])
     {
-
         aftFood = data["medicines"][medicine]["aftFood"];
         befFood = data["medicines"][medicine]["befFood"];
         d = data["medicines"][medicine]["d"];
@@ -202,46 +201,24 @@ database.ref("meeting/"+roomHash).on("value", function(snapshot) {
         quantity = data["medicines"][medicine]["quantity"]
         period = data["medicines"][medicine]["period"]
         remark = data["medicines"][medicine]["remark"]
-        temp = '<div class="row no-gutters mt-1 mb-1 med-det"> \
-                                    <div class="col-md-4 col-sm-12 my-auto"> \
-                                        <input type="text" class="form-control medicine" value="'+medicine+'" placeholder="Enter Medicine Name"> \
-                                    </div> \
-                                    <div class="col-md-4 col-sm-12">M-<input type="checkbox" name="" id="" class="M-medicine">&nbsp;&nbsp;'
-
-        temp = temp + 'L-<input type="checkbox" name="" id="" class="L-medicine"';
-        if (l != false){temp = temp+'checked'};
-        temp = temp + '>&nbsp;&nbsp;'
-        temp = temp + 'S-<input type="checkbox" name="" id="" class="S-medicine"'
-        if (s != false){temp = temp+'checked'};
-        temp = temp + '>&nbsp;&nbsp;'
-        temp = temp + 'D-<input type="checkbox" name="" id="" class="D-medicine"'
-        if (d != false){temp = temp+'checked'};
-        temp = temp + '><br><div class="custom-control custom-radio custom-control-inline"> \
-        <input type="radio" id="customRadioInline1" name="customRadioInline1" class="custom-control-input aftFood-medicine" '
-        if (aftFood != false){temp = temp+'checked'};
-        temp = temp + '><label class="custom-control-label" for="customRadioInline1">Aft Food</label> \
-        </div> \
-        <div class="custom-control custom-radio custom-control-inline">'
-        temp = temp + '<input type="radio" id="customRadioInline2" name="customRadioInline1" class="custom-control-input befFood-medicine"'
-        if (befFood != false){temp = temp+'checked'};
-        temp = temp+'><label class="custom-control-label" for="customRadioInline2">Bef Food</label> \
-    </div> \
-    </div> \
-    <div class="col-6 col-md-2 col-sm-6 my-auto"> \
-        <input type="text" class="form-control quantity-medicine" value="'+quantity+'" placeholder="Quantity"> \
-    </div> \
-    <div class="col-6 col-md-2 col-sm-6 col-xs-3 my-auto"> \
-        <input type="text" class="form-control period-medicine" value="'+period+'" placeholder="Period"> \
-    </div> \
-    <div class="col-md-12 col-sm-12 my-auto"> \
-        <input type="text" class="form-control remark-medicine" value="'+remark+'" placeholder="Remark"> \
-    </div> \
-    </div> \
-                                    '
+        temp = 'Medicine Name:'+medicine
+        temp = '<li><strong>'+medicine+'</strong><br><strong>Doses:</strong> '
+        if (m != false){temp = temp+'Morning'};
+        temp = temp + ', ';
+        if (l != false){temp = temp+'Lunch'};
+        temp = temp + ', ';
+        if (s != false){temp = temp+'Supper'};
+        temp = temp + ', ';
+        if (d != false){temp = temp+'Dinner'};
+        temp = temp + ' <strong>|</strong> ';
+        if (aftFood != false){temp = temp+'After Food'};
+        if (befFood != false){temp = temp+'Before Food'};
+        if (remark != undefined){temp = temp+'<br><strong>Remark: </strong>'+remark};
+        temp = temp + '.</li>';
         $(".med-repo").append(temp);
     }
     console.log(summary);
-    $("textarea#summary-patient").val(summary);
+    $("#summary-patient").text(summary);
 
 }, function (errorObject) {
   console.log("The read failed: " + errorObject.code);

@@ -167,6 +167,7 @@
       border-radius: 10px;
     }
     #prescribe-patient {
+      display: none;
       position: absolute;
       z-index: 1019;
       background-color: #f1f1f1;
@@ -197,6 +198,12 @@
       width: 100%;
       border:0px
     }
+    .pres-close-patient{
+      border: none;
+      float: right;
+      color: #de2626;
+      background-color: transparent;
+    }
     .pres-close{
       border: none;
       float: right;
@@ -215,6 +222,11 @@
         border-radius: 5px;
       }
       #prescribe{
+        width: 100% !important;
+        align-self: right;
+        top: 0%;
+      }
+      #prescribe-patient{
         width: 100% !important;
         align-self: right;
         top: 0%;
@@ -252,6 +264,10 @@
               <button id="presc-btn" class="min-btn" data-toggle="tooltip" data-placement="top" title="Prescribe"><i
                   class="fa fa-pencil-square-o"></i></button>
               {% endif %}
+              {% if doctor != True %}
+              <button id="presc-btn-patient" class="min-btn" data-toggle="tooltip" data-placement="top" title="My Prescription"><i
+                class="fa fa-book"></i></button>
+              {% endif %}
               <button id="end" class="min-btn-red " data-toggle="tooltip" data-placement="top" title="End"><i
                   class="fa fa-stop"></i></button>
             </div>
@@ -267,11 +283,33 @@
 <!--            Experiment-->
               {% if doctor != True %}
               <div id="prescribe-patient">
-                <div id="prescribeheader-patient">Prescribe<button class="pres-close"><i class="fa fa-times" aria-hidden="true"></i></button></div>
-                <textarea class="tinyarea" name="tiny" id="summary-patient" cols="30" rows="10" placeholder="Prescribe here"></textarea>
+                <div id="prescribeheader-patient">My Prescription<button class="pres-close-patient"><i class="fa fa-times" aria-hidden="true"></i></button></div>
                 <div class="container-fluid pt-2 pb-3 med-add">
-                  <div class="med-repo">
+                  <div class="row no-gutters text-left">
+                    <div class="col-6 mx-auto my-auto">
+                      <h1>PDOC</h1>
+                      EDOC Medical Services
+                    </div>
+                    <div class="col-6 ">
+                      Name: <strong>Dr. Name Title</strong><br>
+                      Designation: <strong>xxxxxxx</strong><br>
+                      Phone No: <strong>xxxxxxx</strong>
+                    </div>
 
+                  </div><hr>
+                  <div class="row no-gutters text-left mt-1 mb-2" >
+                    <div class="col-12 mx-auto my-auto">
+                     <p ><pre id="summary-patient"></pre></p>
+                    </div>
+                  </div>
+                  <div class="row no-gutters text-left mt-1 mb-2" >
+                    <div class="col-12 mx-auto my-auto">
+                      <div >
+                        <ol class="med-repo">
+
+                        </ol>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -343,6 +381,7 @@
     $(function () {
       if(window.matchMedia("(min-width: 767px)").matches){
         $("#prescribe").draggable();
+        $("#prescribe-patient").draggable();
       }
 
       $("#localVideo").draggable();
@@ -356,6 +395,12 @@
     });
     $(".pres-close").click(function () {
       $("#prescribe").hide();
+    });
+    $("#presc-btn-patient").click(function () {
+      $("#prescribe-patient").show();
+    });
+    $(".pres-close-patient").click(function () {
+      $("#prescribe-patient").hide();
     });
   </script>
   <script>
