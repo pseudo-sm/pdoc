@@ -268,7 +268,7 @@ $("#prescribe-submit").click(function(){
         type: 'GET',
         dataType: 'json',
         success: function(res) {
-            console.log(res);
+            alert("Submitted!!");
         }
     });
 

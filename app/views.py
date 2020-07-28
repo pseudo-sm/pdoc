@@ -581,8 +581,9 @@ def prescription_submit(request):
     roomhash = request.GET.get("roomhash")
     medicines = json.loads(medicines)
     appointment = Appointments.objects.get(slug=roomhash)
+    Prescription.objects.filter(appointment=appointment).delete()
     for medicine in medicines:
-        prescription = Prescription(appointment=appointment,medicine=medicine["medicine"],morning=medicine["m"],lunch=medicine["l"],evening=medicine["s"],dinner=medicine["d"],afterFood=medicine["aftFood"],period=medicine["period"],quantity=medicine["quantity"],remarks=medicine["remark"])
+        prescription = Prescription(appointment=appointment,medicine=medicine["medicine"],morning=medicine["m"],lunch=medicine["l"],evening=medicine["s"],dinner=medicine["d"],afterFood=medicine["aftFood"],period=medicine["period"],quantity=medicine["quantity"],remarks=medicine["remark"],summary=summary)
         prescription.save()
     return JsonResponse(True,safe=False)
 
