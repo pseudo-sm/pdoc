@@ -170,7 +170,7 @@ function sendSignalingMessage(message) {
   });
 }
 
-$(document).on("click",'.pushMed',function(){
+$(document).on("change",'.pushMed',function(){
     medicine_name = $(this).val();
     m = $(this).parent().parent().find(".med-time").children(".M-medicine").is(':checked');
     l = $(this).parent().parent().find(".med-time").children(".L-medicine").is(':checked');
@@ -201,8 +201,7 @@ if(doctor!="True"){
         quantity = data["medicines"][medicine]["quantity"]
         period = data["medicines"][medicine]["period"]
         remark = data["medicines"][medicine]["remark"]
-        temp = 'Medicine Name:'+medicine
-        temp = '<li><strong>'+medicine+'</strong><br><strong>Doses:</strong> '
+        temp = '<li><strong>'+medicine+'</strong><br><strong>Doses:</strong> ';
         if (m != false){temp = temp+'Morning'};
         temp = temp + ', ';
         if (l != false){temp = temp+'Lunch'};
@@ -218,7 +217,7 @@ if(doctor!="True"){
         $(".med-repo").append(temp);
     }
     console.log(summary);
-    $("#summary-patient").text(summary);
+    $("#summary-patient").html(summary);
 
 }, function (errorObject) {
   console.log("The read failed: " + errorObject.code);
