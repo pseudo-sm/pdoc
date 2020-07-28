@@ -452,10 +452,7 @@ def video_calling(request,slug):
     appointment = Appointments.objects.get(slug=slug)
     now = datetime.datetime.utcnow().replace(tzinfo=utc)
     delta = appointment.time - now
-<<<<<<< HEAD
-=======
     print(delta)
->>>>>>> backend
     if request.user.is_authenticated:
         doctor = False
     else:

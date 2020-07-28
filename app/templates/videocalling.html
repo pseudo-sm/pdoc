@@ -21,24 +21,28 @@
 
     #vd-head {
       position: relative;
-      background-color: black;
+      background: url("{% static 'connecting.png' %}");
       height: 100vh;
       width: 100%;
       overflow: hidden;
-      object-fit: cover;
+      object-fit: contain;
+      object-position: center;
     }
 
     #vd-head .video-remote {
       position: absolute;
       top: 50%;
       left: 50%;
-      min-width: 100%;
+      min-width: auto;
       min-height: 100%;
       width: auto;
       height: auto;
       z-index: 0;
-      -webkit-transform: translateX(-50%) translateY(-50%);
-      transform: translateX(-50%) translateY(-50%);
+      transform:  translateX(-50%) translateY(-50%);
+      -webkit-transform: translateX(-50%) translateY(-50%); /* Safari and Chrome */
+      -moz-transform: translateX(-50%) translateY(-50%);
+      /* -webkit-transform: translateX(-50%) translateY(-50%); */
+      /* transform: translateX(-50%) translateY(-50%); */
     }
 
     #vd-head .container {
@@ -59,7 +63,9 @@
 
     @media (pointer: coarse) and (hover: none) {
       #vd-head {
-        background: url("https://source.unsplash.com/XT5OInaElMw/1600x900") transparent no-repeat center center scroll;
+        background: url("{% static 'connecting.png' %}") transparent no-repeat center center scroll;
+        object-position: center;
+        object-fit: contain;
       }
 
       #vd-head video {
@@ -124,19 +130,24 @@
 
     .video-local {
       width: 20%;
-      background-color: rgb(255, 255, 255);
-      border: 5px solid #26aade2a;
+      background-image: url("{% static 'connecting.png' %}");
+      object-fit: contain;
+      object-position: center;
+      border: 5px solid #26aadef3;
       border-radius: 15px;
       touch-action: none;
       user-select: none;
       margin: 3%;
+      transform: rotateY(180deg);
+      -webkit-transform:rotateY(180deg); /* Safari and Chrome */
+      -moz-transform:rotateY(180deg);
     }
 
     .video-local:hover {
       cursor: move;
       box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5);
-      -webkit-transform: scale(1.1);
-      transform: scale(1.1);
+      -webkit-transform: scale(1.1) rotateY(180deg);
+      transform: scale(1.1) rotateY(180deg);
     }
 
     #prescribe {
@@ -223,7 +234,7 @@
         <div class="overlay"></div>
         <video id="remoteVideo" class="video-remote" playsinline="playsinline" autoplay="autoplay"
           loop="loop">
-          <source src="https://storage.googleapis.com/coverr-main/mp4/Mt_Baker.mp4" type="video/mp4">
+          <source src="{% static 'connecting.png' %}" type="video/mp4">
         </video>
         <div class="container-fluid h-100 p-0">
           <!-- Buttons -->
@@ -247,7 +258,7 @@
               <!-- Local Video -->
               <video id="localVideo" class="video-local" playsinline="playsinline" autoplay="autoplay"
                 loop="loop">
-                <source src="https://storage.googleapis.com/coverr-main/mp4/Mt_Baker.mp4" type="video/mp4">
+                <source src="{% static 'connecting.png' %}" type="video/mp4">
               </video>
 <!--            Experiment-->
               {% if doctor != True %}
@@ -310,18 +321,11 @@
   </div>
   <!-- Optional JavaScript -->
   <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-<<<<<<< HEAD
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
     integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
   </script>
-=======
-<!--  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">-->
-<!--  </script>-->
->>>>>>> backend
-<!--  <script src="https://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>-->
-<!--  <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"-->
-<!--    integrity="sha512-0bEtK0USNd96MnO4XhH8jhv3nyRF0eK87pJke6pkYf3cM0uDIhNJy9ltuzqgypoIFXw3JSuiy04tVk4AjpZdZw=="-->
-<!--    crossorigin="anonymous"></script>-->
+ <script src="https://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"integrity="sha512-0bEtK0USNd96MnO4XhH8jhv3nyRF0eK87pJke6pkYf3cM0uDIhNJy9ltuzqgypoIFXw3JSuiy04tVk4AjpZdZw=="crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
     integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
   </script>
@@ -357,13 +361,10 @@
 
 <!-- TODO: Add SDKs for Firebase products that you want to use
      https://firebase.google.com/docs/web/setup#available-libraries -->
-<<<<<<< HEAD
 
-=======
 <script>
   var doctor = '{{doctor}}';
 </script>
->>>>>>> backend
 <script src="{% static 'script.js' %}"></script>
 
 </body>

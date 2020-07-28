@@ -1,7 +1,4 @@
-<<<<<<< HEAD
-=======
 
->>>>>>> backend
 var firebaseConfig = {
     apiKey: "AIzaSyCNtuLp9_8dTKGHGnYTQDvtc4sjdG6Al8Q",
     authDomain: "pdochealth.firebaseapp.com",
@@ -38,7 +35,6 @@ function onError(error) {
 };
 
 var database = firebase.database();
-<<<<<<< HEAD
 database.ref('meeting/' + roomHash).set({"summary":"Diagnosis summary"});
 database.ref('meeting/' + roomHash).set({"medicines":"medicines"});
 ref = database.ref("meeting/"+roomHash);
@@ -49,7 +45,6 @@ ref.on("child_changed", function(snapshot) {
 });
 
 
-=======
 ref = database.ref("meeting/"+roomHash+"/");
 $("#summary").keyup(function(){
     summary = $(this).val();
@@ -58,7 +53,6 @@ $("#summary").keyup(function(){
 
 
 
->>>>>>> backend
 drone.on('open', error => {
   if (error) {
     return console.error(error);
@@ -175,8 +169,6 @@ function sendSignalingMessage(message) {
     message
   });
 }
-<<<<<<< HEAD
-=======
 
 $(document).on("change",'.medicine',function(){
     medicine_name = $(this).val();
@@ -291,4 +283,3 @@ $("#prescribe-submit").click(function(){
     });
 
 });
->>>>>>> backend
