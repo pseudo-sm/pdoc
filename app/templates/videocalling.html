@@ -7,6 +7,7 @@
   <title>Title</title>
   <!-- Required meta tags -->
   <meta charset="utf-8">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
@@ -150,8 +151,27 @@
       width: 40%;
       border-radius: 10px;
     }
+    #prescribe-patient {
+      position: absolute;
+      z-index: 1019;
+      background-color: #f1f1f1;
+      text-align: center;
+      border: 1px solid #d3d3d3;
+      float: right !important;
+      top:1%;
+      width: 40%;
+      border-radius: 10px;
+    }
 
     #prescribeheader {
+      padding: 10px;
+      cursor: move;
+      z-index: 1029;
+      background-color: #cccccc6c;
+      color: rgb(0, 0, 0);
+    }
+
+    #prescribeheader-patient {
       padding: 10px;
       cursor: move;
       z-index: 1029;
@@ -201,7 +221,7 @@
     <div class="row no-gutters">
       <header id="vd-head">
         <div class="overlay"></div>
-        <video id="remoteVideo" class="video-remote" playsinline="playsinline" autoplay="autoplay" muted="muted"
+        <video id="remoteVideo" class="video-remote" playsinline="playsinline" autoplay="autoplay"
           loop="loop">
           <source src="https://storage.googleapis.com/coverr-main/mp4/Mt_Baker.mp4" type="video/mp4">
         </video>
@@ -213,8 +233,10 @@
                   class="fa fa-microphone-slash"></i></button>
               <button id="video-off" class="min-btn" data-toggle="tooltip" data-placement="top" title="Video On/Off"><i
                   class="fa fa-pause"></i></button>
+              {% if doctor %}
               <button id="presc-btn" class="min-btn" data-toggle="tooltip" data-placement="top" title="Prescribe"><i
                   class="fa fa-pencil-square-o"></i></button>
+              {% endif %}
               <button id="end" class="min-btn-red " data-toggle="tooltip" data-placement="top" title="End"><i
                   class="fa fa-stop"></i></button>
             </div>
@@ -223,51 +245,61 @@
           <div class="d-flex h-100 text-center align-items-right" style="z-index: 99;">
             <div id="drag-area" class="w-100" style="z-index: 99;">
               <!-- Local Video -->
-              <video id="localVideo" class="video-local" playsinline="playsinline" autoplay="autoplay" muted="muted"
+              <video id="localVideo" class="video-local" playsinline="playsinline" autoplay="autoplay"
                 loop="loop">
                 <source src="https://storage.googleapis.com/coverr-main/mp4/Mt_Baker.mp4" type="video/mp4">
               </video>
+<!--            Experiment-->
+              {% if doctor != True %}
+              <div id="prescribe-patient">
+                <div id="prescribeheader-patient">Prescribe<button class="pres-close"><i class="fa fa-times" aria-hidden="true"></i></button></div>
+                <textarea class="tinyarea" name="tiny" id="summary-patient" cols="30" rows="10" placeholder="Prescribe here"></textarea>
+                <div class="container-fluid pt-2 pb-3 med-add">
+                  <div class="med-repo">
 
+                  </div>
+                </div>
+              </div>
+              {% endif %}
+<!--              Experiment-->
               <div id="prescribe">
                 <div id="prescribeheader">Prescribe<button class="pres-close"><i class="fa fa-times" aria-hidden="true"></i></button></div>
-                <textarea class="tinyarea" name="tiny" id="" cols="30" rows="10" placeholder="Prescribe here"></textarea>
+                <textarea class="tinyarea" name="tiny" id="summary" cols="30" rows="10" placeholder="Prescribe here"></textarea>
                 <div class="container-fluid pt-2 pb-3 med-add">
-                  <div class="med-repo"> 
+                  <div class="med-repo">
 
                     <div class="row no-gutters mt-1 mb-3">
                       <div class="col-md-4 col-sm-12 my-auto">
-                        <input type="text" class="form-control" placeholder="Enter Medicine Name">
+                        <input type="text" class="form-control medicine" placeholder="Enter Medicine Name">
                       </div>
-                      <div class="col-md-4 col-sm-12">
-                          M-<input type="checkbox" name="" id="">&nbsp;&nbsp;
-                          L-<input type="checkbox" name="" id="">&nbsp;&nbsp;
-                          S-<input type="checkbox" name="" id="">&nbsp;&nbsp;
-                          D-<input type="checkbox" name="" id="">
+                      <div class="col-md-4 col-sm-12 med-time">
+                          M-<input type="checkbox" name="" class="M-medicine">&nbsp;&nbsp;
+                          L-<input type="checkbox" name="" class="L-medicine">&nbsp;&nbsp;
+                          S-<input type="checkbox" name="" class="S-medicine">&nbsp;&nbsp;
+                          D-<input type="checkbox" name="" class="D-medicine">
                           <br>
                           <div class="custom-control custom-radio custom-control-inline">
-                            <input type="radio" id="customRadioInline1" name="customRadioInline1" class="custom-control-input">
-                            <label class="custom-control-label" for="customRadioInline1">Aft Food</label>
+                            <input type="radio" id="customRadioInline1" name="customRadioInline1" class="custom-control-input aftFood-medicine">
+                            <label class="custom-control-label " for="customRadioInline1">Aft Food</label>
                           </div>
                           <div class="custom-control custom-radio custom-control-inline">
-                            <input type="radio" id="customRadioInline2" name="customRadioInline1" class="custom-control-input">
-                            <label class="custom-control-label" for="customRadioInline2">Bef Food</label>
+                            <input type="radio" id="customRadioInline2" name="customRadioInline1" class="custom-control-input befFood-medicine">
+                            <label class="custom-control-label " for="customRadioInline2">Bef Food</label>
                           </div>
                       </div>
                       <div class="col-6 col-md-2 col-sm-6 my-auto">
-                        <input type="text" class="form-control" placeholder="Quantity">
+                        <input type="text" class="form-control quantity-medicine" placeholder="Quantity">
                       </div>
                       <div class="col-6 col-md-2 col-sm-6 col-xs-3 my-auto">
-                        <input type="text" class="form-control" placeholder="Period">
+                        <input type="text" class="form-control period-medicine" placeholder="Period">
                       </div>
                       <div class="col-md-12 col-sm-12 my-auto">
-                        <input type="text" class="form-control" placeholder="Remark">
+                        <input type="text" class="form-control remark-medicine" placeholder="Remark">
                       </div>
                     </div>
-
                   </div>
-
                   <button id="add-more-med" type="button" class="btn btn-secondary btn-sm btn-block">Add More</button>
-                  <button type="button" class="btn btn-primary btn-sm btn-block">Prescribe</button>
+                  <button id="prescribe-submit" type="button" class="btn btn-primary btn-sm btn-block">Prescribe</button>
                 </div>
               </div>
             </div>
@@ -278,13 +310,12 @@
   </div>
   <!-- Optional JavaScript -->
   <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
-  </script>
-  <script src="https://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"
-    integrity="sha512-0bEtK0USNd96MnO4XhH8jhv3nyRF0eK87pJke6pkYf3cM0uDIhNJy9ltuzqgypoIFXw3JSuiy04tVk4AjpZdZw=="
-    crossorigin="anonymous"></script>
+<!--  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">-->
+<!--  </script>-->
+<!--  <script src="https://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>-->
+<!--  <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"-->
+<!--    integrity="sha512-0bEtK0USNd96MnO4XhH8jhv3nyRF0eK87pJke6pkYf3cM0uDIhNJy9ltuzqgypoIFXw3JSuiy04tVk4AjpZdZw=="-->
+<!--    crossorigin="anonymous"></script>-->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
     integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
   </script>
@@ -299,11 +330,11 @@
       if(window.matchMedia("(min-width: 767px)").matches){
         $("#prescribe").draggable();
       }
-      
+
       $("#localVideo").draggable();
     });
     $("#add-more-med").click(function () {
-      $(".med-repo").append('<div class="row no-gutters mt-1 mb-1"><div class="col-md-4 col-sm-12 my-auto"><input type="text" class="form-control" placeholder="Enter Medicine Name"></div><div class="col-md-4 col-sm-12">M-<input type="checkbox" name="" id="">&nbsp;&nbsp; L-<input type="checkbox" name="" id="">&nbsp;&nbsp;S-<input type="checkbox" name="" id="">&nbsp;&nbsp; D-<input type="checkbox" name="" id=""><br><div class="custom-control custom-radio custom-control-inline"><input type="radio" id="customRadioInline1" name="customRadioInline1" class="custom-control-input"><label class="custom-control-label" for="customRadioInline1">Aft Food</label></div><div class="custom-control custom-radio custom-control-inline"><input type="radio" id="customRadioInline2" name="customRadioInline1" class="custom-control-input"><label class="custom-control-label" for="customRadioInline2">Bef Food</label></div></div><div class="col-6 col-md-2 col-sm-6 my-auto"><input type="text" class="form-control" placeholder="Quantity"></div><div class="col-6 col-md-2 col-sm-6 col-xs-3 my-auto"><input type="text" class="form-control" placeholder="Period"></div><div class="col-md-12 col-sm-12 my-auto"><input type="text" class="form-control" placeholder="Remark"></div></div>');
+      $(".med-repo").append('<div class="row no-gutters mt-1 mb-1"><div class="col-md-4 col-sm-12 my-auto"><input type="text" class="form-control medicine" placeholder="Enter Medicine Name"></div><div class="col-md-4 col-sm-12">M-<input type="checkbox" name="" id="" class="M-medicine">&nbsp;&nbsp; L-<input type="checkbox" name="" id="" class="L-medicine">&nbsp;&nbsp;S-<input type="checkbox" name="" id="" class="S-medicine">&nbsp;&nbsp; D-<input type="checkbox" name="" id="" class="D-medicine"><br><div class="custom-control custom-radio custom-control-inline"><input type="radio" id="customRadioInline1" name="customRadioInline1" class="custom-control-input aftFood-medicine"><label class="custom-control-label" for="customRadioInline1">Aft Food</label></div><div class="custom-control custom-radio custom-control-inline"><input type="radio" id="customRadioInline2" name="customRadioInline1" class="custom-control-input befFood-medicine"><label class="custom-control-label" for="customRadioInline2">Bef Food</label></div></div><div class="col-6 col-md-2 col-sm-6 my-auto"><input type="text" class="form-control quantity-medicine" placeholder="Quantity"></div><div class="col-6 col-md-2 col-sm-6 col-xs-3 my-auto"><input type="text" class="form-control period-medicine" placeholder="Period"></div><div class="col-md-12 col-sm-12 my-auto"><input type="text" class="form-control remark-medicine" placeholder="Remark"></div></div>');
       $('.med-repo').scrollTop($('.med-repo')[0].scrollHeight);
     });
     $("#presc-btn").click(function () {
@@ -316,7 +347,15 @@
   <script>
 
   </script>
+<script src="https://www.gstatic.com/firebasejs/3.1.0/firebase.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+<script>
+  var doctor = '{{doctor}}';
+</script>
 <script src="{% static 'script.js' %}"></script>
+
 </body>
 
 </html>

@@ -70,6 +70,8 @@ urlpatterns = [
         path("payment-booking/",views.payment_booking,name="payment_booking"),
         path("payment/",views.payment,name="payment"),
         path("payment-status/",views.payment_status,name="payment_status"),
+        path("download-prescription/<slug:appointment>",views.create_prescription_document,name="create_prescription_document"),
+        path("prescription-submit/",views.prescription_submit,name="prescription_submit"),
         path("",views.index,name="index"),
 ]
 from django.conf.urls.static import static

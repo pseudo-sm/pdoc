@@ -58,7 +58,7 @@
         <div class="container-fluid overflow-hidden">
             {% for appointment in scheduled_appointments %}
                 <a class="card p-3" href="{% url 'video_calling' slug=appointment.slug %}">
-                    <center>Sheduled Meeting - <b>{{appointment.time}}</b> with Dr. {{appointment.doctor__name}} ({{appointment.doctor__type__name}} at {{appointment.doctor__hospital}})</center><button class="btn btn-primary mt-auto">Start</button>
+                    <center>Valid for 30 Days since - <b>{{appointment.time}}</b> with Dr. {{appointment.doctor__name}} ({{appointment.doctor__type__name}} at {{appointment.doctor__hospital}})</center><button class="btn btn-primary mt-auto">Start</button>
                 </a>
                 {% endfor %}
             {% if status %}
@@ -121,6 +121,29 @@
                                     <h3><i class="fa fa-folder margin-right-10px text-main-color"></i></h3>
                                     <hr>
                                     <h6>Folder</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="margin-bottom-30px">
+                            <div class="padding-30px background-white border-radius-20 box-shadow">
+                                <span class="back"><h3><i class="fas fa-angle-left margin-right-10px text-main-color"></i> Back </h3></span>
+                                <h3><i class="fas fa-file margin-right-10px text-main-color"></i> Prescriptions </h3>
+                                <hr>
+                                <div class="col-lg-2 col-sm-2">
+                                    {% for prescription in prescriptions %}
+                                    <a class="margin-bottom-30px" href="{% url 'create_prescription_document' appointment=prescription.slug %}">
+                                        <div class="padding-30px background-white border-radius-20 box-shadow">
+                                            <h3><i class="fas fa-file margin-right-10px text-main-color"></i></h3>
+                                            <hr>
+                                            <h6>Appointment id - {{prescription.id}}</h6>
+                                            <h6>Appointment Booking Date - {{prescription.datetime}}</h6>
+                                        </div>
+                                    </a>
+                                    {% endfor %}
                                 </div>
                             </div>
                         </div>
