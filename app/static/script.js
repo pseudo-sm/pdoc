@@ -170,7 +170,7 @@ function sendSignalingMessage(message) {
   });
 }
 
-$(document).on("change",'.medicine',function(){
+$(document).on("click",'.pushMed',function(){
     medicine_name = $(this).val();
     m = $(this).parent().parent().find(".med-time").children(".M-medicine").is(':checked');
     l = $(this).parent().parent().find(".med-time").children(".L-medicine").is(':checked');

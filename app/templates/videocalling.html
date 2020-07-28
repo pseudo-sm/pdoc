@@ -280,7 +280,7 @@
                 loop="loop">
                 <source src="{% static 'connecting.png' %}" type="video/mp4">
               </video>
-<!--            Experiment-->
+              <!--Experiment-->
               {% if doctor != True %}
               <div id="prescribe-patient">
                 <div id="prescribeheader-patient">My Prescription<button class="pres-close-patient"><i class="fa fa-times" aria-hidden="true"></i></button></div>
@@ -297,18 +297,18 @@
                     </div>
 
                   </div><hr>
-                  <div class="row no-gutters text-left mt-1 mb-2" >
+                  <div class="row no-gutters text-left mt-1 mb-2 pl-5 pr-5" >
                     <div class="col-12 mx-auto my-auto">
                      <p ><pre id="summary-patient"></pre></p>
                     </div>
                   </div>
+                  <hr>
                   <div class="row no-gutters text-left mt-1 mb-2" >
                     <div class="col-12 mx-auto my-auto">
-                      <div >
                         <ol class="med-repo">
+                          <h4>Medicines List</h4>
 
                         </ol>
-                      </div>
                     </div>
                   </div>
                 </div>
@@ -346,8 +346,11 @@
                       <div class="col-6 col-md-2 col-sm-6 col-xs-3 my-auto">
                         <input type="text" class="form-control period-medicine" placeholder="Period">
                       </div>
-                      <div class="col-md-12 col-sm-12 my-auto">
+                      <div class="col-10 col-md-10 col-sm-10 my-auto">
                         <input type="text" class="form-control remark-medicine" placeholder="Remark">
+                      </div>
+                      <div class="col-2 col-md-2 col-sm-6 my-auto pl-3 ">
+                        <button class="btn btn-success btn-block pushMed"><i class="fa fa-check" aria-hidden="true"></i></button>
                       </div>
                     </div>
                   </div>
@@ -376,6 +379,7 @@
   </script>
   <script>
     //local video
+    var radio_id = 0;
     document.getElementById("localVideo").style["float"] = "right";
     document.getElementById("prescribe").style["float"] = "right";
     $(function () {
@@ -387,7 +391,8 @@
       $("#localVideo").draggable();
     });
     $("#add-more-med").click(function () {
-      $(".med-repo").append('<div class="row no-gutters mt-1 mb-1"><div class="col-md-4 col-sm-12 my-auto"><input type="text" class="form-control medicine" placeholder="Enter Medicine Name"></div><div class="col-md-4 col-sm-12">M-<input type="checkbox" name="" id="" class="M-medicine">&nbsp;&nbsp; L-<input type="checkbox" name="" id="" class="L-medicine">&nbsp;&nbsp;S-<input type="checkbox" name="" id="" class="S-medicine">&nbsp;&nbsp; D-<input type="checkbox" name="" id="" class="D-medicine"><br><div class="custom-control custom-radio custom-control-inline"><input type="radio" id="customRadioInline1" name="customRadioInline1" class="custom-control-input aftFood-medicine"><label class="custom-control-label" for="customRadioInline1">Aft Food</label></div><div class="custom-control custom-radio custom-control-inline"><input type="radio" id="customRadioInline2" name="customRadioInline1" class="custom-control-input befFood-medicine"><label class="custom-control-label" for="customRadioInline2">Bef Food</label></div></div><div class="col-6 col-md-2 col-sm-6 my-auto"><input type="text" class="form-control quantity-medicine" placeholder="Quantity"></div><div class="col-6 col-md-2 col-sm-6 col-xs-3 my-auto"><input type="text" class="form-control period-medicine" placeholder="Period"></div><div class="col-md-12 col-sm-12 my-auto"><input type="text" class="form-control remark-medicine" placeholder="Remark"></div></div>');
+      radio_id++;
+      $(".med-repo").append('<div class="row no-gutters mt-1 mb-1"><div class="col-md-4 col-sm-12 my-auto"><input type="text" class="form-control medicine" placeholder="Enter Medicine Name"></div><div class="col-md-4 col-sm-12">M-<input type="checkbox" name="" id="" class="M-medicine">&nbsp;&nbsp; L-<input type="checkbox" name="" id="" class="L-medicine">&nbsp;&nbsp;S-<input type="checkbox" name="" id="" class="S-medicine">&nbsp;&nbsp; D-<input type="checkbox" name="" id="" class="D-medicine"><br><div class="custom-control custom-radio custom-control-inline"><input type="radio" id="aftFood'+radio_id+'" name="aftFood'+radio_id+'" class="custom-control-input aftFood-medicine"><label class="custom-control-label" for="aftFood'+radio_id+'">Aft Food</label></div><div class="custom-control custom-radio custom-control-inline"><input type="radio" id="befFood'+radio_id+'" name="befFood'+radio_id+'" class="custom-control-input befFood-medicine"><label class="custom-control-label" for="befFood'+radio_id+'">Bef Food</label></div></div><div class="col-6 col-md-2 col-sm-6 my-auto"><input type="text" class="form-control quantity-medicine" placeholder="Quantity"></div><div class="col-6 col-md-2 col-sm-6 col-xs-3 my-auto"><input type="text" class="form-control period-medicine" placeholder="Period"></div><div class="col-md-12 col-sm-12 my-auto"><input type="text" class="form-control remark-medicine" placeholder="Remark"></div></div>');
       $('.med-repo').scrollTop($('.med-repo')[0].scrollHeight);
     });
     $("#presc-btn").click(function () {
