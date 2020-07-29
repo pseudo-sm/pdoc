@@ -600,37 +600,32 @@ def create_prescription_document(request,appointment):
         temp = {
                     "sl":str(sl),
                     "name":prescription.medicine,
-                    "remarks":prescription.remarks,
-                    "summary" : prescription.summary,
+                    "remark":prescription.remarks,
+                    "quantity":prescription.quantity,
+                    "period":prescription.period,
                 }
-
         if prescription.afterFood:
             food = "After Food"
         else:
             food = "Before Food"
+        maen = []
         if prescription.morning:
-            temp["morning"] = food
-        else:
-            temp["morning"] = "no"
+            maen.append("morning")
         if prescription.lunch:
-            temp["lunch"] = food
-        else:
-            temp["lunch"] = "no"
+            maen.append("afternoon")
         if prescription.evening:
-            temp["evening"] = food
-        else:
-            temp["evening"] = "no"
+            maen.append("evening")
         if prescription.dinner:
-            temp["dinner"] = food
-        else:
-            temp["dinner"] = "no"
+            maen.append("dinner")
+        temp.update({"maen":",".join(maen),"food":food})
         medicines.append(temp)
         sl = sl+1
     context = {
 
         'date': prescriptions[0].date,
         'doctor_id': doctor_id,
-        'medicines': medicines
+        'medicines': medicines,
+        'summary': prescriptions[0].summary,
     }
     print(context)
     count = appointment.count
@@ -638,6 +633,12 @@ def create_prescription_document(request,appointment):
     tpl.render(context)
     name = "prescription-"+str(appointment.id)+"-"+str(count)+".docx"
     filepath = '/home/pdochealth/pdoc/app/prescriptions/'+name
+
+    # tpl = DocxTemplate("app/template.docx")
+    # tpl.render(context)
+    # name = "prescription-"+str(appointment.id)+"-"+str(count)+".docx"
+    # filepath = 'app/prescriptions/'+name
+
     tpl.save(filepath)
     if os.path.exists(filepath):
         with open(filepath, 'rb') as fh:
