@@ -76,9 +76,6 @@
       #vd-head video {
         display: none;
       }
-      #localVideo{
-        z-index: 9999;
-      }
     }
 
     .vc-buttons {
@@ -277,91 +274,90 @@
             </div>
           </div>
 
-          <!-- <div class="d-flex h-100 text-center align-items-right" style="z-index: 99;">
+          <div class="d-flex h-100 text-center align-items-right" style="z-index: 99;">
             <div id="drag-area" class="w-100" style="z-index: 99;">
-              
-            </div>
-          </div> -->
-          <!-- Local Video -->
-        <video id="localVideo" class="video-local" playsinline="playsinline" autoplay="autoplay"
-          loop="loop" muted="muted">
-          <source src="{% static 'connecting.png' %}" type="video/mp4">
-        </video>
-        <!--Experiment-->
-        {% if doctor != True %}
-        <div id="prescribe-patient">
-          <div id="prescribeheader-patient">My Prescription<button class="pres-close-patient"><i class="fa fa-times" aria-hidden="true"></i></button></div>
-          <div class="container-fluid pt-2 pb-3 med-add">
-            <div class="row no-gutters text-left">
-              <div class="col-6 mx-auto my-auto">
-                <h1>PDOC</h1>
-                EDOC Medical Services
-              </div>
-              <div class="col-6 ">
-                Name: <strong>Dr. Name Title</strong><br>
-                Designation: <strong>xxxxxxx</strong><br>
-                Phone No: <strong>xxxxxxx</strong>
-              </div>
+              <!-- Local Video -->
+              <video id="localVideo" class="video-local" playsinline="playsinline" autoplay="autoplay"
+                loop="loop" muted="muted">
+                <source src="{% static 'connecting.png' %}" type="video/mp4">
+              </video>
+              <!--Experiment-->
+              {% if doctor != True %}
+              <div id="prescribe-patient">
+                <div id="prescribeheader-patient">My Prescription<button class="pres-close-patient"><i class="fa fa-times" aria-hidden="true"></i></button></div>
+                <div class="container-fluid pt-2 pb-3 med-add">
+                  <div class="row no-gutters text-left">
+                    <div class="col-6 mx-auto my-auto">
+                      <h1>PDOC</h1>
+                      EDOC Medical Services
+                    </div>
+                    <div class="col-6 ">
+                      Name: <strong>Dr. Name Title</strong><br>
+                      Designation: <strong>xxxxxxx</strong><br>
+                      Phone No: <strong>xxxxxxx</strong>
+                    </div>
 
-            </div><hr>
-            <div class="row no-gutters text-left mt-1 mb-2 pl-5 pr-5" >
-              <div class="col-12 mx-auto my-auto">
-               <p ><pre id="summary-patient"></pre></p>
-              </div>
-            </div>
-            <hr>
-            <div class="row no-gutters text-left mt-1 mb-2" >
-              <div class="col-12 mx-auto my-auto">
-                  <ol class="med-repo">
-                    <h4>Medicines List</h4>
+                  </div><hr>
+                  <div class="row no-gutters text-left mt-1 mb-2 pl-5 pr-5" >
+                    <div class="col-12 mx-auto my-auto">
+                     <p ><pre id="summary-patient"></pre></p>
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row no-gutters text-left mt-1 mb-2" >
+                    <div class="col-12 mx-auto my-auto">
+                        <ol class="med-repo">
+                          <h4>Medicines List</h4>
 
-                  </ol>
+                        </ol>
+                    </div>
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
-        </div>
-        {% endif %}
+              {% endif %}
 <!--              Experiment-->
-        <div id="prescribe">
-          <div id="prescribeheader">Prescribe<button class="pres-close"><i class="fa fa-times" aria-hidden="true"></i></button></div>
-          <textarea class="tinyarea" name="tiny" id="summary" cols="30" rows="10" placeholder="Prescribe here"></textarea>
-          <div class="container-fluid pt-2 pb-3 med-add">
-            <div class="med-repo">
+              <div id="prescribe">
+                <div id="prescribeheader">Prescribe<button class="pres-close"><i class="fa fa-times" aria-hidden="true"></i></button></div>
+                <textarea class="tinyarea" name="tiny" id="summary" cols="30" rows="10" placeholder="Prescribe here"></textarea>
+                <div class="container-fluid pt-2 pb-3 med-add">
+                  <div class="med-repo">
 
-              <div class="row no-gutters mt-1 mb-3">
-                <div class="col-md-4 col-sm-12 my-auto">
-                  <input type="text" class="form-control medicine pushMed" placeholder="Enter Medicine Name">
-                </div>
-                <div class="col-md-4 col-sm-12 med-time">
-                    M-<input type="checkbox" name="" class="M-medicine pushMed">&nbsp;&nbsp;
-                    L-<input type="checkbox" name="" class="L-medicine pushMed">&nbsp;&nbsp;
-                    S-<input type="checkbox" name="" class="S-medicine pushMed">&nbsp;&nbsp;
-                    D-<input type="checkbox" name="" class="D-medicine pushMed">
-                    <br>
-                    <div class="custom-control custom-radio custom-control-inline">
-                      <input type="radio" id="radio_id1" name="radio_id1" class="custom-control-input aftFood-medicine pushMed">
-                      <label class="custom-control-label " for="radio_id1">Aft Food</label>
+                    <div class="row no-gutters mt-1 mb-3">
+                      <div class="col-md-4 col-sm-12 my-auto">
+                        <input type="text" class="form-control medicine pushMed" placeholder="Enter Medicine Name">
+                      </div>
+                      <div class="col-md-4 col-sm-12 med-time">
+                          M-<input type="checkbox" name="" class="M-medicine pushMed">&nbsp;&nbsp;
+                          L-<input type="checkbox" name="" class="L-medicine pushMed">&nbsp;&nbsp;
+                          S-<input type="checkbox" name="" class="S-medicine pushMed">&nbsp;&nbsp;
+                          D-<input type="checkbox" name="" class="D-medicine pushMed">
+                          <br>
+                          <div class="custom-control custom-radio custom-control-inline">
+                            <input type="radio" id="radio_id1" name="radio_id1" class="custom-control-input aftFood-medicine pushMed">
+                            <label class="custom-control-label " for="radio_id1">Aft Food</label>
+                          </div>
+                          <div class="custom-control custom-radio custom-control-inline">
+                            <input type="radio" id="radio_id2" name="radio_id2" class="custom-control-input befFood-medicine pushMed">
+                            <label class="custom-control-label " for="radio_id2">Bef Food</label>
+                          </div>
+                      </div>
+                      <div class="col-6 col-md-2 col-sm-6 my-auto">
+                        <input type="text" class="form-control quantity-medicine pushMed" placeholder="Quantity">
+                      </div>
+                      <div class="col-6 col-md-2 col-sm-6 col-xs-3 my-auto">
+                        <input type="text" class="form-control period-medicine pushMed" placeholder="Period">
+                      </div>
+                      <div class="col-md-12 col-sm-12 my-auto">
+                        <input type="text" class="form-control remark-medicine pushMed" placeholder="Remark">
+                      </div>
                     </div>
-                    <div class="custom-control custom-radio custom-control-inline">
-                      <input type="radio" id="radio_id2" name="radio_id2" class="custom-control-input befFood-medicine pushMed">
-                      <label class="custom-control-label " for="radio_id2">Bef Food</label>
-                    </div>
-                </div>
-                <div class="col-6 col-md-2 col-sm-6 my-auto">
-                  <input type="text" class="form-control quantity-medicine pushMed" placeholder="Quantity">
-                </div>
-                <div class="col-6 col-md-2 col-sm-6 col-xs-3 my-auto">
-                  <input type="text" class="form-control period-medicine pushMed" placeholder="Period">
-                </div>
-                <div class="col-md-12 col-sm-12 my-auto">
-                  <input type="text" class="form-control remark-medicine pushMed" placeholder="Remark">
+                  </div>
+                  <button id="add-more-med" type="button" class="btn btn-secondary btn-sm btn-block">Add More</button>
+                  <button id="prescribe-submit" type="button" class="btn btn-primary btn-sm btn-block">Prescribe</button>
                 </div>
               </div>
             </div>
-            <button id="add-more-med" type="button" class="btn btn-secondary btn-sm btn-block">Add More</button>
-            <button id="prescribe-submit" type="button" class="btn btn-primary btn-sm btn-block">Prescribe</button>
           </div>
-        </div>
         </div>
       </header>
     </div>
