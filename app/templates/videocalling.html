@@ -4,6 +4,7 @@
 <head>
   {% load static %}
   <script src='https://cdn.scaledrone.com/scaledrone.min.js'></script>
+  <script src="https://api.html5media.info/1.1.5/html5media.min.js"></script>
   <title>Title</title>
   <!-- Required meta tags -->
   <meta charset="utf-8">
@@ -73,7 +74,7 @@
       background-size: contain;
       }
 
-      
+
     }
 
     .vc-buttons {
@@ -233,6 +234,9 @@
       .d-sm-none{
         display: none;
       }
+      #vd-head .video-remote {
+          width : 100%;
+      }
       .med-repo{
       max-height: 250px;
       overflow-y: auto;
@@ -247,8 +251,7 @@
     <div class="row no-gutters">
       <header id="vd-head">
         <div class="overlay"></div>
-        <video id="remoteVideo" class="video-remote" playsinline="playsinline" autoplay="autoplay"
-          loop="loop">
+        <video id="remoteVideo" class="video-remote" playsinline="playsinline" autoplay loop="loop">
           <source src="{% static 'connecting.png' %}" type="video/mp4">
         </video>
         <div class="container-fluid h-100 p-0">
@@ -275,8 +278,8 @@
           <div class="d-flex h-100 text-center align-items-right" style="z-index: 99;">
             <div id="drag-area" class="w-100" style="z-index: 99;">
               <!-- Local Video -->
-              <video id="localVideo" class="video-local" playsinline="playsinline" autoplay="autoplay"
-                loop="loop" muted="muted">
+              <video id="localVideo" class="video-local" playsinline="playsinline" autoplay
+                loop="loop" muted>
                 <source src="{% static 'connecting.png' %}" type="video/mp4">
               </video>
               <!--Experiment-->
@@ -374,6 +377,8 @@
   <script>
     //local video
     var radio_id = 1;
+    document.getElementById("localVideo").play();
+    document.getElementById("remoteVideo").play();
     document.getElementById("localVideo").style["float"] = "right";
     document.getElementById("prescribe").style["float"] = "right";
     $(function () {
