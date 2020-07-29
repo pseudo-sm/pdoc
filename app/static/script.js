@@ -36,7 +36,6 @@ function onError(error) {
 
 var database = firebase.database();
 database.ref('meeting/' + roomHash).set({"summary":"Diagnosis summary"});
-database.ref('meeting/' + roomHash).set({"medicines":"medicines"});
 ref = database.ref("meeting/"+roomHash);
 ref.on("child_changed", function(snapshot) {
   console.log(snapshot.val());
