@@ -258,10 +258,10 @@
           <!-- Buttons -->
           <div class="row vc-buttons" style="z-index: 100;">
             <div class="col-12 text-center mx-auto">
-              <button id="mute" class="min-btn" data-toggle="tooltip" data-placement="top" title="Mute/Unmute"><i
-                  class="fa fa-microphone-slash"></i></button>
-              <button id="video-off" class="min-btn" data-toggle="tooltip" data-placement="top" title="Video On/Off"><i
-                  class="fa fa-pause"></i></button>
+              <button id="mute" class="min-btn" data-toggle="tooltip" data-placement="top" title="Mute/Unmute" onclick="toggleMic()"><i
+                  class="fa fa-microphone-slash" id="mute-icon"></i></button>
+              <button id="video-off" class="min-btn" data-toggle="tooltip" data-placement="top" title="Video On/Off" onclick="toggleVideo()"><i
+                  class="fa fa-pause" id="pause-icon"></i></button>
               {% if doctor %}
               <button id="presc-btn" class="min-btn" data-toggle="tooltip" data-placement="top" title="Prescribe"><i
                   class="fa fa-pencil-square-o"></i></button>
@@ -293,9 +293,9 @@
                       EDOC Medical Services
                     </div>
                     <div class="col-6 ">
-                      Name: <strong>Dr. Name Title</strong><br>
-                      Designation: <strong>xxxxxxx</strong><br>
-                      Phone No: <strong>xxxxxxx</strong>
+                      Name: <strong>Dr. {{name}}</strong><br>
+                      Designation: <strong>{{designation}}</strong><br>
+                      Reg no: <strong>{{practice_id}}</strong>
                     </div>
 
                   </div><hr>
@@ -323,24 +323,18 @@
                 <div class="container-fluid pt-2 pb-3 med-add">
                   <div class="med-repo">
 
-                    <div class="row no-gutters mt-1 mb-3">
+                    <div class="row no-gutters mt-1 mb-3 med-row"  data-count="1">
                       <div class="col-md-4 col-sm-12 my-auto">
                         <input type="text" class="form-control medicine pushMed" placeholder="Enter Medicine Name">
                       </div>
                       <div class="col-md-4 col-sm-12 med-time">
-                          M-<input type="checkbox" name="" class="M-medicine pushMed">&nbsp;&nbsp;
-                          L-<input type="checkbox" name="" class="L-medicine pushMed">&nbsp;&nbsp;
-                          S-<input type="checkbox" name="" class="S-medicine pushMed">&nbsp;&nbsp;
-                          D-<input type="checkbox" name="" class="D-medicine pushMed">
+                          M-<input type="checkbox" id="m-1" name="" class="M-medicine pushMed">&nbsp;&nbsp;
+                          A-<input type="checkbox" id="l-1" name="" class="L-medicine pushMed">&nbsp;&nbsp;
+                          E-<input type="checkbox" id="s-1" name="" class="S-medicine pushMed">&nbsp;&nbsp;
+                          N-<input type="checkbox" id="d-1" name="" class="D-medicine pushMed">
                           <br>
-                          <div class="custom-control custom-radio custom-control-inline">
-                            <input type="radio" id="radio_id1" name="radio_id1" class="custom-control-input aftFood-medicine pushMed">
-                            <label class="custom-control-label " for="radio_id1">Aft Food</label>
-                          </div>
-                          <div class="custom-control custom-radio custom-control-inline">
-                            <input type="radio" id="radio_id2" name="radio_id2" class="custom-control-input befFood-medicine pushMed">
-                            <label class="custom-control-label " for="radio_id2">Bef Food</label>
-                          </div>
+                           <input type="checkbox" name="" class="aftFood-medicine pushMed"> Aft Food
+                           <input type="checkbox" name="" class="befFood-medicine pushMed"> Bef Food
                       </div>
                       <div class="col-6 col-md-2 col-sm-6 my-auto">
                         <input type="text" class="form-control quantity-medicine pushMed" placeholder="Quantity">
@@ -391,7 +385,7 @@
     });
     $("#add-more-med").click(function () {
       radio_id++;
-      $(".med-repo").append('<div class="row no-gutters mt-1 mb-1"><div class="col-md-4 col-sm-12 my-auto"><input type="text" class="form-control medicine pushMed" placeholder="Enter Medicine Name"></div><div class="col-md-4 col-sm-12">M-<input type="checkbox" name="" id="" class="M-medicine pushMed">&nbsp;&nbsp; L-<input type="checkbox" name="" id="" class="L-medicine pushMed">&nbsp;&nbsp;S-<input type="checkbox" name="" id="" class="S-medicine pushMed">&nbsp;&nbsp; D-<input type="checkbox" name="" id="" class="D-medicine pushMed"><br><div class="custom-control custom-radio custom-control-inline"><input type="radio" id="aftFood'+radio_id+'" name="aftFood'+radio_id+'" class="custom-control-input aftFood-medicine pushMed"><label class="custom-control-label" for="aftFood'+radio_id+'">Aft Food</label></div><div class="custom-control custom-radio custom-control-inline"><input type="radio" id="befFood'+radio_id+'" name="befFood'+radio_id+'" class="custom-control-input befFood-medicine pushMed"><label class="custom-control-label" for="befFood'+radio_id+'">Bef Food</label></div></div><div class="col-6 col-md-2 col-sm-6 my-auto"><input type="text" class="form-control quantity-medicine pushMed" placeholder="Quantity"></div><div class="col-6 col-md-2 col-sm-6 col-xs-3 my-auto"><input type="text" class="form-control period-medicine pushMed" placeholder="Period"></div><div class="col-md-12 col-sm-12 my-auto"><input type="text" class="form-control remark-medicine pushMed" placeholder="Remark"></div></div>');
+      $(".med-repo").append('<div class="row no-gutters mt-1 mb-1 med-row" data-count="'+radio_id+'"><div class="col-md-4 col-sm-12 my-auto"><input type="text" class="form-control medicine pushMed" placeholder="Enter Medicine Name"></div><div class="col-md-4 col-sm-12">M-<input type="checkbox" name="" id="m-'+radio_id+'" class="M-medicine pushMed">&nbsp;&nbsp; A-<input type="checkbox" name="" id="l-'+radio_id+'" class="L-medicine pushMed">&nbsp;&nbsp;E-<input type="checkbox" name="" id="s-'+radio_id+'" class="S-medicine pushMed">&nbsp;&nbsp; N-<input type="checkbox" name="" id="d-'+radio_id+'" class="D-medicine pushMed"><br><input type="checkbox" name="" class="aftFood-medicine pushMed"> Aft Food<input type="checkbox" name="" class="befFood-medicine pushMed"> Bef Food</div><div class="col-6 col-md-2 col-sm-6 my-auto"><input type="text" class="form-control quantity-medicine pushMed" placeholder="Quantity"></div><div class="col-6 col-md-2 col-sm-6 col-xs-3 my-auto"><input type="text" class="form-control period-medicine pushMed" placeholder="Period"></div><div class="col-md-12 col-sm-12 my-auto"><input type="text" class="form-control remark-medicine pushMed" placeholder="Remark"></div></div>');
       $('.med-repo').scrollTop($('.med-repo')[0].scrollHeight);
     });
     $("#presc-btn").click(function () {

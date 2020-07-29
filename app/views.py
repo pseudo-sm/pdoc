@@ -430,8 +430,8 @@ def patient_dashboard(request):
     tdoctor = len(list(Doctor.objects.filter(telecalling=True)))
     pmconsultancy = len(list(Paramedics.objects.filter()))
     if not_yet is not None:
-        return render(request,"customer/dashboard.html",{"p":"true","vdoctor":vdoctor,"tdoctor":tdoctor,"pmconsultancy":pmconsultancy,"doctor_types":doctor_types,"paramedic_types":paramedic_types,"scheduled_appointments":shortlisted_scheduled_appointments,"status":status,"logout":True,"prescriptions":prescriptions})
-    return render(request,"customer/dashboard.html",{"vdoctor":vdoctor,"tdoctor":tdoctor,"pmconsultancy":pmconsultancy,"doctor_types":doctor_types,"paramedic_types":paramedic_types,"scheduled_appointments":shortlisted_scheduled_appointments,"status":status,"logout":True,"prescriptions":prescriptions})
+        return render(request,"customer/dashboard.html",{"p":"true","vdoctor":vdoctor,"tdoctor":tdoctor,"pmconsultancy":pmconsultancy,"doctor_types":doctor_types,"paramedic_types":paramedic_types,"scheduled_appointments":shortlisted_scheduled_appointments,"status":status,"logout":True,"prescriptions":prescriptions,"cprescription":len(prescriptions)})
+    return render(request,"customer/dashboard.html",{"vdoctor":vdoctor,"tdoctor":tdoctor,"pmconsultancy":pmconsultancy,"doctor_types":doctor_types,"paramedic_types":paramedic_types,"scheduled_appointments":shortlisted_scheduled_appointments,"status":status,"logout":True,"prescriptions":prescriptions,"cprescription":len(prescriptions)})
 
 def blog_list(request):
     articles = Article.objects.all()
@@ -451,6 +451,9 @@ def zonal_admin(request):
 def video_calling(request,slug):
     appointment = Appointments.objects.get(slug=slug)
     now = datetime.datetime.utcnow().replace(tzinfo=utc)
+    name = appointment.doctor.name
+    practice_id = appointment.doctor.practice_id
+    designation = appointment.doctor.designation
     delta = appointment.time - now
     print(delta)
     if request.user.is_authenticated:
@@ -459,7 +462,7 @@ def video_calling(request,slug):
         doctor = True
     minutes = (delta.seconds//60)
     if minutes < 20 or now > appointment.time:
-        return render(request,"videocalling.html",{"doctor":doctor})
+        return render(request,"videocalling.html",{"doctor":doctor,"name":name,"practice_id":practice_id,"designation":designation})
     return redirect("/patient-dashboard/?not_time=true")
 
 def request_video_calling(request):
@@ -629,12 +632,12 @@ def create_prescription_document(request,appointment):
         'doctor_id': doctor_id,
         'medicines': medicines
     }
+    print(context)
     count = appointment.count
     tpl = DocxTemplate("/home/pdochealth/pdoc/app/template.docx")
     tpl.render(context)
     name = "prescription-"+str(appointment.id)+"-"+str(count)+".docx"
     filepath = '/home/pdochealth/pdoc/app/prescriptions/'+name
-    filepath = 'app/prescriptions/'+name
     tpl.save(filepath)
     if os.path.exists(filepath):
         with open(filepath, 'rb') as fh:
