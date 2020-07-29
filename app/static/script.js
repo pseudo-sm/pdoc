@@ -31,7 +31,7 @@ let pc;
 
 function onSuccess() {};
 function onError(error) {
-  console.error(error);
+  alert(error);
 };
 
 var database = firebase.database();
@@ -100,7 +100,7 @@ function startWebRTC(isOfferer) {
   }
 
   // When a remote stream arrives display it in the #remoteVideo element
-  pc.onaddstream = event => {
+  pc.ontrack = event => {
     remoteVideo.srcObject = event.stream;
   };
 

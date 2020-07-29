@@ -1,9 +1,21 @@
 
+var firebaseConfig = {
+    apiKey: "AIzaSyCNtuLp9_8dTKGHGnYTQDvtc4sjdG6Al8Q",
+    authDomain: "pdochealth.firebaseapp.com",
+    databaseURL: "https://pdochealth.firebaseio.com",
+    projectId: "pdochealth",
+    storageBucket: "pdochealth.appspot.com",
+    messagingSenderId: "781169590792",
+    appId: "1:781169590792:web:247b3e1249dac8e0e8c7bd",
+    measurementId: "G-56VD6RED0L"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
 if (!location.hash) {
-  location.hash = window.location.pathname.split("/")[window.location.pathname.split("/").length-1];
+  location.hash = location.hash = window.location.pathname.split("/")[window.location.pathname.split("/").length-1];
 }
 const roomHash = window.location.pathname.split("/")[window.location.pathname.split("/").length-1];
-  
+
 // TODO: Replace with your own channel ID
 const drone = new ScaleDrone('2xmbUiTsqTzukyf7');
 // Room name needs to be prefixed with 'observable-'
@@ -15,13 +27,32 @@ const configuration = {
 };
 let room;
 let pc;
-  
-  
+
+
 function onSuccess() {};
 function onError(error) {
   console.error(error);
 };
-  
+
+var database = firebase.database();
+database.ref('meeting/' + roomHash).set({"summary":"Diagnosis summary"});
+database.ref('meeting/' + roomHash).set({"medicines":"medicines"});
+ref = database.ref("meeting/"+roomHash);
+ref.on("child_changed", function(snapshot) {
+  console.log(snapshot.val());
+}, function (errorObject) {
+  console.log("The read failed: " + errorObject.code);
+});
+
+
+ref = database.ref("meeting/"+roomHash+"/");
+$("#summary").keyup(function(){
+    summary = $(this).val();
+    ref.update({"summary":summary})
+});
+
+
+
 drone.on('open', error => {
   if (error) {
     return console.error(error);
@@ -41,7 +72,7 @@ drone.on('open', error => {
     startWebRTC(isOfferer);
   });
 });
-  
+
 // Send signaling data via Scaledrone
 function sendMessage(message) {
   drone.publish({
@@ -49,10 +80,10 @@ function sendMessage(message) {
     message
   });
 }
-  
+
 function startWebRTC(isOfferer) {
   pc = new RTCPeerConnection(configuration);
-  
+
   // 'onicecandidate' notifies us whenever an ICE agent needs to deliver a
   // message to the other peer through the signaling server
   pc.onicecandidate = event => {
@@ -60,36 +91,36 @@ function startWebRTC(isOfferer) {
       sendMessage({'candidate': event.candidate});
     }
   };
-  
+
   // If user is offerer let the 'negotiationneeded' event create the offer
   if (isOfferer) {
     pc.onnegotiationneeded = () => {
       pc.createOffer().then(localDescCreated).catch(onError);
     }
   }
-  
+
   // When a remote stream arrives display it in the #remoteVideo element
   pc.onaddstream = event => {
     remoteVideo.srcObject = event.stream;
   };
-  
+
   navigator.mediaDevices.getUserMedia({
     audio: true,
-    video: true,
+    video: true
   }).then(stream => {
     // Display your local video in #localVideo element
     localVideo.srcObject = stream;
     // Add your stream to be sent to the conneting peer
     pc.addStream(stream);
   }, onError);
-  
+
   // Listen to signaling data from Scaledrone
   room.on('data', (message, client) => {
     // Message was sent by us
     if (client.id === drone.clientId) {
       return;
     }
-  
+
     if (message.sdp) {
       // This is called after receiving an offer or answer from another peer
       pc.setRemoteDescription(new RTCSessionDescription(message.sdp), () => {
@@ -106,7 +137,7 @@ function startWebRTC(isOfferer) {
     }
   });
 }
-  
+
 function localDescCreated(desc) {
   pc.setLocalDescription(
     desc,
@@ -114,3 +145,117 @@ function localDescCreated(desc) {
     onError
   );
 }
+
+$("#end").click(function(){
+  if (confirm("End Meeting?")) {
+    $.ajax({
+        url: "/appointment-close/",
+        data : {
+            'appointment':roomHash,
+        },
+        type: 'GET',
+        dataType: 'json',
+        success: function(res) {
+            window.location="/patient-dashboard/";
+        }
+    });
+
+  }
+})
+
+function sendSignalingMessage(message) {
+  drone.publish({
+    room: roomName,
+    message
+  });
+}
+
+$(document).on("change",'.pushMed',function(){
+    medicine_name = $(this).val();
+    m = $(this).parent().parent().find(".med-time").children(".M-medicine").is(':checked');
+    l = $(this).parent().parent().find(".med-time").children(".L-medicine").is(':checked');
+    s = $(this).parent().parent().find(".med-time").children(".S-medicine").is(':checked');
+    d = $(this).parent().parent().find(".med-time").children(".D-medicine").is(':checked');
+    aftFood = $(this).parent().parent().find(".aftFood-medicine").is(':checked');
+    befFood = $(this).parent().parent().find(".befFood-medicine").is(':checked');
+    quantity = $(this).parent().parent().find(".quantity-medicine").val();
+    period = $(this).parent().parent().find(".period-medicine").val();
+    remark = $(this).parent().parent().find(".remark-medicine").val();
+    medicine_object = {[medicine_name] : {"m":m,"l":l,"s":s,"d":"d","aftFood":aftFood,"befFood":befFood,"quantity":quantity,"period":period,"remark":remark}}
+    database.ref("meeting/"+roomHash+"/medicines/").update(medicine_object);
+});
+
+if(doctor!="True"){
+    database.ref("meeting/"+roomHash).on("value", function(snapshot) {
+    data = snapshot.val()
+    summary = data["summary"];
+    console.log(data["medicines"]);
+    for(medicine in data["medicines"])
+    {
+        aftFood = data["medicines"][medicine]["aftFood"];
+        befFood = data["medicines"][medicine]["befFood"];
+        d = data["medicines"][medicine]["d"];
+        l = data["medicines"][medicine]["l"];
+        s = data["medicines"][medicine]["s"];
+        m = data["medicines"][medicine]["m"];
+        quantity = data["medicines"][medicine]["quantity"]
+        period = data["medicines"][medicine]["period"]
+        remark = data["medicines"][medicine]["remark"]
+        temp = '<li><strong>'+medicine+'</strong><br><strong>Doses:</strong> ';
+        if (m != false){temp = temp+'Morning'};
+        temp = temp + ', ';
+        if (l != false){temp = temp+'Lunch'};
+        temp = temp + ', ';
+        if (s != false){temp = temp+'Supper'};
+        temp = temp + ', ';
+        if (d != false){temp = temp+'Dinner'};
+        temp = temp + ' <strong>|</strong> ';
+        if (aftFood != false){temp = temp+'After Food'};
+        if (befFood != false){temp = temp+'Before Food'};
+        if (remark != undefined){temp = temp+'<br><strong>Remark: </strong>'+remark};
+        temp = temp + '.</li>';
+        $(".med-repo").append(temp);
+    }
+    console.log(summary);
+    $("#summary-patient").html(summary);
+
+}, function (errorObject) {
+  console.log("The read failed: " + errorObject.code);
+});
+
+}
+
+$("#prescribe-submit").click(function(){
+    console.log('clicked!!!!');
+    summary = $("#summary").val();
+    medicines = [];
+    $('.medicine').each(function() {
+        medicine = $(this).val();
+        m = $(this).parent().parent().find(".med-time").children(".M-medicine").is(':checked');
+        l = $(this).parent().parent().find(".med-time").children(".L-medicine").is(':checked');
+        s = $(this).parent().parent().find(".med-time").children(".S-medicine").is(':checked');
+        d = $(this).parent().parent().find(".med-time").children(".D-medicine").is(':checked');
+        aftFood = $(this).parent().parent().find(".aftFood-medicine").is(':checked');
+        befFood = $(this).parent().parent().find(".befFood-medicine").is(':checked');
+        quantity = $(this).parent().parent().find(".quantity-medicine").val();
+        period = $(this).parent().parent().find(".period-medicine").val();
+        remark = $(this).parent().parent().find(".remark-medicine").val();
+
+        medicines.push({"medicine":medicine,"m":m,"l":l,"s":s,"d":d,"aftFood":aftFood,"befFood":befFood,"quantity":quantity,"period":period,"remark":remark});
+        });
+
+        $.ajax({
+        url: "/prescription-submit/",
+        data : {
+            'summary':summary,
+            'medicines':JSON.stringify(medicines),
+            'roomhash':roomHash,
+        },
+        type: 'GET',
+        dataType: 'json',
+        success: function(res) {
+            alert("Submitted!!");
+        }
+    });
+
+});
