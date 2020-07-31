@@ -1,6 +1,8 @@
 import random
 import string
 import os
+
+from django.db.models import Q
 from django.views.static import serve
 from django.conf import settings
 from django.core.mail import EmailMessage
@@ -26,6 +28,16 @@ doctor_types = Type.objects.filter(type_category=1)
 paramedic_types = Type.objects.filter(type_category=2)
 client = razorpay.Client(auth=("rzp_live_7VShD4pzdX6r0m", "HFFXrT0KRIObgzB7SvU7JdZG"))
 
+import pyrebase
+
+config = {
+  "apiKey": "AIzaSyCNtuLp9_8dTKGHGnYTQDvtc4sjdG6Al8Q",
+  "authDomain": "pdochealth.firebaseapp.com",
+  "databaseURL": "https://pdochealth.firebaseio.com",
+  "storageBucket": "pdochealth.appspot.com"
+}
+firebase = pyrebase.initialize_app(config)
+storage = firebase.storage()
 def handler404(request, exception, template_name="404.html"):
     response = render(template_name)
     response.status_code = 404
@@ -364,36 +376,6 @@ def paramedic_diagnostics_action(request):
     new_diagnostic.save()
     return JsonResponse(True,safe=False)
 
-def fitness_advisor_show(request):
-    health_advisor = HealthFitnessAdvisor.objects.all()
-    terms = Others.objects.get(name="terms")
-    return render(request,"paramedics-show/fitness-advisors.html",{"health_advisor":health_advisor,"terms":terms,"phone":"8917240913"})
-
-def physiotherapist_show(request):
-    physiotherapist = Physiotherapist.objects.all()
-    terms = Others.objects.get(name="terms")
-
-    return render(request,"paramedics-show/physiotherapist.html",{"physiotherapists":physiotherapist,"terms":terms,"phone":"8917240913"})
-
-def clinical_psychiatry_show(request):
-    clinical_psychiatry = ClinicalPsychiatry.objects.all()
-    terms = Others.objects.get(name="terms")
-    return render(request,"paramedics-show/clinical-psychiatry.html",{"clinical_psychiatrys":clinical_psychiatry,"terms":terms,"phone":"8917240913"})
-
-def diagonistic_show(request):
-    diagonistics = Diagnostics.objects.all()
-    terms = Others.objects.get(name="terms")
-    return render(request,"paramedics-show/diagnostics.html",{"diagonistics":diagonistics,"terms":terms,"phone":"8917240913"})
-
-def yoga_guru_show(request):
-    yoga_gurus = YogaGuru.objects.all()
-    terms = Others.objects.get(name="terms")
-    return render(request,"paramedics-show/yoga-guru.html",{"yoga_gurus":yoga_gurus,"terms":terms,"phone":"8917240913"})
-
-def pharamacies_show(request):
-    pharmacies = DrugHouse.objects.all()
-    terms = Others.objects.get(name="terms")
-    return render(request,"paramedics-show/drughouse.html",{"pharmacies":pharmacies,"terms":terms,"phone":"8917240913"})
 
 def login(request):
     email = request.POST.get("email")
@@ -418,9 +400,9 @@ def patient_dashboard(request):
     not_yet=request.GET.get("not_time")
     user = User.objects.get(id=request.user.id)
     customer = Customer.objects.get(user_id=user)
-    scheduled_appointments = Appointments.objects.filter(customer=customer,status="1")
-    prescriptions = scheduled_appointments.filter(count__gte=1)
-    scheduled_appointments=scheduled_appointments.values("doctor__name","doctor__type__name","doctor__hospital","time","slug")
+    scheduled_appointments = Appointments.objects.filter(customer=customer,status__gte="1")
+    prescriptions = Prescription.objects.filter(appointment__customer=customer)
+    scheduled_appointments=scheduled_appointments.values("doctor__name","doctor__type__name","doctor__hospital","time","slug","status","datetime")
     shortlisted_scheduled_appointments = []
     for appointment in scheduled_appointments:
         now = datetime.datetime.utcnow().replace(tzinfo=utc)
@@ -444,11 +426,11 @@ def blog_single(request,slug):
     return render(request,"blog-single.html",{"article":article,"doctor_types":doctor_types,"paramedic_types":paramedic_types})
 
 def zonal_admin(request):
-    appointments = Appointments.objects.filter(status="0")
-    paramedic_bookings = ParamedicBookings.objects.filter(status="0")
-    appointments = appointments.values("id","name","phone","datetime","doctor__name","doctor__phone","query","type")
-    paramedic_bookings = paramedic_bookings.values("id","name","phone","datetime","paramedic__name","paramedic__phone","query")
-    return render(request,"Zonal Admin/index.html",{"appointments":appointments,"paramedic_bookings":paramedic_bookings})
+    appointments = Appointments.objects.filter(Q(status="0") | Q(status="3"))
+    # paramedic_bookings = ParamedicBookings.objects.filter(status="0")
+    appointments = appointments.values("id","name","phone","datetime","doctor__name","doctor__phone","query","type","status")
+    # paramedic_bookings = paramedic_bookings.values("id","name","phone","datetime","paramedic__name","paramedic__phone","query")
+    return render(request,"Zonal Admin/index.html",{"appointments":appointments})
 
 def video_calling(request,slug):
     appointment = Appointments.objects.get(slug=slug)
@@ -553,6 +535,7 @@ def appointment_close(request):
     appointment = request.GET.get("appointment")
     appointment = Appointments.objects.get(slug=appointment)
     appointment.count=int(appointment.count)+1
+    appointment.status="2"
     appointment.save()
     return JsonResponse(True,safe=False)
 
@@ -586,51 +569,58 @@ def prescription_submit(request):
     roomhash = request.GET.get("roomhash")
     medicines = json.loads(medicines)
     appointment = Appointments.objects.get(slug=roomhash)
-    Prescription.objects.filter(appointment=appointment).delete()
+    slug = ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(16))
+    prescription = Prescription(appointment=appointment,summary=summary,slug=slug)
+    prescription.save()
     for medicine in medicines:
-        prescription = Prescription(appointment=appointment,medicine=medicine["medicine"],morning=medicine["m"],lunch=medicine["l"],evening=medicine["s"],dinner=medicine["d"],afterFood=medicine["aftFood"],period=medicine["period"],quantity=medicine["quantity"],remarks=medicine["remark"],summary=summary)
-        prescription.save()
+        new_medicine = Medicine(prescription_id=prescription,medicine=medicine["medicine"],morning=medicine["m"],lunch=medicine["l"],evening=medicine["s"],dinner=medicine["d"],afterFood=medicine["aftFood"],period=medicine["period"],quantity=medicine["quantity"],remarks=medicine["remark"])
+        new_medicine.save()
+    filepath = save_prescription(prescription)
+    save_prescription_firebase(filepath,appointment.customer.id)
     return JsonResponse(True,safe=False)
 
-def create_prescription_document(request,appointment):
-    appointment = Appointments.objects.get(slug=appointment)
-    medicines = []
-    prescriptions = Prescription.objects.filter(appointment=appointment)
+def save_prescription(prescription):
+
+    appointment = prescription.appointment
+    customer = appointment.customer.id
+    medicine_list = []
+    medicines = Medicine.objects.filter(prescription_id=prescription)
     sl = 1
     doctor_id = appointment.doctor.practice_id
-    for prescription in prescriptions:
+    for medicine in medicines:
         temp = {
                     "sl":str(sl),
-                    "name":prescription.medicine,
-                    "remark":prescription.remarks,
-                    "quantity":prescription.quantity,
-                    "period":prescription.period,
+                    "name":medicine.medicine,
+                    "remark":medicine.remarks,
+                    "quantity":medicine.quantity,
+                    "period":medicine.period,
                 }
-        if prescription.afterFood:
+        if medicine.afterFood:
             food = "After Food"
         else:
             food = "Before Food"
         maen = []
-        if prescription.morning:
+        if medicine.morning:
             maen.append("morning")
-        if prescription.lunch:
+        if medicine.lunch:
             maen.append("afternoon")
-        if prescription.evening:
+        if medicine.evening:
             maen.append("evening")
-        if prescription.dinner:
+        if medicine.dinner:
             maen.append("dinner")
         temp.update({"maen":",".join(maen),"food":food})
-        medicines.append(temp)
+        medicine_list.append(temp)
         sl = sl+1
     context = {
 
-        'date': prescriptions[0].date,
+        'date': prescription.datetime.strftime("%d %B, %Y"),
         'doctor_id': doctor_id,
-        'medicines': medicines,
-        'summary': prescriptions[0].summary,
+        'medicines': medicine_list,
+        'summary': prescription.summary,
     }
     print(context)
     count = appointment.count
+
     tpl = DocxTemplate("/home/pdochealth/pdoc/app/template.docx")
     tpl.render(context)
     name = "prescription-"+str(appointment.id)+"-"+str(count)+".docx"
@@ -638,10 +628,19 @@ def create_prescription_document(request,appointment):
 
     # tpl = DocxTemplate("app/template.docx")
     # tpl.render(context)
-    # name = "prescription-"+str(appointment.id)+"-"+str(count)+".docx"
+    # name = "prescription-"+str(appointment.id)+"-"+str(prescription.pk)+".docx"
     # filepath = 'app/prescriptions/'+name
 
     tpl.save(filepath)
+    return filepath
+
+def save_prescription_firebase(filename,customer):
+    name = filename.split("/")[-1]
+    storage.child("records/{}/{}".format(customer,name)).put(filename)
+
+def create_prescription_document(request,prescription):
+    prescription  = Prescription.objects.get(slug=prescription)
+    filepath = save_prescription(prescription)
     if os.path.exists(filepath):
         with open(filepath, 'rb') as fh:
             response = HttpResponse(fh.read(), content_type="application/vnd.ms-docx")
@@ -649,3 +648,11 @@ def create_prescription_document(request,appointment):
             return response
     raise Http404
 
+
+def re_request(request):
+
+    appointment = request.GET.get("appointment")
+    appointment = Appointments.objects.get(slug=appointment)
+    appointment.status = "3"
+    appointment.save()
+    return JsonResponse(True,safe=False)

@@ -163,12 +163,13 @@ class Appointments(models.Model):
     phone = models.CharField(max_length=200,blank=True,null=True)
     query = models.TextField()
     type = models.CharField(max_length=3)
-    datetime = models.DateTimeField(auto_now=True)
+    datetime = models.DateTimeField(auto_created=True)
     status = models.CharField(max_length=2,default=0)
     time = models.DateTimeField(null=True,blank=True)
     slug = models.SlugField(auto_created=True)
     razor_pay_order_id = models.CharField(max_length=100,null=True,blank=True)
     count = models.CharField(max_length=10,default=0)
+
     def __str__(self):
         return str(self.id)
 
@@ -186,11 +187,17 @@ class ParamedicBookings(models.Model):
     def __str__(self):
         return str(self.id)
 
-
 class Prescription(models.Model):
 
+    slug = models.SlugField()
     appointment = models.ForeignKey(Appointments,on_delete=models.CASCADE)
-    date = models.DateField(auto_now=True)
+    datetime = models.DateTimeField(auto_now=True)
+    summary = models.TextField()
+    meeting_close = models.DateTimeField(auto_now=True)
+
+class Medicine(models.Model):
+
+    prescription_id = models.ForeignKey(Prescription,on_delete=models.CASCADE)
     medicine = models.CharField(max_length=300)
     morning = models.BooleanField(max_length=10)
     lunch = models.BooleanField(max_length=10)
@@ -200,7 +207,6 @@ class Prescription(models.Model):
     period = models.CharField(max_length=300)
     quantity = models.CharField(max_length=300)
     remarks = models.TextField()
-    summary = models.TextField()
 
 class Terms(models.Model):
     id = models.AutoField(primary_key=True)

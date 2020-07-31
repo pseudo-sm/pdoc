@@ -26,7 +26,7 @@
                 <th>Status</th>
             </tr>
             {% for appointment in appointments %}
-            <tr class="doctor-row-{{appointment.id}}">
+            <tr class="doctor-row-{{appointment.id}}" {% if appointment.status == "3" %} style="background-color:red;color:white;" {% endif %}>
                 <td>{{appointment.id}}</td>
                 <td>{{appointment.name}}</td>
                 <td>{{appointment.phone}}</td>
@@ -44,37 +44,37 @@
         </table>
     </div>
     </center>
-    <center>
-        <h4>Paramedic Requests</h4>
-    <div class="col-lg-12 mt-3 p-3">
-        <table class="table table-responsive table-hover table-light">
-            <tr>
-                <th>Appointment Id</th>
-                <th>Patient Name</th>
-                <th>Patient Contact</th>
-                <th>Booking Date Time</th>
-                <th>Paramedic Name</th>
-                <th>Paramedic Contact</th>
-                <th>Query</th>
-                <th>Status</th>
-            </tr>
-            {% for appointment in paramedic_bookings %}
-            <tr class="paramedic-row-{{appointment.id}}">
-                <td>{{appointment.id}}</td>
-                <td>{{appointment.name}}</td>
-                <td>{{appointment.phone}}</td>
-                <td>{{appointment.datetime}}</td>
-                <td>{{appointment.paramedic__name}}</td>
-                <td>{{appointment.paramedic__phone}}</td>
-                <td>{{appointment.query}}</td>
-                <td>
-                    <button class="btn btn-success done-paramedic" data-paramedic="{{appointment.id}}">Done</button>
-                </td>
-            </tr>
-            {% endfor %}
-        </table>
-    </div>
-    </center>
+<!--    <center>-->
+<!--        <h4>Paramedic Requests</h4>-->
+<!--    <div class="col-lg-12 mt-3 p-3">-->
+<!--        <table class="table table-responsive table-hover table-light">-->
+<!--            <tr>-->
+<!--                <th>Appointment Id</th>-->
+<!--                <th>Patient Name</th>-->
+<!--                <th>Patient Contact</th>-->
+<!--                <th>Booking Date Time</th>-->
+<!--                <th>Paramedic Name</th>-->
+<!--                <th>Paramedic Contact</th>-->
+<!--                <th>Query</th>-->
+<!--                <th>Status</th>-->
+<!--            </tr>-->
+<!--            {% for appointment in paramedic_bookings %}-->
+<!--            <tr class="paramedic-row-{{appointment.id}}">-->
+<!--                <td>{{appointment.id}}</td>-->
+<!--                <td>{{appointment.name}}</td>-->
+<!--                <td>{{appointment.phone}}</td>-->
+<!--                <td>{{appointment.datetime}}</td>-->
+<!--                <td>{{appointment.paramedic__name}}</td>-->
+<!--                <td>{{appointment.paramedic__phone}}</td>-->
+<!--                <td>{{appointment.query}}</td>-->
+<!--                <td>-->
+<!--                    <button class="btn btn-success done-paramedic" data-paramedic="{{appointment.id}}">Done</button>-->
+<!--                </td>-->
+<!--            </tr>-->
+<!--            {% endfor %}-->
+<!--        </table>-->
+<!--    </div>-->
+<!--    </center>-->
 </body>
 <script>
     $(".done-appointment").on('click',function(){
@@ -86,11 +86,11 @@
         datetime = date+" "+time;
         done(type,id,datetime);
     });
-    $(".done-paramedic").on('click',function(){
-        type = "paramedic";
-        id = $(this).attr("data-paramedic");
-        done(type,id);
-    });
+    //$(".done-paramedic").on('click',function(){
+      //  type = "paramedic";
+       // id = $(this).attr("data-paramedic");
+       // done(type,id);
+   // });
     function done(type,id,time){
         $.ajax({
         url: "{% url 'done_appointment'  %}",
