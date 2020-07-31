@@ -201,7 +201,9 @@ def important_links(request):
 def signup_customer(request):
     if request.user.is_authenticated:
         return redirect("/patient-dashboard/")
-    return render(request,"sign-up-customer.html",{"doctor_types":doctor_types,"paramedic_types":paramedic_types})
+    terms = Terms.objects.all()
+    terms = terms.last()
+    return render(request,"sign-up-customer.html",{"doctor_types":doctor_types,"paramedic_types":paramedic_types,"terms":terms})
 
 
 def payment(request):
