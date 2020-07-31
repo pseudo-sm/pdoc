@@ -78,6 +78,7 @@
     }
 
     .vc-buttons {
+      z-index: 3;
       position: absolute;
       bottom: 10%;
       left: 0;
@@ -128,11 +129,12 @@
       justify-content: center;
       overflow: hidden;
       touch-action: none;
-      z-index: 999 !important;
+
       background-color: transparent;
     }
 
     .video-local {
+      z-index: 3;
       width: 20%;
       background-image: url("{% static 'connecting.png' %}");
       object-fit: contain;
@@ -158,7 +160,7 @@
     .vc-d-box {
       display: none;
       position: absolute;
-      z-index: 1019;
+      z-index: 3;
       background-color: #f1f1f1;
       text-align: center;
       border: 1px solid #d3d3d3;
@@ -171,7 +173,7 @@
     .vc-d-box-header {
       padding: 10px;
       cursor: move;
-      z-index: 1029;
+
       background-color: #cccccc6c;
       color: rgb(0, 0, 0);
     }
@@ -206,7 +208,7 @@
       /* Hidden by default */
       position: fixed;
       /* Stay in place */
-      z-index: 1999;
+      z-index: 3;
       /* Sit on top */
       padding-top: 100px;
       /* Location of the box */
@@ -307,7 +309,9 @@
       .Mymodal-content {
         width: 100%;
       }
-      .min-btn,.min-btn-red{
+
+      .min-btn,
+      .min-btn-red {
         width: 40px;
         height: 40px;
         font-size: .9rem;
@@ -326,7 +330,7 @@
         </video>
         <div class="container-fluid h-100 p-0">
           <!-- Buttons -->
-          <div class="row vc-buttons" style="z-index: 100;">
+          <div class="row vc-buttons">
             <div class="col-12 text-center mx-auto">
               <button id="mute" class="min-btn" data-toggle="tooltip" data-placement="top" title="Mute/Unmute"
                 onclick="toggleMic()"><i class="fa fa-microphone-slash" id="mute-icon"></i></button>
@@ -349,10 +353,11 @@
             </div>
           </div>
 
-          <div class="d-flex h-100 text-center align-items-right" style="z-index: 99;">
-            <div id="drag-area" class="w-100" style="z-index: 99;">
+          <div class="d-flex h-100 text-center align-items-right">
+            <div id="drag-area" class="w-100">
               <!-- Local Video -->
-              <video id="localVideo" class="video-local" playsinline="playsinline" poster="{% static 'fetching.png' %}" autoplay loop="loop" muted>
+              <video id="localVideo" class="video-local" playsinline="playsinline" poster="{% static 'fetching.png' %}"
+                autoplay loop="loop" muted>
                 <source src="{% static 'connecting.png' %}" type="video/mp4">
               </video>
               <!--Experiment-->
