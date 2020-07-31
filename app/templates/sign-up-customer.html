@@ -1,43 +1,45 @@
 {% for message in messages %}
-    <script>
+<script>
     function remove_alert() {
-            alert = document.getElementsByClassName("alert")[0];
-            alert.remove();
-        }
-    </script>
-    <div class="alert alert-danger">
-        <a class="close" id="close" href="#" data-dismiss="alert" onclick="remove_alert()">×</a>
-        {{ message }}
-    </div>
-    {% endfor %}
+        alert = document.getElementsByClassName("alert")[0];
+        alert.remove();
+    }
+</script>
+<div class="alert alert-danger">
+    <a class="close" id="close" href="#" data-dismiss="alert" onclick="remove_alert()">×</a>
+    {{ message }}
+</div>
+{% endfor %}
 
 
 <!DOCTYPE html>
 <html lang="en-US">
 {% load static %}
 {% include 'head.html' %}
+
 <head>
     <script src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
-     <script src="https://cdn.jsdelivr.net/npm/connectycube@x.x.x/dist/connectycube.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/connectycube@x.x.x/dist/connectycube.min.js"></script>
 </head>
+
 <body>
     <script>
-           const CREDENTIALS = {
-  appId: 2671,
-  authKey: "SYV6fw6DLk86t3v",
-  authSecret: "Nq3KJNcmpn9u3Mj"
-};
+        const CREDENTIALS = {
+            appId: 2671,
+            authKey: "SYV6fw6DLk86t3v",
+            authSecret: "Nq3KJNcmpn9u3Mj"
+        };
 
-ConnectyCube.init(CREDENTIALS);
+        ConnectyCube.init(CREDENTIALS);
 
 
-ConnectyCube.createSession()
-  .then((session) => {
-    console.log('session intiated');
-  })
-  .catch((error) => {
-    console.log('some error happened');
-  });
+        ConnectyCube.createSession()
+            .then((session) => {
+                console.log('session intiated');
+            })
+            .catch((error) => {
+                console.log('some error happened');
+            });
     </script>
     {% include 'navigation.html' %}
     <!-- // Header  -->
@@ -48,164 +50,215 @@ ConnectyCube.createSession()
                 <li><a href="#">Home</a></li>
                 <li class="active">Signup / Login</li>
             </ol>
-<!--            <h1 class="font-weight-300">Calling all Doctors to register who wants to be a part of PDOC</h1>-->
+            <!--            <h1 class="font-weight-300">Calling all Doctors to register who wants to be a part of PDOC</h1>-->
         </div>
     </div>
     <div class="row">
-    <div class="col-lg-6">
-    <div class="container margin-bottom-100px">
-        <!--======= log_in_page =======-->
-        <div id="log-in" class="site-form log-in-form box-shadow border-radius-10">
-            <form action="{% url 'login' %}" method="post" >
-                {% csrf_token %}
-            <div class="form-output">
-                    <p style="color:red;display:none;" class="warning">Please make sure you have filled all fields!!</p>
+        <div class="col-lg-6">
+            <div class="container margin-bottom-100px">
+                <!--======= log_in_page =======-->
+                <div id="log-in" class="site-form log-in-form box-shadow border-radius-10">
+                    <form action="{% url 'login' %}" method="post">
+                        {% csrf_token %}
+                        <div class="form-output">
+                            <p style="color:red;display:none;" class="warning">Please make sure you have filled all
+                                fields!!</p>
 
-                    <div class="form-group label-floating">
-                        <label class="control-label" for="email">Email</label>
-                        <input class="form-control" name="email" placeholder="ex - yourname@gmail.com" id="login-email" type="email">
+                            <div class="form-group label-floating">
+                                <label class="control-label" for="email">Email</label>
+                                <input class="form-control" name="email" placeholder="ex - yourname@gmail.com"
+                                    id="login-email" type="email">
+                            </div>
+
+                            <div class="form-group label-floating">
+                                <label class="control-label" for="password">Password</label>
+                                <input class="form-control" name="password" placeholder="password" id="login-password"
+                                    type="password">
+                            </div>
+
+                        </div>
+
+                        <center>
+                            <!--                        <p>Don't worry , your phone number will not be made public.</p>-->
+                        </center>
+
+                        <button class="btn btn-md btn-primary full-width" style="background-color:#0864b2;"
+                            id="login">Login</button>
+                    </form>
+
+                    <!--                    <a href="#" class="btn btn-md bg-facebook full-width btn-icon-left"><i class="fab fa-facebook margin-right-8px" aria-hidden="true"></i> Login with Facebook</a>-->
+
+                    <!--                    <a href="#" class="btn btn-md bg-twitter full-width btn-icon-left"><i class="fab fa-twitter margin-right-8px" aria-hidden="true"></i> Login with Twitter</a>-->
+
+
+                    <!--                    <p>you have an account? <a href="page-login.html"> Sing in !</a> </p>-->
+
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="container margin-bottom-100px">
+                <!--======= log_in_page =======-->
+                <div id="sign-up" class="site-form log-in-form box-shadow border-radius-10">
+
+                    <div class="form-output">
+                        <p style="color:red;display:none;" class="warning">Please make sure you have filled all fields!!
+                        </p>
+                        <div class="form-group label-floating">
+                            <label class="control-label" for="name">Your Name</label>
+                            <input class="form-control" placeholder="Your Full Name" id="name" type="text">
+                        </div>
+
+                        <div class="form-group label-floating">
+                            <label class="control-label" for="email">Email</label>
+                            <input class="form-control" placeholder="ex - yourname@gmail.com" id="email" type="email">
+                        </div>
+
+                        <div class="form-group label-floating">
+                            <label class="control-label" for="password">Password</label>
+                            <input class="form-control" placeholder="password" id="password" type="password">
+                        </div>
+
+                        <div class="form-group label-floating">
+                            <label class="control-label" for="phone">Phone</label>
+                            <input class="form-control" placeholder="Mobile" type="text" id="phone">
+                        </div>
+
+                        <div class="form-group label-floating">
+                            <label class="control-label" for="query">Query</label>
+                            <textarea class="form-control" placeholder="Describe the problem in detail.."
+                                id="query"></textarea>
+                        </div>
+
+                        <!--                    <div class="form-group label-floating is-select">-->
+                        <!--                        <label class="control-label">Your Gender</label>-->
+                        <!--                        <select class="selectpicker form-control">-->
+                        <!--						<option value="MA">Male</option>-->
+                        <!--						<option value="FE">Female</option>-->
+                        <!--					</select>-->
                     </div>
 
-                    <div class="form-group label-floating">
-                        <label class="control-label" for="password">Password</label>
-                        <input class="form-control" name="password" placeholder="password"  id="login-password" type="password">
+                    <div class="form-group pl-5 pr-4 pb-5">
+                        <div class="form-check">
+                            <input class="form-check-input is-invalid" type="checkbox" value="" id="toc"
+                                required>
+                            <label class="form-check-label" for="toc">
+                                Agree to <a href="!#" data-toggle="modal" data-target="#exampleModalLong">terms and
+                                    conditions</a>. You must agree before submitting.
+                            </label>
+                        </div>
                     </div>
+                    
 
-                    </div>
+                    <button class="btn btn-md btn-primary full-width" style="background-color:#0864b2;"
+                        id="submit">Submit</button>
+                        <script>
+                            $('input:checkbox').change(function(){
+                                if($(this).is(":checked")) {
+                                    $("#submit").show();
+                                } else {
+                                    $("#submit").hide();
+                                }
+                            });
+                            $(document).ready(function() {
+                                    $("#submit").hide();
+                            });
+                            
+                        </script>
 
-                    <center>
-<!--                        <p>Don't worry , your phone number will not be made public.</p>-->
-                    </center>
-
-                    <button  class="btn btn-md btn-primary full-width" style="background-color:#0864b2;" id="login">Login</button>
-            </form>
-
-<!--                    <a href="#" class="btn btn-md bg-facebook full-width btn-icon-left"><i class="fab fa-facebook margin-right-8px" aria-hidden="true"></i> Login with Facebook</a>-->
-
-<!--                    <a href="#" class="btn btn-md bg-twitter full-width btn-icon-left"><i class="fab fa-twitter margin-right-8px" aria-hidden="true"></i> Login with Twitter</a>-->
 
 
-<!--                    <p>you have an account? <a href="page-login.html"> Sing in !</a> </p>-->
+                    <!--                    <a href="#" class="btn btn-md bg-facebook full-width btn-icon-left"><i class="fab fa-facebook margin-right-8px" aria-hidden="true"></i> Login with Facebook</a>-->
 
+                    <!--                    <a href="#" class="btn btn-md bg-twitter full-width btn-icon-left"><i class="fab fa-twitter margin-right-8px" aria-hidden="true"></i> Login with Twitter</a>-->
+
+
+                    <!--                    <p>you have an account? <a href="page-login.html"> Sing in !</a> </p>-->
+
+                </div>
             </div>
         </div>
     </div>
-    <div class="col-lg-6">
-        <div class="container margin-bottom-100px">
-        <!--======= log_in_page =======-->
-        <div id="sign-up" class="site-form log-in-form box-shadow border-radius-10">
-
-            <div class="form-output">
-                    <p style="color:red;display:none;" class="warning">Please make sure you have filled all fields!!</p>
-                    <div class="form-group label-floating">
-                        <label class="control-label" for="name">Your Name</label>
-                        <input class="form-control" placeholder="Your Full Name" id="name" type="text">
-                    </div>
-
-                    <div class="form-group label-floating">
-                        <label class="control-label" for="email">Email</label>
-                        <input class="form-control" placeholder="ex - yourname@gmail.com" id="email" type="email">
-                    </div>
-
-                    <div class="form-group label-floating">
-                        <label class="control-label" for="password">Password</label>
-                        <input class="form-control" placeholder="password"  id="password" type="password">
-                    </div>
-
-                    <div class="form-group label-floating">
-                        <label class="control-label" for="phone">Phone</label>
-                        <input class="form-control" placeholder="Mobile" type="text" id="phone">
-                    </div>
-
-                    <div class="form-group label-floating">
-                        <label class="control-label" for="query">Query</label>
-                        <textarea class="form-control" placeholder="Describe the problem in detail.."  id="query"></textarea>
-                    </div>
-
-<!--                    <div class="form-group label-floating is-select">-->
-<!--                        <label class="control-label">Your Gender</label>-->
-<!--                        <select class="selectpicker form-control">-->
-<!--						<option value="MA">Male</option>-->
-<!--						<option value="FE">Female</option>-->
-<!--					</select>-->
-                    </div>
-
-                    <center>
-<!--                        <p>Don't worry , your phone number will not be made public.</p>-->
-                    </center>
-
-                    <button  class="btn btn-md btn-primary full-width" style="background-color:#0864b2;" id="submit">Submit</button>
-
-
-
-<!--                    <a href="#" class="btn btn-md bg-facebook full-width btn-icon-left"><i class="fab fa-facebook margin-right-8px" aria-hidden="true"></i> Login with Facebook</a>-->
-
-<!--                    <a href="#" class="btn btn-md bg-twitter full-width btn-icon-left"><i class="fab fa-twitter margin-right-8px" aria-hidden="true"></i> Login with Twitter</a>-->
-
-
-<!--                    <p>you have an account? <a href="page-login.html"> Sing in !</a> </p>-->
-
-            </div>
-        </div>
-    </div>
-    </div>
-        <!--===
+    <!--===
         ==== // log_in_page =======-->
 
     </div>
 
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Terms and Conditions</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    ...
+                </div>
+                <div class="modal-footer">
+                    Thank You
+                </div>
+            </div>
+        </div>
+    </div>
+
     {% include 'footer.html' %}
     <script>
-        $("#submit").on("click",function(){
+        $("#submit").on("click", function () {
             name = $("#name").val();
             email = $("#email").val();
             password = $("#password").val();
             phone = $("#phone").val();
             query = $("textarea#query").val();
             status = "true";
-            if(name == ""){
-                $("#name").css("border-color","red");
+            if (name == "") {
+                $("#name").css("border-color", "red");
                 status = "false";
             }
-            if(email == ""){
-                $("#email").css("border-color","red");
+            if (email == "") {
+                $("#email").css("border-color", "red");
                 status = "false";
             }
-            if(password == ""){
-                $("#password").css("border-color","red");
+            if (password == "") {
+                $("#password").css("border-color", "red");
                 status = false;
             }
-            if(phone == ""){
-                $("#phone").css("border-color","red");
+            if (phone == "") {
+                $("#phone").css("border-color", "red");
                 status = "false";
             }
-            if(query == ""){
-                $("textarea#query").css("border-color","red");
+            if (query == "") {
+                $("textarea#query").css("border-color", "red");
                 status = "false";
             }
-            if(status=="true") {
-            $.ajax({
-              url: "{% url 'signup_customer_action' %}",
-              type: "GET",
-              data: {
-                "name" : name,
-                "email" : email,
-                "password" : password,
-                "phone" : phone,
-                "query" : query,
-               },
-              dataType: "json",
-              success: function(order){
-                console.log(order);
-                window.location="http://www.pdochealth.com/payment?order_id="+order.order_id.id;
-              }
-            });
+            if (status == "true") {
+                $.ajax({
+                    url: "{% url 'signup_customer_action' %}",
+                    type: "GET",
+                    data: {
+                        "name": name,
+                        "email": email,
+                        "password": password,
+                        "phone": phone,
+                        "query": query,
+                    },
+                    dataType: "json",
+                    success: function (order) {
+                        console.log(order);
+                        window.location = "http://www.pdochealth.com/payment?order_id=" + order
+                            .order_id.id;
+                    }
+                });
             }
         });
     </script>
-{% include 'js.html' %}
+    {% include 'js.html' %}
 </body>
 
 
 <!-- Mirrored from nilethemes.com/html/tabib/health-and-fitness-advisor.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 06 Mar 2020 16:39:01 GMT -->
+
 </html>

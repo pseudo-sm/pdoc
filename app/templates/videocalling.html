@@ -3,6 +3,7 @@
 
 <head>
   {% load static %}
+  <link rel="shortcut icon" href="#">
   <script src='https://cdn.scaledrone.com/scaledrone.min.js'></script>
   <script src="https://api.html5media.info/1.1.5/html5media.min.js"></script>
   <title>Title</title>
@@ -25,7 +26,7 @@
       background: url("{% static 'connecting.png' %}");
       background-position: center;
       background-size: contain;
-      background-repeat:no-repeat;
+      background-repeat: no-repeat;
       height: 100vh;
       width: 100%;
       overflow: hidden;
@@ -42,8 +43,9 @@
       width: auto;
       height: auto;
       z-index: 0;
-      transform:  translateX(-50%) translateY(-50%);
-      -webkit-transform: translateX(-50%) translateY(-50%); /* Safari and Chrome */
+      transform: translateX(-50%) translateY(-50%);
+      -webkit-transform: translateX(-50%) translateY(-50%);
+      /* Safari and Chrome */
       -moz-transform: translateX(-50%) translateY(-50%);
       /* -webkit-transform: translateX(-50%) translateY(-50%); */
       /* transform: translateX(-50%) translateY(-50%); */
@@ -71,10 +73,8 @@
         object-position: center;
         object-fit: contain;
         background-position: center;
-      background-size: contain;
+        background-size: contain;
       }
-
-
     }
 
     .vc-buttons {
@@ -137,14 +137,15 @@
       background-image: url("{% static 'connecting.png' %}");
       object-fit: contain;
       object-position: center;
-      border: 5px solid #26aadef3;
+      border: 5px solid #2a2a2af3;
       border-radius: 15px;
       touch-action: none;
       user-select: none;
       margin: 3%;
       transform: rotateY(180deg);
-      -webkit-transform:rotateY(180deg); /* Safari and Chrome */
-      -moz-transform:rotateY(180deg);
+      -webkit-transform: rotateY(180deg);
+      /* Safari and Chrome */
+      -moz-transform: rotateY(180deg);
     }
 
     .video-local:hover {
@@ -154,7 +155,7 @@
       transform: scale(1.1) rotateY(180deg);
     }
 
-    #prescribe {
+    .vc-d-box {
       display: none;
       position: absolute;
       z-index: 1019;
@@ -162,24 +163,12 @@
       text-align: center;
       border: 1px solid #d3d3d3;
       float: right !important;
-      top:1%;
-      width: 40%;
-      border-radius: 10px;
-    }
-    #prescribe-patient {
-      display: none;
-      position: absolute;
-      z-index: 1019;
-      background-color: #f1f1f1;
-      text-align: center;
-      border: 1px solid #d3d3d3;
-      float: right !important;
-      top:1%;
+      top: 1%;
       width: 40%;
       border-radius: 10px;
     }
 
-    #prescribeheader {
+    .vc-d-box-header {
       padding: 10px;
       cursor: move;
       z-index: 1029;
@@ -187,32 +176,106 @@
       color: rgb(0, 0, 0);
     }
 
-    #prescribeheader-patient {
-      padding: 10px;
-      cursor: move;
-      z-index: 1029;
-      background-color: #cccccc6c;
-      color: rgb(0, 0, 0);
-    }
-    .tinyarea{
+    .tinyarea {
       width: 100%;
-      border:0px
+      border: 0px
     }
-    .pres-close-patient{
+
+    .vc-d-box-close {
       border: none;
       float: right;
       color: #de2626;
       background-color: transparent;
     }
-    .pres-close{
-      border: none;
-      float: right;
-      color: #de2626;
-      background-color: transparent;
-    }
-    .med-repo{
+
+    .med-repo {
       max-height: 300px;
       overflow-y: auto;
+    }
+
+    .custom-d-file {
+      max-height: 100px;
+      width: 100%;
+      height: 100%;
+      object-position: center;
+      object-fit: cover;
+    }
+
+    .Mymodal {
+      display: none;
+      /* Hidden by default */
+      position: fixed;
+      /* Stay in place */
+      z-index: 1999;
+      /* Sit on top */
+      padding-top: 100px;
+      /* Location of the box */
+      left: 0;
+      top: 0;
+      width: 100%;
+      /* Full width */
+      height: 100%;
+      /* Full height */
+      overflow: auto;
+      /* Enable scroll if needed */
+      background-color: rgb(0, 0, 0);
+      /* Fallback color */
+      background-color: rgba(0, 0, 0, 0.9);
+      /* Black w/ opacity */
+    }
+
+    /* Modal Content (image) */
+    .Mymodal-content {
+      margin: auto;
+      display: block;
+      width: 80%;
+      max-width: 700px;
+    }
+
+    /* Add Animation */
+    .Mymodal-content {
+      -webkit-animation-name: zoom;
+      -webkit-animation-duration: 0.6s;
+      animation-name: zoom;
+      animation-duration: 0.6s;
+    }
+
+    @-webkit-keyframes zoom {
+      from {
+        -webkit-transform: scale(0)
+      }
+
+      to {
+        -webkit-transform: scale(1)
+      }
+    }
+
+    @keyframes zoom {
+      from {
+        transform: scale(0)
+      }
+
+      to {
+        transform: scale(1)
+      }
+    }
+
+    /* The Close Button */
+    .Myclose {
+      position: absolute;
+      top: 15px;
+      right: 35px;
+      color: #f1f1f1;
+      font-size: 40px;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+
+    .Myclose:hover,
+    .Myclose:focus {
+      color: #bbb;
+      text-decoration: none;
+      cursor: pointer;
     }
 
     @media only screen and (max-width: 600px) {
@@ -221,28 +284,35 @@
         border: 2px solid rgba(136, 136, 136, .5);
         border-radius: 5px;
       }
-      #prescribe{
+
+      .vc-d-box {
         width: 100% !important;
         align-self: right;
         top: 0%;
       }
-      #prescribe-patient{
-        width: 100% !important;
-        align-self: right;
-        top: 0%;
-      }
-      .d-sm-none{
+
+      .d-sm-none {
         display: none;
       }
-      #vd-head .video-remote {
-          width : 100%;
-      }
-      .med-repo{
-      max-height: 250px;
-      overflow-y: auto;
-    }
-    }
 
+      #vd-head .video-remote {
+        width: 100%;
+      }
+
+      .med-repo {
+        max-height: 250px;
+        overflow-y: auto;
+      }
+
+      .Mymodal-content {
+        width: 100%;
+      }
+      .min-btn,.min-btn-red{
+        width: 40px;
+        height: 40px;
+        font-size: .9rem;
+      }
+    }
   </style>
 </head>
 
@@ -258,17 +328,21 @@
           <!-- Buttons -->
           <div class="row vc-buttons" style="z-index: 100;">
             <div class="col-12 text-center mx-auto">
-              <button id="mute" class="min-btn" data-toggle="tooltip" data-placement="top" title="Mute/Unmute" onclick="toggleMic()"><i
-                  class="fa fa-microphone-slash" id="mute-icon"></i></button>
-              <button id="video-off" class="min-btn" data-toggle="tooltip" data-placement="top" title="Video On/Off" onclick="toggleVideo()"><i
-                  class="fa fa-pause" id="pause-icon"></i></button>
+              <button id="mute" class="min-btn" data-toggle="tooltip" data-placement="top" title="Mute/Unmute"
+                onclick="toggleMic()"><i class="fa fa-microphone-slash" id="mute-icon"></i></button>
+              <button id="video-off" class="min-btn" data-toggle="tooltip" data-placement="top" title="Video On/Off"
+                onclick="toggleVideo()"><i class="fa fa-pause" id="pause-icon"></i></button>
               {% if doctor %}
               <button id="presc-btn" class="min-btn" data-toggle="tooltip" data-placement="top" title="Prescribe"><i
                   class="fa fa-pencil-square-o"></i></button>
+              <button id="pati-file" class="min-btn" data-toggle="tooltip" data-placement="top" title="Files"><i
+                  class="fa fa-folder-open"></i></button>
               {% endif %}
               {% if doctor != True %}
-              <button id="presc-btn-patient" class="min-btn" data-toggle="tooltip" data-placement="top" title="My Prescription"><i
-                class="fa fa-book"></i></button>
+              <button id="presc-btn-patient" class="min-btn" data-toggle="tooltip" data-placement="top"
+                title="My Prescription"><i class="fa fa-book"></i></button>
+              <button id="file-up" class="min-btn" data-toggle="tooltip" data-placement="top" title="Upload Docs"><i
+                  class="fa fa-upload"></i></button>
               {% endif %}
               <button id="end" class="min-btn-red " data-toggle="tooltip" data-placement="top" title="End"><i
                   class="fa fa-stop"></i></button>
@@ -278,14 +352,15 @@
           <div class="d-flex h-100 text-center align-items-right" style="z-index: 99;">
             <div id="drag-area" class="w-100" style="z-index: 99;">
               <!-- Local Video -->
-              <video id="localVideo" class="video-local" playsinline="playsinline" autoplay
-                loop="loop" muted>
+              <video id="localVideo" class="video-local" playsinline="playsinline" poster="{% static 'fetching.png' %}" autoplay loop="loop" muted>
                 <source src="{% static 'connecting.png' %}" type="video/mp4">
               </video>
               <!--Experiment-->
               {% if doctor != True %}
-              <div id="prescribe-patient">
-                <div id="prescribeheader-patient">My Prescription<button class="pres-close-patient"><i class="fa fa-times" aria-hidden="true"></i></button></div>
+              <div id="prescribe-patient" class="vc-d-box">
+                <div id="prescribeheader-patient" class="vc-d-box-header">My Prescription<button
+                    class="pres-close-patient vc-d-box-close"><i class="fa fa-times" aria-hidden="true"></i></button>
+                </div>
                 <div class="container-fluid pt-2 pb-3 med-add">
                   <div class="row no-gutters text-left">
                     <div class="col-6 mx-auto my-auto">
@@ -298,43 +373,111 @@
                       Reg no: <strong>{{practice_id}}</strong>
                     </div>
 
-                  </div><hr>
-                  <div class="row no-gutters text-left mt-1 mb-2 pl-5 pr-5" >
+                  </div>
+                  <hr>
+                  <div class="row no-gutters text-left mt-1 mb-2 pl-5 pr-5">
                     <div class="col-12 mx-auto my-auto">
-                     <p ><pre id="summary-patient"></pre></p>
+                      <p>
+                        <pre id="summary-patient"></pre>
+                      </p>
                     </div>
                   </div>
                   <hr>
-                  <div class="row no-gutters text-left mt-1 mb-2" >
+                  <div class="row no-gutters text-left mt-1 mb-2">
                     <div class="col-12 mx-auto my-auto">
-                        <ol class="med-repo">
-                          <h4>Medicines List</h4>
+                      <ol class="med-repo">
+                        <h4>Medicines List</h4>
 
-                        </ol>
+                      </ol>
                     </div>
                   </div>
                 </div>
               </div>
+              <div id="file-patient" class="vc-d-box">
+                <div id="prescribeheader-patient" class="vc-d-box-header">My Files<button
+                    class="file-close-patient vc-d-box-close"><i class="fa fa-times" aria-hidden="true"></i></button>
+                </div>
+                <div class="container-fluid pt-2 pb-3 med-add">
+                  <div class="row no-gutters text-left">
+                    <div class="col-12 mx-auto my-auto">
+                      <h5 class="pl-2 pt-3 pb-3">Upload a document</h5>
+                      <div class="input-group">
+                        <div class="custom-file">
+                          <input type="file" class="custom-file-input" id="inputGroupFile04">
+                          <label class="custom-file-label" for="inputGroupFile04">Choose Document</label>
+                        </div>
+                        <div class="input-group-append">
+                          <button class="btn btn-success" type="button">Upload</button>
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+                  <hr>
+                  <h5 class="text-left pl-2 pt-3 pb-3">All Documents</h5>
+                  <div class="row no-gutters text-left">
+
+                    <div class="col-4 col-md-3 col-sm-4">
+                      <img src="https://media.sproutsocial.com/uploads/2017/02/10x-featured-social-media-image-size.png"
+                        alt="Patient Documents" class="img-thumbnail custom-d-file">
+                    </div>
+                    <div class="col-4 col-md-3 col-sm-4">
+                      <img src="https://media.sproutsocial.com/uploads/2017/02/10x-featured-social-media-image-size.png"
+                        alt="Patient Documents" class="img-thumbnail custom-d-file">
+                    </div>
+                    <div class="col-4 col-md-3 col-sm-4">
+                      <img src="https://media.sproutsocial.com/uploads/2017/02/10x-featured-social-media-image-size.png"
+                        alt="Patient Documents" class="img-thumbnail custom-d-file">
+                    </div>
+                    <div class="col-4 col-md-3 col-sm-4">
+                      <img src="https://media.sproutsocial.com/uploads/2017/02/10x-featured-social-media-image-size.png"
+                        alt="Patient Documents" class="img-thumbnail custom-d-file">
+                    </div>
+                    <div class="col-4 col-md-3 col-sm-4">
+                      <img src="https://media.sproutsocial.com/uploads/2017/02/10x-featured-social-media-image-size.png"
+                        alt="Patient Documents" class="img-thumbnail custom-d-file">
+                    </div>
+                    <div class="col-4 col-md-3 col-sm-4">
+                      <img src="http://media1.santabanta.com/full5/Nature/Animals/animals-89a.jpg"
+                        alt="Patient Documents" class="img-thumbnail custom-d-file">
+                    </div>
+                    <div class="col-4 col-md-3 col-sm-4">
+                      <img src="https://media.sproutsocial.com/uploads/2017/02/10x-featured-social-media-image-size.png"
+                        alt="Patient Documents" class="img-thumbnail custom-d-file">
+                    </div>
+                    <div class="col-4 col-md-3 col-sm-4">
+                      <img src="https://media.sproutsocial.com/uploads/2017/02/10x-featured-social-media-image-size.png"
+                        alt="Patient Documents" class="img-thumbnail custom-d-file">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div id="myModal" class="Mymodal">
+                <span class="Myclose">&times;</span>
+                <img class="Mymodal-content" id="img01">
+              </div>
               {% endif %}
-<!--              Experiment-->
-              <div id="prescribe">
-                <div id="prescribeheader">Prescribe<button class="pres-close"><i class="fa fa-times" aria-hidden="true"></i></button></div>
-                <textarea class="tinyarea" name="tiny" id="summary" cols="30" rows="10" placeholder="Prescribe here"></textarea>
+              <!--              Experiment-->
+              <div id="prescribe" class="vc-d-box">
+                <div id="prescribeheader" class="vc-d-box-header">Prescribe<button class="pres-close vc-d-box-close"><i
+                      class="fa fa-times" aria-hidden="true"></i></button></div>
+                <textarea class="tinyarea" name="tiny" id="summary" cols="30" rows="10"
+                  placeholder="Prescribe here"></textarea>
                 <div class="container-fluid pt-2 pb-3 med-add">
                   <div class="med-repo">
 
-                    <div class="row no-gutters mt-1 mb-3 med-row"  data-count="1">
+                    <div class="row no-gutters mt-1 mb-3 med-row" data-count="1">
                       <div class="col-md-4 col-sm-12 my-auto">
                         <input type="text" class="form-control medicine pushMed" placeholder="Enter Medicine Name">
                       </div>
                       <div class="col-md-4 col-sm-12 med-time">
-                          M-<input type="checkbox" id="m-1" name="" class="M-medicine pushMed">&nbsp;&nbsp;
-                          A-<input type="checkbox" id="l-1" name="" class="L-medicine pushMed">&nbsp;&nbsp;
-                          E-<input type="checkbox" id="s-1" name="" class="S-medicine pushMed">&nbsp;&nbsp;
-                          N-<input type="checkbox" id="d-1" name="" class="D-medicine pushMed">
-                          <br>
-                           <input type="checkbox" name="" class="aftFood-medicine pushMed"> Aft Food
-                           <input type="checkbox" name="" class="befFood-medicine pushMed"> Bef Food
+                        M-<input type="checkbox" id="m-1" name="" class="M-medicine pushMed">&nbsp;&nbsp;
+                        A-<input type="checkbox" id="l-1" name="" class="L-medicine pushMed">&nbsp;&nbsp;
+                        E-<input type="checkbox" id="s-1" name="" class="S-medicine pushMed">&nbsp;&nbsp;
+                        N-<input type="checkbox" id="d-1" name="" class="D-medicine pushMed">
+                        <br>
+                        <input type="checkbox" name="" class="aftFood-medicine pushMed"> Aft Food
+                        <input type="checkbox" name="" class="befFood-medicine pushMed"> Bef Food
                       </div>
                       <div class="col-6 col-md-2 col-sm-6 my-auto">
                         <input type="text" class="form-control quantity-medicine pushMed" placeholder="Quantity">
@@ -348,8 +491,56 @@
                     </div>
                   </div>
                   <button id="add-more-med" type="button" class="btn btn-secondary btn-sm btn-block">Add More</button>
-                  <button id="prescribe-submit" type="button" class="btn btn-primary btn-sm btn-block">Prescribe</button>
+                  <button id="prescribe-submit" type="button"
+                    class="btn btn-primary btn-sm btn-block">Prescribe</button>
                 </div>
+              </div>
+              <div id="file-doctor" class="vc-d-box">
+                <div id="prescribeheader-patient" class="vc-d-box-header">My Files<button
+                    class="file-close-doctor vc-d-box-close"><i class="fa fa-times" aria-hidden="true"></i></button>
+                </div>
+                <div class="container-fluid pt-2 pb-3 med-add">
+                  <h5 class="text-left pl-2 pt-3 pb-3">All Documents</h5>
+                  <div class="row no-gutters text-left">
+
+                    <div class="col-4 col-md-3 col-sm-4">
+                      <img src="https://media.sproutsocial.com/uploads/2017/02/10x-featured-social-media-image-size.png"
+                        alt="Patient Documents" class="img-thumbnail custom-d-file">
+                    </div>
+                    <div class="col-4 col-md-3 col-sm-4">
+                      <img src="https://media.sproutsocial.com/uploads/2017/02/10x-featured-social-media-image-size.png"
+                        alt="Patient Documents" class="img-thumbnail custom-d-file">
+                    </div>
+                    <div class="col-4 col-md-3 col-sm-4">
+                      <img src="https://media.sproutsocial.com/uploads/2017/02/10x-featured-social-media-image-size.png"
+                        alt="Patient Documents" class="img-thumbnail custom-d-file">
+                    </div>
+                    <div class="col-4 col-md-3 col-sm-4">
+                      <img src="https://media.sproutsocial.com/uploads/2017/02/10x-featured-social-media-image-size.png"
+                        alt="Patient Documents" class="img-thumbnail custom-d-file">
+                    </div>
+                    <div class="col-4 col-md-3 col-sm-4">
+                      <img src="https://media.sproutsocial.com/uploads/2017/02/10x-featured-social-media-image-size.png"
+                        alt="Patient Documents" class="img-thumbnail custom-d-file">
+                    </div>
+                    <div class="col-4 col-md-3 col-sm-4">
+                      <img src="http://media1.santabanta.com/full5/Nature/Animals/animals-89a.jpg"
+                        alt="Patient Documents" class="img-thumbnail custom-d-file">
+                    </div>
+                    <div class="col-4 col-md-3 col-sm-4">
+                      <img src="https://media.sproutsocial.com/uploads/2017/02/10x-featured-social-media-image-size.png"
+                        alt="Patient Documents" class="img-thumbnail custom-d-file">
+                    </div>
+                    <div class="col-4 col-md-3 col-sm-4">
+                      <img src="https://media.sproutsocial.com/uploads/2017/02/10x-featured-social-media-image-size.png"
+                        alt="Patient Documents" class="img-thumbnail custom-d-file">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div id="myModal" class="Mymodal">
+                <span class="Myclose">&times;</span>
+                <img class="Mymodal-content" id="img01">
               </div>
             </div>
           </div>
@@ -359,9 +550,12 @@
   </div>
   <!-- Optional JavaScript -->
   <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-  <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
- <script src="https://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
- <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"integrity="sha512-0bEtK0USNd96MnO4XhH8jhv3nyRF0eK87pJke6pkYf3cM0uDIhNJy9ltuzqgypoIFXw3JSuiy04tVk4AjpZdZw=="crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"
+    integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"
+    integrity="sha512-0bEtK0USNd96MnO4XhH8jhv3nyRF0eK87pJke6pkYf3cM0uDIhNJy9ltuzqgypoIFXw3JSuiy04tVk4AjpZdZw=="
+    crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
     integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
   </script>
@@ -371,48 +565,77 @@
   <script>
     //local video
     var radio_id = 1;
-    document.getElementById("localVideo").play();
-    document.getElementById("remoteVideo").play();
     document.getElementById("localVideo").style["float"] = "right";
     document.getElementById("prescribe").style["float"] = "right";
     $(function () {
-      if(window.matchMedia("(min-width: 767px)").matches){
+      if (window.matchMedia("(min-width: 767px)").matches) {
         $("#prescribe").draggable();
         $("#prescribe-patient").draggable();
+        $("#file-doctor").draggable();
+        $("#file-patient").draggable();
       }
 
       $("#localVideo").draggable();
     });
     $("#add-more-med").click(function () {
       radio_id++;
-      $(".med-repo").append('<div class="row no-gutters mt-1 mb-1 med-row" data-count="'+radio_id+'"><div class="col-md-4 col-sm-12 my-auto"><input type="text" class="form-control medicine pushMed" placeholder="Enter Medicine Name"></div><div class="col-md-4 col-sm-12">M-<input type="checkbox" name="" id="m-'+radio_id+'" class="M-medicine pushMed">&nbsp;&nbsp; A-<input type="checkbox" name="" id="l-'+radio_id+'" class="L-medicine pushMed">&nbsp;&nbsp;E-<input type="checkbox" name="" id="s-'+radio_id+'" class="S-medicine pushMed">&nbsp;&nbsp; N-<input type="checkbox" name="" id="d-'+radio_id+'" class="D-medicine pushMed"><br><input type="checkbox" name="" class="aftFood-medicine pushMed"> Aft Food<input type="checkbox" name="" class="befFood-medicine pushMed"> Bef Food</div><div class="col-6 col-md-2 col-sm-6 my-auto"><input type="text" class="form-control quantity-medicine pushMed" placeholder="Quantity"></div><div class="col-6 col-md-2 col-sm-6 col-xs-3 my-auto"><input type="text" class="form-control period-medicine pushMed" placeholder="Period"></div><div class="col-md-12 col-sm-12 my-auto"><input type="text" class="form-control remark-medicine pushMed" placeholder="Remark"></div></div>');
+      $(".med-repo").append('<div class="row no-gutters mt-1 mb-1 med-row" data-count="' + radio_id +
+        '"><div class="col-md-4 col-sm-12 my-auto"><input type="text" class="form-control medicine pushMed" placeholder="Enter Medicine Name"></div><div class="col-md-4 col-sm-12">M-<input type="checkbox" name="" id="m-' +
+        radio_id + '" class="M-medicine pushMed">&nbsp;&nbsp; A-<input type="checkbox" name="" id="l-' +
+        radio_id + '" class="L-medicine pushMed">&nbsp;&nbsp;E-<input type="checkbox" name="" id="s-' + radio_id +
+        '" class="S-medicine pushMed">&nbsp;&nbsp; N-<input type="checkbox" name="" id="d-' + radio_id +
+        '" class="D-medicine pushMed"><br><input type="checkbox" name="" class="aftFood-medicine pushMed"> Aft Food<input type="checkbox" name="" class="befFood-medicine pushMed"> Bef Food</div><div class="col-6 col-md-2 col-sm-6 my-auto"><input type="text" class="form-control quantity-medicine pushMed" placeholder="Quantity"></div><div class="col-6 col-md-2 col-sm-6 col-xs-3 my-auto"><input type="text" class="form-control period-medicine pushMed" placeholder="Period"></div><div class="col-md-12 col-sm-12 my-auto"><input type="text" class="form-control remark-medicine pushMed" placeholder="Remark"></div></div>'
+      );
       $('.med-repo').scrollTop($('.med-repo')[0].scrollHeight);
     });
+
     $("#presc-btn").click(function () {
+      $("#file-doctor").hide();
       $("#prescribe").show();
     });
     $(".pres-close").click(function () {
       $("#prescribe").hide();
     });
     $("#presc-btn-patient").click(function () {
+      $("#file-patient").hide();
       $("#prescribe-patient").show();
     });
     $(".pres-close-patient").click(function () {
       $("#prescribe-patient").hide();
     });
-  </script>
-  <script>
 
-  </script>
-<script src="https://www.gstatic.com/firebasejs/3.1.0/firebase.js"></script>
+    $("#file-up").click(function () {
+      $("#prescribe-patient").hide();
+      $("#file-patient").show();
+    });
+    $(".file-close-patient").click(function () {
+      $("#file-patient").hide();
+    });
+    $("#pati-file").click(function () {
+      $("#prescribe").hide();
+      $("#file-doctor").show();
+    });
+    $(".file-close-doctor").click(function () {
+      $("#file-doctor").hide();
+    });
 
-<!-- TODO: Add SDKs for Firebase products that you want to use
+    $(".custom-d-file").click(function () {
+      $(".Mymodal-content").attr("src", $(this).closest(".custom-d-file").attr("src"));
+      $(".Mymodal").show();
+    });
+    $(".Myclose").click(function () {
+      $(".Mymodal").hide();
+    });
+  </script>
+  <script src="https://www.gstatic.com/firebasejs/3.1.0/firebase.js"></script>
+
+  <!-- TODO: Add SDKs for Firebase products that you want to use
      https://firebase.google.com/docs/web/setup#available-libraries -->
 
-<script>
-  var doctor = '{{doctor}}';
-</script>
-<script src="{% static 'script.js' %}"></script>
+  <script>
+    var doctor = '{{doctor}}';
+  </script>
+  <script src="{% static 'script.js' %}"></script>
 
 </body>
 

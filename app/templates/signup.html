@@ -24,83 +24,123 @@
 
             <div class="form-output">
 
-                    <div class="form-group label-floating">
-                        <label class="control-label" for="name">Your Name</label>
-                        <input class="form-control" placeholder="Dr. Your Name " id="name" type="text">
-                    </div>
+                <div class="form-group label-floating">
+                    <label class="control-label" for="name">Your Name</label>
+                    <input class="form-control" placeholder="Dr. Your Name " id="name" type="text">
+                </div>
 
-                    <div class="form-group label-floating">
-                        <label class="control-label" for="specialization">Specialization</label>
-                        <input class="form-control" placeholder="Ex - Orthopedic/Padeatric/General Medicine" id="specialization" type="text">
-                    </div>
+                <div class="form-group label-floating">
+                    <label class="control-label" for="specialization">Specialization</label>
+                    <input class="form-control" placeholder="Ex - Orthopedic/Padeatric/General Medicine"
+                        id="specialization" type="text">
+                </div>
 
-                    <div class="form-group label-floating" >
-                        <label class="control-label" for="designation">Your Designation</label>
-                        <input class="form-control" placeholder="Ex - Assoc. Professor" id="designation" type="text">
-                    </div>
+                <div class="form-group label-floating">
+                    <label class="control-label" for="designation">Your Designation</label>
+                    <input class="form-control" placeholder="Ex - Assoc. Professor" id="designation" type="text">
+                </div>
 
-                    <div class="form-group label-floating">
-                        <label class="control-label" for="hospital">Hospital</label>
-                        <input class="form-control" placeholder="Hospital Name" id="hospital" type="text">
-                    </div>
+                <div class="form-group label-floating">
+                    <label class="control-label" for="hospital">Hospital</label>
+                    <input class="form-control" placeholder="Hospital Name" id="hospital" type="text">
+                </div>
 
-                     <div class="form-group label-floating">
-                        <label class="control-label" for="location">Location</label>
-                         <textarea class="form-control" placeholder="Address" id="location" ></textarea>
-                    </div>
+                <div class="form-group label-floating">
+                    <label class="control-label" for="location">Location</label>
+                    <textarea class="form-control" placeholder="Address" id="location"></textarea>
+                </div>
 
-                    <div class="form-group label-floating">
-                        <label class="control-label" for="phone">Phone</label>
-                        <input class="form-control" placeholder="Mobile" type="text" id="phone">
-                    </div>
+                <div class="form-group label-floating">
+                    <label class="control-label" for="phone">Phone</label>
+                    <input class="form-control" placeholder="Mobile" type="text" id="phone">
+                </div>
 
-                    <h5>Availability</h5>
-                    <div class="form-group label-floating">
-                        <label class="control-label" for="from">From</label>
-                        <input class="form-control" type="time" id="from">
-                    </div>
+                <h5>Availability</h5>
+                <div class="form-group label-floating">
+                    <label class="control-label" for="from">From</label>
+                    <input class="form-control" type="time" id="from">
+                </div>
 
-                    <div class="form-group label-floating">
-                        <label class="control-label" for="to">To</label>
-                        <input class="form-control"  type="time" id="to">
-                    </div>
+                <div class="form-group label-floating">
+                    <label class="control-label" for="to">To</label>
+                    <input class="form-control" type="time" id="to">
+                </div>
 
-                    <div class="form-group label-floating">
-                        <label class="control-label" for="id">Registration Id</label>
-                        <input class="form-control" placeholder="Registration Id" type="text" id="id">
-                    </div>
+                <div class="form-group label-floating">
+                    <label class="control-label" for="id">Registration Id</label>
+                    <input class="form-control" placeholder="Registration Id" type="text" id="id">
+                </div>
 
-<!--                    <div class="form-group label-floating is-select">-->
-<!--                        <label class="control-label">Your Gender</label>-->
-<!--                        <select class="selectpicker form-control">-->
-<!--						<option value="MA">Male</option>-->
-<!--						<option value="FE">Female</option>-->
-<!--					</select>-->
-                    </div>
-
-                    <center>
-                        <p>Don't worry , your phone number will not be made public.</p>
-                    </center>
-
-                    <button  class="btn btn-md btn-primary full-width" style="background-color:#0864b2;" id="submit">Submit</button>
-
-
-<!--                    <a href="#" class="btn btn-md bg-facebook full-width btn-icon-left"><i class="fab fa-facebook margin-right-8px" aria-hidden="true"></i> Login with Facebook</a>-->
-
-<!--                    <a href="#" class="btn btn-md bg-twitter full-width btn-icon-left"><i class="fab fa-twitter margin-right-8px" aria-hidden="true"></i> Login with Twitter</a>-->
-
-
-<!--                    <p>you have an account? <a href="page-login.html"> Sing in !</a> </p>-->
-
+                <!--                    <div class="form-group label-floating is-select">-->
+                <!--                        <label class="control-label">Your Gender</label>-->
+                <!--                        <select class="selectpicker form-control">-->
+                <!--						<option value="MA">Male</option>-->
+                <!--						<option value="FE">Female</option>-->
+                <!--					</select>-->
             </div>
+
+            <center>
+                <p>Don't worry , your phone number will not be made public.</p>
+            </center>
+            <div class="form-group pl-5 pr-4 pb-5">
+                <div class="form-check">
+                    <input class="form-check-input is-invalid" type="checkbox" value="" id="toc" required>
+                    <label class="form-check-label" for="toc">
+                        Agree to <a href="!#" data-toggle="modal" data-target="#exampleModalLong">terms and
+                            conditions</a>. You must agree before submitting.
+                    </label>
+                </div>
+            </div>
+
+            <button class="btn btn-md btn-primary full-width" style="background-color:#0864b2;"
+                id="submit">Submit</button>
+            <script>
+                $('input:checkbox').change(function () {
+                    if ($(this).is(":checked")) {
+                        $("#submit").show();
+                    } else {
+                        $("#submit").hide();
+                    }
+                });
+                $(document).ready(function () {
+                    $("#submit").hide();
+                });
+            </script>
+
+            <!--                    <a href="#" class="btn btn-md bg-facebook full-width btn-icon-left"><i class="fab fa-facebook margin-right-8px" aria-hidden="true"></i> Login with Facebook</a>-->
+
+            <!--                    <a href="#" class="btn btn-md bg-twitter full-width btn-icon-left"><i class="fab fa-twitter margin-right-8px" aria-hidden="true"></i> Login with Twitter</a>-->
+
+
+            <!--                    <p>you have an account? <a href="page-login.html"> Sing in !</a> </p>-->
+
         </div>
-        <!--======= // log_in_page =======-->
+    </div>
+    <!--======= // log_in_page =======-->
 
     </div>
-
+    <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Terms and Conditions</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    ...
+                </div>
+                <div class="modal-footer">
+                    Thank You
+                </div>
+            </div>
+        </div>
+    </div>
     {% include 'footer.html' %}
     <script>
-        $("#submit").on("click",function(){
+        $("#submit").on("click", function () {
             name = $("#name").val();
             designation = $("#designation").val();
             hospital = $("#hospital").val();
@@ -111,39 +151,41 @@
             id = $("#id").val();
             location1 = $("textarea#location").val();
             $.ajax({
-              url: "{% url 'doctor_registration_action' %}",
-              type: "GET",
-              data: {
-                "name" : name,
-                "designation" : designation,
-                "hospital" : hospital,
-                "specialization" : specialization,
-                "phone" : phone,
-                "from" : from,
-                "to" : to,
-                "id" : id,
-                "location" : location1,
-               },
-              dataType: "json",
-              success: function(html){
-                alert('Thank you for joining us. Our team will get in touch with you very soon');
-                location.reload();
-                $("#name").val("");
-                $("#designation").val("");
-                $("#hospital").val("");
-                $("#specialization").val("");
-                $("#phone").val("");
-                $("#from").val("");
-                $("#to").val("");
-                $("#id").val("");
-                $("textarea#location").val("");
-              }
+                url: "{% url 'doctor_registration_action' %}",
+                type: "GET",
+                data: {
+                    "name": name,
+                    "designation": designation,
+                    "hospital": hospital,
+                    "specialization": specialization,
+                    "phone": phone,
+                    "from": from,
+                    "to": to,
+                    "id": id,
+                    "location": location1,
+                },
+                dataType: "json",
+                success: function (html) {
+                    alert(
+                    'Thank you for joining us. Our team will get in touch with you very soon');
+                    location.reload();
+                    $("#name").val("");
+                    $("#designation").val("");
+                    $("#hospital").val("");
+                    $("#specialization").val("");
+                    $("#phone").val("");
+                    $("#from").val("");
+                    $("#to").val("");
+                    $("#id").val("");
+                    $("textarea#location").val("");
+                }
             });
         });
     </script>
-{% include 'js.html' %}
+    {% include 'js.html' %}
 </body>
 
 
 <!-- Mirrored from nilethemes.com/html/tabib/health-and-fitness-advisor.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 06 Mar 2020 16:39:01 GMT -->
+
 </html>
