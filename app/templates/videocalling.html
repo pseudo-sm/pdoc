@@ -642,7 +642,7 @@
       console.log(filesName);
       if (files.length != 0 && filesName != "") {
         for (let i = 0; i < files.length; i++) {
-          var storage = firebase.storage().ref('records/' + customerID + '/' + filesName + ext);
+          var storage = firebase.storage().ref('records/' + customerID + '/' + filesName + '.' + ext);
           var uploadTask = storage.put(files[i], metadata);
           uploadTask.on('state_changed', function (snapshot) {
             var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
