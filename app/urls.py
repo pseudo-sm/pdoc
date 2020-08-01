@@ -15,11 +15,20 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+
 from . import views
-from django.conf.urls import (handler400, handler403, handler404, handler500)
+from django.conf.urls import (handler400, handler403, handler404, handler500, url)
 from django.conf import settings
+from .sitemaps import CategorySitemap
+from django.contrib.sitemaps.views import sitemap
+
+sitemaps = {
+    'categories': CategorySitemap
+}
+
 
 urlpatterns = [
+        url(r'^sitemap\.xml/$', sitemap, {'sitemaps' : sitemaps } , name='sitemap'),
         path("logout/",views.logout,name="logout"),
         path("get-doctors/",views.get_doctors,name="get_doctors"),
         path("re-request/",views.re_request,name="re_request"),
