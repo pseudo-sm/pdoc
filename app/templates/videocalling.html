@@ -375,6 +375,10 @@
                 <source src="{% static 'connecting.png' %}" type="video/mp4">
               </video>
               <!--Experiment-->
+              <script>
+                var customerID;
+                customerID = '{{customer}}';
+              </script>
               {% if doctor != True %}
               <div id="prescribe-patient" class="vc-d-box">
                 <div id="prescribeheader-patient" class="vc-d-box-header">My Prescription<button
@@ -457,6 +461,7 @@
               </div>
               {% endif %}
               <!--Experiment-->
+
               <div id="prescribe" class="vc-d-box">
                 <div id="prescribeheader" class="vc-d-box-header">Prescribe<button class="pres-close vc-d-box-close"><i
                       class="fa fa-times" aria-hidden="true"></i></button></div>
@@ -611,6 +616,7 @@
     var metadata;
     var ext;
     var re = /(?:\.([^.]+))?$/;
+    if(doctor == "False"){
     document.getElementById("files").addEventListener("change", function (e) {
       files = e.target.files;
       for (let i = 0; i < files.length; i++) {
@@ -636,7 +642,7 @@
       console.log(filesName);
       if (files.length != 0 && filesName != "") {
         for (let i = 0; i < files.length; i++) {
-          var storage = firebase.storage().ref('records/' + temp_roomHash + '/' + filesName + ext);
+          var storage = firebase.storage().ref('records/' + customerID + '/' + filesName + ext);
           var uploadTask = storage.put(files[i], metadata);
           uploadTask.on('state_changed', function (snapshot) {
             var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
@@ -646,7 +652,7 @@
               document.getElementById("uploading").innerHTML +=
                 `<span style="color:green">Uploaded Successfully</span> <br />`;
               database = firebase.database();
-              database.ref('Stats/' + temp_roomHash).set({
+              database.ref('Stats/' + customerID).set({
                 "upload": "Uploaded " + filesName
               });
             }
@@ -673,7 +679,7 @@
         alert("Choose a file and a name");
       }
     });
-
+  }
     function getFileUrl(filename) {
       var storage = firebase.storage().ref(filename);
       storage
@@ -685,10 +691,10 @@
           console.log("error encountered");
         });
     }
-    database.ref('Stats/' + temp_roomHash).on("value", function (snapshot) {
+    database.ref('Stats/' + customerID).on("value", function (snapshot) {
       data = snapshot.val();
       $(".store-files").html('');
-      var listRef = firebase.storage().ref('records/' + temp_roomHash + '/');
+      var listRef = firebase.storage().ref('records/' + customerID + '/');
       listRef.listAll().then(function (res) {
         res.items.forEach(function (itemRef) {
           //console.log( itemRef.toString() );

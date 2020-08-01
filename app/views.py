@@ -445,8 +445,9 @@ def video_calling(request,slug):
     else:
         doctor = True
     minutes = (delta.seconds//60)
+    customer = appointment.customer.id
     if minutes < 20 or now > appointment.time:
-        return render(request,"videocalling.html",{"doctor":doctor,"name":name,"practice_id":practice_id,"designation":designation})
+        return render(request,"videocalling.html",{"doctor":doctor,"name":name,"practice_id":practice_id,"designation":designation,"customer":customer})
     return redirect("/patient-dashboard/?not_time=true")
 
 def request_video_calling(request):
