@@ -14,8 +14,9 @@ firebase.initializeApp(firebaseConfig);
 if (!location.hash) {
 location.hash = location.hash = window.location.pathname.split("/")[window.location.pathname.split("/").length-1];
 }
+var temp_roomHash;
 const roomHash = window.location.pathname.split("/")[window.location.pathname.split("/").length-1];
-
+temp_roomHash = roomHash;
 // TODO: Replace with your own channel ID
 const drone = new ScaleDrone('2xmbUiTsqTzukyf7');
 // Room name needs to be prefixed with 'observable-'
@@ -33,7 +34,6 @@ function onSuccess() {};
 function onError(error) {
 console.error(error);
 };
-
 var database = firebase.database();
 database.ref('meeting/' + roomHash).set({"summary":"Diagnosis summary"});
 ref = database.ref("meeting/"+roomHash);
@@ -230,7 +230,7 @@ if(doctor!="True"){
   database.ref("meeting/"+roomHash).on("value", function(snapshot) {
   data = snapshot.val()
   summary = data["summary"];
-  console.log(data["medicines"]);
+  //console.log(data["medicines"]);
   $(".med-repo").empty();
   for(count in data["medicines"])
   {
@@ -305,5 +305,3 @@ $("#prescribe-submit").click(function(){
   });
 
 });
-
-

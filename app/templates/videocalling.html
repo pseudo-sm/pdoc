@@ -195,6 +195,11 @@
       overflow-y: auto;
     }
 
+    .patient-docs {
+      max-height: 350px;
+      overflow-y: auto;
+    }
+
     .custom-d-file {
       max-height: 100px;
       width: 100%;
@@ -280,6 +285,10 @@
       cursor: pointer;
     }
 
+    .up-status {
+      display: none;
+    }
+
     @media only screen and (max-width: 600px) {
       .video-local {
         width: 30%;
@@ -302,6 +311,11 @@
       }
 
       .med-repo {
+        max-height: 250px;
+        overflow-y: auto;
+      }
+
+      .patient-docs {
         max-height: 250px;
         overflow-y: auto;
       }
@@ -403,57 +417,37 @@
                     class="file-close-patient vc-d-box-close"><i class="fa fa-times" aria-hidden="true"></i></button>
                 </div>
                 <div class="container-fluid pt-2 pb-3 med-add">
+                  <h5 class="text-left pl-2 pt-3 pb-3">Upload a document</h5>
                   <div class="row no-gutters text-left">
-                    <div class="col-12 mx-auto my-auto">
-                      <h5 class="pl-2 pt-3 pb-3">Upload a document</h5>
+
+                    <div class="col-12 col-md-7 mx-auto my-auto md-pr-3 sm-pb-5">
+                      <div class="custom-file form-group">
+                        <input type="text" class="form-control" id="docu-name" name="docu-name"
+                          aria-describedby="textHelp" placeholder="Enter File Name" required>
+                      </div>
+                    </div>
+
+                    <div class="col-12 col-md-5 mx-auto my-auto">
                       <div class="input-group">
                         <div class="custom-file">
-                          <input type="file" class="custom-file-input" id="inputGroupFile04">
-                          <label class="custom-file-label" for="inputGroupFile04">Choose Document</label>
+                          <input type="file" class="custom-file-input" id="files" accept="image/*">
+                          <label class="custom-file-label" for="files">Select File</label>
                         </div>
-                        <div class="input-group-append">
-                          <button class="btn btn-success" type="button">Upload</button>
+                        <div class="md-pl-2 ">
+                          <button class="btn btn-success" type="button" id="send">Upload</button>
                         </div>
                       </div>
+                    </div>
+                    <div class="col-12 up-status pt-5" id="up-status">
+                      <progress value="0" max="100" id="progress"></progress>
+                      <p id="uploading"></p>
                     </div>
 
                   </div>
                   <hr>
                   <h5 class="text-left pl-2 pt-3 pb-3">All Documents</h5>
-                  <div class="row no-gutters text-left">
+                  <div class="row no-gutters text-left patient-docs store-files">
 
-                    <div class="col-4 col-md-3 col-sm-4">
-                      <img src="https://media.sproutsocial.com/uploads/2017/02/10x-featured-social-media-image-size.png"
-                        alt="Patient Documents" class="img-thumbnail custom-d-file">
-                    </div>
-                    <div class="col-4 col-md-3 col-sm-4">
-                      <img src="https://media.sproutsocial.com/uploads/2017/02/10x-featured-social-media-image-size.png"
-                        alt="Patient Documents" class="img-thumbnail custom-d-file">
-                    </div>
-                    <div class="col-4 col-md-3 col-sm-4">
-                      <img src="https://media.sproutsocial.com/uploads/2017/02/10x-featured-social-media-image-size.png"
-                        alt="Patient Documents" class="img-thumbnail custom-d-file">
-                    </div>
-                    <div class="col-4 col-md-3 col-sm-4">
-                      <img src="https://media.sproutsocial.com/uploads/2017/02/10x-featured-social-media-image-size.png"
-                        alt="Patient Documents" class="img-thumbnail custom-d-file">
-                    </div>
-                    <div class="col-4 col-md-3 col-sm-4">
-                      <img src="https://media.sproutsocial.com/uploads/2017/02/10x-featured-social-media-image-size.png"
-                        alt="Patient Documents" class="img-thumbnail custom-d-file">
-                    </div>
-                    <div class="col-4 col-md-3 col-sm-4">
-                      <img src="http://media1.santabanta.com/full5/Nature/Animals/animals-89a.jpg"
-                        alt="Patient Documents" class="img-thumbnail custom-d-file">
-                    </div>
-                    <div class="col-4 col-md-3 col-sm-4">
-                      <img src="https://media.sproutsocial.com/uploads/2017/02/10x-featured-social-media-image-size.png"
-                        alt="Patient Documents" class="img-thumbnail custom-d-file">
-                    </div>
-                    <div class="col-4 col-md-3 col-sm-4">
-                      <img src="https://media.sproutsocial.com/uploads/2017/02/10x-featured-social-media-image-size.png"
-                        alt="Patient Documents" class="img-thumbnail custom-d-file">
-                    </div>
                   </div>
                 </div>
               </div>
@@ -501,45 +495,13 @@
                 </div>
               </div>
               <div id="file-doctor" class="vc-d-box">
-                <div id="prescribeheader-patient" class="vc-d-box-header">My Files<button
+                <div id="prescribeheader-patient" class="vc-d-box-header">Patient's Files<button
                     class="file-close-doctor vc-d-box-close"><i class="fa fa-times" aria-hidden="true"></i></button>
                 </div>
                 <div class="container-fluid pt-2 pb-3 med-add">
                   <h5 class="text-left pl-2 pt-3 pb-3">All Documents</h5>
-                  <div class="row no-gutters text-left">
+                  <div class="row no-gutters text-left patient-docs store-files">
 
-                    <div class="col-4 col-md-3 col-sm-4">
-                      <img src="https://media.sproutsocial.com/uploads/2017/02/10x-featured-social-media-image-size.png"
-                        alt="Patient Documents" class="img-thumbnail custom-d-file">
-                    </div>
-                    <div class="col-4 col-md-3 col-sm-4">
-                      <img src="https://media.sproutsocial.com/uploads/2017/02/10x-featured-social-media-image-size.png"
-                        alt="Patient Documents" class="img-thumbnail custom-d-file">
-                    </div>
-                    <div class="col-4 col-md-3 col-sm-4">
-                      <img src="https://media.sproutsocial.com/uploads/2017/02/10x-featured-social-media-image-size.png"
-                        alt="Patient Documents" class="img-thumbnail custom-d-file">
-                    </div>
-                    <div class="col-4 col-md-3 col-sm-4">
-                      <img src="https://media.sproutsocial.com/uploads/2017/02/10x-featured-social-media-image-size.png"
-                        alt="Patient Documents" class="img-thumbnail custom-d-file">
-                    </div>
-                    <div class="col-4 col-md-3 col-sm-4">
-                      <img src="https://media.sproutsocial.com/uploads/2017/02/10x-featured-social-media-image-size.png"
-                        alt="Patient Documents" class="img-thumbnail custom-d-file">
-                    </div>
-                    <div class="col-4 col-md-3 col-sm-4">
-                      <img src="http://media1.santabanta.com/full5/Nature/Animals/animals-89a.jpg"
-                        alt="Patient Documents" class="img-thumbnail custom-d-file">
-                    </div>
-                    <div class="col-4 col-md-3 col-sm-4">
-                      <img src="https://media.sproutsocial.com/uploads/2017/02/10x-featured-social-media-image-size.png"
-                        alt="Patient Documents" class="img-thumbnail custom-d-file">
-                    </div>
-                    <div class="col-4 col-md-3 col-sm-4">
-                      <img src="https://media.sproutsocial.com/uploads/2017/02/10x-featured-social-media-image-size.png"
-                        alt="Patient Documents" class="img-thumbnail custom-d-file">
-                    </div>
                   </div>
                 </div>
               </div>
@@ -632,7 +594,7 @@
       $(".Mymodal").hide();
     });
   </script>
-  <script src="https://www.gstatic.com/firebasejs/3.1.0/firebase.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/6.2.4/firebase.js"></script>
 
   <!-- TODO: Add SDKs for Firebase products that you want to use
      https://firebase.google.com/docs/web/setup#available-libraries -->
@@ -643,6 +605,105 @@
   <script src="{% static 'adapter.js' %}"></script>
   <script src="{% static 'script.js' %}"></script>
 
+  <script>
+    var database;
+    var files = [];
+    var metadata;
+    var ext;
+    var re = /(?:\.([^.]+))?$/;
+    document.getElementById("files").addEventListener("change", function (e) {
+      files = e.target.files;
+      for (let i = 0; i < files.length; i++) {
+        console.log(files[i]);
+        ext = re.exec(files[i].name)[1];
+        console.log("hii" + ext);
+        metadata = {
+          contentType: files[i].type
+        };
+        console.log(metadata);
+      }
+
+    });
+
+
+    document.getElementById("send").addEventListener("click", function () {
+      document.getElementById("up-status").style.display = "block";
+      var inp = document.getElementById('docu-name');
+      inp.focus();
+      document.execCommand('SelectAll');
+      var filesName = window.getSelection().toString();
+
+      console.log(filesName);
+      if (files.length != 0 && filesName != "") {
+        for (let i = 0; i < files.length; i++) {
+          var storage = firebase.storage().ref('records/' + temp_roomHash + '/' + filesName + ext);
+          var uploadTask = storage.put(files[i], metadata);
+          uploadTask.on('state_changed', function (snapshot) {
+            var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            document.getElementById("progress").value = progress;
+            console.log('Upload is ' + progress + '% done');
+            if (progress == 100) {
+              document.getElementById("uploading").innerHTML +=
+                `<span style="color:green">Uploaded Successfully</span> <br />`;
+              database = firebase.database();
+              database.ref('Stats/' + temp_roomHash).set({
+                "upload": "Uploaded " + filesName
+              });
+            }
+            switch (snapshot.state) {
+              case firebase.storage.TaskState.PAUSED: // or 'paused'
+                console.log('Upload is paused');
+                break;
+              case firebase.storage.TaskState.RUNNING: // or 'running'
+                console.log('Upload is running');
+                break;
+            }
+          }, function (error) {
+            document.getElementById("uploading").innerHTML +=
+              `<span style="color:red">Upload Failed</span> <br />`;
+          }, function () {
+            // Handle successful uploads on complete
+            // For instance, get the download URL: https://firebasestorage.googleapis.com/...
+            uploadTask.snapshot.ref.getDownloadURL().then(function (downloadURL) {
+              console.log('File available at', downloadURL);
+            });
+          });
+        }
+      } else {
+        alert("Choose a file and a name");
+      }
+    });
+
+    function getFileUrl(filename) {
+      var storage = firebase.storage().ref(filename);
+      storage
+        .getDownloadURL()
+        .then(function (url) {
+          console.log(url);
+        })
+        .catch(function (error) {
+          console.log("error encountered");
+        });
+    }
+    database.ref('Stats/' + temp_roomHash).on("value", function (snapshot) {
+      data = snapshot.val();
+      $(".store-files").html('');
+      var listRef = firebase.storage().ref('records/' + temp_roomHash + '/');
+      listRef.listAll().then(function (res) {
+        res.items.forEach(function (itemRef) {
+          //console.log( itemRef.toString() );
+          itemRef.getDownloadURL().then(function (url) {
+            $(".store-files").append('<div class="col-4 col-md-3 col-sm-4"> <a href="' + url +
+              '" target="_blank" rel="noopener noreferrer"><img class="img-thumbnail custom-d-file" type="image/jpg" src="' +
+              url + '"></a> </div>  ');
+            console.log(url);
+          })
+        });
+      }).catch(function (error) {});
+    }, function (errorObject) {
+      console.log("The read failed: " + errorObject.code);
+    });
+  </script>
 </body>
 
 </html>
