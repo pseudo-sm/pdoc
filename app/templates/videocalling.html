@@ -434,7 +434,7 @@
                     <div class="col-12 col-md-5 mx-auto my-auto">
                       <div class="input-group">
                         <div class="custom-file">
-                          <input type="file" class="custom-file-input" id="files" accept="image/*">
+                          <input type="file" class="custom-file-input" id="files">
                           <label class="custom-file-label" for="files">Select File</label>
                         </div>
                         <div class="md-pl-2 ">
@@ -442,26 +442,29 @@
                         </div>
                       </div>
                     </div>
-                    <div class="col-12 up-status pt-5" id="up-status">
-                      <progress value="0" max="100" id="progress" style="width: 100%;"></progress>
-                      <p id="uploading"></p>
-                    </div>
-
                   </div>
                   <hr>
                   <h5 class="text-left pl-2 pt-3 pb-3">All Documents</h5>
-                  <div class="row no-gutters text-left patient-docs store-files">
-
+                  <div class="row no-gutters text-left patient-docs store-files  text-center mx-auto">
+                    NO Files Yet.... <br> In Case of User Uploaded The File, and Still Not Showing... <br> You Can Refresh The Page and Review the File.
                   </div>
                 </div>
               </div>
-              <div id="myModal" class="Mymodal">
-                <span class="Myclose">&times;</span>
-                <img class="Mymodal-content" id="img01">
+              <div id="up-status" class="Mymodal up-status"> 
+                <div class="container">
+                  <div class="row ptb-100 pl-5 pr-5" style="background-color: whitesmoke;">
+                    <div class="col-12 ptb-100 pl-5 pr-5">
+                      <br>
+                      <h4 class="text-center">Uploading Status</h4>
+                      <progress class="mt-5" value="0" max="100" id="progress" style="width: 100%;"></progress>
+                      <p id="uploading"></p>
+                    </div>
+                  </div>
+                </div>
+                
               </div>
               {% endif %}
               <!--Experiment-->
-
               <div id="prescribe" class="vc-d-box">
                 <div id="prescribeheader" class="vc-d-box-header">Prescribe<button class="pres-close vc-d-box-close"><i
                       class="fa fa-times" aria-hidden="true"></i></button></div>
@@ -509,10 +512,6 @@
 
                   </div>
                 </div>
-              </div>
-              <div id="myModal" class="Mymodal">
-                <span class="Myclose">&times;</span>
-                <img class="Mymodal-content" id="img01">
               </div>
             </div>
           </div>
@@ -590,14 +589,6 @@
     $(".file-close-doctor").click(function () {
       $("#file-doctor").hide();
     });
-
-    $(".custom-d-file").click(function () {
-      $(".Mymodal-content").attr("src", $(this).closest(".custom-d-file").attr("src"));
-      $(".Mymodal").show();
-    });
-    $(".Myclose").click(function () {
-      $(".Mymodal").hide();
-    });
   </script>
   <script src="https://www.gstatic.com/firebasejs/6.2.4/firebase.js"></script>
 
@@ -611,6 +602,15 @@
   <script src="{% static 'script.js' %}"></script>
 
   <script>
+    function makeid(length) {
+      var result           = '';
+      var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+      var charactersLength = characters.length;
+      for ( var i = 0; i < length; i++ ) {
+          result += characters.charAt(Math.floor(Math.random() * charactersLength));
+      }
+      return result;
+    }
     var database;
     var files = [];
     var metadata;
@@ -630,27 +630,24 @@
       }
 
     });
-
-
     document.getElementById("send").addEventListener("click", function () {
-      document.getElementById("up-status").style.display = "block";
       var inp = document.getElementById('docu-name');
       inp.focus();
       document.execCommand('SelectAll');
       var filesName = window.getSelection().toString();
-
-      console.log(filesName);
       if (files.length != 0 && filesName != "") {
         for (let i = 0; i < files.length; i++) {
           var storage = firebase.storage().ref('records/' + customerID + '/' + filesName + '.' + ext);
           var uploadTask = storage.put(files[i], metadata);
           uploadTask.on('state_changed', function (snapshot) {
             var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            document.getElementById("up-status").style.display = "block";
             document.getElementById("progress").value = progress;
             console.log('Upload is ' + progress + '% done');
             if (progress == 100) {
               document.getElementById("uploading").innerHTML +=
                 `<span style="color:green">Uploaded Successfully</span> <br />`;
+                setTimeout(function(){ document.getElementById("up-status").style.display = "none"; }, 2000);
               database = firebase.database();
               database.ref('Stats/' + customerID).set({
                 "upload": "Uploaded " + filesName
@@ -678,8 +675,7 @@
       } else {
         alert("Choose a file and a name");
       }
-    });
-  }
+    });}
     function getFileUrl(filename) {
       var storage = firebase.storage().ref(filename);
       storage
@@ -699,16 +695,28 @@
         res.items.forEach(function (itemRef) {
           //console.log( itemRef.toString() );
           itemRef.getDownloadURL().then(function (url) {
-            $(".store-files").append('<div class="col-4 col-md-3 col-sm-4"> <a href="' + url +
-              '" target="_blank" rel="noopener noreferrer"><img class="img-thumbnail custom-d-file" type="image/jpg" src="' +
-              url + '"></a> </div>  ');
-            console.log(url);
+            var ranID = makeid(9);
+            var funId = "'"+ranID+"'";
+            var str;
+            if(itemRef.name.length > 10)str = itemRef.name.substring(0,7)+'...';
+            else str = itemRef.name;
+            $(".store-files").append('<div class="col-4 col-md-3 col-sm-4 pl-2 pr-2" > <embed class="img-thumbnail custom-d-file" type="image/jpg" src="' +
+              url + '" onclick="showModal('+funId+')"><p class="text-center pl-2 pr-2 mb-3 w-100"style="background-color:white"><small>'+str+'</small></p></div><div id="'+ranID+'" class="Mymodal"> <span onclick="hideModal('+funId+')" class="Myclose">&times;</span> <embed ' +
+              'src="'+url+'"'+ 'class="Mymodal-content"> </div>  ');
           })
         });
       }).catch(function (error) {});
     }, function (errorObject) {
       console.log("The read failed: " + errorObject.code);
     });
+    function showModal(id){
+      var x = document.getElementById(id);
+      x.style.display = "block";
+    }
+    function hideModal(id){
+      var x = document.getElementById(id);
+      x.style.display = "none";
+    }
   </script>
 </body>
 
