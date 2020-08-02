@@ -78,23 +78,21 @@ WSGI_APPLICATION = 'pdoc.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
-# from pymongo import MongoClient
-# from urllib.parse import quote_plus
-# mongodb+srv://root:<password>@cluster0-j6ctp.mongodb.net/test?retryWrites=true&w=majority
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'djongo',
-#         'NAME': 'pdoc-mongo',
-#         'HOST': "mongodb+srv://saswath:"+quote_plus("Pdoc@123")+"@cluster0-xt2cn.mongodb.net/test?retryWrites=true&w=majority",
-#         'ENFORCE_SCHEMA': False,
-#     }
-# }
 DATABASES = {
-   'default': {
-       'ENGINE': 'django.db.backends.sqlite3',
-       'NAME': os.path.join(BASE_DIR, 'db2.sqlite3'),
-   }
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'pdochealth$default',
+        'USER': 'pdochealth',
+        'PASSWORD': 'CaveMenDev1@3',
+        'HOST': 'pdochealth.mysql.pythonanywhere-services.com',
+    }
 }
+# DATABASES = {
+#   'default': {
+#       'ENGINE': 'django.db.backends.sqlite3',
+#       'NAME': os.path.join(BASE_DIR, 'db2.sqlite3'),
+#   }
+# }
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
 
