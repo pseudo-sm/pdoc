@@ -163,7 +163,7 @@ class Appointments(models.Model):
     phone = models.CharField(max_length=200,blank=True,null=True)
     query = models.TextField()
     type = models.CharField(max_length=3)
-    datetime = models.DateTimeField(auto_created=True)
+    datetime = models.DateTimeField(auto_created=True,auto_now=True)
     status = models.CharField(max_length=2,default=0)
     time = models.DateTimeField(null=True,blank=True)
     slug = models.SlugField(auto_created=True)
