@@ -76,6 +76,7 @@ urlpatterns = [
         path("payment-status/",views.payment_status,name="payment_status"),
         path("download-prescription/<slug:prescription>",views.create_prescription_document,name="create_prescription_document"),
         path("prescription-submit/",views.prescription_submit,name="prescription_submit"),
+        path("feedback/",views.feedback,name="feedback"),
         path("",views.index,name="index"),
 ]
 from django.conf.urls.static import static

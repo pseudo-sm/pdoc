@@ -47,10 +47,10 @@ class Doctor(models.Model):
     lat = models.CharField(max_length=100,null=True,blank=True)
     lon = models.CharField(max_length=100,null=True,blank=True)
     phone = models.CharField(max_length=100,null=True,blank=True)
-    type = models.ForeignKey(Type,on_delete=models.CASCADE)
-    city = models.ForeignKey(City,on_delete=models.CASCADE)
-    area = models.ForeignKey(Area,on_delete=models.CASCADE)
-    state = models.ForeignKey(State,on_delete=models.CASCADE)
+    type = models.ForeignKey(Type,on_delete=models.CASCADE,null=True,blank=True)
+    city = models.ForeignKey(City,on_delete=models.CASCADE,null=True,blank=True)
+    area = models.ForeignKey(Area,on_delete=models.CASCADE,null=True,blank=True)
+    state = models.ForeignKey(State,on_delete=models.CASCADE,null=True,blank=True)
     status = models.BooleanField(default=False)
     videoconferencing = models.BooleanField(default=False)
     telecalling = models.BooleanField(default=False)
@@ -60,6 +60,7 @@ class Doctor(models.Model):
     direct_contact = models.BooleanField(default=False)
     designation = models.CharField(max_length=300,null=True,blank=True)
     hospital = models.CharField(max_length=300)
+    fees = models.CharField(max_length=100)
     class Meta:
         verbose_name = "Doctor"
         verbose_name_plural = "Doctors"
@@ -215,3 +216,15 @@ class Terms(models.Model):
 
     def __str__(self):
         return str(self.datetime)
+
+class Feedback(models.Model):
+
+    prescription = models.ForeignKey(Prescription,on_delete=models.CASCADE)
+    doctor_rating = models.CharField(max_length=1,null=True,blank=True)
+    doctor_comments = models.CharField(max_length=1,null=True,blank=True)
+    patient_rating = models.CharField(max_length=1,null=True,blank=True)
+    patient_comments = models.CharField(max_length=1,null=True,blank=True)
+
+    def __str__(self):
+        return str(self.prescription)
+

@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '=nzn$skkael#*sm1(_=wwo)#fo0hw!5u*%$%ttw9xf@u^0(iia'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
 
@@ -78,21 +78,21 @@ WSGI_APPLICATION = 'pdoc.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'pdochealth$default',
-        'USER': 'pdochealth',
-        'PASSWORD': 'CaveMenDev1@3',
-        'HOST': 'pdochealth.mysql.pythonanywhere-services.com',
-    }
-}
 # DATABASES = {
-#   'default': {
-#       'ENGINE': 'django.db.backends.sqlite3',
-#       'NAME': os.path.join(BASE_DIR, 'db2.sqlite3'),
-#   }
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'pdochealth$default',
+#         'USER': 'pdochealth',
+#         'PASSWORD': 'CaveMenDev1@3',
+#         'HOST': 'pdochealth.mysql.pythonanywhere-services.com',
+#     }
 # }
+DATABASES = {
+  'default': {
+      'ENGINE': 'django.db.backends.sqlite3',
+      'NAME': os.path.join(BASE_DIR, 'db2.sqlite3'),
+  }
+}
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
 

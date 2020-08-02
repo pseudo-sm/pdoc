@@ -201,7 +201,7 @@ def doctor_registration_action(request):
         type.save()
     else:
         type = Type.objects.get(name=type)
-    new_doc = TeleCallDoctors(name=name,hospital=hospital,type=type,phone=phone,designation=designation,address=location,available_from=from1,available_to=to,registration_id=id)
+    new_doc = Doctor(name=name,hospital=hospital,type=type,phone=phone,designation=designation,address=location,available_from=from1,available_to=to,practice_id=id)
     new_doc.save()
     return JsonResponse(True,safe=False)
 
@@ -229,12 +229,13 @@ def payment(request):
 
 def payment_booking(request):
     order_id=request.GET.get("order_id")
-    customer = Appointments.objects.get(razor_pay_order_id=order_id).customer
+    appointment = Appointments.objects.get(razor_pay_order_id=order_id)
+    customer = appointment.customer
     name = customer.name
     phone = customer.phone
     user_id = customer.user_id
     date = datetime.datetime.now().strftime("%m/%d/%Y")
-    return render(request,"payment-booking.html",{"order_id":order_id,"name":name,"phone":phone,"username":user_id,"date":date})
+    return render(request,"payment-booking.html",{"order_id":order_id,"name":name,"phone":phone,"username":user_id,"date":date,"fees":appointment.doctor.fees})
 
 
 def signup_customer_action(request):
@@ -480,7 +481,7 @@ def book_appointment(request):
         customer = Customer.objects.get(user_id=user)
         slug = ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(16))
         data = {
-            "amount" : 25000,
+            "amount" : int(doctor.fees),
             "currency" : "INR",
             "receipt" : "1",
             "payment_capture" : 1,
@@ -656,4 +657,26 @@ def re_request(request):
     appointment = Appointments.objects.get(slug=appointment)
     appointment.status = "3"
     appointment.save()
+    return JsonResponse(True,safe=False)
+
+def feedback(request):
+    prescription = request.GET.get("prescription")
+    prescription = Prescription.objects.get(pk=prescription)
+    rating = request.GET.get("rating")
+    comments = request.GET.get("comments")
+    feedbacks = Feedback.objects.filter(prescription=prescription)
+    if len(feedbacks) > 0:
+        feedback = feedbacks.last()
+        if request.GET.get("patient"):
+            feedback.patient_rating=rating
+            feedback.patient_comments=comments
+        else:
+            feedback.doctor_rating=rating
+            feedback.doctor_comments=comments
+    else:
+        if request.GET.get("patient"):
+            feedback = Feedback(prescription=prescription,patient_rating=rating,patient_comments=comments)
+        else:
+            feedback = Feedback(prescription=prescription,doctor_rating=rating,doctor_comments=comments)
+    feedback.save()
     return JsonResponse(True,safe=False)

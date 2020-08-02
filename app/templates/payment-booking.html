@@ -22,7 +22,7 @@
             <td>Payment Status</td>
         </tr>
         <tr>
-            <td>Rs.250</td>
+            <td>Rs.{{fees}}</td>
             <td>{{date}}</td>
             <td>{{name}}</td>
             <td>Not Paid</td>
@@ -39,7 +39,7 @@ var order_id;
 var signature;
 var options = {
     "key": "rzp_live_7VShD4pzdX6r0m",
-    "amount": "250000",
+    "amount": "{{fees}}",
     "currency": "INR",
     "name": "PDOCHEALTH",
     "description": "Registration",
