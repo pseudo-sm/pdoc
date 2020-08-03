@@ -159,14 +159,14 @@ stats_vc_dm.on("value", function (snapshot) {
   //console.log(dvs + " " + dms + " " + pvs + " " + pms);
   statusCall(dvs, dms, pvs, pms);
 });
-var stats_vc_dv = firebase.database().ref('Stats/' + customerID + '/VideoCalling/PatientVideo/status');
-stats_vc_dv.on("value", function (snapshot) {
+var stats_vc_pv = firebase.database().ref('Stats/' + customerID + '/VideoCalling/PatientVideo/status');
+stats_vc_pv.on("value", function (snapshot) {
   pvs = snapshot.val();
   //console.log(dvs + " " + dms + " " + pvs + " " + pms);
   statusCall(dvs, dms, pvs, pms);
 });
-var stats_vc_dv = firebase.database().ref('Stats/' + customerID + '/VideoCalling/PatientMic/status');
-stats_vc_dv.on("value", function (snapshot) {
+var stats_vc_pm = firebase.database().ref('Stats/' + customerID + '/VideoCalling/PatientMic/status');
+stats_vc_pm.on("value", function (snapshot) {
   pms = snapshot.val();
   //console.log(dvs + " " + dms + " " + pvs + " " + pms);
   statusCall(dvs, dms, pvs, pms);
@@ -355,7 +355,7 @@ if (doctor != "True") {
       });
       $("#pause-icon").removeClass("fa-play");
       $("#pause-icon").addClass("fa-pause");
-
+      $("#pause-icon").closest( "button" ).css( "background-color", "#26ABDE" );
     } else {
       temp_stream.getVideoTracks()[0].enabled = video_switch;
       database.ref('Stats/' + customerID + '/VideoCalling/PatientVideo').set({
@@ -363,6 +363,7 @@ if (doctor != "True") {
       });
       $("#pause-icon").removeClass("fa-pause");
       $("#pause-icon").addClass("fa-play");
+      $("#pause-icon").closest( "button" ).css( "background-color", "#df7373" );
     }
   }
 
@@ -379,6 +380,7 @@ if (doctor != "True") {
       });
       $("#mute-icon").removeClass("fa-microphone");
       $("#mute-icon").addClass("fa-microphone-slash");
+      $("#mute-icon").closest( "button" ).css( "background-color", "#26ABDE" );
 
     } else {
       temp_stream.getAudioTracks()[0].enabled = mic_switch;
@@ -387,6 +389,7 @@ if (doctor != "True") {
       });
       $("#mute-icon").removeClass("fa-microphone-slash");
       $("#mute-icon").addClass("fa-microphone");
+      $("#mute-icon").closest( "button" ).css( "background-color", "#df7373" );
     }
   }
 }
@@ -410,6 +413,7 @@ if (doctor != "False") {
       });
       $("#pause-icon").removeClass("fa-play");
       $("#pause-icon").addClass("fa-pause");
+      $("#pause-icon").closest( "button" ).css( "background-color", "#26ABDE" );
 
     } else {
       temp_stream.getVideoTracks()[0].enabled = video_switch;
@@ -418,6 +422,7 @@ if (doctor != "False") {
       });
       $("#pause-icon").removeClass("fa-pause");
       $("#pause-icon").addClass("fa-play");
+      $("#pause-icon").closest( "button" ).css( "background-color", "#df7373" );
     }
   }
 
@@ -434,6 +439,7 @@ if (doctor != "False") {
       });
       $("#mute-icon").removeClass("fa-microphone");
       $("#mute-icon").addClass("fa-microphone-slash");
+      $("#mute-icon").closest( "button" ).css( "background-color", "#26ABDE" );
 
     } else {
       temp_stream.getAudioTracks()[0].enabled = mic_switch;
@@ -442,6 +448,7 @@ if (doctor != "False") {
       });
       $("#mute-icon").removeClass("fa-microphone-slash");
       $("#mute-icon").addClass("fa-microphone");
+      $("#mute-icon").closest( "button" ).css( "background-color", "#df7373" );
     }
   }
 }
