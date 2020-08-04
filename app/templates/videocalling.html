@@ -122,7 +122,8 @@
       -webkit-transform: scale(1.1);
       transform: scale(1.1);
     }
-    .vc-av-status{
+
+    .vc-av-status {
       display: none;
     }
 
@@ -348,25 +349,25 @@
         <div class="container-fluid h-100 p-0">
           <!-- Buttons -->
           <div class="row vc-buttons text-center">
-            <div class="col-12 col-md-6 col-sm-12 text-center mx-auto my-auto pt-2 pb-2 vc-av-status pl-2 pv-2" 
-            style="margin-bottom: 100px;background-color: #ffacac;color: #de2626;border: solid #de2626;border-radius: 5px;opacity: .7;">
-            ...</div>
+            <div class="col-12 col-md-6 col-sm-12 text-center mx-auto my-auto pt-2 pb-2 vc-av-status pl-2 pv-2"
+              style="margin-bottom: 100px;background-color: #ffacac;color: #de2626;border: solid #de2626;border-radius: 5px;opacity: .7;">
+              ...</div>
             <div class="col-12 text-center mx-auto mt-3">
-              <button id="mute" class="min-btn text-center" data-toggle="tooltip" data-placement="top" title="Mute/Unmute"
-                onclick="toggleMic()"><i class="fa fa-microphone-slash" id="mute-icon"></i></button>
-              <button id="video-off" class="min-btn text-center" data-toggle="tooltip" data-placement="top" title="Video On/Off"
-                onclick="toggleVideo()"><i class="fa fa-pause" id="pause-icon"></i></button>
+              <button id="mute" class="min-btn text-center" data-toggle="tooltip" data-placement="top"
+                title="Mute/Unmute" onclick="toggleMic()"><i class="fa fa-microphone-slash" id="mute-icon"></i></button>
+              <button id="video-off" class="min-btn text-center" data-toggle="tooltip" data-placement="top"
+                title="Video On/Off" onclick="toggleVideo()"><i class="fa fa-pause" id="pause-icon"></i></button>
               {% if doctor %}
-              <button id="presc-btn" class="min-btn text-center" data-toggle="tooltip" data-placement="top" title="Prescribe"><i
-                  class="fa fa-pencil-square-o"></i></button>
-              <button id="pati-file" class="min-btn text-center" data-toggle="tooltip" data-placement="top" title="Files"><i
-                  class="fa fa-folder-open"></i></button>
+              <button id="presc-btn" class="min-btn text-center" data-toggle="tooltip" data-placement="top"
+                title="Prescribe"><i class="fa fa-pencil-square-o"></i></button>
+              <button id="pati-file" class="min-btn text-center" data-toggle="tooltip" data-placement="top"
+                title="Files"><i class="fa fa-folder-open"></i></button>
               {% endif %}
               {% if doctor != True %}
               <button id="presc-btn-patient" class="min-btn text-center" data-toggle="tooltip" data-placement="top"
                 title="My Prescription"><i class="fa fa-book"></i></button>
-              <button id="file-up" class="min-btn text-center" data-toggle="tooltip" data-placement="top" title="Upload Docs"><i
-                  class="fa fa-upload"></i></button>
+              <button id="file-up" class="min-btn text-center" data-toggle="tooltip" data-placement="top"
+                title="Upload Docs"><i class="fa fa-upload"></i></button>
               {% endif %}
               <button id="end" class="min-btn-red text-center" data-toggle="tooltip" data-placement="top" title="End"><i
                   class="fa fa-stop"></i></button>
@@ -544,16 +545,26 @@
   <script>
     //local video
     var radio_id = 1;
-    $('.video-local').css('float','right');
+    $('.video-local').css('float', 'right');
     document.getElementById("prescribe").style["float"] = "right";
     $(function () {
       if (window.matchMedia("(min-width: 767px)").matches) {
-        $("#prescribe").draggable({ containment: "#drag-area" });
-        $("#prescribe-patient").draggable({ containment: "#drag-area" });
-        $("#file-doctor").draggable({ containment: "#drag-area" });
-        $("#file-patient").draggable({ containment: "#drag-area" });
+        $("#prescribe").draggable({
+          containment: "#drag-area"
+        });
+        $("#prescribe-patient").draggable({
+          containment: "#drag-area"
+        });
+        $("#file-doctor").draggable({
+          containment: "#drag-area"
+        });
+        $("#file-patient").draggable({
+          containment: "#drag-area"
+        });
       }
-      $("#localVideo").draggable({ containment: "#drag-area" });
+      $("#localVideo").draggable({
+        containment: "#drag-area"
+      });
     });
     $("#add-more-med").click(function () {
       radio_id++;

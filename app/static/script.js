@@ -392,7 +392,7 @@ if (doctor != "True") {
       $("#mute-icon").closest( "button" ).css( "background-color", "#df7373" );
     }
   }
-}
+} 
 if (doctor != "False") {
   database.ref('Stats/' + customerID + '/VideoCalling/DoctorVideo').set({
     "status": "on"
