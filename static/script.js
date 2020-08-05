@@ -184,6 +184,7 @@ pc.setLocalDescription(
 }
 
 $("#end").click(function(){
+$("#prescribe-submit").click();
 if (confirm("End Meeting?")) {
   $.ajax({
       url: "/appointment-close/",
