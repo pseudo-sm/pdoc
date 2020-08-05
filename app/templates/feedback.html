@@ -2,6 +2,7 @@
 <html lang="en">
 
 <head>
+    {% load static %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
@@ -60,30 +61,58 @@
                 style="background-color: white;border-radius: 10px;padding: 10px;">
                 
                 <form id="star-widget">
-                    <input id="star-widget__input5" type="radio" name="star-rating" value="5star">
+                    <input id="star-widget__input5" type="radio" name="star-rating" class="rate-star" value="5" checked>
                     <label for="star-widget__input5" title="Excellent"></label>
 
-                    <input id="star-widget__input4" type="radio" name="star-rating" value="4star">
+                    <input id="star-widget__input4" type="radio" name="star-rating" class="rate-star" value="4">
                     <label for="star-widget__input4" title="Good"></label>
 
-                    <input id="star-widget__input3" type="radio" name="star-rating" value="3star">
+                    <input id="star-widget__input3" type="radio" name="star-rating" class="rate-star" value="3">
                     <label for="star-widget__input3" title="So so"></label>
 
-                    <input id="star-widget__input2" type="radio" name="star-rating" value="2star">
+                    <input id="star-widget__input2" type="radio" name="star-rating" class="rate-star" value="2">
                     <label for="star-widget__input2" title="Bad"></label>
 
-                    <input id="star-widget__input1" type="radio" name="star-rating" value="1star">
+                    <input id="star-widget__input1" type="radio" name="star-rating" class="rate-star" value="1">
                     <label for="star-widget__input1" title="Very bad"></label>
                 </form>
                 <div class="col-12 mt-4">
-                    <textarea class="w-100" name="suggestion" id="" cols="20" rows="5" placeholder="Any suggestion?"
+                    <textarea class="w-100" name="suggestion" id="comments" cols="20" rows="5" placeholder="Any suggestion?"
                         style="background-color:whitesmoke;border: solid 0.5px rgba(134, 134, 134, 0.267);border-radius: 10px;padding: 10px;"></textarea>
                 </div>
-                <div class="col-12 mb-3 mt-3"> <button class="btn btn-block btn-small btn-primary">Submit</button></div>
+                <div class="col-12 mb-3 mt-3"> <button class="btn btn-block btn-small btn-primary" id="submit">Submit</button></div>
 
             </div>
         </div>
     </div>
 </body>
+    <script src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
 
+<script>
+
+$("#submit").click(function(){
+    meeting = "{{prescription_slug}}";
+    $(".rate-star").each(function(item) {
+        max = 0;
+        if($(this).is(":checked")){
+            console.log($(this).val());
+        }
+    });
+    comments = $("#comments").val();
+    $.ajax({
+    url: "/feedback-submit/",
+    data: {
+      'prescription': meeting,
+      'rating': max,
+      'comments': comments,
+    },
+    type: 'GET',
+    dataType: 'json',
+    success: function (res) {
+      window.location = "{% url 'patient_dashboard' %}";
+    }
+  });
+});
+
+</script>
 </html>

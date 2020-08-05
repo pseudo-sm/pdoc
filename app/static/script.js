@@ -475,7 +475,7 @@ $("#end").click(function () {
       type: 'GET',
       dataType: 'json',
       success: function (res) {
-        window.location = "/patient-dashboard/";
+        window.location = "/feedback/"+res.prescription;
       }
     });
 

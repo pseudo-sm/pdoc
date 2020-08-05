@@ -235,7 +235,7 @@ def payment_booking(request):
     phone = customer.phone
     user_id = customer.user_id
     date = datetime.datetime.now().strftime("%m/%d/%Y")
-    return render(request,"payment-booking.html",{"order_id":order_id,"name":name,"phone":phone,"username":user_id,"date":date,"fees":appointment.doctor.fees})
+    return render(request,"payment-booking.html",{"order_id":order_id,"name":name,"phone":phone,"username":user_id,"date":date,"fees":int(appointment.doctor.fees)//100})
 
 
 def signup_customer_action(request):
@@ -539,7 +539,9 @@ def appointment_close(request):
     appointment.count=int(appointment.count)+1
     appointment.status="2"
     appointment.save()
-    return JsonResponse(True,safe=False)
+    prescription = Prescription.objects.filter(appointment=appointment).first()
+    print(prescription)
+    return JsonResponse({"prescription":prescription.slug},safe=False)
 
 def logout(request):
     auth.logout(request)
@@ -623,15 +625,15 @@ def save_prescription(prescription):
     print(context)
     count = appointment.count
 
-    tpl = DocxTemplate("/home/pdochealth/pdoc/app/template.docx")
-    tpl.render(context)
-    name = "prescription-"+str(appointment.id)+"-"+str(count)+".docx"
-    filepath = '/home/pdochealth/pdoc/app/prescriptions/'+name
-
-    # tpl = DocxTemplate("app/template.docx")
+    # tpl = DocxTemplate("/home/pdochealth/pdoc/app/template.docx")
     # tpl.render(context)
-    # name = "prescription-"+str(appointment.id)+"-"+str(prescription.pk)+".docx"
-    # filepath = 'app/prescriptions/'+name
+    # name = "prescription-"+str(appointment.id)+"-"+str(count)+".docx"
+    # filepath = '/home/pdochealth/pdoc/app/prescriptions/'+name
+
+    tpl = DocxTemplate("app/template.docx")
+    tpl.render(context)
+    name = "prescription-"+str(appointment.id)+"-"+str(prescription.pk)+".docx"
+    filepath = 'app/prescriptions/'+name
 
     tpl.save(filepath)
     return filepath
@@ -659,15 +661,22 @@ def re_request(request):
     appointment.save()
     return JsonResponse(True,safe=False)
 
-def feedback(request):
+def feedback(request,meeting):
+    if request.user.is_authenticated:
+        doctor = False
+    else:
+        doctor = True
+    return render(request,"feedback.html",{"prescription_slug":meeting,"doctor":doctor})
+
+def feedback_submit(request):
     prescription = request.GET.get("prescription")
-    prescription = Prescription.objects.get(pk=prescription)
+    prescription = Prescription.objects.get(slug=prescription)
     rating = request.GET.get("rating")
     comments = request.GET.get("comments")
     feedbacks = Feedback.objects.filter(prescription=prescription)
     if len(feedbacks) > 0:
         feedback = feedbacks.last()
-        if request.GET.get("patient"):
+        if request.user.is_authenticated:
             feedback.patient_rating=rating
             feedback.patient_comments=comments
         else:
@@ -680,3 +689,4 @@ def feedback(request):
             feedback = Feedback(prescription=prescription,doctor_rating=rating,doctor_comments=comments)
     feedback.save()
     return JsonResponse(True,safe=False)
+
