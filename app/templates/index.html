@@ -18,7 +18,7 @@
                 <h6 class="text-title-small text-main-color font-weight-3 margin-tb-15px" style="color:white;">EDOC Medical Services Pvt Ltd &nbsp;|&nbsp; U74999OR2019PTC030248</h6>
 <!--                <h4 class="font-weight-300 text-main-color text-up-small" style="color:white;">Now find the best doctors around in just <b>1</b> click !!</h4>-->
             </div>
-<!--            <div class="row margin-tb-60px">-->
+           <!-- <div class="row margin-tb-60px">-->
 <!--                <div class="col-lg-8">-->
 <!--                    <div class="listing-search">-->
 <!--                        <form class="row no-gutters">-->
@@ -47,9 +47,9 @@
 <!--                                <a class="listing-bottom background-second-color box-shadow" onclick="alert('This service is temporarily unavailbale !!');" style="color:white;cursor:pointer;" >Search Now</a>-->
 <!--                            </div>-->
 <!--                        </form>-->
-<!--                    </div>-->
+                   <!-- </div>-->
 <!--                </div>-->
-<!--            </div>-->
+<!--            </div> -->
             <div class="row">
                 <div class="col-lg-6">
                     <div class="row" >
@@ -58,7 +58,7 @@
                             <a href="{% url 'doctor_pages' slug=type.name|replace_filter %}" class="d-block border-radius-15 hvr-float hvr-sh2">
                                 <div class="background-main-color text-white border-radius-15 padding-20px text-center opacity-hover-7">
                                     <div class="icon margin-bottom-15px opacity-9">
-                                        <img src="{{type.image.url}}" style="max-width:25%;" alt="">
+                                        <img src="{{type.image.url}}" style="max-width:25%;" alt="{{type.name}}">
                                     </div>
                                     <span style="font-size:.75em;word-wrap: break-word;">{{type.name}}</span>
                                 </div>
@@ -70,7 +70,7 @@
                             <a href="{% url 'paramedic_pages' slug=type.name|replace_filter %}" class="d-block border-radius-15 hvr-float hvr-sh2">
                                 <div class="background-main-color text-white border-radius-15 padding-20px text-center opacity-hover-7">
                                     <div class="icon margin-bottom-15px opacity-9">
-                                        <img src="{{type.image.url}}" style="max-width:25%;" alt="">
+                                        <img src="{{type.image.url}}" style="max-width:25%;" alt="{{type.name}}">
                                     </div>
                                     <span style="word-wrap: break-word;font-size:.75em;">{{type.name}}</span>
                                 </div>
@@ -92,7 +92,7 @@
                 <div class="col-lg-4 col-md-6 sm-mb-30px wow fadeInUp">
                     <div class="service text-center opacity-hover-7 hvr-bob">
                         <div class="icon margin-bottom-10px">
-                            <img src="{% static 'img/icon/service-1.png' %}" alt="">
+                            <img src="{% static 'img/icon/service-1.png' %}" alt="pdoc">
                         </div>
                         <h3 class="text-second-color">Reliable Places</h3>
                         <p class="text-grey-2">PDOC assures you to take you to the most reliable Doctors, Paramedics, Pharmacies and Diagnostics.</p>
@@ -103,7 +103,7 @@
                 <div class="col-lg-4 col-md-6 sm-mb-30px wow fadeInUp" data-wow-delay="0.2s">
                     <div class="service text-center opacity-hover-7 hvr-bob">
                         <div class="icon margin-bottom-10px">
-                            <img src="{% static 'img/icon/service-2.png' %}" alt="">
+                            <img src="{% static 'img/icon/service-2.png' %}" alt="pdoc">
                         </div>
                         <h3 class="text-second-color">High Credibility</h3>
                         <p class="text-grey-2">PDOC is an organization intitated and governed by a community of doctors. All processes and activites are practiced by quality and experienced doctors.</p>
@@ -114,7 +114,7 @@
                 <div class="col-lg-4 col-md-6 sm-mb-30px wow fadeInUp" data-wow-delay="0.3s">
                     <div class="service text-center opacity-hover-7 hvr-bob">
                         <div class="icon margin-bottom-10px">
-                            <img src="{% static 'img/icon/service-3.png' %}" alt="">
+                            <img src="{% static 'img/icon/service-3.png' %}" alt="pdoc">
                         </div>
                         <h3 class="text-second-color">Quick search</h3>
                         <p class="text-grey-2">The PDOC-health platform provides quick search facilities so that you are now one click away from the right medical professional.</p>
@@ -464,7 +464,7 @@
       <div class="modal-body">
                   <h6 class="modal-title">PODC is now a Recognized as an Innovative Startup by Startup Odisha !</h6>
 
-        <img src="https://www.pdochealth.com/static/page1.jpg">
+        <img src="https://www.pdochealth.com/static/page1.jpg" alt="pdoc">
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
