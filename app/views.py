@@ -574,14 +574,22 @@ def prescription_submit(request):
     medicines = json.loads(medicines)
     appointment = Appointments.objects.get(slug=roomhash)
     slug = ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(16))
-    prescription = Prescription(appointment=appointment,summary=summary,slug=slug)
+    if request.GET.get("resave")=="true":
+        prescription = request.GET.get("prescription")
+        print("-"*20)
+        print(prescription)
+        prescription = Prescription.objects.get(pk=prescription)
+        prescription.summary = summary
+        Medicine.objects.filter(prescription_id=prescription).delete()
+    else:
+        prescription = Prescription(appointment=appointment,summary=summary,slug=slug)
     prescription.save()
     for medicine in medicines:
         new_medicine = Medicine(prescription_id=prescription,medicine=medicine["medicine"],morning=medicine["m"],lunch=medicine["l"],evening=medicine["s"],dinner=medicine["d"],afterFood=medicine["aftFood"],period=medicine["period"],quantity=medicine["quantity"],remarks=medicine["remark"])
         new_medicine.save()
     filepath = save_prescription(prescription)
     save_prescription_firebase(filepath,appointment.customer.id)
-    return JsonResponse(True,safe=False)
+    return JsonResponse({"prescription":prescription.pk},safe=False)
 
 def save_prescription(prescription):
 

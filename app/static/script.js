@@ -1,3 +1,5 @@
+
+
 var firebaseConfig = {
   apiKey: "AIzaSyCNtuLp9_8dTKGHGnYTQDvtc4sjdG6Al8Q",
   authDomain: "pdochealth.firebaseapp.com",
@@ -466,6 +468,7 @@ function localDescCreated(desc) {
 }
 
 $("#end").click(function () {
+$("#prescribe-submit").click();
   if (confirm("End Meeting?")) {
     $.ajax({
       url: "/appointment-close/",
@@ -475,6 +478,7 @@ $("#end").click(function () {
       type: 'GET',
       dataType: 'json',
       success: function (res) {
+        $.removeCookie("prescription");
         window.location = "/feedback/"+res.prescription;
       }
     });
@@ -608,19 +612,33 @@ $("#prescribe-submit").click(function () {
       "remark": remark
     });
   });
-
+   if(!$.cookie('prescription'))
+   {
+        resave = false;
+        prescription = "-1";
+   }
+   else{
+        resave = true;
+        prescription = $.cookie('prescription');
+   }
+   console.log("resave");
+   console.log(resave);
   $.ajax({
     url: "/prescription-submit/",
     data: {
       'summary': summary,
       'medicines': JSON.stringify(medicines),
       'roomhash': roomHash,
+      'resave': resave,
+      'prescription': prescription,
     },
     type: 'GET',
     dataType: 'json',
     success: function (res) {
-      alert("Submitted!!");
+      $.cookie("prescription",res.prescription);
+      alert('Saved');
     }
   });
 
 });
+

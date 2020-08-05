@@ -196,6 +196,7 @@ class Prescription(models.Model):
     summary = models.TextField()
     meeting_close = models.DateTimeField(auto_now=True)
 
+
 class Medicine(models.Model):
 
     prescription_id = models.ForeignKey(Prescription,on_delete=models.CASCADE)
