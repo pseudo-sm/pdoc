@@ -6,6 +6,93 @@
 <body>
     {% include 'navigation.html' %}
     <!-- // Header  -->
+    <style>
+
+  .stats-bar{
+display:none
+}
+@media only screen and (max-width: 600px) {
+        .icon-bar{
+        display: none;
+        }
+        .stats-bar {
+        overflow: hidden;
+        display: block;
+        background-color: #333;
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        z-index: 99;
+        }
+
+        .stats-bar a {
+        float: left;
+        display: block;
+        color: #f2f2f2;
+        text-align: center;
+        text-decoration: none;
+        padding: 5px 0px 5px 0px;
+        font-size: 17px;
+
+        font-size: 15px;
+        }
+
+        .stats-bar a:hover {
+        background: #f1f1f1;
+        color: black;
+        }
+
+
+        .smitem1 {
+            background: #0D2149;
+            color: white;
+            width: 30%;
+        }
+
+        .smitem2 {
+            background: #805E73;
+            color: white;
+            width: 40%;
+        }
+
+        .smitem3 {
+            background: #208AAE;
+            color: white;
+            width: 30%;
+        }
+
+        }
+        </style>
+    <div class="stats-bar">
+        <a href="#" class="smitem1">
+            <div class="container-fluid">
+                <div class="row no-gutters">
+                    <div class="col-12 text-center pl-2">
+                        <span class="sideHide"><span id="doctors"></span><br>Doctors</span>
+                    </div>
+                </div>
+            </div>
+        </a>
+        <a href="#" class="smitem2">
+            <div class="container-fluid">
+                <div class="row no-gutters">
+                    <div class="col-12 text-center pl-2">
+                        <span class="sideHide"><span id="appointments"></span> <br>Appointments</span>
+                    </div>
+                </div>
+            </div>
+        </a>
+        <a href="#" class="smitem3">
+            <div class="container-fluid">
+                <div class="row no-gutters">
+
+                    <div class="col-12 text-center pl-2">
+                        <span class="sideHide"><span id="users"></span> <br>Users</span>
+                    </div>
+                </div>
+            </div>
+        </a>
+      </div>
     <marquee style="background-color:#007cff;color:white;"> Important Links & Updates :
             {% for link in links %}
         <a href="{{link.url}}" style="color:white;text-decoration-line:underline;">{{link.title}}</a>
@@ -478,7 +565,21 @@
 <!--Start of Tawk.to Script-->
 {% include 'tawk.html' %}
 </body>
-
+<script>
+    $.ajax({
+      url: "/statistics/",
+      type: 'GET',
+      dataType: 'json',
+      success: function(res) {
+          users = res.users;
+          doctors = res.doctors;
+          appointments = res.appointments;
+          $("#doctors").html(doctors);
+          $("#users").html(users);
+          $("#appointments").html(appointments);
+      }
+  });
+</script>
 {% include 'js.html' %}
 
 </html>
