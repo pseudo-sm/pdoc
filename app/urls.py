@@ -78,6 +78,7 @@ urlpatterns = [
         path("prescription-submit/",views.prescription_submit,name="prescription_submit"),
         path("feedback/<slug:meeting>",views.feedback,name="feedback"),
         path("feedback-submit/",views.feedback_submit,name="feedback_submit"),
+        path("statistics/",views.statistics,name="statistics"),
         path("",views.index,name="index"),
 ]
 from django.conf.urls.static import static

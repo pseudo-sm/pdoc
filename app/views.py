@@ -698,3 +698,10 @@ def feedback_submit(request):
     feedback.save()
     return JsonResponse(True,safe=False)
 
+
+def statistics(request):
+    users = len(Customer.objects.all())
+    doctors = len(Doctor.objects.all())
+    appointments = len(Appointments.objects.all())
+    data = {"users":users,"doctors":doctors,"appointments":appointments}
+    return JsonResponse(data,safe=False)
