@@ -46,7 +46,8 @@ def handler404(request, exception, template_name="404.html"):
 def get_doctors(request):
     doctors = Doctor.objects.all()
     if request.GET.get("type") == "0":
-        return JsonResponse(list(doctors.values("name","type_id__name","image","education","practicing_year")),safe=False)
+        print(doctors)
+        return JsonResponse(list(doctors.values("name","type_id__name","image","education","practicing_year","special_day","special_from","special_to")),safe=False)
     areas = request.GET.get("areas")
     education = request.GET.get("education")
     keyword = request.GET.get("keyword")
@@ -65,7 +66,8 @@ def get_doctors(request):
     for doc in filtered_doctors:
         if int(now.year)-int(doc.practicing_year) < int(experience):
             filtered_doctors = filtered_doctors.exclude(id=doc.id)
-    return JsonResponse(list(filtered_doctors.values("name","type_id__name","image","education","practicing_year")),safe=False)
+    print(filtered_doctors)
+    return JsonResponse(list(filtered_doctors.values("name","type_id__name","image","education","practicing_year","special_day","special_from","special_to")),safe=False)
 
 def index(request):
     all_links = Links.objects.all()
@@ -83,20 +85,16 @@ def details(request):
 def doctors_over_call(request):
     type = Type.objects.all()
     terms = Others.objects.get(name="terms")
-    print(terms)
     return render(request,"telecalling.html",{"types":type,"terms":terms})
 
 def doctors(request):
     type = Type.objects.filter(type_category="1")
     terms = Others.objects.get(name="terms")
-    print(terms)
     return render(request,"doctors.html",{"types":type,"terms":terms,"doctor_types":doctor_types,"paramedic_types":paramedic_types})
 
 def doctors_cat(request):
     category = request.GET.get("category")
     type_service = request.GET.get("type")
-
-    print(category)
     if category != "all":
         type = Type.objects.get(id=int(category))
         if type_service is None:
@@ -112,7 +110,7 @@ def doctors_cat(request):
             doctors = Doctor.objects.filter(telecalling=True)
         elif type_service=="videocall":
             doctors = Doctor.objects.filter(videoconferencing=True)
-    doctors = doctors.values("id","name","type_id__name","education","practicing_year","direct_contact","phone","designation","hospital","address","available_from","available_to")
+    doctors = doctors.values("id","name","type_id__name","education","practicing_year","direct_contact","phone","designation","hospital","address","available_from","available_to","special_day","special_from","special_to")
     for doctor in doctors:
         if not doctor["direct_contact"]:
             doctor["phone"] = "8917240913"

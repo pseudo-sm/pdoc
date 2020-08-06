@@ -61,6 +61,10 @@ class Doctor(models.Model):
     designation = models.CharField(max_length=300,null=True,blank=True)
     hospital = models.CharField(max_length=300)
     fees = models.CharField(max_length=100)
+    special_day = models.CharField(max_length=100,null=True,blank=True)
+    special_from = models.TimeField(null=True,blank=True)
+    special_to = models.TimeField(null=True,blank=True)
+
     class Meta:
         verbose_name = "Doctor"
         verbose_name_plural = "Doctors"
