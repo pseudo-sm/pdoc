@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en">
+{% load string_ops %}
 {% load static %}
 <head>
   <title>EDOC | PDOC Health</title>
@@ -125,10 +126,10 @@
         <div class="container-fluid" data-aos="fade-up" data-aos-duration="1000">
           <div class="row no-gutters">
             {% for type in doctor_types %}
-            <div class="col-4 col-md-2 col-sm-4 text-center tog-div">
+            <a href="{% url 'doctor_pages' slug=type.name|replace_filter %}" class="col-4 col-md-2 col-sm-4 text-center tog-div">
               <img class="tog-img" src="{{type.image.url}}" alt="name">
               <p>{{type.name}}</p>
-            </div>
+            </a>
             {% endfor %}
           </div>
         </div>
