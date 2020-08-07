@@ -704,7 +704,7 @@ def statistics(request):
     data = {"users":users,"doctors":doctors,"appointments":appointments}
     return JsonResponse(data,safe=False)
 
-def index2(request):
+def index(request):
     all_links = Links.objects.all()
     return render(request,"index/index.html",{"links":all_links,"doctor_types":doctor_types,"paramedic_types":paramedic_types})
 

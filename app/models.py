@@ -8,7 +8,7 @@ class Type(models.Model):
     description = models.TextField()
     status = models.BooleanField(default=False)
     type_category = models.CharField(max_length=3)
-    image = models.ImageField(upload_to="types/",default="types/default.png")
+    image = models.FileField(upload_to="types/",default="types/default.png")
     def __str__(self):
         return self.name
 
