@@ -703,3 +703,19 @@ def statistics(request):
     appointments = len(Appointments.objects.all())
     data = {"users":users,"doctors":doctors,"appointments":appointments}
     return JsonResponse(data,safe=False)
+
+def index2(request):
+    all_links = Links.objects.all()
+    return render(request,"index/index.html",{"links":all_links,"doctor_types":doctor_types,"paramedic_types":paramedic_types})
+
+
+def email_contact_form(request):
+
+    name = request.GET.get("name")
+    email = request.GET.get("email").strip()
+    phone = request.GET.get("phone")
+    message = request.GET.get("message")
+    body ="Name : "+name+"\nEmail : "+email+"\n Phone : "+phone+"\nMessage : "+message
+    email_msg = EmailMessage("pdochealth consultancy enquiry", body, settings.EMAIL_HOST_USER, ["care@pdochealth.com"])
+    email_msg.send(fail_silently=False)
+    return JsonResponse(True,safe=False)
