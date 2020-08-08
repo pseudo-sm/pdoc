@@ -69,10 +69,6 @@ def get_doctors(request):
     print(filtered_doctors)
     return JsonResponse(list(filtered_doctors.values("name","type_id__name","image","education","practicing_year","special_day","special_from","special_to")),safe=False)
 
-def index(request):
-    all_links = Links.objects.all()
-    return render(request,"index.html",{"links":all_links,"doctor_types":doctor_types,"paramedic_types":paramedic_types})
-
 def search(request):
     area = Area.objects.all()
     type = Type.objects.all()
@@ -110,7 +106,7 @@ def doctors_cat(request):
             doctors = Doctor.objects.filter(telecalling=True)
         elif type_service=="videocall":
             doctors = Doctor.objects.filter(videoconferencing=True)
-    doctors = doctors.values("id","name","type_id__name","education","practicing_year","direct_contact","phone","designation","hospital","address","available_from","available_to","special_day","special_from","special_to")
+    doctors = doctors.values("id","name","type_id__name","education","practicing_year","direct_contact","phone","designation","hospital","address","available_from","available_to","special_day","special_from","special_to","fees")
     for doctor in doctors:
         if not doctor["direct_contact"]:
             doctor["phone"] = "8917240913"
@@ -706,7 +702,8 @@ def statistics(request):
 
 def index(request):
     all_links = Links.objects.all()
-    return render(request,"index/index.html",{"links":all_links,"doctor_types":doctor_types,"paramedic_types":paramedic_types})
+    feedbacks = Feedback.objects.filter(Q(status_doctor=True) | Q(status_patient=True))
+    return render(request,"index/index.html",{"links":all_links,"doctor_types":doctor_types,"paramedic_types":paramedic_types,"feedbacks":feedbacks})
 
 
 def email_contact_form(request):

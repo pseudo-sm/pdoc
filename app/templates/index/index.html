@@ -421,7 +421,7 @@
 <!--    </div>-->
 <!--  </section>-->
   <!-- suggesation -->
-  <section style="background-color:#D95D39;" data-aos="fade-up">
+  <section style="background-color:#D95D39;margin-top:5%;" data-aos="fade-up">
     <section class="plusBG pt-5 pb-5">
       <div class="container contact-form">
           <h3>Drop Us a Message</h3>
@@ -521,13 +521,13 @@
         <div class="row text-center">
           <span class="badge" onclick="statsHide()">x</span>
           <div class="col-12 sitem1 p-2">
-            <span class="sideHide"><span id="doctors"></span><br>Doctors</span>
+            <span class="sideHide"><span class="doctors-stats"></span><br>Doctors</span>
           </div>
           <div class="col-12 sitem2 p-2">
-            <span class="sideHide"><span id="appointments"></span> <br>Appointments</span>
+            <span class="sideHide"><span class="appointments-stats"></span> <br>Appointments</span>
           </div>
           <div class="col-12 sitem3 p-2">
-            <span class="sideHide"><span id="users"></span> <br>Users</span>
+            <span class="sideHide"><span class="users-stats"></span><br>Users</span>
           </div>
         </div>
       </div>
@@ -539,7 +539,7 @@
       <div class="container-fluid">
         <div class="row no-gutters">
           <div class="col-12 text-center pl-2">
-            <span class="sideHide">56 <br>Doctors</span>
+            <span class="sideHide"><span class="doctors-stats"></span> <br>Doctors</span>
           </div>
         </div>
       </div>
@@ -548,7 +548,7 @@
       <div class="container-fluid">
         <div class="row no-gutters">
           <div class="col-12 text-center pl-2">
-            <span class="sideHide">324 <br>Appointments</span>
+            <span class="sideHide"><span class="appointments-stats"></span> <br>Appointments</span>
           </div>
         </div>
       </div>
@@ -558,7 +558,7 @@
         <div class="row no-gutters">
 
           <div class="col-12 text-center pl-2">
-            <span class="sideHide">289 <br>Users</span>
+            <span class="sideHide"><span class="users-stats"></span> <br>Users</span>
           </div>
         </div>
       </div>
@@ -584,9 +584,9 @@
           users = res.users;
           doctors = res.doctors;
           appointments = res.appointments;
-          $("#doctors").html(doctors);
-          $("#users").html(users);
-          $("#appointments").html(appointments);
+          $(".doctors-stats").html(doctors);
+          $(".users-stats").html(users);
+          $(".appointments-stats").html(appointments);
       }
   });
   $("#contact-submit").click(function() {

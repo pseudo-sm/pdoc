@@ -148,20 +148,19 @@
                             </label>
                         </div>
                     </div>
-                    
 
                     <button class="btn btn-md btn-primary full-width" style="background-color:#0864b2;"
                         id="submit">Submit</button>
                         <script>
                             $('input:checkbox').change(function(){
                                 if($(this).is(":checked")) {
-                                    $("#submit").show();
+                                    $("#submit").prop("disabled",false);
                                 } else {
-                                    $("#submit").hide();
+                                    $("#submit").prop("disabled",true);;
                                 }
                             });
                             $(document).ready(function() {
-                                    $("#submit").hide();
+                                    $("#submit").prop("disabled",true);
                             });
                             
                         </script>

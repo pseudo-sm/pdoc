@@ -226,9 +226,11 @@ class Feedback(models.Model):
 
     prescription = models.ForeignKey(Prescription,on_delete=models.CASCADE)
     doctor_rating = models.CharField(max_length=1,null=True,blank=True)
-    doctor_comments = models.CharField(max_length=1,null=True,blank=True)
+    doctor_comments = models.TextField(null=True,blank=True)
     patient_rating = models.CharField(max_length=1,null=True,blank=True)
-    patient_comments = models.CharField(max_length=1,null=True,blank=True)
+    patient_comments = models.TextField(null=True,blank=True)
+    status_doctor = models.BooleanField(default=False)
+    status_patient = models.BooleanField(default=False)
 
     def __str__(self):
         return str(self.prescription)

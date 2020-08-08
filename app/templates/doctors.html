@@ -153,8 +153,9 @@
                 {
                     temp = temp + '<br><span class="text-grey-6"><b>'+res[i].special_day+'</b></span><span class="text-grey-6"> : '+res[i].special_from+' - '+res[i].special_to+'</span>';
                 }
+                temp = temp + '<br><br><span class="text-grey-6"><b> Fees : Rs. ' + res[i].fees+ '</b></span>'
                 temp = temp + '</div> \
-                                <div class="m-3" style="color:#007bff"><i class="fa fa-video" aria-hidden="true"></i><i class="fa fa-phone" aria-hidden="true"></i></div> \
+                                <div class="m-3" style="color:#007bff"><i class="fa fa-video mr-2" aria-hidden="true"></i><i class="fa fa-phone" aria-hidden="true"></i></div> \
                                  <div doctor-id="'+res[i].id+'" class="btn btn-primary schedule-call" style="width:100%;border-radius:0px;">Schedule Call</div></a>\
                             </div> \
                         </div>'
