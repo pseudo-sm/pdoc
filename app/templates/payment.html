@@ -25,7 +25,7 @@
             <td>Rs.30</td>
             <td>{{date}}</td>
             <td>{{name}}</td>
-            <td>Not Paid</td>
+            <td id="payment-status"></td>
         </tr>
     </table>
 </div>
@@ -82,6 +82,26 @@ document.getElementById('rzp-button1').onclick = function(e){
     rzp1.open();
     e.preventDefault();
 }
+$.ajax({
+        url: "{% url 'payment_status' %}",
+        data : {
+            'order_id':"{{order_id}}",
+            'signature':"{{signature_id}}",
+            'payment_id':"{{payment_id}}",
+        },
+        type: 'GET',
+        dataType: 'json',
+
+        success: function(res) {
+            console.log(res);
+            if(res){
+               $("#payment-status").html("Paid");
+               }
+              else {
+              $("#payment-status").html("Not Paid");
+              }
+        }
+    });
 </script>
 </body>
 </html>

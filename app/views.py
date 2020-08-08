@@ -113,6 +113,7 @@ def doctors_cat(request):
         if doctor["available_from"] is None:
             doctor["available_from"] = "Available Time Slots"
             doctor["available_to"] = "Not Mentioned"
+        doctor["fees"] = str(int(doctor["fees"])//100)
     return JsonResponse(list(doctors),safe=False)
 
 def paramedics_cat(request):
@@ -218,8 +219,11 @@ def payment(request):
     name = customer.name
     phone = customer.phone
     user_id = customer.user_id
+    order_id = customer.razor_pay_order_id
+    payment_id = customer.payment_id
+    signature_id = customer.signature_id
     date = datetime.datetime.now().strftime("%m/%d/%Y")
-    return render(request,"payment.html",{"order_id":order_id,"name":name,"phone":phone,"username":user_id,"date":date})
+    return render(request,"payment.html",{"name":name,"phone":phone,"username":user_id,"date":date,"order_id":order_id,"signature_id":signature_id,"payment_id":payment_id})
 
 def payment_booking(request):
     order_id=request.GET.get("order_id")
@@ -255,6 +259,10 @@ def signup_customer_action(request):
     order_id = client.order.create(data=data)
     new_customer.razor_pay_order_id=order_id["id"]
     new_customer.save()
+    body = "Hi {}, Welcome to Pdochealth by Edoc Medical Services Pvt Ltd\n Our Customer Relation Representative will contact you shortly. Meanwhile please go through the website to checkout our sservices.".format(name)
+    email_msg = EmailMessage("Welcome to Pdochealth", body, settings.EMAIL_HOST_USER,
+                             ["saswathcommand@gmail.com",email])
+    email_msg.send(fail_silently=False)
     return JsonResponse({"order_id":order_id},safe=False)
 
 
@@ -552,8 +560,16 @@ def payment_status(request):
     order_id = request.GET.get("order_id")
     signature = request.GET.get("signature")
     payment_id = request.GET.get("payment_id")
-    client.utility.verify_payment_signature({"razorpay_signature":signature,"razorpay_order_id":order_id,"razorpay_payment_id":payment_id})
-    return JsonResponse(True,safe=False)
+    customer = Customer.objects.get(razor_pay_order_id=order_id)
+    customer.payment_id=payment_id
+    customer.signature_id=signature
+    try:
+        client.utility.verify_payment_signature({"razorpay_signature":signature,"razorpay_order_id":order_id,"razorpay_payment_id":payment_id})
+        customer.payment_status=True
+    except:
+        customer.payment_status=False
+    customer.save()
+    return JsonResponse(customer.payment_status,safe=False)
 
 def email_notify(patient,doctor,phone):
     body = "A user name {} wants an appointment with Dr. {}".format(patient,doctor)

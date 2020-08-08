@@ -112,6 +112,8 @@ class Customer(models.Model):
     email = models.CharField(max_length=100)
     password = models.CharField(max_length=100)
     razor_pay_order_id = models.CharField(max_length=1000,null=True,blank=True)
+    payment_id = models.CharField(max_length=1000,null=True,blank=True)
+    signature_id = models.CharField(max_length=1000,null=True,blank=True)
     datetime = models.DateTimeField(auto_now=True)
     def __str__(self):
         return self.name
