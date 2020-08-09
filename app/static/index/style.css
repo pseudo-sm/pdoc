@@ -34,13 +34,21 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-    box-shadow: inset 0 0 5px grey;
+    box-shadow: inset 0 0 50px #0D2149;
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #477da3;
+    background: #D95D39;
     transition: all 1s ease;
 }
+
+:root {
+    scrollbar-face-color: #D95D39;
+    scrollbar-track-color: #0D2149;
+    scrollbar-color: #D95D39 #0D2149;
+    scrollbar-width: thin;
+}
+
 
 a {
     display: inline-block;
@@ -509,23 +517,33 @@ button:focus {
 
 #mySidenav a {
     position: fixed;
-    /* left: -1%; */
     transition: 0.3s;
-    width: 10%;
+    width: 35%;
     text-decoration: none;
-    font-size: 20px;
     color: white;
     border-radius: 5px;
     z-index: 1 !important;
-    /* transform: rotateZ(-90deg); */
+    transform: translateX(-50%) rotate(-90deg);
+    -webkit-transform: translateX(-50%) rotate(-90deg);
+    transform-origin: center top;
+    -webkit-transform-origin: center top;
+}
+
+.insNo {
+    border: solid 1px white;
+    border-radius: 100px;
+    padding: 5px;
+    height: 90px !important;
+    width: 90px !important;
+    margin-right: 4%;
 }
 
 #about {
-    bottom: 0;
+    top: 50%
 }
 
 .sitem1 {
-    background: #0D2149;
+    background: #1e428a;
     color: white;
 }
 
@@ -541,11 +559,11 @@ button:focus {
 
 .badge {
     position: absolute;
-    top: -10px;
+    bottom: -10px;
     right: -10px;
     padding: 5px 10px;
-    border-radius: 50%;
-    background: red;
+    border-radius: 50px;
+    background: #ff3737;
     color: white;
     z-index: 1 !important;
     cursor: pointer;
@@ -574,7 +592,8 @@ button:focus {
 
     .bg2-1-h {
         color: white;
-        margin-top: 30%;
+        margin-top: 25%;
+        margin-bottom: 8%;
     }
 
     .bg-2-1-hr {
@@ -629,4 +648,66 @@ button:focus {
     .bg1-img {
         width: 100%;
     }
+}
+
+.overflow-hid {
+    overflow: hidden !important;
+}
+
+.MarqA {
+    color: white;
+    text-decoration-line: none;
+    padding-bottom: 1px;
+    padding-top: 2px;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    border-top-width: 1px;
+    border-top-style: solid;
+}
+
+.MarqA:hover {
+    color: #fc6c45 !important;
+}
+
+@media only screen and (max-width: 600px) {
+    .MarqA {
+        color: #0D2149 !important;
+        text-decoration-line: none;
+        padding-bottom: 1px;
+        padding-top: 2px;
+        border-bottom-width: 1px;
+        border-bottom-style: solid;
+        border-top-width: 1px;
+        border-top-style: solid;
+    }
+}
+
+/* Loader */
+#loader-div{
+    width: 100% !important;
+    height: 100% !important;
+    background-color: #0D2149;
+}
+#loader {
+    border: 7px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 12px solid #D95D39;
+    width: 70px;
+    height: 70px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.center {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
 }
