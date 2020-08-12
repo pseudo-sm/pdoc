@@ -113,6 +113,11 @@ def doctors_cat(request):
         if doctor["available_from"] is None:
             doctor["available_from"] = "Available Time Slots"
             doctor["available_to"] = "Not Mentioned"
+        doctor["available_from"] = doctor["available_from"].strftime("%H:%M")
+        doctor["available_to"] = doctor["available_to"].strftime("%H:%M")
+        if doctor["special_day"] is not None:
+            doctor["special_from"] = doctor["special_from"].strftime("%H:%M")
+            doctor["special_to"] = doctor["special_to"].strftime("%H:%M")
         doctor["fees"] = str(int(doctor["fees"])//100)
     return JsonResponse(list(doctors),safe=False)
 

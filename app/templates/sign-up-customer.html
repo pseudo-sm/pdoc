@@ -20,6 +20,38 @@
 <head>
     <script src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
     <script src="https://cdn.jsdelivr.net/npm/connectycube@x.x.x/dist/connectycube.min.js"></script>
+    <style>
+        #loader-div {
+            width: 100% !important;
+            height: 100% !important;
+            display: none;
+            padding-left:45%;
+            
+        }
+        #loader-div-log {
+            width: 100% !important;
+            height: 100% !important;
+            display: none;
+            padding-left:45%;
+            padding-top: 5%;
+            padding-bottom: 5%;
+        }
+
+        #loader {
+            border: 7px solid #f3f3f3;
+            border-radius: 50%;
+            border-top: 12px solid #D95D39;
+            width: 70px;
+            height: 70px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
 </head>
 
 <body>
@@ -58,7 +90,10 @@
             <div class="container margin-bottom-100px">
                 <!--======= log_in_page =======-->
                 <div id="log-in" class="site-form log-in-form box-shadow border-radius-10">
-                    <form action="{% url 'login' %}" method="post">
+                    <div id="loader-div-log">
+                        <div id="loader" class="center"></div>
+                    </div>
+                    <form action="{% url 'login' %}" method="post" class="hide-loader-login">
                         {% csrf_token %}
                         <div class="form-output">
                             <p style="color:red;display:none;" class="warning">Please make sure you have filled all
@@ -85,6 +120,12 @@
                         <button class="btn btn-md btn-primary full-width" style="background-color:#0864b2;"
                             id="login">Login</button>
                     </form>
+                    <script>
+                        $("#login").on("click", function () {
+                            $(".hide-loader-login").hide();
+                            $("#loader-div-log").show();
+                        });
+                    </script>
 
                     <!--                    <a href="#" class="btn btn-md bg-facebook full-width btn-icon-left"><i class="fab fa-facebook margin-right-8px" aria-hidden="true"></i> Login with Facebook</a>-->
 
@@ -99,32 +140,39 @@
         <div class="col-lg-6">
             <div class="container margin-bottom-100px">
                 <!--======= log_in_page =======-->
+                
                 <div id="sign-up" class="site-form log-in-form box-shadow border-radius-10">
-
+                    
                     <div class="form-output">
                         <p style="color:red;display:none;" class="warning">Please make sure you have filled all fields!!
                         </p>
-                        <div class="form-group label-floating">
+                        <!-- loader -->
+                        
+                        <div id="loader-div">
+                            <div id="loader" class="center"></div>
+                        </div>
+                        <!-- loader Ends -->
+                        <div class="form-group label-floating hide-loader">
                             <label class="control-label" for="name">Your Name</label>
                             <input class="form-control" placeholder="Your Full Name" id="name" type="text">
                         </div>
 
-                        <div class="form-group label-floating">
+                        <div class="form-group label-floating hide-loader">
                             <label class="control-label" for="email">Email</label>
                             <input class="form-control" placeholder="ex - yourname@gmail.com" id="email" type="email">
                         </div>
 
-                        <div class="form-group label-floating">
+                        <div class="form-group label-floating hide-loader">
                             <label class="control-label" for="password">Password</label>
                             <input class="form-control" placeholder="password" id="password" type="password">
                         </div>
 
-                        <div class="form-group label-floating">
+                        <div class="form-group label-floating hide-loader">
                             <label class="control-label" for="phone">Phone</label>
                             <input class="form-control" placeholder="Mobile" type="text" id="phone">
                         </div>
 
-                        <div class="form-group label-floating">
+                        <div class="form-group label-floating hide-loader">
                             <label class="control-label" for="query">Query</label>
                             <textarea class="form-control" placeholder="Describe the problem in detail.."
                                 id="query"></textarea>
@@ -138,7 +186,7 @@
                         <!--					</select>-->
                     </div>
 
-                    <div class="form-group pl-5 pr-4 pb-5">
+                    <div class="form-group pl-5 pr-4 pb-5 hide-loader">
                         <div class="form-check">
                             <input class="form-check-input is-invalid" type="checkbox" value="" id="toc"
                                 required>
@@ -149,7 +197,7 @@
                         </div>
                     </div>
 
-                    <button class="btn btn-md btn-primary full-width" style="background-color:#0864b2;"
+                    <button class="btn btn-md btn-primary full-width hide-loader" style="background-color:#0864b2;"
                         id="submit">Submit</button>
                         <script>
                             $('input:checkbox').change(function(){
@@ -207,6 +255,8 @@
     {% include 'footer.html' %}
     <script>
         $("#submit").on("click", function () {
+            $('.hide-loader').hide();
+            $('#loader-div').show();
             name = $("#name").val();
             email = $("#email").val();
             password = $("#password").val();

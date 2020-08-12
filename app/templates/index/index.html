@@ -474,6 +474,16 @@
           </div>
         </div>
       </div>
+      <style>
+        .contact-loader{
+          display: none;
+        }
+      </style>
+      <div class="container contact-loader">
+        <div id="loader-div">
+          <div id="loader" class="center"></div> 
+        </div>
+      </div>
     </section>
   </section>
   <!-- footer -->
@@ -617,6 +627,8 @@
       }
     });
     $("#contact-submit").click(function () {
+      $(".contact-form").hide();
+      $(".contact-loader").show();
       name = $("#name").val();
       email = $("#email").val();
       phone = $("#phone").val();
@@ -654,7 +666,11 @@
           type: 'GET',
           dataType: 'json',
           success: function (res) {
-            alert('Our team will shortly contact you !!');
+            $(".contact-form").show();
+            $(".contact-loader").hide();
+            $(".contact-form").text("");
+            $(".contact-form").html('<h2 class="text-center p-5">Our team will shortly contact you !!</h2>');
+            // alert('Our team will shortly contact you !!');
           }
         });
       }
