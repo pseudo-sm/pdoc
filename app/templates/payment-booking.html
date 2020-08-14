@@ -59,8 +59,13 @@ var options = {
                },
               dataType: "json",
               success: function(order){
-                alert('Succesful , Team PDOC will contact you shortly!!');
-                window.location="http://www.pdochealth.com/signup/";
+                if(order) {
+                    alert('Succesfull , Team PDOC will contact you shortly!!');
+                    window.location="http://www.pdochealth.com/signup/";
+                }
+                else {
+                    alert('Payment failled :(');
+                }
               }
             });
 

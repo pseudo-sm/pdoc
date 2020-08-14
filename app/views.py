@@ -106,19 +106,17 @@ def doctors_cat(request):
             doctors = Doctor.objects.filter(telecalling=True)
         elif type_service=="videocall":
             doctors = Doctor.objects.filter(videoconferencing=True)
-    doctors = doctors.values("id","name","type_id__name","education","practicing_year","direct_contact","phone","designation","hospital","address","available_from","available_to","special_day","special_from","special_to","fees")
+    doctors = doctors.values("id","name","type_id__name","education","practicing_year","direct_contact","phone","designation","hospital","address","available_from","available_to","available_from2","available_to2","special_day","special_from","special_to","fees")
     for doctor in doctors:
-        if not doctor["direct_contact"]:
-            doctor["phone"] = "8917240913"
-        if doctor["available_from"] is None:
-            doctor["available_from"] = "Available Time Slots"
-            doctor["available_to"] = "Not Mentioned"
         doctor["available_from"] = doctor["available_from"].strftime("%H:%M")
         doctor["available_to"] = doctor["available_to"].strftime("%H:%M")
+        if doctor["available_from2"] is not None:
+            doctor["available_from2"] = doctor["available_from2"].strftime("%H:%M")
+            doctor["available_to2"] = doctor["available_to2"].strftime("%H:%M")
         if doctor["special_day"] is not None:
             doctor["special_from"] = doctor["special_from"].strftime("%H:%M")
             doctor["special_to"] = doctor["special_to"].strftime("%H:%M")
-        doctor["fees"] = str(int(doctor["fees"])//100)
+        doctor["fees"] = str(int(doctor["fees"])+int(int(doctor["fees"])*0.12))
     return JsonResponse(list(doctors),safe=False)
 
 def paramedics_cat(request):
@@ -238,7 +236,7 @@ def payment_booking(request):
     phone = customer.phone
     user_id = customer.user_id
     date = datetime.datetime.now().strftime("%m/%d/%Y")
-    return render(request,"payment-booking.html",{"order_id":order_id,"name":name,"phone":phone,"username":user_id,"date":date,"fees":int(appointment.doctor.fees)//100})
+    return render(request,"payment-booking.html",{"order_id":order_id,"name":name,"phone":phone,"username":user_id,"date":date,"fees":int(int(appointment.doctor.fees)*1.12),"slug":appointment.slug})
 
 
 def signup_customer_action(request):
@@ -254,21 +252,12 @@ def signup_customer_action(request):
     auth.login(request,user=user)
     new_customer = Customer(name=name,phone=phone,query=query,user_id=user,email=email,password=password)
     new_customer.save()
-    data = {
-        "amount" : 3000,
-        "currency" : "INR",
-        "receipt" : "1",
-        "payment_capture" : 1,
-
-    }
-    order_id = client.order.create(data=data)
-    new_customer.razor_pay_order_id=order_id["id"]
     new_customer.save()
     body = "Hi {}, Welcome to Pdochealth by Edoc Medical Services Pvt Ltd\n Our Customer Relation Representative will contact you shortly. Meanwhile please go through the website to checkout our sservices.".format(name)
     email_msg = EmailMessage("Welcome to Pdochealth", body, settings.EMAIL_HOST_USER,
                              ["saswathcommand@gmail.com",email])
     email_msg.send(fail_silently=False)
-    return JsonResponse({"order_id":order_id},safe=False)
+    return JsonResponse(True,safe=False)
 
 
 def paramedic_health_and_fitness_advisor(request):
@@ -401,10 +390,6 @@ def login(request):
 @login_required(login_url="signup_customer")
 def patient_dashboard(request):
     customer = Customer.objects.get(user_id=request.user.id)
-    if customer.razor_pay_order_id is not None:
-        status = False
-    else:
-        status = True
     not_yet=request.GET.get("not_time")
     user = User.objects.get(id=request.user.id)
     customer = Customer.objects.get(user_id=user)
@@ -422,8 +407,8 @@ def patient_dashboard(request):
     tdoctor = len(list(Doctor.objects.filter(telecalling=True)))
     pmconsultancy = len(list(Paramedics.objects.filter()))
     if not_yet is not None:
-        return render(request,"customer/dashboard.html",{"p":"true","vdoctor":vdoctor,"tdoctor":tdoctor,"pmconsultancy":pmconsultancy,"doctor_types":doctor_types,"paramedic_types":paramedic_types,"scheduled_appointments":shortlisted_scheduled_appointments,"status":status,"logout":True,"prescriptions":prescriptions,"cprescription":len(prescriptions)})
-    return render(request,"customer/dashboard.html",{"vdoctor":vdoctor,"tdoctor":tdoctor,"pmconsultancy":pmconsultancy,"doctor_types":doctor_types,"paramedic_types":paramedic_types,"scheduled_appointments":shortlisted_scheduled_appointments,"status":status,"logout":True,"prescriptions":prescriptions,"cprescription":len(prescriptions)})
+        return render(request,"customer/dashboard.html",{"p":"true","vdoctor":vdoctor,"tdoctor":tdoctor,"pmconsultancy":pmconsultancy,"doctor_types":doctor_types,"paramedic_types":paramedic_types,"scheduled_appointments":shortlisted_scheduled_appointments,"logout":True,"prescriptions":prescriptions,"cprescription":len(prescriptions)})
+    return render(request,"customer/dashboard.html",{"vdoctor":vdoctor,"tdoctor":tdoctor,"pmconsultancy":pmconsultancy,"doctor_types":doctor_types,"paramedic_types":paramedic_types,"scheduled_appointments":shortlisted_scheduled_appointments,"logout":True,"prescriptions":prescriptions,"cprescription":len(prescriptions)})
 
 def blog_list(request):
     articles = Article.objects.all()
@@ -436,9 +421,15 @@ def blog_single(request,slug):
 def zonal_admin(request):
     appointments = Appointments.objects.filter(Q(status="0") | Q(status="3"))
     # paramedic_bookings = ParamedicBookings.objects.filter(status="0")
-    appointments = appointments.values("id","name","phone","datetime","doctor__name","doctor__phone","query","type","status")
-    # paramedic_bookings = paramedic_bookings.values("id","name","phone","datetime","paramedic__name","paramedic__phone","query")
-    return render(request,"Zonal Admin/index.html",{"appointments":appointments})
+    appointments = appointments.values("id","name","phone","datetime","doctor__name","doctor__phone","query","type","status","payment_status")
+    for row in appointments:
+        print(row["payment_status"],row["id"])
+    return render(request,"Zonal Admin/index.html",{"appointments":appointments[::-1]})
+
+def zonal_admin_doctors(request):
+    doctors = Doctor.objects.all()
+    doctors = doctors.values("practice_id","name","address","education","phone","type__name","available_from","available_to","available_from2","available_to2","designation","hospital","special_day","special_from","special_to")
+    return render(request,"Zonal Admin/doctors.html",{"doctors":doctors})
 
 def video_calling(request,slug):
     appointment = Appointments.objects.get(slug=slug)
@@ -488,7 +479,7 @@ def book_appointment(request):
         customer = Customer.objects.get(user_id=user)
         slug = ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(16))
         data = {
-            "amount" : int(doctor.fees),
+            "amount" : int(doctor.fees)*112,
             "currency" : "INR",
             "receipt" : "1",
             "payment_capture" : 1,
@@ -561,20 +552,21 @@ def payment_action(request):
     customer = Customer.objects.get(razor_pay_order_id=order_id)
     return signup_customer(request)
 
+
 def payment_status(request):
     order_id = request.GET.get("order_id")
     signature = request.GET.get("signature")
     payment_id = request.GET.get("payment_id")
-    customer = Customer.objects.get(razor_pay_order_id=order_id)
-    customer.payment_id=payment_id
-    customer.signature_id=signature
+    appointment = Appointments.objects.get(razor_pay_order_id=order_id)
+    appointment.payment_id=payment_id
+    appointment.signature_id=signature
     try:
         client.utility.verify_payment_signature({"razorpay_signature":signature,"razorpay_order_id":order_id,"razorpay_payment_id":payment_id})
-        customer.payment_status=True
+        appointment.payment_status=True
     except:
-        customer.payment_status=False
-    customer.save()
-    return JsonResponse(customer.payment_status,safe=False)
+        appointment.payment_status=False
+    appointment.save()
+    return JsonResponse(appointment.payment_status,safe=False)
 
 def email_notify(patient,doctor,phone):
     body = "A user name {} wants an appointment with Dr. {}".format(patient,doctor)
@@ -737,3 +729,4 @@ def email_contact_form(request):
     email_msg = EmailMessage("pdochealth consultancy enquiry", body, settings.EMAIL_HOST_USER, ["care@pdochealth.com"])
     email_msg.send(fail_silently=False)
     return JsonResponse(True,safe=False)
+

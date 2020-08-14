@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<table border="2">
+    <tr>
+        <td>Reg No</td>
+        <td>Name</td>
+        <td>Education</td>
+        <td>Phone</td>
+        <td>Speciality</td>
+        <td>Timing</td>
+        <td>Designation</td>
+        <td>Hospital</td>
+    </tr>
+    {% for doctor in doctors %}
+        <tr>
+            <td>{{doctor.practice_id}}</td>
+            <td>{{doctor.name}}</td>
+            <td>{{doctor.education}}</td>
+            <td>{{doctor.phone}}</td>
+            <td>{{doctor.type__name}}</td>
+            <td> {% if doctor.available_from %} {{doctor.available_from}} - {{doctor.available_to}} {% endif %} & {% if doctor.available_from2 %} {{doctor.available_from2}} - {{doctor.available_to2}} {% endif %} {% if doctor.special_day %} ({{doctor.special_day}} {{doctor.special_from}} - {{doctor.special_to}}) {% endif %}</td>
+            <td>{{doctor.designation}}</td>
+            <td>{{doctor.hospital}}</td>
+        </tr>
+    {% endfor %}
+</table>
+</body>
+</html>

@@ -63,6 +63,7 @@ urlpatterns = [
         path("doctors-over-call/",views.doctors_over_call,name="doctors_over_call"),
         path("login/",views.login,name="login"),
         path("zonal-admin-8249619206/",views.zonal_admin,name="zonal_admin"),
+        path("zonal-admin-doctors/",views.zonal_admin_doctors,name="zonal_admin_doctors"),
         path("done-appointment/",views.done_appointment,name="done_appointment"),
         path("patient-dashboard/",views.patient_dashboard,name="patient_dashboard"),
         path("video-calling/<slug:slug>",views.video_calling,name="video_calling"),

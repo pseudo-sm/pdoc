@@ -54,8 +54,10 @@ class Doctor(models.Model):
     status = models.BooleanField(default=False)
     videoconferencing = models.BooleanField(default=False)
     telecalling = models.BooleanField(default=False)
-    available_from = models.TimeField()
-    available_to = models.TimeField()
+    available_from = models.TimeField(null=True,blank=True)
+    available_to = models.TimeField(null=True,blank=True)
+    available_from2 = models.TimeField(null=True,blank=True)
+    available_to2 = models.TimeField(null=True,blank=True)
     signuptime = models.DateTimeField(auto_now=True)
     direct_contact = models.BooleanField(default=False)
     designation = models.CharField(max_length=300,null=True,blank=True)
@@ -111,9 +113,6 @@ class Customer(models.Model):
     query = models.TextField()
     email = models.CharField(max_length=100)
     password = models.CharField(max_length=100)
-    razor_pay_order_id = models.CharField(max_length=1000,null=True,blank=True)
-    payment_id = models.CharField(max_length=1000,null=True,blank=True)
-    signature_id = models.CharField(max_length=1000,null=True,blank=True)
     datetime = models.DateTimeField(auto_now=True)
     def __str__(self):
         return self.name
@@ -176,7 +175,9 @@ class Appointments(models.Model):
     slug = models.SlugField(auto_created=True)
     razor_pay_order_id = models.CharField(max_length=100,null=True,blank=True)
     count = models.CharField(max_length=10,default=0)
-
+    payment_id = models.CharField(max_length=1000, null=True, blank=True)
+    signature_id = models.CharField(max_length=1000, null=True, blank=True)
+    payment_status = models.BooleanField(default=False)
     def __str__(self):
         return str(self.id)
 

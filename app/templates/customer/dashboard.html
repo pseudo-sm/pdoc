@@ -357,7 +357,14 @@
                                     <span class="text-black-6" style="font-weight:bold;">'+res[i].designation+'</span><br> \
                                     <span class="text-grey-4">'+res[i].hospital+'</span> \
                                     <span class="text-grey-6">'+res[i].address+'</span> \
-                                    <span class="text-grey-6"> <br><b>Regular Days : </b>'+res[i].available_from+' - '+res[i].available_to+'</span>'
+                                    <span class="text-grey-6"> <br><b>Regular Days : </b>'+res[i].available_from+' - '+res[i].available_to;
+            if(res[i].available_from2!=null){
+                temp = temp +' & '+res[i].available_from2+' - '+res[i].available_to2
+                +'</span>';
+            }
+            else {
+                temp = temp + '</span>';
+            }
             if(res[i].special_day!=null)
                 {
                     temp = temp + '<br><span class="text-grey-6"><b>'+res[i].special_day+'</b></span><span class="text-grey-6"> : '+res[i].special_from+' - '+res[i].special_to+'</span>';

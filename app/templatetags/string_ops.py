@@ -20,3 +20,11 @@ def type_convert(type):
     else:
         return "Video Call"
 
+@register.filter(name="revisit_status")
+def revisit_status(status):
+
+    if status=="3":
+        return "Revisit"
+    else:
+        return "Fresh"
+

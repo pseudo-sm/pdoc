@@ -23,9 +23,10 @@
                 <th>Type</th>
                 <th>Time</th>
                 <th>Status</th>
+                <th>Revisit</th>
             </tr>
             {% for appointment in appointments %}
-            <tr class="doctor-row-{{appointment.id}}" {% if appointment.status == "3" %} style="background-color:red;color:white;" {% endif %}>
+            <tr class="doctor-row-{{appointment.id}}" {% if appointment.payment_status %} style="background-color:red;color:white;" {% endif %}>
                 <td>{{appointment.id}}</td>
                 <td>{{appointment.name}}</td>
                 <td>{{appointment.phone}}</td>
@@ -35,9 +36,8 @@
                 <td>{{appointment.query}}</td>
                 <td>{{appointment.type|type_convert}}</td>
                 <td><input type="date" id="date-{{appointment.id}}" name="date"><input type="time" id="time-{{appointment.id}}" name="time"></td>
-                <td>
-                    <button class="btn btn-success done-appointment" data-doctor="{{appointment.id}}">Done</button>
-                </td>
+                <td>{{appointment.status|revisit_status}}</td>
+                <td><button class="btn btn-success done-appointment" data-doctor="{{appointment.id}}">Done</button></td>
             </tr>
             {% endfor %}
         </table>
