@@ -108,8 +108,9 @@ def doctors_cat(request):
             doctors = Doctor.objects.filter(videoconferencing=True)
     doctors = doctors.values("id","name","type_id__name","education","practicing_year","direct_contact","phone","designation","hospital","address","available_from","available_to","available_from2","available_to2","special_day","special_from","special_to","fees")
     for doctor in doctors:
-        doctor["available_from"] = doctor["available_from"].strftime("%H:%M")
-        doctor["available_to"] = doctor["available_to"].strftime("%H:%M")
+        if doctor["available_from"] is not None:
+            doctor["available_from"] = doctor["available_from"].strftime("%H:%M")
+            doctor["available_to"] = doctor["available_to"].strftime("%H:%M")
         if doctor["available_from2"] is not None:
             doctor["available_from2"] = doctor["available_from2"].strftime("%H:%M")
             doctor["available_to2"] = doctor["available_to2"].strftime("%H:%M")
@@ -401,7 +402,7 @@ def patient_dashboard(request):
         now = datetime.datetime.utcnow().replace(tzinfo=utc)
         delta = now - appointment["time"]
         print("timedelta : ------------------------------")
-        if delta.days < 30 :
+        if delta.days < 15 :
             shortlisted_scheduled_appointments.append(appointment)
     vdoctor = len(list(Doctor.objects.filter(videoconferencing=True)))
     tdoctor = len(list(Doctor.objects.filter(telecalling=True)))

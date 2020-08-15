@@ -148,8 +148,10 @@
                                     <span class="text-black-6" style="font-weight:bold;">'+res[i].designation+'</span><br> \
                                     <span class="text-grey-4">'+res[i].hospital+'</span> \
                                     <span class="text-grey-6">'+res[i].address+'</span> \
-                                    <br><span class="text-grey-6"><b>Regular Days</b>: '+res[i].available_from+' - '+res[i].available_to;
-
+                                    <br><span class="text-grey-6">'
+                if(res[i].available_from){
+                                temp = temp + '<b>Regular Days</b>: '+res[i].available_from+' - '+res[i].available_to;
+                }
                 if(res[i].available_from2){
                                  temp = temp +' & '+res[i].available_from2+' - '+res[i].available_to2+'</span>';
                 }
