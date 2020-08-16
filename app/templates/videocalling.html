@@ -6,7 +6,7 @@
   <link rel="shortcut icon" href="#">
   <script src='https://cdn.scaledrone.com/scaledrone.min.js'></script>
   <script src="https://api.html5media.info/1.1.5/html5media.min.js"></script>
-  <title>Title</title>
+  <title>PDOC | VideoCalling</title>
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -664,7 +664,7 @@
               document.getElementById("progress").value = progress;
               console.log('Upload is ' + progress + '% done');
               if (progress == 100) {
-                document.getElementById("uploading").innerHTML +=
+                document.getElementById("uploading").innerHTML =
                   `<span style="color:green">Uploaded Successfully</span> <br />`;
                 setTimeout(function () {
                   document.getElementById("up-status").style.display = "none";
@@ -712,32 +712,38 @@
     }
     database.ref('Stats/' + customerID).on("value", function (snapshot) {
       data = snapshot.val();
-      $(".store-files").html('');
-      var listRef = firebase.storage().ref('records/' + customerID + '/');
-      listRef.listAll().then(function (res) {
-        res.items.forEach(function (itemRef) {
-          //console.log( itemRef.toString() );
-          itemRef.getDownloadURL().then(function (url) {
-            var ranID = makeid(9);
-            var funId = "'" + ranID + "'";
-            var str;
-            if (itemRef.name.length > 10) str = itemRef.name.substring(0, 7) + '...';
-            else str = itemRef.name;
-            $(".store-files").append(
-              '<div class="col-4 col-md-3 col-sm-4 pl-2 pr-2" > <embed class="img-thumbnail custom-d-file" type="image/jpg" src="' +
-              url + '" onclick="showModal(' + funId +
-              ')"><p class="text-center pl-2 pr-2 mb-3 w-100"style="background-color:white"><small>' +
-              str + '</small></p></div><div id="' + ranID +
-              '" class="Mymodal"> <span onclick="hideModal(' + funId +
-              ')" class="Myclose">&times;</span> <embed ' +
-              'src="' + url + '"' + 'class="Mymodal-content"> </div>  ');
-          })
-        });
-      }).catch(function (error) {});
+      reFetchStorage();
     }, function (errorObject) {
       console.log("The read failed: " + errorObject.code);
     });
 
+    //new Storage ups
+    function reFetchStorage(){
+        setTimeout(function(){
+              $(".store-files").html('');
+              var listRef = firebase.storage().ref('records/' + customerID + '/');
+              listRef.listAll().then(function (res) {
+                res.items.forEach(function (itemRef) {
+                  //console.log( itemRef.toString() );
+                  itemRef.getDownloadURL().then(function (url) {
+                    var ranID = makeid(9);
+                    var funId = "'" + ranID + "'";
+                    var str;
+                    if (itemRef.name.length > 10) str = itemRef.name.substring(0, 7) + '...';
+                    else str = itemRef.name;
+                    $(".store-files").append(
+                      '<div class="col-4 col-md-3 col-sm-4 pl-2 pr-2" > <embed class="img-thumbnail custom-d-file" type="image/jpg" src="' +
+                      url + '" onclick="showModal(' + funId +
+                      ')"><p class="text-center pl-2 pr-2 mb-3 w-100"style="background-color:white"><small>' +
+                      str + '</small></p></div><div id="' + ranID +
+                      '" class="Mymodal"> <span onclick="hideModal(' + funId +
+                      ')" class="Myclose">&times;</span> <embed ' +
+                      'src="' + url + '"' + 'class="Mymodal-content"> </div>  ');
+                  })
+                });
+              }).catch(function (error) {});
+        }, 3000);
+    }
     function showModal(id) {
       var x = document.getElementById(id);
       x.style.display = "block";
