@@ -1,5 +1,4 @@
-
-
+var end = false;
 var firebaseConfig = {
   apiKey: "AIzaSyCNtuLp9_8dTKGHGnYTQDvtc4sjdG6Al8Q",
   authDomain: "pdochealth.firebaseapp.com",
@@ -25,9 +24,42 @@ const drone = new ScaleDrone('2xmbUiTsqTzukyf7');
 // Room name needs to be prefixed with 'observable-'
 const roomName = 'observable-' + roomHash;
 const configuration = {
-  iceServers: [{
-    urls: 'stun:stun.l.google.com:19302'
-  }]
+  iceServers: [
+    {url:'stun:stun01.sipphone.com'},
+    {url:'stun:stun.ekiga.net'},
+    {url:'stun:stun.fwdnet.net'},
+    {url:'stun:stun.ideasip.com'},
+    {url:'stun:stun.iptel.org'},
+    {url:'stun:stun.rixtelecom.se'},
+    {url:'stun:stun.schlund.de'},
+    {url:'stun:stun.l.google.com:19302'},
+    {url:'stun:stun1.l.google.com:19302'},
+    {url:'stun:stun2.l.google.com:19302'},
+    {url:'stun:stun3.l.google.com:19302'},
+    {url:'stun:stun4.l.google.com:19302'},
+    {url:'stun:stunserver.org'},
+    {url:'stun:stun.softjoys.com'},
+    {url:'stun:stun.voiparound.com'},
+    {url:'stun:stun.voipbuster.com'},
+    {url:'stun:stun.voipstunt.com'},
+    {url:'stun:stun.voxgratia.org'},
+    {url:'stun:stun.xten.com'},
+    {
+    url: 'turn:numb.viagenie.ca',
+    credential: 'muazkh',
+    username: 'webrtc@live.com'
+    },
+    {
+        url: 'turn:192.158.29.39:3478?transport=udp',
+        credential: 'JZEOEt2V3Qb0y27GRntt2u2PAYA=',
+        username: '28224511:1379330808'
+    },
+    {
+        url: 'turn:192.158.29.39:3478?transport=tcp',
+        credential: 'JZEOEt2V3Qb0y27GRntt2u2PAYA=',
+        username: '28224511:1379330808'
+    }
+    ]
 };
 let room;
 let pc;
@@ -52,6 +84,7 @@ ref.on("child_changed", function (snapshot) {
 
 ref = database.ref("meeting/" + roomHash + "/");
 $("#summary").keyup(function () {
+    end = false;
   summary = $(this).val();
   ref.update({
     "summary": summary
@@ -394,7 +427,7 @@ if (doctor != "True") {
       $("#mute-icon").closest( "button" ).css( "background-color", "#df7373" );
     }
   }
-} 
+}
 if (doctor != "False") {
   database.ref('Stats/' + customerID + '/VideoCalling/DoctorVideo').set({
     "status": "on"
@@ -468,7 +501,7 @@ function localDescCreated(desc) {
 }
 
 $("#end").click(function () {
-$("#prescribe-submit").click();
+if(end){
   if (confirm("End Meeting?")) {
     $.ajax({
       url: "/appointment-close/",
@@ -484,6 +517,11 @@ $("#prescribe-submit").click();
     });
 
   }
+}
+else {
+
+    alert('Click prescribe first.');
+}
 })
 
 function sendSignalingMessage(message) {
@@ -494,7 +532,7 @@ function sendSignalingMessage(message) {
 }
 
 $(document).on("change", '.pushMed', function () {
-
+    end = false;
   med_row = $(this).closest(".med-row");
   data_count = med_row.attr("data-count");
   medicine = med_row.find('.medicine');
@@ -585,6 +623,7 @@ if (doctor != "True") {
 
 $("#prescribe-submit").click(function () {
   console.log('clicked!!!!');
+  end = true;
   summary = $("#summary").val();
   medicines = [];
   $('.medicine').each(function () {
@@ -641,4 +680,3 @@ $("#prescribe-submit").click(function () {
   });
 
 });
-

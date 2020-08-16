@@ -1,3 +1,4 @@
+var end = false;
 var firebaseConfig = {
   apiKey: "AIzaSyCNtuLp9_8dTKGHGnYTQDvtc4sjdG6Al8Q",
   authDomain: "pdochealth.firebaseapp.com",
@@ -83,6 +84,7 @@ ref.on("child_changed", function (snapshot) {
 
 ref = database.ref("meeting/" + roomHash + "/");
 $("#summary").keyup(function () {
+    end = false;
   summary = $(this).val();
   ref.update({
     "summary": summary
@@ -499,6 +501,7 @@ function localDescCreated(desc) {
 }
 
 $("#end").click(function () {
+if(end){
   if (confirm("End Meeting?")) {
     $.ajax({
       url: "/appointment-close/",
@@ -508,11 +511,17 @@ $("#end").click(function () {
       type: 'GET',
       dataType: 'json',
       success: function (res) {
-        window.location = "/patient-dashboard/";
+        $.removeCookie("prescription");
+        window.location = "/feedback/"+res.prescription;
       }
     });
 
   }
+}
+else {
+
+    alert('Click prescribe first.');
+}
 })
 
 function sendSignalingMessage(message) {
@@ -523,7 +532,7 @@ function sendSignalingMessage(message) {
 }
 
 $(document).on("change", '.pushMed', function () {
-
+    end = false;
   med_row = $(this).closest(".med-row");
   data_count = med_row.attr("data-count");
   medicine = med_row.find('.medicine');
@@ -614,6 +623,7 @@ if (doctor != "True") {
 
 $("#prescribe-submit").click(function () {
   console.log('clicked!!!!');
+  end = true;
   summary = $("#summary").val();
   medicines = [];
   $('.medicine').each(function () {
@@ -641,18 +651,31 @@ $("#prescribe-submit").click(function () {
       "remark": remark
     });
   });
-
+   if(!$.cookie('prescription'))
+   {
+        resave = false;
+        prescription = "-1";
+   }
+   else{
+        resave = true;
+        prescription = $.cookie('prescription');
+   }
+   console.log("resave");
+   console.log(resave);
   $.ajax({
     url: "/prescription-submit/",
     data: {
       'summary': summary,
       'medicines': JSON.stringify(medicines),
       'roomhash': roomHash,
+      'resave': resave,
+      'prescription': prescription,
     },
     type: 'GET',
     dataType: 'json',
     success: function (res) {
-      alert("Submitted!!");
+      $.cookie("prescription",res.prescription);
+      alert('Saved');
     }
   });
 
