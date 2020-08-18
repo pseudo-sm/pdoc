@@ -680,3 +680,20 @@ $("#prescribe-submit").click(function () {
   });
 
 });
+
+if(doctor!="True")
+{
+      var vcRef = database.ref("active-meetings/" + roomHash + "/");
+      vcRef.update({
+        "vc": 1
+      })
+}
+
+var vcRefGet = database.ref("active-meetings/" + roomHash + "/" + "vc");
+vcRefGet.on("value", function(snapshot) {
+    if(snapshot.val() === 2){
+        console.log("Modal Dismiss");
+    }
+}, function (error) {
+   console.log("Error: " + error.code);
+});

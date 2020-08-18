@@ -432,6 +432,10 @@ def zonal_admin_doctors(request):
     doctors = doctors.values("practice_id","name","address","education","phone","type__name","available_from","available_to","available_from2","available_to2","designation","hospital","special_day","special_from","special_to")
     return render(request,"Zonal Admin/doctors.html",{"doctors":doctors})
 
+def doctor_wait(request,slug):
+
+    return render(request,"doctor-waiting.html",{"slug":slug})
+
 def video_calling(request,slug):
     appointment = Appointments.objects.get(slug=slug)
     now = datetime.datetime.utcnow().replace(tzinfo=utc)

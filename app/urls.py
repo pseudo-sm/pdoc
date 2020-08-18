@@ -66,6 +66,7 @@ urlpatterns = [
         path("zonal-admin-doctors/",views.zonal_admin_doctors,name="zonal_admin_doctors"),
         path("done-appointment/",views.done_appointment,name="done_appointment"),
         path("patient-dashboard/",views.patient_dashboard,name="patient_dashboard"),
+        path("doctor-wait/<slug:slug>",views.doctor_wait,name="doctor_wait"),
         path("video-calling/<slug:slug>",views.video_calling,name="video_calling"),
         path("request-video-calling/",views.request_video_calling,name="request_video_calling"),
         path("terms-and-conditions",views.terms,name="terms"),
