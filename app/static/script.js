@@ -501,7 +501,7 @@ function localDescCreated(desc) {
 }
 
 $("#end").click(function () {
-if(end){
+if(end | doctor=="False"){
   if (confirm("End Meeting?")) {
     $.ajax({
       url: "/appointment-close/",
