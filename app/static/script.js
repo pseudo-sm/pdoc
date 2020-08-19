@@ -390,7 +390,7 @@ if (doctor != "True") {
       });
       $("#pause-icon").removeClass("fa-play");
       $("#pause-icon").addClass("fa-pause");
-      $("#pause-icon").closest( "button" ).css( "background-color", "#26ABDE" );
+      $("#pause-icon").closest( "button" ).css( "background-color", "#2e2e2e" );
     } else {
       temp_stream.getVideoTracks()[0].enabled = video_switch;
       database.ref('Stats/' + customerID + '/VideoCalling/PatientVideo').set({
@@ -415,7 +415,7 @@ if (doctor != "True") {
       });
       $("#mute-icon").removeClass("fa-microphone");
       $("#mute-icon").addClass("fa-microphone-slash");
-      $("#mute-icon").closest( "button" ).css( "background-color", "#26ABDE" );
+      $("#mute-icon").closest( "button" ).css( "background-color", "#2e2e2e" );
 
     } else {
       temp_stream.getAudioTracks()[0].enabled = mic_switch;
@@ -448,7 +448,7 @@ if (doctor != "False") {
       });
       $("#pause-icon").removeClass("fa-play");
       $("#pause-icon").addClass("fa-pause");
-      $("#pause-icon").closest( "button" ).css( "background-color", "#26ABDE" );
+      $("#pause-icon").closest( "button" ).css( "background-color", "#2e2e2e" );
 
     } else {
       temp_stream.getVideoTracks()[0].enabled = video_switch;
@@ -474,7 +474,7 @@ if (doctor != "False") {
       });
       $("#mute-icon").removeClass("fa-microphone");
       $("#mute-icon").addClass("fa-microphone-slash");
-      $("#mute-icon").closest( "button" ).css( "background-color", "#26ABDE" );
+      $("#mute-icon").closest( "button" ).css( "background-color", "#2e2e2e" );
 
     } else {
       temp_stream.getAudioTracks()[0].enabled = mic_switch;
@@ -622,7 +622,7 @@ if (doctor != "True") {
 }
 
 $("#prescribe-submit").click(function () {
-  console.log('clicked!!!!');
+  //console.log('clicked!!!!');
   end = true;
   summary = $("#summary").val();
   medicines = [];
