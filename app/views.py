@@ -666,15 +666,15 @@ def save_prescription(prescription):
     print(context)
     count = appointment.count
 
-    # tpl = DocxTemplate("/home/pdochealth/pdoc/app/template.docx")
-    # tpl.render(context)
-    # name = "prescription-"+str(appointment.id)+"-"+str(count)+".docx"
-    # filepath = '/home/pdochealth/pdoc/app/prescriptions/'+name
-
-    tpl = DocxTemplate("app/template.docx")
+    tpl = DocxTemplate("/home/pdochealth/pdoc/app/template.docx")
     tpl.render(context)
-    name = "prescription-"+str(appointment.id)+"-"+str(prescription.pk)+".docx"
-    filepath = 'app/prescriptions/'+name
+    name = "prescription-"+str(appointment.id)+"-"+str(count)+".docx"
+    filepath = '/home/pdochealth/pdoc/app/prescriptions/'+name
+
+    # tpl = DocxTemplate("app/template.docx")
+    # tpl.render(context)
+    # name = "prescription-"+str(appointment.id)+"-"+str(prescription.pk)+".docx"
+    # filepath = 'app/prescriptions/'+name
 
     tpl.save(filepath)
     return filepath

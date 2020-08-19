@@ -519,7 +519,6 @@ if(end | doctor=="False"){
   }
 }
 else {
-
     alert('Click prescribe first.');
 }
 })
