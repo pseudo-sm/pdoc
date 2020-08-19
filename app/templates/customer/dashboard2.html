@@ -1,0 +1,1081 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    {% load static %}
+    {% if p %}
+        <script>
+            alert('Its not time yet :( !, If there is anything urgent please try to call an ambulance.');
+        </script>
+    {% endif %}
+  <title>EDOC | PDOC Health</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="google" content="notranslate">
+  <link rel="stylesheet" href="{% static 'index/style.css' %}">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+    integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  <link rel="stylesheet"
+    href="https://owlcarousel2.github.io/OwlCarousel2/assets/owlcarousel/assets/owl.carousel.min.css">
+  <link rel="stylesheet"
+    href="https://owlcarousel2.github.io/OwlCarousel2/assets/owlcarousel/assets/owl.theme.default.min.css">
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <style>
+    .appoint-con>.appoints-row>.appoints {
+      border: solid 0.03px #0d21499c;
+      border-radius: 15px;
+      padding: 0px;
+      margin-right: 5%;
+      display: inline-block;
+      float: none;
+      background-color: white;
+      transition: all 0.7s ease;
+      cursor: grab;
+    }
+
+    .items.active {
+      cursor: grabbing;
+      cursor: -webkit-grabbing;
+    }
+
+    .items2.active2 {
+      cursor: grabbing;
+      cursor: -webkit-grabbing;
+    }
+
+    .appoint-con>.appoints-row>.appoints:hover {
+      border: solid 0.5px #0d2149;
+    }
+
+    .appoints-btn {
+      background-color: #0d2149;
+      border-bottom-left-radius: 15px;
+      border-bottom-right-radius: 15px;
+      color: white;
+      border: none;
+    }
+
+    .appoints-btn:hover {
+      color: #d1d1d1;
+      margin: 0px !important;
+    }
+
+    .appoint-con>.appoints-row {
+      overflow-x: auto;
+      flex-wrap: nowrap;
+    }
+
+    .appoin-no {
+      border-bottom: solid .7px #0d2149;
+      padding-top: 2px;
+      padding-bottom: 2px;
+    }
+
+    @media only screen and (max-width: 600px) {
+      .appoint-con>.appoints-row {
+        padding-left: 20px;
+        padding-right: 20px;
+      }
+
+      .book-phn-mt {
+        margin-top: 13% !important;
+      }
+    }
+
+    .dashboard-items {
+      border-radius: 15px;
+      background-color: #0d2149 !important;
+      color: white !important;
+      min-height: 100px;
+      margin-right: 3%;
+    }
+
+    .dashboard-items-active {
+      border-radius: 15px;
+      background-color: #D95D39 !important;
+      color: #ffffff !important;
+      min-height: 100px;
+      margin-right: 3%;
+    }
+
+    .items2::-webkit-scrollbar {
+      height: 7px;
+      display: none;
+    }
+
+    .filters {
+      color: #0d2149;
+      font-weight: 500;
+      line-height: 50px;
+    }
+
+    .dd {
+      margin-left: 5%;
+    }
+
+    .filter-items {
+      background-color: #0d2149 !important;
+      color: white !important;
+      margin-right: 3px;
+      padding: 10px;
+      border-radius: 7px;
+      cursor: pointer;
+    }
+
+    .filter-items-active {
+      background-color: white !important;
+      color: #0d2149 !important;
+      margin-right: 3px;
+      padding: 10px;
+      border-radius: 7px;
+      border: 0.5px solid #0d2149;
+      cursor: pointer;
+    }
+
+    .dashboard-sch-btn {
+      background-color: #0d2149;
+      color: white;
+      border: none;
+      border-radius: 0px !important;
+      border-bottom-left-radius: 5px !important;
+      border-bottom-right-radius: 5px !important;
+    }
+
+    .dashboard-sch-btn:hover {
+      color: #d1d1d1;
+      margin: 0px !important;
+    }
+
+    .dashboard-doc-list {
+      border: solid 0.5px #0d2149;
+      background-color: white;
+      border-radius: 0px !important;
+      border-top-left-radius: 5px !important;
+      border-top-right-radius: 5px !important;
+      padding: 0px;
+    }
+
+    .presc-li {
+      color: #0d2149;
+      border-radius: 5px !important;
+    }
+
+    .presc-li:hover {
+      color: #D95D39 !important;
+    }
+
+    .navig-bar {
+      display: none;
+    }
+
+    @media only screen and (max-width: 600px) {
+
+
+      .navig-bar {
+        overflow: hidden;
+        display: block;
+        background-color: #333;
+        position: fixed;
+        bottom: 0;
+        width: 100% !important;
+        z-index: 99;
+        box-shadow: 0px -3px 16px rgba(34, 19, 61, 0.247);
+      }
+
+      .navig-bar a {
+        float: left;
+        display: block;
+        color: #f2f2f2;
+        text-align: center;
+        text-decoration: none;
+        padding: 5px 0px 5px 0px;
+        font-size: 17px;
+        font-size: 15px;
+      }
+
+      .navig-bar a:hover {
+        background: #f1f1f1;
+        color: black;
+      }
+
+
+      .navig-item {
+        background: #ffffff;
+        color: rgb(158, 158, 158) !important;
+        width: 25% !important;
+        height: 60px;
+        border: solid 0.09px #0d214948;
+        transition: all 0.5s linear;
+      }
+
+      .nav-active {
+        background: #0d2149 !important;
+        color: #ffffff !important;
+        width: 25% !important;
+        transition: all 0.5s linear;
+      }
+      .copyright{
+        margin-bottom: 59px !important;
+      }
+      .nav-fa {
+        font-size: 1.5rem;
+      }
+    }
+  </style>
+  <style>
+    #loader-div-cus {
+      width: 100% !important;
+      height: 100% !important;
+      display: none;
+      padding-left: 45%;
+      padding-top: 100px;
+      padding-bottom: 100px;
+    }
+
+    #loader-div-cus2 {
+      width: 100% !important;
+      height: 100% !important;
+      display: none;
+      padding-left: 45%;
+      padding-top: 80%;
+      padding-bottom: 100px;
+    }
+
+    #loader {
+      border: 7px solid #f3f3f3;
+      border-radius: 50%;
+      border-top: 12px solid #D95D39;
+      width: 70px;
+      height: 70px;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- header -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-bark fixed-top scrld">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">
+        <img src="{% static 'logo-sqr.png' %}" height="50" alt="pdochealth"> <a href="#" class="d-sm-none d-md-block">PDOCHEALTH</a>
+      </a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+        aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+       <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'index' %}">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'doctors' %}">Doctors</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'blog_list' %}">Articles</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'important_links' %}">Important Links</a>
+          </li>
+          <!--          <li class="nav-item dropdown dmenu">-->
+          <!--            <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">-->
+          <!--              More-->
+          <!--            </a>-->
+          <!--            <div class="dropdown-menu sm-menu">-->
+          <!--              <a class="dropdown-item" href="{% url 'blog_list' %}">Articles</a>-->
+          <!--              <a class="dropdown-item" href="{% url 'important_links' %}">Important Links</a>-->
+          <!--            </div>-->
+          <!--          </li>-->
+          <!--          <li class="nav-item dropdown dmenu">-->
+          <!--            <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">-->
+          <!--              Paramedics Signup-->
+          <!--            </a>-->
+          <!--            <div class="dropdown-menu sm-menu">-->
+          <!--              <a class="dropdown-item" href="{% url 'paramedic_health_and_fitness_advisor' %}">Health and Fitness Advise</a>-->
+          <!--              <a class="dropdown-item" href="{% url 'paramedic_physiotherapy' %}">Physiotherapist</a>-->
+          <!--              <a class="dropdown-item" href="{% url 'paramedic_clinical_pscyhiatry' %}">Clinical Psychiatry</a>-->
+          <!--              <a class="dropdown-item" href="{% url 'paramedic_yoga_guru' %}">Yoga Guru</a>-->
+          <!--              <a class="dropdown-item" href="#">Drug House</a>-->
+          <!--              <a class="dropdown-item" href="#">Diagnostics</a>-->
+          <!--            </div>-->
+          <!--          </li>-->
+          <li class="nav-item">
+            <a class="nav-link pl-md-3 pl-sm-0" href="#"><i class="fa fa-stethoscope"></i> &nbsp;Join
+              Us</a>
+          </li>
+          <li class="nav-item pl-md-5 pl-sm-0 pr-md-5 pr-sm-0">
+            {% if logout %}
+            <a class="nav-link pc-btn pl-4 pr-4" href="{% url 'logout' %}">Logout</a>
+            {% else %}
+            <a class="nav-link pc-btn pl-4 pr-4" href="{% url 'signup_customer' %}">Patient Corner</a>
+            {% endif %}
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <!-- Appointments -->
+  <section class="pt-3 mt-md-5 mt-sm-2 plusBG nav-sch-tr nav-sch-fal">
+      {% if scheduled_appointments %}
+    <div class="container mt-5 pt-5 appoint-con">
+      <div class="row">
+        <div class="col-12">
+          <h3>My Appointment(s)
+            <br><small>Upcoming Schedules and History</small>
+          </h3>
+        </div>
+        <span class="hr-r ml-3 mt-3 mb-3"></span>
+          {% endif %}
+      </div>
+      <div class="row mt-3 appoints-row ml-sm-3 mr-sm-3 items">
+          {% for appointment in scheduled_appointments %}
+        <div class="col-8 col-md-4 col-sm-8 mb-4 appoints">
+          <div class="pl-4 pt-4 pr-4">
+            <span class="appoin-no"><small>Appointment Id. {{appointment.id}}</small></span><br><br>
+            <p>Date:<strong>{{appointment.datetime.date}}</strong><br>
+              Time: <strong>{{appointment.datetime.time}}</strong><br>
+              <small>Valid For: <strong>15days</strong></small>
+            </p>
+            <br>
+            <p class="text-center">
+              <strong>{{appointment.doctor__name}}</strong><br>
+              <small><strong>{{appointment.doctor__type__name}}</strong></small><br>
+              <small>{{appointment.doctor__hospital}}</small>
+            </p>
+          </div>
+            {% if appointment.status == "1" %}
+          <a href="{% url 'video_calling' slug=appointment.slug %}" style="width:100%;"><button class="btn btn-block appoints-btn">Start</button></a>
+            {% else %}
+          <button class="btn btn-block appoints-btn" data-appointment="{{appointment.slug}}" id="re-request">Re-schedule</button>
+            {% endif %}
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+  <!-- Dashboard Items-->
+  <section class="pt-3 mt-5 pt-5 plusBG dashboard-sec nav-sch-tr nav-sch-fal">
+    <div class="container appoint-con">
+      <div class="row">
+        <div class="col-12 d-md-block d-sm-none">
+          <h3>My Dashboard
+          </h3>
+        </div>
+        <div class="col-12 d-md-none d-sm-block">
+          <h3>Find Your Doctor <br><small>and More...</small>
+          </h3>
+        </div>
+        <span class="hr-r ml-3 mt-3 mb-3"></span>
+      </div>
+      <div class="row mt-3 appoints-row ml-sm-3 mr-sm-3 items2">
+        <div class="item-tele col-7 col-md-3 col-sm-7 mb-3 p-4 dashboard-items">
+          <i class="fa fa-phone fa-2x"></i>
+          <span class="float-right">{{tdoctor}}</span><br><br>
+          <span class="float-right">Tele Consultancy</span>
+        </div>
+        <div class="item-video col-7 col-md-3 col-sm-7 mb-3 p-4 dashboard-items">
+          <i class="fa fa-video-camera fa-2x"></i>
+          <span class="float-right">{{vdoctor}}</span><br><br>
+          <span class="float-right">Video Consultancy</span>
+        </div>
+        <div class="item-paramedic col-7 col-md-3 col-sm-7 mb-3 p-4 dashboard-items">
+          <i class="fa fa-heartbeat fa-2x"></i>
+          <span class="float-right">{{pmconsultancy}}</span><br><br>
+          <span class="float-right">Paramedical</span>
+        </div>
+        <div class="item-med-rec col-7 col-md-3 col-sm-7 mb-3 p-4 dashboard-items  d-md-block d-sm-none">
+          <i class="fa fa-book fa-2x"></i>
+          <span class="float-right">{{cprescription}}</span><br><br>
+          <span class="float-right">Medical Records</span>
+        </div>
+<!--        <div class="item-yoga col-7 col-md-3 col-sm-7 mb-3 p-4 dashboard-items">-->
+<!--          <i class="fa fa-american-sign-language-interpreting fa-2x"></i>-->
+<!--          <span class="float-right">5</span><br><br>-->
+<!--          <span class="float-right">Yoga</span>-->
+<!--        </div>-->
+<!--        <div class="item-psac col-7 col-md-3 col-sm-7 mb-3 p-4 dashboard-items">-->
+<!--          <i class="fa fa-assistive-listening-systems fa-2x"></i>-->
+<!--          <span class="float-right">1</span><br><br>-->
+<!--          <span class="float-right">P-sac</span>-->
+<!--        </div>-->
+<!--        <div class="item-profile col-7 col-md-3 col-sm-7 mb-3 p-4 dashboard-items d-md-block d-sm-none">-->
+<!--          <i class="fa fa-user-circle fa-2x"></i>-->
+<!--          <span class="float-right">!</span><br><br>-->
+<!--          <span class="float-right">Profile</span>-->
+<!--        </div>-->
+      </div>
+    </div>
+  </section>
+  <!-- Items Loader-->
+  <div id="loader-div-cus">
+    <div id="loader" class="center"></div>
+  </div>
+  <div id="loader-div-cus2">
+    <div id="loader" class="center"></div>
+  </div>
+  <!-- Tele Consultancy -->
+  <section class="pt-3  plusBG dashboard-sec-cls dashboard-sec-tele nav-sch-tr nav-sch-fal">
+    <div class="container">
+      <div class="row">
+        <p class="filters  d-md-block d-sm-none mb-5">Filter By: &nbsp;&nbsp;
+          <span class="fi filter-items filter-items-active doctor-filter-type" data-type="all">All</span>
+            {% for type in doctor_types %}
+                <span class="fi filter-items doctor-filter-type" data-type="{{type.id}}" >{{type}}</span>
+            {% endfor %}
+        </p>
+<!--        <div class="dropdown dd d-md-none d-sm-block mb-3">-->
+<!--          <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"-->
+<!--            aria-haspopup="true" aria-expanded="false">-->
+<!--            Filter By-->
+<!--          </button>-->
+<!--          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">-->
+<!--            <a class="dropdown-item" href="#">All</a>-->
+<!--            <a class="dropdown-item" href="#">Ayurveda</a>-->
+<!--            <a class="dropdown-item" href="#">Urology</a>-->
+<!--          </div>-->
+<!--        </div>-->
+      </div>
+         <div class="row results">
+
+    </div>
+  </section>
+
+  <!-- Video Consultancy -->
+  <section class="pt-3  plusBG dashboard-sec-cls dashboard-sec-vdo nav-sch-fal">
+    <div class="container">
+      <div class="row">
+        <p class="filters  d-md-block d-sm-none mb-5">Filter By: &nbsp;&nbsp;
+          <span class="fi filter-items filter-items-active doctor-filter-type" data-type="all">All</span>
+            {% for type in doctor_types %}
+                <span class="fi filter-items doctor-filter-type" data-type="{{type.id}}" >{{type}}</span>
+            {% endfor %}
+        </p>
+        <div class="dropdown dd d-md-none d-sm-block mb-3">
+          <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            Filter By
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" href="#">All</a>
+            <a class="dropdown-item" href="#">Ayurveda</a>
+            <a class="dropdown-item" href="#">Urology</a>
+          </div>
+        </div>
+      </div>
+      <div class="row video-results" >
+        <div class="col-12 col-md-4 com-sm-12 mb-3">
+          <div class="pl-4 pt-4 pr-4 dashboard-doc-list">
+            <span class="appoin-no"><small>Aurveda</small></span><br><br>
+            <p class="text-center">
+              <strong>Dr. Binod Pandya</strong><br>
+              <small><strong>Associate professor</strong></small><br>
+              <small>Institute of Medical Service and SUM Hospital</small>
+            </p><br>
+            <p>
+              <small>Regular Days:<strong> 10:00 - 17:00</strong><br>
+                Fees: <strong>250</strong><br></small>
+            </p>
+            <br>
+          </div>
+          <button class="btn btn-block dashboard-sch-btn">Schedule Video Call</button>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- paramedic -->
+  <section class="pt-3  plusBG dashboard-sec-cls dashboard-sec-paramedic nav-sch-fal">
+    <div class="container">
+      <div class="row">
+        <p class="filters  d-md-block d-sm-none mb-5">Filter By: &nbsp;&nbsp;
+          <span data-type="all" class="fi filter-items filter-items-active paramedic-filter-type">All</span>
+          {% for type in paramedic_types %}
+            <span data-type="{{type.id}}" class="fi paramedic-filter-type filter-items">{{type.name}}</span>
+          {% endfor %}
+        </p>
+        <div class="dropdown dd d-md-none d-sm-block mb-3">
+          <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            Filter By
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" href="#">All</a>
+            <a class="dropdown-item" href="#">Diagnostics</a>
+            <a class="dropdown-item" href="#">Physiotherapist</a>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12 col-md-4 com-sm-12 mb-3">
+          <div class="pl-4 pt-4 pr-4 dashboard-doc-list">
+            <span class="appoin-no"><small>Diagnostics</small></span><br><br>
+            <p class="text-center">
+              <strong>Dr. Binod Pandya</strong><br>
+              <small><strong>Associate professor</strong></small><br>
+              <small>Institute of Medical Service and SUM Hospital</small>
+            </p><br>
+            <p>
+              <small>Regular Days:<strong> 10:00 - 17:00</strong><br>
+                Fees: <strong>250</strong><br></small>
+            </p>
+            <br>
+          </div>
+          <button class="btn btn-block dashboard-sch-btn">Schedule Call</button>
+        </div>
+        <div class="col-12 col-md-4 com-sm-12 mb-3">
+          <div class="pl-4 pt-4 pr-4 dashboard-doc-list">
+            <span class="appoin-no"><small>Diagnostics</small></span><br><br>
+            <p class="text-center">
+              <strong>Dr. Binod Pandya</strong><br>
+              <small><strong>Associate professor</strong></small><br>
+              <small>Institute of Medical Service and SUM Hospital</small>
+            </p><br>
+            <p>
+              <small>Regular Days:<strong> 10:00 - 17:00</strong><br>
+                Fees: <strong>250</strong><br></small>
+            </p>
+            <br>
+          </div>
+          <button class="btn btn-block dashboard-sch-btn">Schedule Call</button>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- Medical Records -->
+  <section class="pt-3 book-phn-mt  plusBG dashboard-sec-cls dashboard-sec-med-rec nav-sch-fal nav-book-tr">
+    <div class="container">
+      <div class="row pl-3 mt-5">
+        <div class="col-12">
+          <h5>Prescriptions
+          </h5>
+        </div>
+        <span style="width: 300px !important;" class="hr-r ml-3 mt-1 mb-3"></span>
+      </div>
+      <div class="row pl-3">
+          {% for prescription in prescriptions %}
+            <div class="col-6 col-md-3 com-sm-6 mb-3">
+              <a href="#" class="pl-4 pt-4 pr-4 dashboard-doc-list text-center presc-li">
+                <i class="fa fa-hospital-o fa-3x"></i><br><br>
+                <p>Prescription Id - {{prescription.id}}</p>
+                <p>Appointment Booking Date - {{prescription.datetime}}</p>
+              </a>
+            </div>
+          {% endfor %}
+      </div>
+      <div class="row pl-3 mt-5">
+        <div class="col-12">
+          <h5>Documents <span class="float-right" style="background-color: #D95D39;color: white;padding: 5px;border-radius: 5px;margin-right: 10px;"> + Add </span>
+          </h5>
+        </div>
+        <span style="width: 300px !important;" class="hr-r ml-3 mt-1 mb-3"></span>
+      </div>
+      <div class="row pl-3">
+        <h3 class="p-5"><small>No Documents Uploaded</small></h3>
+      </div>
+    </div>
+  </section>
+  <!-- Nothing Here -->
+  <section class="pt-3 book-phn-mt  plusBG dashboard-sec-cls dashboard-sec-blank nav-sch-fal nav-pro-tr">
+    <div class="container">
+      <h3 class="p-5"><small>No Data Found</small></h3>
+    </div>
+  </section>
+  <!-- footer -->
+  <footer id="dk-footer" class="dk-footer pt-5 nav-sch-fal nav-sch-tr nav-book-tr nav-pro-tr">
+    <div class="container">
+      <div class="row">
+        <div class="col-12 col-md-3 col-sm-12 text-center my-auto">
+          <img style="width: 100%;" src="./site_images/logo.png" alt="" srcset="">
+        </div>
+        <div class="col-12 col-md-5 col-sm-12 p-2  text-center my-auto">
+          <p style="color: rgb(151, 151, 151); text-align: justify;">
+            PDoc is a revolution coming up in the
+            Indian Healthcare sector. We are thriving
+            to bring technology to build robust solutions
+            in the domain. In this Pandemic we introduce
+            our emergency telecalling service 'Doctor-Over-Call'
+            keeping our promise of bringing the right answers
+            to your health needs.</p>
+        </div>
+        <div class="col-12 col-md-4 col-sm-12  text-center my-auto">
+          <h2 style="color: white;">Follow Us:</h2>
+          <a class="footico footico-f" href="#"><i class="fa fa-facebook "></i></a>
+          <a class="footico footico-i" href="#"><i class="fa fa-instagram "></i></a>
+          <a class="footico footico-l" href="#"><i class="fa fa-linkedin "></i></a>
+          <a class="footico footico-t" href="#"><i class="fa fa-twitter "></i></a>
+        </div>
+      </div>
+      <hr style="background-color: rgba(139, 139, 139, 0.301);">
+      <div class="row pt-3 text-center">
+        <div class="col-12 col-md-11 col-sm-12 my-auto text-md-left text-sm-center">
+          <p style="color: rgb(151, 151, 151);">
+            Designed and Developed By &nbsp;<strong><a style="color: rgba(255, 255, 255, 0.582);"
+                href="www.cavemendev.com"> CaveMenDev</a></strong>
+          </p>
+        </div>
+        <div class="col-6 col-md-1 col-sm-6 text-center my-auto mx-auto mb-5">
+          <a href="www.cavemendev.com"> <img style="width: 100%;" src="./site_images/cmd.png" alt=""></a>
+        </div>
+      </div>
+    </div>
+    <div class="copyright">
+      <div class="container">
+        <div class="row pb-3">
+          <div class="col-md-6">
+            <span>© 2020 PDOC Health | All Right Reserved.</span>
+          </div>
+          <div class="col-md-6 d-sm-none d-md-block">
+            <div class="copyright-menu">
+              <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Doctors</a></li>
+                <li><a href="#">Articles</a></li>
+                <li><a href="#">Join Us</a>/li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Back to top -->
+    <div id="back-to-top" class="back-to-top">
+      <button class="btn btn-dark" title="Back to Top" style="display: block;" onclick="topFunction()">
+        <i class="fa fa-angle-up"></i>
+      </button>
+    </div>
+  </footer>
+  <!-- Mobile navigation bar -->
+  <div class="navig-bar">
+    <a href="index.html" class="navig-item nav-active nav-sch">
+      <div class="container-fluid">
+        <div class="row no-gutters  ">
+          <div class="col-12 text-center pl-2">
+            <i class="nav-fa fa fa-home fa-1x pt-1"></i><br>
+            <span class="sideHide">Home</span>
+          </div>
+        </div>
+      </div>
+    </a>
+    <a href="#" class="navig-item nav-active nav-sch">
+      <div class="container-fluid">
+        <div class="row no-gutters  ">
+          <div class="col-12 text-center pl-2">
+            <i class="nav-fa fa fa-clock-o fa-1x pt-1"></i><br>
+            <span class="sideHide">Schedule</span>
+          </div>
+        </div>
+      </div>
+    </a>
+    <a href="#" class="navig-item nav-book">
+      <div class="container-fluid">
+        <div class="row no-gutters">
+          <div class="col-12 text-center pl-2">
+            <i class="nav-fa fa fa-book fa-1x pt-1"></i><br>
+            <span class="sideHide">Records</span>
+          </div>
+        </div>
+      </div>
+    </a>
+    <a href="#" class="navig-item nav-profile">
+      <div class="container-fluid">
+        <div class="row no-gutters">
+          <div class="col-12 text-center pl-2">
+            <i class="nav-fa fa fa-user-circle fa-1x pt-1"></i><br>
+            <span class="sideHide">Profile</span>
+          </div>
+        </div>
+      </div>
+    </a>
+  </div>
+  <!-- Scripts -->
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"
+    integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
+    integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+    integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous">
+  </script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+    integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous">
+  </script>
+  <script src="https://owlcarousel2.github.io/OwlCarousel2/assets/owlcarousel/owl.carousel.js"></script>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script src="script.js"></script>
+  <script>
+          $(".doctor-filter-type").on('click',function(){
+                 id = $(this).attr('data-type');
+                fetch(id,'telecall');
+                fetch(id,'videocall');
+                $(".doctor-filter-type").addClass("btn-primary");
+                $(this).removeClass('btn-primary');
+                $(".doctor-filter-type").addClass("btn-default");
+
+          });
+      </script>
+  <script>
+    $(".dashboard-sec-cls").hide();
+    if (window.matchMedia('(max-width: 600px)').matches) {
+      jQuery(function () {
+        jQuery('.nav-sch').click();
+      });
+    } else {
+      jQuery(function () {
+        jQuery('.item-tele').click();
+      });
+    }
+    slider = document.querySelector('.items');
+    let isDown = false;
+    let startX;
+    let scrollLeft;
+
+    slider.addEventListener('mousedown', (e) => {
+      isDown = true;
+      slider.classList.add('active');
+      startX = e.pageX - slider.offsetLeft;
+      scrollLeft = slider.scrollLeft;
+    });
+    slider.addEventListener('mouseleave', () => {
+      isDown = false;
+      slider.classList.remove('active');
+    });
+    slider.addEventListener('mouseup', () => {
+      isDown = false;
+      slider.classList.remove('active');
+    });
+    slider.addEventListener('mousemove', (e) => {
+      if (!isDown) return;
+      e.preventDefault();
+      const x = e.pageX - slider.offsetLeft;
+      const walk = (x - startX) * 1; //scroll-fast
+      slider.scrollLeft = scrollLeft - walk;
+    });
+    const slider2 = document.querySelector('.items2');
+    slider2.addEventListener('mousedown', (e) => {
+      isDown = true;
+      slider2.classList.add('active2');
+      startX = e.pageX - slider2.offsetLeft;
+      scrollLeft = slider2.scrollLeft;
+    });
+    slider2.addEventListener('mouseleave', () => {
+      isDown = false;
+      slider2.classList.remove('active2');
+    });
+    slider2.addEventListener('mouseup', () => {
+      isDown = false;
+      slider2.classList.remove('active2');
+    });
+    slider2.addEventListener('mousemove', (e) => {
+      if (!isDown) return;
+      e.preventDefault();
+      const x = e.pageX - slider2.offsetLeft;
+      const walk = (x - startX) * 1; //scroll-fast
+      slider2.scrollLeft = scrollLeft - walk;
+    });
+    $(".dashboard-items").click(function () {
+      $(".items2 div").removeClass("dashboard-items");
+      $(".items2 div").removeClass("dashboard-items-active");
+      $(".items2 div").addClass("dashboard-items");
+      $(this).removeClass("dashboard-items");
+      $(this).addClass("dashboard-items-active");
+      // $('html,body').animate({
+      //   scrollTop: $(".dashboard-sec").offset().top
+      // });
+      //  $(".items2").animate({
+      //     scrollLeft: $(this).position().left}, 50);
+    });
+    $(".filter-items").click(function () {
+      $(".fi").removeClass("filter-items");
+      $(".fi").removeClass("filter-items-active");
+      $(".fi").addClass("filter-items");
+      $(this).removeClass("filter-items");
+      $(this).addClass("filter-items-active");
+    });
+    $(".item-tele").click(function () {
+      $(".dashboard-sec-cls").hide();
+      $("#loader-div-cus").show();
+      setTimeout(function () {
+        $("#loader-div-cus").hide();
+        $(".dashboard-sec-tele").show();
+      }, 1);
+    });
+    $(".item-video").click(function () {
+      $(".dashboard-sec-cls").hide();
+      $("#loader-div-cus").show();
+      setTimeout(function () {
+        $("#loader-div-cus").hide();
+        $(".dashboard-sec-vdo").show();
+      }, 1);
+    });
+    $(".item-paramedic").click(function () {
+      //$(".dashboard-sec-cls").hide();
+      //$("#loader-div-cus").show();
+      //setTimeout(function () {
+       // $("#loader-div-cus").hide();
+        //$(".dashboard-sec-paramedic").show();
+      //}, 1);
+      alert('This service will soon be online!!');
+    });
+    $(".item-med-rec").click(function () {
+      $(".dashboard-sec-cls").hide();
+      $("#loader-div-cus").show();
+      setTimeout(function () {
+        $("#loader-div-cus").hide();
+        $(".dashboard-sec-med-rec").show();
+      }, 1);
+    });
+    $(".item-yoga").click(function () {
+      $(".dashboard-sec-cls").hide();
+      $("#loader-div-cus").show();
+      setTimeout(function () {
+        $("#loader-div-cus").hide();
+        $(".dashboard-sec-blank").show();
+      }, 1);
+    });
+    $(".item-psac").click(function () {
+      $(".dashboard-sec-cls").hide();
+      $("#loader-div-cus").show();
+      setTimeout(function () {
+        $("#loader-div-cus").hide();
+        $(".dashboard-sec-blank").show();
+      }, 1);
+    });
+    $(".item-profile").click(function () {
+      $(".dashboard-sec-cls").hide();
+      $("#loader-div-cus").show();
+      setTimeout(function () {
+        $("#loader-div-cus").hide();
+        $(".dashboard-sec-blank").show();
+      }, 1);
+    });
+    $(".navig-item").click(function () {
+      $(".navig-item").removeClass("nav-active");
+      $(this).addClass("nav-active");
+    });
+    $(".nav-sch").click(function () {
+      $(".nav-sch-fal").hide();
+      $("#loader-div-cus2").show();
+      setTimeout(function () {
+        $("#loader-div-cus2").hide();
+        jQuery('.item-tele').click();
+        $(".nav-sch-tr").show();
+      }, 1);
+    });
+    $(".nav-book").click(function () {
+      $(".nav-sch-fal").hide();
+      $("#loader-div-cus2").show();
+      setTimeout(function () {
+        $("#loader-div-cus2").hide();
+        $(".nav-book-tr").show();
+      }, 1);
+    });
+    $(".nav-profile").click(function () {
+      $(".nav-sch-fal").hide();
+      $("#loader-div-cus2").show();
+      setTimeout(function () {
+        $("#loader-div-cus2").hide();
+        $(".nav-pro-tr").show();
+      }, 1);
+    });
+  </script>
+<script>
+    function fetch(doctor_type,service_type){
+        $.ajax({
+        url: "{% url 'doctors_cat'  %}",
+        data : {
+            'category':doctor_type,
+            'type':service_type
+        },
+        type: 'GET',
+        dataType: 'json',
+        success: function(res) {
+            console.log(res);
+            if(service_type=="telecall")
+            {
+                result = $(".results");
+            }
+            else if(service_type=="videocall")
+            {
+                result = $(".video-results");
+            }
+            result.empty();
+            for(i=0;i<res.length;i++){
+
+            temp = '<div class="col-12 col-md-4 com-sm-12 mb-3"> \
+                        <div class="pl-4 pt-4 pr-4 dashboard-doc-list"> \
+                            <span class="appoin-no"><small>'+res[i].type_id__name+'</small></span><br><br> \
+                            <p class="text-center"> \
+                            <strong>'+res[i].name+'</strong><br> \
+                            <small><strong>'+res[i].designation+'</strong></small><br> \
+                            <small>'+res[i].hospital+'</small><br> \
+                            </p><br> \
+                        <p> \
+                          <small>Fees: <strong>'+res[i].fees+'</strong><br></small>'
+            if(res[i].available_from!=null){
+                temp = temp + '<small>Regular Days:<strong> '+res[i].available_from+' - '+res[i].available_to
+            }
+            if(res[i].available_from2!=null){
+                temp = temp +' & '+res[i].available_from2+' - '+res[i].available_to2+'</strong></small><br>';
+            }
+            if(res[i].special_day!=null)
+                {
+                    temp = temp+"<small>"+res[i].special_day+" : <b>"+res[i].special_from+' - '+res[i].special_to+'</b>';
+                }
+            temp = temp + '</small></strong></p><br></div>';
+            temp = temp + '<button class="btn btn-block dashboard-sch-btn schedule-call" doctor-id="'+res[i].id+'" data-type="2">Schedule Call</button></div>'
+            result.append(temp);
+            }
+
+        }
+    });
+    }
+    $(document).ready(function(){
+        fetch('all','telecall');
+        fetch('all','videocall');
+        paramedic_fetch('all');
+    });
+    $(document).on('click', '.schedule-call', function(){
+            doctor = $(this).attr("doctor-id");
+            type = $(this).attr("data-type");
+            $("#call-now").attr("doctor",doctor);
+            $("#call-now").attr("data-type",type);
+            $('#exampleModal').modal('toggle');
+    });
+</script>
+<script>
+    function paramedic_fetch(type){
+        $.ajax({
+        url: "{% url 'paramedics_cat'  %}",
+        data : {
+            'category':type,
+        },
+        type: 'GET',
+        dataType: 'json',
+        success: function(res) {
+            console.log('paramedics');
+            console.log(res);
+            $(".paramedic-results").empty();
+            for(i=0;i<res.length;i++){
+            temp = '<div class="col-lg-6 col-md-6 hvr-bob margin-bottom-45px"> \
+    <div class="background-white box-shadow"> \
+        <div class="padding-30px"> \
+            <h5 class="margin-tb-15px"><a class="text-dark" href="#">'+res[i].name+'</a></h5> \
+            <span class="text-grey-3"><b>'+res[i].type_id__name+'</b></span><br>'
+            if(res[i].available_from!=null)
+            {
+                temp = temp + '<span class="text-grey-6"><b>('+res[i].available_from+' - '+res[i].available_to+' )</b></span><br>'
+            }
+            if(res[i].organization!=null)
+            {
+                temp = temp + '<span class="text-grey-6">'+res[i].organization+'</span><br>'
+            }
+            if(res[i].qualifications!=null)
+            {
+                temp = temp + '<span class="text-grey-3">'+res[i].qualifications+'</span><br>'
+            }
+            if(res[i].achievements!=null)
+            {
+                temp = temp + 'Achievements : <span class="text-grey-2">'+res[i].achievements+'</span><br>'
+            }
+            if(res[i].address!=null)
+            {
+                temp = temp + '<span class="text-grey-1">'+res[i].address+'</span><br>'
+            }
+                  temp = temp+'</div> \
+                    <div class="m-3" style="color:#007bff"><i class="fa fa-video-camera" aria-hidden="true"></i><i class="fa fa-phone" aria-hidden="true"></i></div> \
+                     <div paramedic-id="'+res[i].id+'" class="btn btn-primary offline" style="width:100%;border-radius:0px;">Schedule Call</div></a>\
+                </div> \
+            </div>'
+
+            $(".paramedic-results").append(temp);
+            }
+
+        }
+    });
+    }
+</script>
+<script>
+    $(document).on('click', '.offline', function(){
+        alert('This Service Will Soon Be Online !!');
+    });
+    $(document).on('click', '#call-now', function(){
+            doctor= $(this).attr("doctor");
+            name = $("#name").val();
+            phone = $("#phone").val();
+            query = $("textarea#query").val();
+            type = $(this).attr("data-type");
+            $.ajax({
+        url: "{% url 'book_appointment'  %}",
+        data : {
+            'doctor':doctor,
+            'name':name,
+            'phone':phone,
+            'query':query,
+            'type':type,
+        },
+        type: 'GET',
+        dataType: 'json',
+        success: function(res) {
+            if(res){
+                window.location="https://www.pdochealth.com/payment-booking?order_id="+res.order_id.id;
+            }
+            else{
+                alert("Please create an account first.");
+                window.location = "/signup/";
+            }
+        }
+    });
+
+});
+</script>
+ <script>
+    $("#re-request").click(function(){
+        appointment = $(this).attr('data-appointment');
+        console.log(appointment);
+        $.ajax({
+            url: "{% url 're_request' %}",
+            data : {
+                'appointment':appointment,
+            },
+            type: 'GET',
+            dataType: 'json',
+            success: function(res) {
+                $("#re-request").remove();
+                alert('Our team will shortly contact you.');
+            }
+      });
+    });
+</script>
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Terms & Conditions</h5>
+                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">×</span>
+                </button>
+                    </div>
+                    <div class="modal-body" style="overflow-y:hidden;">
+                        <div class="form">
+                            <input class="form-control form-group" id="name" type="text" placeholder="Patient name" required>
+                            <input class="form-control form-group" id="phone" type="text" placeholder="Patient phone" required>
+                            <textarea class="form-control" type="text" id="query" placeholder="Describe your problem in short" required></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <h7>Continuing to call will mean that you accept our <a href="{% url 'terms' %}" style="text-decoration:underline;color:blue;">Terms & Conditions</a></h7>
+                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                        <a class="btn btn-primary" id="call-now" style="color:white;">Submit</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+</body>
+
+</html>

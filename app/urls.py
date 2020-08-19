@@ -83,6 +83,7 @@ urlpatterns = [
         path("feedback-submit/",views.feedback_submit,name="feedback_submit"),
         path("statistics/",views.statistics,name="statistics"),
         path("email-contact-form/",views.email_contact_form,name="email_contact_form"),
+        path("new-lead/",views.new_lead,name="new_lead"),
         path("",views.index,name="index"),
 ]
 from django.conf.urls.static import static

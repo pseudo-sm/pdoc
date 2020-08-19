@@ -238,3 +238,12 @@ class Feedback(models.Model):
     def __str__(self):
         return str(self.prescription)
 
+class Lead(models.Model):
+
+    name = models.CharField(max_length=100)
+    phone = models.CharField(max_length=100)
+    query = models.TextField()
+    type = models.CharField(max_length=100)
+    doctor = models.ForeignKey(Doctor,on_delete=models.CASCADE)
+    def __str__(self):
+        return self.name

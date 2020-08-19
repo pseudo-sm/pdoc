@@ -256,7 +256,7 @@ def signup_customer_action(request):
     new_customer.save()
     body = "Hi {}, Welcome to Pdochealth by Edoc Medical Services Pvt Ltd\n Our Customer Relation Representative will contact you shortly. Meanwhile please go through the website to checkout our sservices.".format(name)
     email_msg = EmailMessage("Welcome to Pdochealth", body, settings.EMAIL_HOST_USER,
-                             ["saswathcommand@gmail.com",email])
+                             ["saswath@pdochealth.com",email])
     email_msg.send(fail_silently=False)
     return JsonResponse(True,safe=False)
 
@@ -396,7 +396,7 @@ def patient_dashboard(request):
     customer = Customer.objects.get(user_id=user)
     scheduled_appointments = Appointments.objects.filter(customer=customer,status__gte="1")
     prescriptions = Prescription.objects.filter(appointment__customer=customer)
-    scheduled_appointments=scheduled_appointments.values("doctor__name","doctor__type__name","doctor__hospital","time","slug","status","datetime")
+    scheduled_appointments=scheduled_appointments.values("doctor__name","doctor__type__name","doctor__hospital","time","slug","status","datetime","id")
     shortlisted_scheduled_appointments = []
     for appointment in scheduled_appointments:
         now = datetime.datetime.utcnow().replace(tzinfo=utc)
@@ -408,8 +408,8 @@ def patient_dashboard(request):
     tdoctor = len(list(Doctor.objects.filter(telecalling=True)))
     pmconsultancy = len(list(Paramedics.objects.filter()))
     if not_yet is not None:
-        return render(request,"customer/dashboard.html",{"p":"true","vdoctor":vdoctor,"tdoctor":tdoctor,"pmconsultancy":pmconsultancy,"doctor_types":doctor_types,"paramedic_types":paramedic_types,"scheduled_appointments":shortlisted_scheduled_appointments,"logout":True,"prescriptions":prescriptions,"cprescription":len(prescriptions)})
-    return render(request,"customer/dashboard.html",{"vdoctor":vdoctor,"tdoctor":tdoctor,"pmconsultancy":pmconsultancy,"doctor_types":doctor_types,"paramedic_types":paramedic_types,"scheduled_appointments":shortlisted_scheduled_appointments,"logout":True,"prescriptions":prescriptions,"cprescription":len(prescriptions)})
+        return render(request,"customer/dashboard2.html",{"p":"true","vdoctor":vdoctor,"tdoctor":tdoctor,"pmconsultancy":pmconsultancy,"doctor_types":doctor_types,"paramedic_types":paramedic_types,"scheduled_appointments":shortlisted_scheduled_appointments,"logout":True,"prescriptions":prescriptions,"cprescription":len(prescriptions)})
+    return render(request,"customer/dashboard2.html",{"vdoctor":vdoctor,"tdoctor":tdoctor,"pmconsultancy":pmconsultancy,"doctor_types":doctor_types,"paramedic_types":paramedic_types,"scheduled_appointments":shortlisted_scheduled_appointments,"logout":True,"prescriptions":prescriptions,"cprescription":len(prescriptions)})
 
 def blog_list(request):
     articles = Article.objects.all()
@@ -596,7 +596,7 @@ def payment_status(request):
 
 def email_notify(patient,doctor,phone):
     body = "A user name {} wants an appointment with Dr. {}".format(patient,doctor)
-    email_msg = EmailMessage("Important!! PDOC - You Have a New Appointment Request", body, settings.EMAIL_HOST_USER, ["saswathcommand@gmail.com"])
+    email_msg = EmailMessage("Important!! PDOC - You Have a New Appointment Request", body, settings.EMAIL_HOST_USER, ["saswath@pdochealth.com"])
     email_msg.send(fail_silently=False)
     return JsonResponse(True,safe=False)
 
@@ -756,3 +756,17 @@ def email_contact_form(request):
     email_msg.send(fail_silently=False)
     return JsonResponse(True,safe=False)
 
+def new_lead(request):
+    doctor  = request.GET.get("doctor")
+    name  = request.GET.get("name")
+    phone  = request.GET.get("phone")
+    query  = request.GET.get("query")
+    type  = request.GET.get("type")
+    doctor = Doctor.objects.get(id=doctor)
+    lead = Lead(doctor=doctor,name=name,phone=phone,query=query,type=type)
+    lead.save()
+    body = "Doctor : {}\n Name : {}\n Phone : {}\n Query : {}  ".format(doctor,name,phone,query)
+    email_msg = EmailMessage("New Lead", body, settings.EMAIL_HOST_USER,
+                             ["saswath@pdochealth.com"])
+    email_msg.send(fail_silently=False)
+    return JsonResponse(True,safe=False)

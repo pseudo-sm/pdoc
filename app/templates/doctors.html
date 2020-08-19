@@ -223,12 +223,13 @@
 {% include 'js.html' %}
 <script>
     $(document).on('click', '#call-now', function(){
+            $(this).html('Submitting...');
             doctor= $(this).attr("doctor");
             name = $("#name").val();
             phone = $("#phone").val();
             query = $("textarea#query").val();
             $.ajax({
-        url: "{% url 'book_appointment'  %}",
+        url: "{% url 'new_lead'  %}",
         data : {
             'doctor':doctor,
             'name':name,
@@ -239,14 +240,10 @@
         type: 'GET',
         dataType: 'json',
         success: function(res) {
-            if(res){
+
                 $('#exampleModal').modal('toggle');
-                alert('You appointment has been scheduled. PDOC Health will contact you shortly for confirmation!!');
-            }
-            else{
-                alert("Please create an account first.");
-                window.location = "/signup/";
-            }
+                alert('PDOC Health will contact you shortly for confirmation!!');
+
         }
     });
 
