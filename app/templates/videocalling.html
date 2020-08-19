@@ -16,7 +16,16 @@
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
     integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous" />
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300;0,400;0,500;0,700;0,900;1,300;1,400;1,500;1,700;1,900&amp;display=swap">
   <style>
+    * {
+      font-family: "Rubik", sans-serif;
+      scroll-behavior: smooth;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
     .vc-body {
       background-color: rgb(0, 0, 0);
     }
@@ -143,8 +152,8 @@
       background-image: url("{% static 'connecting.png' %}");
       object-fit: contain;
       object-position: center;
-      border: 5px solid #2a2a2af3;
-      border-radius: 15px;
+      border: 1px solid #75757577;
+      border-radius: 5px;
       touch-action: none;
       user-select: none;
       margin: 3%;
@@ -296,7 +305,7 @@
     @media only screen and (max-width: 600px) {
       .video-local {
         width: 30%;
-        border: 2px solid rgba(136, 136, 136, .5);
+        border: 1px solid rgba(136, 136, 136, .5);
         border-radius: 5px;
       }
 
@@ -335,10 +344,111 @@
         font-size: .9rem;
       }
     }
+
+    .pop-up-body {
+      width: 100%;
+      height: 100vh;
+      position: absolute;
+      z-index: 9999;
+      background-color: #000000e1;
+      display: none;
+    }
+
+    .pop-up-dismis {
+      display: none;
+    }
+
+    .go-back {
+      display: none;
+    }
+
+    .pop-up {
+      width: 40%;
+      height: 40%;
+      position: fixed;
+      border: 0.5px solid grey;
+      border-radius: 5px;
+      background-color: #ffffff;
+      background-image: url({% static 'plusBg.png' %});
+      background-position: top;
+      background-size: contain;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      margin: auto;
+
+    }
+
+    .pl-wt {
+      font-size: 1.7rem;
+      font-weight: 500;
+    }
+
+    .pl-wt small {
+      font-size: 1rem;
+      font-weight: 100;
+    }
+
+    @media only screen and (max-width: 600px) {
+      .pop-up {
+        width: 80%;
+      }
+
+      .pl-wt {
+        font-size: 1.5rem !important;
+        font-weight: 500;
+      }
+
+      .pl-wt small {
+        font-size: 0.8rem !important;
+        font-weight: 100;
+      }
+    }
   </style>
+
 </head>
 
 <body class="vc-body">
+  <div class="pop-up-body">
+    <div class="pop-up">
+      <div class="container">
+        <div class="row">
+          <div class="col-12 col-md-12 col-sm-12 text-center pt-5">
+            <div class="spinner-grow text-primary" role="status">
+              <span class="sr-only">Loading...</span>
+            </div>
+            <div class="spinner-grow text-secondary" role="status">
+              <span class="sr-only">Loading...</span>
+            </div>
+            <div class="spinner-grow text-success" role="status">
+              <span class="sr-only">Loading...</span>
+            </div>
+            <div class="spinner-grow text-danger" role="status">
+              <span class="sr-only">Loading...</span>
+            </div>
+            <div class="spinner-grow text-warning" role="status">
+              <span class="sr-only">Loading...</span>
+            </div>
+            <div class="spinner-grow text-info" role="status">
+              <span class="sr-only">Loading...</span>
+            </div>
+            <div class="spinner-grow text-dark" role="status">
+              <span class="sr-only">Loading...</span>
+            </div>
+          </div>
+          <div class="col-12 col-md-12 col-sm-12 text-center mt-3 mt-md-5">
+            <p class="pl-wt "><span class="main-status">Please Wait..</span>
+              <br><small class="sub-status">The Doctor hasn't Joined yet.</small>
+            </p>
+            <button class="btn btn-success pop-up-dismis">Continue</button>
+            <button class="btn btn-danger go-back">Exit</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div class="container-fluid vc-cont p-0">
     <div class="row no-gutters">
       <header id="vd-head">
@@ -528,8 +638,7 @@
       </header>
     </div>
   </div>
-  <!-- Optional JavaScript -->
-  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  
   <script src="https://code.jquery.com/jquery-3.5.1.min.js"
     integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
@@ -610,16 +719,11 @@
     });
   </script>
   <script src="https://www.gstatic.com/firebasejs/6.2.4/firebase.js"></script>
-
-  <!-- TODO: Add SDKs for Firebase products that you want to use
-     https://firebase.google.com/docs/web/setup#available-libraries -->
-
   <script>
     var doctor = '{{doctor}}';
   </script>
   <script src="{% static 'adapter.js' %}"></script>
   <script src="{% static 'script.js' %}"></script>
-
   <script>
     function makeid(length) {
       var result = '';
@@ -718,32 +822,33 @@
     });
 
     //new Storage ups
-    function reFetchStorage(){
-        setTimeout(function(){
-              $(".store-files").html('');
-              var listRef = firebase.storage().ref('records/' + customerID + '/');
-              listRef.listAll().then(function (res) {
-                res.items.forEach(function (itemRef) {
-                  //console.log( itemRef.toString() );
-                  itemRef.getDownloadURL().then(function (url) {
-                    var ranID = makeid(9);
-                    var funId = "'" + ranID + "'";
-                    var str;
-                    if (itemRef.name.length > 10) str = itemRef.name.substring(0, 7) + '...';
-                    else str = itemRef.name;
-                    $(".store-files").append(
-                      '<div class="col-4 col-md-3 col-sm-4 pl-2 pr-2" > <embed class="img-thumbnail custom-d-file" type="image/jpg" src="' +
-                      url + '" onclick="showModal(' + funId +
-                      ')"><p class="text-center pl-2 pr-2 mb-3 w-100"style="background-color:white"><small>' +
-                      str + '</small></p></div><div id="' + ranID +
-                      '" class="Mymodal"> <span onclick="hideModal(' + funId +
-                      ')" class="Myclose">&times;</span> <embed ' +
-                      'src="' + url + '"' + 'class="Mymodal-content"> </div>  ');
-                  })
-                });
-              }).catch(function (error) {});
-        }, 3000);
+    function reFetchStorage() {
+      setTimeout(function () {
+        $(".store-files").html('');
+        var listRef = firebase.storage().ref('records/' + customerID + '/');
+        listRef.listAll().then(function (res) {
+          res.items.forEach(function (itemRef) {
+            //console.log( itemRef.toString() );
+            itemRef.getDownloadURL().then(function (url) {
+              var ranID = makeid(9);
+              var funId = "'" + ranID + "'";
+              var str;
+              if (itemRef.name.length > 10) str = itemRef.name.substring(0, 7) + '...';
+              else str = itemRef.name;
+              $(".store-files").append(
+                '<div class="col-4 col-md-3 col-sm-4 pl-2 pr-2" > <embed class="img-thumbnail custom-d-file" type="image/jpg" src="' +
+                url + '" onclick="showModal(' + funId +
+                ')"><p class="text-center pl-2 pr-2 mb-3 w-100"style="background-color:white"><small>' +
+                str + '</small></p></div><div id="' + ranID +
+                '" class="Mymodal"> <span onclick="hideModal(' + funId +
+                ')" class="Myclose">&times;</span> <embed ' +
+                'src="' + url + '"' + 'class="Mymodal-content"> </div>  ');
+            })
+          });
+        }).catch(function (error) {});
+      }, 3000);
     }
+
     function showModal(id) {
       var x = document.getElementById(id);
       x.style.display = "block";
@@ -753,6 +858,122 @@
       var x = document.getElementById(id);
       x.style.display = "none";
     }
+  </script>
+  <script>
+    var vcRefx = database.ref("active-meetings/" + roomHash + "/");
+    vcRefx.update({
+      "vc-pat-status": "false",
+      "vc-doc-status": "false"
+    })
+    if (doctor != "True") {
+      $(".pop-up-body").show(500);
+      $(".pop-up-dismis").click(function () {
+        $(".pop-up-dismis").hide(500);
+        $(".pop-up-body").hide(500);
+      });
+      var d;
+      var vcNum;
+
+      function timeUp() {
+        d = new Date();
+        vcNum = d.getTime();
+        var vcRef = database.ref("active-meetings/" + roomHash + "/");
+        vcRef.update({
+          "vc-pat": vcNum,
+          "vc-pat-status": "true"
+        })
+        setTimeout(timeUp, 5000);
+      }
+      timeUp();
+      var vcRefGetPat = database.ref("active-meetings/" + roomHash + "/" + "vc-doc");
+      vcRefGetPat.on("value", function (snapshot) {
+        getNumPat = snapshot.val();
+        //console.log(Math.abs(getNumPat - vcNum));
+        if (Math.abs(getNumPat - vcNum) < 5000) {
+          //console.log("doctor Joined");
+          $(".main-status").html("Doctor has Joined");
+          $(".sub-status").html("Click on continue...");
+          $(".pop-up-dismis").show();
+        }
+      }, function (error) {
+        console.log("Error: " + error.code);
+      });
+    }
+
+    if (doctor == "True") {
+      function timeUpDoc() {
+        var dDoc = new Date();
+        var vcNumDoc = dDoc.getTime();
+        var vcRefDoc = database.ref("active-meetings/" + roomHash + "/");
+        vcRefDoc.update({
+          "vc-doc": vcNumDoc,
+          "vc-doc-status": "true"
+        })
+        setTimeout(timeUpDoc, 5000);
+      }
+      timeUpDoc();
+    }
+    var getDocTS, getPatTS, PatStat, DocStat;
+
+    var vcDocStat = database.ref("active-meetings/" + roomHash + "/" + "vc-doc-status");
+    vcDocStat.on("value", function (snapshot) {
+      DocStat = snapshot.val();
+    }, function (error) {
+      console.log("Error: " + error.code);
+    });
+    var vcPatStat = database.ref("active-meetings/" + roomHash + "/" + "vc-pat-status");
+    vcPatStat.on("value", function (snapshot) {
+      PatStat = snapshot.val();
+    }, function (error) {
+      console.log("Error: " + error.code);
+    });
+
+
+    var DocTSRef = database.ref("active-meetings/" + roomHash + "/" + "vc-doc");
+    DocTSRef.on("value", function (snapshot) {
+      getDocTS = snapshot.val();
+      if (Math.abs(getDocTS - getPatTS) > 15000 && DocStat == "true" && PatStat == "true") {
+        console.log("Problem Occoured");
+        $(".pop-up-body").show(500);
+        $(".main-status").html("You are Disconnected...");
+        $(".sub-status").html("Our team will call you soon.");
+        $(".go-back").show();
+        $(".go-back").click(function () {
+          var vcRefx = database.ref("active-meetings/" + roomHash + "/");
+          vcRefx.update({
+            "vc-pat-status": "false",
+            "vc-doc-status": "false"
+          })
+          $(".go-back").hide();
+          window.history.back();
+        });
+      }
+    }, function (error) {
+      console.log("Error: " + error.code);
+    });
+
+    var PatTSRef = database.ref("active-meetings/" + roomHash + "/" + "vc-pat");
+    PatTSRef.on("value", function (snapshot) {
+      getPatTS = snapshot.val();
+      if (Math.abs(getDocTS - getPatTS) > 15000 && DocStat == "true" && PatStat == "true") {
+        //console.log("Problem Occoured");
+        $(".pop-up-body").show(500);
+        $(".main-status").html("You are Disconnected...");
+        $(".sub-status").html("Our team will call you soon.");
+        $(".go-back").show();
+        $(".go-back").click(function () {
+          var vcRefx = database.ref("active-meetings/" + roomHash + "/");
+          vcRefx.update({
+            "vc-pat-status": "false",
+            "vc-doc-status": "false"
+          })
+          $(".go-back").hide();
+          window.history.back();
+        });
+      }
+    }, function (error) {
+      console.log("Error: " + error.code);
+    });
   </script>
 
 </body>
