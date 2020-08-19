@@ -431,17 +431,18 @@
                 <span class="fi filter-items doctor-filter-type" data-type="{{type.id}}" >{{type}}</span>
             {% endfor %}
         </p>
-<!--        <div class="dropdown dd d-md-none d-sm-block mb-3">-->
-<!--          <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"-->
-<!--            aria-haspopup="true" aria-expanded="false">-->
-<!--            Filter By-->
-<!--          </button>-->
-<!--          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">-->
-<!--            <a class="dropdown-item" href="#">All</a>-->
-<!--            <a class="dropdown-item" href="#">Ayurveda</a>-->
-<!--            <a class="dropdown-item" href="#">Urology</a>-->
-<!--          </div>-->
-<!--        </div>-->
+        <div class="dropdown dd d-md-none d-sm-block mb-3">
+          <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            Filter By
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item doctor-filter-type"  data-type="all">All</a>
+            {% for type in doctor_types %}
+              <a class="dropdown-item doctor-filter-type"  data-type="{{type.id}}">{{type}}</a>
+            {% endfor %}
+          </div>
+        </div>
       </div>
          <div class="row results">
 
@@ -464,9 +465,10 @@
             Filter By
           </button>
           <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <a class="dropdown-item" href="#">All</a>
-            <a class="dropdown-item" href="#">Ayurveda</a>
-            <a class="dropdown-item" href="#">Urology</a>
+            <a class="dropdown-itemdoctor-filter-type" data-type="all">All</a>
+            {% for type in doctor_types %}
+              <a class="dropdown-item doctor-filter-type" data-type="{{type.id}}">{{type}}</a>
+            {% endfor %}
           </div>
         </div>
       </div>
@@ -653,7 +655,7 @@
   </footer>
   <!-- Mobile navigation bar -->
   <div class="navig-bar">
-    <a href="index.html" class="navig-item nav-active nav-sch">
+    <a href="{% url 'index' %}" class="navig-item nav-active nav-sch">
       <div class="container-fluid">
         <div class="row no-gutters  ">
           <div class="col-12 text-center pl-2">
