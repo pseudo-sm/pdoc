@@ -66,7 +66,7 @@ class Doctor(models.Model):
     special_day = models.CharField(max_length=100,null=True,blank=True)
     special_from = models.TimeField(null=True,blank=True)
     special_to = models.TimeField(null=True,blank=True)
-
+    payment_method = models.TextField()
     class Meta:
         verbose_name = "Doctor"
         verbose_name_plural = "Doctors"

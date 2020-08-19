@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<table>
+    <tr>
+        <td>Doctor Name</td>
+        <td>Unpaid Appointments</td>
+        <td>Total unpaid Amount</td>
+        <td>Payment Method</td>
+    </tr>
+    {% for doctor,details in doctors.items %}
+        <tr>
+            <td>{{doctor.name}}</td>
+            <td>{{details.appointments}}</td>
+            <td>{{details.fees}}</td>
+            <td>{{doctor.payment_method}}</td>
+        </tr>
+    {% endfor %}
+</table>
+</body>
+</html>

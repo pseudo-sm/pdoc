@@ -427,6 +427,20 @@ def zonal_admin(request):
         print(row["payment_status"],row["id"])
     return render(request,"Zonal Admin/index.html",{"appointments":appointments[::-1]})
 
+def zonal_admin_settlements(request):
+    appointments = Appointments.objects.filter(payment_status=False)
+    doctors = {}
+    for appointment in appointments:
+        doctor = appointment.doctor
+        fees = doctor.fees
+        if doctors.get(doctor) is None:
+            doctors[doctor] = {"fees":int(doctor.fees),"appointments":1}
+        else:
+            doctors[doctor]["appointments"] += 1
+            doctors[doctor]["fees"] += int(doctor.fees)
+
+    return render(request,"Zonal admin/settlements.html",{"doctors":doctors})
+
 def zonal_admin_doctors(request):
     doctors = Doctor.objects.all()
     doctors = doctors.values("practice_id","name","address","education","phone","type__name","available_from","available_to","available_from2","available_to2","designation","hospital","special_day","special_from","special_to")
