@@ -388,7 +388,7 @@
                         <span class="float-right">{{vdoctor}}</span><br>
                         <span class="float-right">Video Consultancy</span>
                     </div>
-                    <div class="item-paramedic col-9 col-md-3 col-sm-9 mb-3 p-4 dashboard-items">
+                    <div class="item-dignos-serv col-9 col-md-3 col-sm-9 mb-3 p-4 dashboard-items">
                         <i class="fa fa-medkit fa-2x"></i>
                         <span class="float-right">2</span><br>
                         <span class="float-right">Diagnostic Service</span>
@@ -470,7 +470,7 @@
             </div>
         </section>
         <!-- Diagnostic Center -->
-        <section class="pt-3  plusBG dashboard-sec-cls dashboard-sec-paramedic nav-sch-fal">
+        <section class="pt-3  plusBG dashboard-sec-cls dashboard-sec-dignos-serv nav-sch-fal">
             <div class="container">
                 <div class="row">
                     <p class="filters  d-md-block d-sm-none mb-5">Filter By: &nbsp;&nbsp;
@@ -716,7 +716,6 @@
         </script>
         <script>
             $(".dashboard-sec-cls").hide();
-            $(".dashboard-sec-cls").hide();
             $("#loader-div-cus").show();
             setTimeout(function () {
                 $("#loader-div-cus").hide();
@@ -805,12 +804,12 @@
                     $(".dashboard-sec-vdo").show();
                 }, 1500);
             });
-            $(".item-paramedic").click(function () {
+            $(".item-dignos-serv").click(function () {
                 $(".dashboard-sec-cls").hide();
                 $("#loader-div-cus").show();
                 setTimeout(function () {
                     $("#loader-div-cus").hide();
-                    $(".dashboard-sec-paramedic").show();
+                    $(".dashboard-sec-dignos-serv").show();
                 }, 1500);
             });
             $(".item-med-rec").click(function () {
