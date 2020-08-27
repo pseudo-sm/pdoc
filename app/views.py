@@ -206,7 +206,7 @@ def doctor_registration_action(request):
 
 def important_links(request):
 
-    links = Links.objects.all()
+    links = Links.objects.all()[::-1]
     return render(request,"important-links.html",{"links":links,"doctor_types":doctor_types,"paramedic_types":paramedic_types})
 
 def signup_customer(request):
@@ -416,7 +416,7 @@ def patient_dashboard(request):
     return render(request,"customer/dashboard2.html",{"vdoctor":vdoctor,"tdoctor":tdoctor,"pmconsultancy":pmconsultancy,"doctor_types":doctor_types,"paramedic_types":paramedic_types,"scheduled_appointments":shortlisted_scheduled_appointments,"logout":True,"prescriptions":prescriptions,"cprescription":len(prescriptions)})
 
 def blog_list(request):
-    articles = Article.objects.all()
+    articles = Article.objects.all()[::-1]
     return render(request,"blog-list.html",{"articles":articles,"doctor_types":doctor_types,"paramedic_types":paramedic_types})
 
 def blog_single(request,slug):
@@ -486,7 +486,7 @@ def get_doctor_categories(request):
 
 def terms(request):
     terms = Others.objects.get(name="terms")
-    all_links = Links.objects.all()
+    all_links = Links.objects.all()[::-1]
     return render(request,"terms.html",{"terms":terms,"links":all_links,"doctor_types":doctor_types,"paramedic_types":paramedic_types})
 
 def book_appointment(request):
@@ -744,7 +744,7 @@ def statistics(request):
     return JsonResponse(data,safe=False)
 
 def index(request):
-    all_links = Links.objects.all()
+    all_links = Links.objects.all()[::-1]
     feedbacks = Feedback.objects.filter(Q(status_doctor=True) | Q(status_patient=True))
     return render(request,"index/index.html",{"links":all_links,"doctor_types":doctor_types,"paramedic_types":paramedic_types,"feedbacks":feedbacks})
 
