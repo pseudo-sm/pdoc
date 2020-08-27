@@ -303,6 +303,9 @@
                             <a class="nav-link" href="{% url 'doctors' %}">Doctors</a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link" href="{% url 'physical_consultation' %}">Physical Consultation</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link" href="{% url 'blog_list' %}">Articles</a>
                         </li>
                         <li class="nav-item">
@@ -805,12 +808,13 @@
                 }, 1500);
             });
             $(".item-dignos-serv").click(function () {
-                $(".dashboard-sec-cls").hide();
-                $("#loader-div-cus").show();
-                setTimeout(function () {
-                    $("#loader-div-cus").hide();
-                    $(".dashboard-sec-dignos-serv").show();
-                }, 1500);
+                alert("This service will soon be live!!");
+                //$(".dashboard-sec-cls").hide();
+                //$("#loader-div-cus").show();
+                //setTimeout(function () {
+                  //  $("#loader-div-cus").hide();
+                   // $(".dashboard-sec-dignos-serv").show();
+                //}, 1500);
             });
             $(".item-med-rec").click(function () {
                 $(".dashboard-sec-cls").hide();
