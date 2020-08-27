@@ -247,3 +247,25 @@ class Lead(models.Model):
     doctor = models.ForeignKey(Doctor,on_delete=models.CASCADE)
     def __str__(self):
         return self.name
+
+class Diagnostic(models.Model):
+    id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=100)
+    account = models.ForeignKey(User,on_delete=models.CASCADE,null=True,blank=True)
+    image = models.ImageField(upload_to="DiagnosticLogos/",null=True,blank=True)
+
+class DiagnosticTestCategory(models.Model):
+
+    id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=100)
+
+class Diagnostic_Test(models.Model):
+
+    id = models.AutoField(primary_key=True)
+    title = models.CharField(max_length=300)
+    additional_info = models.CharField(max_length=300)
+    description = models.TextField()
+    price = models.CharField(max_length=100)
+    homepickup = models.BooleanField(default=False)
+    provider = models.ForeignKey(Diagnostic,on_delete=models.CASCADE,null=True,blank=True)
+    category = models.ForeignKey(DiagnosticTestCategory,on_delete=models.CASCADE,null=True,blank=True)

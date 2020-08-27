@@ -2,6 +2,7 @@
 <html lang="en-US">
 {% load static %}
 {% include 'head.html' %}
+<link rel="stylesheet" href="{% static 'css/flag-icon.min.css' %}">
 <body>
 <!--<script src="https://kit.fontawesome.com/abca28b1e6.js" crossorigin="anonymous"></script>-->
     <style>
@@ -27,9 +28,9 @@
             <ol class="breadcrumb opacity-5">
                 <li><a href="#">Home</a></li>
                 <li><a href="#">Pages</a></li>
-                <li class="active">Paramedics</li>
+                <li class="active">Doctors</li>
             </ol>
-            <h1 class="font-weight-300">Paramedics</h1>
+            <h1 class="font-weight-300">Doctors</h1>
         </div>
     </div>
 <!--    <div class="col-md-8 container align-items-center box-shadow bg-white" >-->
@@ -46,28 +47,6 @@
   display: none;
 }
     </style>
-    <div class="container">
-  <div class="row">
-    <div class="col-sm-12">
-      <p>Filter by :
-      <button type="button" data-type="all" class="btn btn-default btn-xs btn-tag doctor-filter-type">All</button>
-      {% for type in types %}
-          <button type="button" data-type="{{type.id}}" class="btn btn-primary btn-xs btn-tag doctor-filter-type mt-2">{{type}}</button>
-      {% endfor %}
-      <script>
-          $(".doctor-filter-type").on('click',function(){
-                 id = $(this).attr('data-type');
-                fetch(id);
-                $(".doctor-filter-type").addClass("btn-primary");
-                $(this).removeClass('btn-primary');
-                $(".doctor-filter-type").addClass("btn-default");
-
-          });
-      </script>
-      </p>
-    </div>
-    </div>
-</div>
 
 
 <!--    FIlter Ends-->
@@ -76,8 +55,22 @@
             <div class="row">
                 <div class="col-md-8 col-sm-push-8 results" >
                     <div class="row">
-                        <!-- Doctor -->
-                        <!-- // Doctor -->
+                        {% for doctor in doctors %}
+                        <div class="col-lg-6 col-md-6 hvr-bob margin-bottom-45px">
+                            <div class="background-white box-shadow">
+                                <div class="padding-30px">
+                                    <h5 class="margin-tb-15px"><a class="text-dark" href="#">{{doctor.name}}</a></h5>
+                                    <span class="text-grey-3"><b>{{doctor.type_id__name}}</b></span><br>
+                                    <span class="text-black-6" style="font-weight:bold;">{{doctor.designation}}</span><br>
+                                    <span class="text-grey-4">{{doctor.hospital}}</span>
+                                    <span class="text-grey-6">{{doctor.address}}</span>
+                                    <br>
+                                    <br><br><span class="text-grey-6"><b> Booking Fees : Rs. {{doctor.fees}}</b></span></div>
+<!--                                <div class="m-3" style="color:#007bff"><svg class="svg-inline&#45;&#45;fa fa-video fa-w-18 mr-2" aria-hidden="true" data-prefix="fa" data-icon="video" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" data-fa-i2svg=""><path fill="currentColor" d="M528 64h-12.118a48 48 0 0 0-33.941 14.059L384 176v-64c0-26.51-21.49-48-48-48H48C21.49 64 0 85.49 0 112v288c0 26.51 21.49 48 48 48h288c26.51 0 48-21.49 48-48v-64l97.941 97.941A48 48 0 0 0 515.882 448H528c26.51 0 48-21.49 48-48V112c0-26.51-21.49-48-48-48z"></path></svg>&lt;!&ndash; <i class="fa fa-video mr-2" aria-hidden="true"></i> &ndash;&gt;<svg class="svg-inline&#45;&#45;fa fa-phone fa-w-16" aria-hidden="true" data-prefix="fa" data-icon="phone" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M493.397 24.615l-104-23.997c-11.314-2.611-22.879 3.252-27.456 13.931l-48 111.997a24 24 0 0 0 6.862 28.029l60.617 49.596c-35.973 76.675-98.938 140.508-177.249 177.248l-49.596-60.616a24 24 0 0 0-28.029-6.862l-111.997 48C3.873 366.516-1.994 378.08.618 389.397l23.997 104C27.109 504.204 36.748 512 48 512c256.087 0 464-207.532 464-464 0-11.176-7.714-20.873-18.603-23.385z"></path></svg>&lt;!&ndash; <i class="fa fa-phone" aria-hidden="true"></i> &ndash;&gt;</div>-->
+                                <div doctor-id="{{doctor.id}}" class="btn btn-primary book-appointment" style="width:100%;border-radius:0px;">Book Appointment</div>
+                            </div>
+                        </div>
+                        {% endfor %}
                     </div>
                     
                     <ul class="pagination pagination-md ">
@@ -119,80 +112,8 @@
         {% include 'paramedics-show/other-services.html' %}
 
     {% include 'footer.html' %}
-{% include 'tawk.html' %}
 </body>
 <script>
-    function calculate_experience(year){
-        var currentYear = (new Date).getFullYear();
-        year = parseInt(year);
-        return (currentYear-year);
-    }
-    function fetch(type){
-        $.ajax({
-        url: "{% url 'paramedics_cat'  %}",
-        data : {
-            'category':type,
-        },
-        type: 'GET',
-        dataType: 'json',
-
-        success: function(res) {
-            $(".results").empty();
-            for(i=0;i<res.length;i++){
-            temp = '<div class="col-lg-6 col-md-6 hvr-bob margin-bottom-45px"> \
-    <div class="background-white box-shadow"> \
-        <div class="padding-30px"> \
-            <h5 class="margin-tb-15px"><a class="text-dark" href="#">'+res[i].name+'</a></h5> \
-            <span class="text-grey-3"><b>'+res[i].type_id__name+'</b></span><br>'
-            if(res[i].available_from!=null)
-            {
-                temp = temp + '<span class="text-grey-6"><b>('+res[i].available_from+' - '+res[i].available_to+' )</b></span><br>'
-            }
-            if(res[i].organization!=null)
-            {
-                temp = temp + '<span class="text-grey-6">'+res[i].organization+'</span><br>'
-            }
-            if(res[i].qualifications!=null)
-            {
-                temp = temp + '<span class="text-grey-3">'+res[i].qualifications+'</span><br>'
-            }
-            if(res[i].achievements!=null)
-            {
-                temp = temp + 'Achievements : <span class="text-grey-2">'+res[i].achievements+'</span><br>'
-            }
-            if(res[i].address!=null)
-            {
-                temp = temp + '<span class="text-grey-1">'+res[i].address+'</span><br>'
-            }
-                  temp = temp+'</div> \
-                    <div class="m-3" style="color:#007bff"><i class="fa fa-video-camera" aria-hidden="true"></i><i class="fa fa-phone" aria-hidden="true"></i></div> \
-                     <div paramedic-id="'+res[i].id+'" class="btn btn-primary schedule-call" style="width:100%;border-radius:0px;">Schedule Call</div></a>\
-                </div> \
-            </div>'
-
-            $(".results").append(temp);
-            }
-
-        }
-    });
-    }
-    $(document).on('click', '.schedule-call', function(){
-            paramedic = $(this).attr("paramedic-id");
-            $("#call-now").attr("paramedic",paramedic);
-            $('#exampleModal').modal('toggle');
-    });
-    $("#search").click(function(){
-         $(".results").empty();
-         $(".results").append('<div class="loader"></div>');
-        area_list = [$("#area").find('option:selected').attr('data-value')];
-        keyword = $("#keywords").val();
-        type = $("#type").find('option:selected').attr('data-value');
-        fetch(area_list,keyword,type);
-
-    });
-    $(document).ready(function(){
-        fetch('{{req_category}}');
-    });
 
 </script>
 
@@ -213,7 +134,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <h7>Continuing to call will mean that you accept our <a href="{% url 'terms' %}" style="text-decoration:underline;color:blue;">Terms & Conditions</a></h7>
+                        <h7>The booking amount is to be paid online with compulsion</h7>
                         <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
                         <a class="btn btn-primary" id="call-now" style="color:white;">Submit</a>
                     </div>
@@ -223,25 +144,33 @@
 
 {% include 'js.html' %}
 <script>
+$(document).on('click', '.book-appointment', function(){
+            doctor = $(this).attr("doctor-id");
+            $("#call-now").attr("doctor",doctor);
+            $('#exampleModal').modal('toggle');
+    });
     $(document).on('click', '#call-now', function(){
-            paramedic= $(this).attr("paramedic");
+            $(this).html('Submitting...');
+            doctor= $(this).attr("doctor");
             name = $("#name").val();
             phone = $("#phone").val();
             query = $("textarea#query").val();
             $.ajax({
-        url: "{% url 'book_appointment_paramedic'  %}",
+        url: "{% url 'new_physical_appointment'  %}",
         data : {
-            'paramedic':paramedic,
+            'doctor':doctor,
             'name':name,
             'phone':phone,
             'query':query,
-            'type':"1",
+            'type':"3",
         },
         type: 'GET',
         dataType: 'json',
         success: function(res) {
-            $('#exampleModal').modal('toggle');
-            alert('You appointment has been scheduled. PDOC Health will contact you shortly for confirmation!!');
+                $('#exampleModal').modal('toggle');
+                if (res) {
+                    window.location = "https://www.pdochealth.com/payment-booking?order_id="+res.order_id.id;
+                }
         }
     });
 

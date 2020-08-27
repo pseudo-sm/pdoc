@@ -233,11 +233,15 @@ def payment_booking(request):
     order_id=request.GET.get("order_id")
     appointment = Appointments.objects.get(razor_pay_order_id=order_id)
     customer = appointment.customer
-    name = customer.name
-    phone = customer.phone
-    user_id = customer.user_id
+    if customer is not None:
+        name = customer.name
+        phone = customer.phone
+        user_id = customer.user_id
+    else:
+        name = appointment.name
+        phone = appointment.phone
     date = datetime.datetime.now().strftime("%m/%d/%Y")
-    return render(request,"payment-booking.html",{"order_id":order_id,"name":name,"phone":phone,"username":user_id,"date":date,"fees":int(int(appointment.doctor.fees)*1.12),"slug":appointment.slug})
+    return render(request,"payment-booking.html",{"order_id":order_id,"name":name,"phone":phone,"date":date,"fees":int(int(appointment.doctor.fees)*.12),"slug":appointment.slug,"status":appointment.payment_status})
 
 
 def signup_customer_action(request):
@@ -770,3 +774,52 @@ def new_lead(request):
                              ["saswath@pdochealth.com"])
     email_msg.send(fail_silently=False)
     return JsonResponse(True,safe=False)
+
+def get_diagnostic_cat(request):
+
+    category = request.GET.get("category")
+    if category=="all":
+        diagnostics = Diagnostic.objects.all().values()
+    return JsonResponse({"diagnostics":diagnostics})
+
+def physical_consultation(request):
+    doctors = Doctor.objects.all()
+    doctors = doctors.values("id", "name", "type_id__name", "education", "practicing_year", "direct_contact", "phone",
+                             "designation", "hospital", "address", "available_from", "available_to", "available_from2",
+                             "available_to2", "special_day", "special_from", "special_to", "fees")
+    for doctor in doctors:
+        if doctor["available_from"] is not None:
+            doctor["available_from"] = doctor["available_from"].strftime("%H:%M")
+            doctor["available_to"] = doctor["available_to"].strftime("%H:%M")
+        if doctor["available_from2"] is not None:
+            doctor["available_from2"] = doctor["available_from2"].strftime("%H:%M")
+            doctor["available_to2"] = doctor["available_to2"].strftime("%H:%M")
+        if doctor["special_day"] is not None:
+            doctor["special_from"] = doctor["special_from"].strftime("%H:%M")
+            doctor["special_to"] = doctor["special_to"].strftime("%H:%M")
+        doctor["fees"] = int(int(doctor["fees"]) * 0.12)
+    return render(request,"physical-consultation.html",{"doctors":doctors})
+
+def new_physical_appointment(request):
+
+    customer_phone = request.GET.get("phone")
+    name = request.GET.get("name")
+    query = request.GET.get("query")
+    doctor = request.GET.get("doctor")
+    doctor = Doctor.objects.get(id=doctor)
+    new_appointment = Appointments(doctor=doctor,name=name,phone=customer_phone,query=query,type="3")
+    slug = ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(16))
+    data = {
+        "amount": int(doctor.fees) * 12,
+        "currency": "INR",
+        "receipt": "1",
+        "payment_capture": 1,
+
+    }
+    order_id = client.order.create(data=data)
+    new_appointment.razor_pay_order_id = order_id["id"]
+    new_appointment.save()
+    doctor_name = doctor.name
+    patient_name = name
+    email_notify(patient_name, doctor_name, customer_phone)
+    return JsonResponse({"order_id": order_id}, safe=False)

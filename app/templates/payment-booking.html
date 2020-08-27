@@ -25,7 +25,7 @@
             <td>Rs.{{fees}}</td>
             <td>{{date}}</td>
             <td>{{name}}</td>
-            <td id="payment-status"></td>
+            <td id="payment-status">{% if status %} Paid {% else %} Unpaid {% endif %}</td>
         </tr>
     </table>
 </div>
