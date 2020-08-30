@@ -2,15 +2,30 @@ function checkScroll() {
   var startY = $('.navbar').height() * 2; //The point where the navbar changes in px
 
   if ($(window).scrollTop() > startY) {
-    $('.navbar').addClass("scrld");
-    $('.navbar').removeClass("unscrld");
-    $('.back-to-top').show();
+    if(!(document.querySelector(".navbar").classList.contains("def-scrl"))){
+      $('.navbar').addClass("scrld");
+      $('.navbar').removeClass("unscrld");
+    }
+    $('.back-to-top').show(1000);
   } else {
-    $('.navbar').addClass("unscrld");
-    $('.navbar').removeClass("scrld");
-    $('.back-to-top').hide();
+    if(!(document.querySelector(".navbar").classList.contains("def-scrl"))){
+      $('.navbar').addClass("unscrld");
+      $('.navbar').removeClass("scrld");
+    }
+    $('.back-to-top').hide(1000);
   }
 }
+var prevScrollpos = window.pageYOffset;
+window.onscroll = function() {
+var currentScrollPos = window.pageYOffset;
+  if (prevScrollpos > currentScrollPos) {
+    $('.navbar').slideDown(200);
+  } else {
+    $('.navbar').slideUp(200);
+  }
+  prevScrollpos = currentScrollPos;
+};
+
 
 if ($('.navbar').length > 0) {
   $(window).on("scroll load resize", function () {
@@ -62,3 +77,7 @@ document.onreadystatechange = function() {
       document.querySelector("body").style.visibility = "visible"; 
   } 
 };
+function remove_alert() {
+  alert = document.getElementsByClassName("alert")[0];
+  alert.remove();
+}

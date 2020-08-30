@@ -185,7 +185,7 @@
                     bottom: 0;
                     width: 100% !important;
                     z-index: 99;
-                    box-shadow: 0px -10px 16px rgba(34, 19, 61, 0.322);
+                    box-shadow: 0px -2px 10px rgba(34, 19, 61, 0.322);
                 }
 
                 .navig-bar a {
@@ -246,45 +246,14 @@
                 border-radius: 15px;
             }
         </style>
-        <style>
-            #loader-div-cus {
-                width: 100% !important;
-                height: 100% !important;
-                display: none;
-                padding-left: 45%;
-                padding-top: 100px;
-                padding-bottom: 100px;
-            }
-
-            #loader-div-cus2 {
-                width: 100% !important;
-                height: 100% !important;
-                display: none;
-                padding-left: 45%;
-                padding-top: 80%;
-                padding-bottom: 100px;
-            }
-
-            #loader {
-                border: 7px solid #f3f3f3;
-                border-radius: 50%;
-                border-top: 12px solid #D95D39;
-                width: 70px;
-                height: 70px;
-                animation: spin 1s linear infinite;
-            }
-
-            @keyframes spin {
-                100% {
-                    transform: rotate(360deg);
-                }
-            }
-        </style>
     </head>
 
     <body>
+        <div id="loader-div">
+            <div id="loader" class="center loader-sty"></div> 
+        </div>
         <!-- header -->
-        <nav class="navbar navbar-expand-lg navbar-light bg-bark fixed-top scrld">
+        <nav class="navbar navbar-expand-lg navbar-light bg-bark fixed-top scrld def-scrl">
             <div class="container-fluid">
                 <a class="navbar-brand" href="#">
                     <img src="{% static 'logo-sqr.png' %}" height="50" alt="pdochealth"> <a href="#"
@@ -410,12 +379,9 @@
             </div>
         </section>
         <!-- Items Loader-->
-        <div id="loader-div-cus">
-            <div id="loader" class="center"></div>
-        </div>
-        <div id="loader-div-cus2">
-            <div id="loader" class="center"></div>
-        </div>
+        <section class="pt-5 pb-5 text-center dash-loading nav-sch-fal nav-sch-tr">
+            <h3>Loading...</h3>
+        </section>
         <!-- Tele Consultancy -->
         <section class="pt-3  plusBG dashboard-sec-cls dashboard-sec-tele nav-sch-tr nav-sch-fal">
             <div class="container">
@@ -586,7 +552,7 @@
             </div>
         </section>
         <!-- footer -->
-        <footer id="dk-footer" class="dk-footer pt-5 nav-sch-fal nav-sch-tr nav-book-tr nav-pro-tr">
+        <footer id="dk-footer" class="dk-footer pt-5 footer-nav-tr">
             <div class="container">
                 <div class="row">
                     <div class="col-12 col-md-3 col-sm-12 text-center my-auto">
@@ -611,7 +577,7 @@
                     </div>
                 </div>
                 <hr style="background-color: rgba(139, 139, 139, 0.301);">
-                <div class="row pt-3 text-center">
+                <div class="row pt-2 text-center">
                     <div class="col-12 col-md-11 col-sm-12 my-auto text-md-left text-sm-center">
                         <p style="color: rgb(151, 151, 151);">
                             Designed and Developed By &nbsp;<strong><a style="color: rgba(255, 255, 255, 0.582);"
@@ -619,13 +585,14 @@
                         </p>
                     </div>
                     <div class="col-6 col-md-1 col-sm-6 text-center my-auto mx-auto mb-5">
-                        <a href="www.cavemendev.com"> <img style="width: 100%;" src="{% static 'index/site_images/cmd.png' %}" alt=""></a>
+                        <a href="www.cavemendev.com"> <img style="width: 100%;"
+                                src="{% static 'index/site_images/cmd.png' %}" alt=""></a>
                     </div>
                 </div>
             </div>
-            <div class="copyright">
+            <div class="copyright pt-3 pb-3">
                 <div class="container">
-                    <div class="row pb-3">
+                    <div class="row">
                         <div class="col-md-6">
                             <span>© 2020 PDOC Health | All Right Reserved.</span>
                         </div>
@@ -651,7 +618,7 @@
         </footer>
         <!-- Mobile navigation bar -->
         <div class="navig-bar">
-            <a href="pdochealth.com" class="navig-item nav-sch">
+            <a href="{% url 'index' %}" class="navig-item nav-sch">
                 <div class="container-fluid">
                     <div class="row no-gutters  ">
                         <div class="col-12 text-center pl-2">
@@ -718,10 +685,20 @@
             });
         </script>
         <script>
+            //    This service will soon be live!!
+            $(".dashboard-sec-dignos-serv").html("");
+            $(".dashboard-sec-dignos-serv").html(
+                "<h4 class='text-center pt-5 pb-5'>This service will soon be live!!</h4>");
+            $(".dashboard-sec-profile").html("");
+            $(".dashboard-sec-profile").html(
+                "<h4 class='text-center pt-5 pb-5'>This service will soon be live!!</h4>");
+            //    This service will soon be live!!  ENDS!!!!!
+
+
             $(".dashboard-sec-cls").hide();
-            $("#loader-div-cus").show();
+            $(".dash-loading").show();
             setTimeout(function () {
-                $("#loader-div-cus").hide();
+                $(".dash-loading").hide();
                 $(".dashboard-sec-tele").show();
             }, 1500);
             slider = document.querySelector('.items');
@@ -793,59 +770,62 @@
             });
             $(".item-tele").click(function () {
                 $(".dashboard-sec-cls").hide();
-                $("#loader-div-cus").show();
+                $(".dash-loading").show();
                 setTimeout(function () {
-                    $("#loader-div-cus").hide();
+                    $(".dash-loading").hide();
                     $(".dashboard-sec-tele").show();
                 }, 1500);
             });
             $(".item-video").click(function () {
                 $(".dashboard-sec-cls").hide();
-                $("#loader-div-cus").show();
+                $(".dash-loading").show();
                 setTimeout(function () {
-                    $("#loader-div-cus").hide();
+                    $(".dash-loading").hide();
                     $(".dashboard-sec-vdo").show();
                 }, 1500);
             });
             $(".item-dignos-serv").click(function () {
-                alert("This service will soon be live!!");
-                //$(".dashboard-sec-cls").hide();
-                //$("#loader-div-cus").show();
-                //setTimeout(function () {
-                  //  $("#loader-div-cus").hide();
-                   // $(".dashboard-sec-dignos-serv").show();
-                //}, 1500);
+                $(".dashboard-sec-cls").hide();
+                $(".dash-loading").show();
+                setTimeout(function () {
+                    $(".dash-loading").hide();
+                    //If "This service will soon be live!!" is showing
+                    //Go to the top of this Script tag and delete that section
+                    $(".dashboard-sec-dignos-serv").show();
+                }, 1500);
             });
             $(".item-med-rec").click(function () {
                 $(".dashboard-sec-cls").hide();
-                $("#loader-div-cus").show();
+                $(".dash-loading").show();
                 setTimeout(function () {
-                    $("#loader-div-cus").hide();
+                    $(".dash-loading").hide();
                     $(".dashboard-sec-med-rec").show();
                 }, 1500);
             });
             $(".item-yoga").click(function () {
                 $(".dashboard-sec-cls").hide();
-                $("#loader-div-cus").show();
+                $(".dash-loading").show();
                 setTimeout(function () {
-                    $("#loader-div-cus").hide();
+                    $(".dash-loading").hide();
                     $(".dashboard-sec-blank").show();
                 }, 1500);
             });
             $(".item-psac").click(function () {
                 $(".dashboard-sec-cls").hide();
-                $("#loader-div-cus").show();
+                $(".dash-loading").show();
                 setTimeout(function () {
-                    $("#loader-div-cus").hide();
+                    $(".dash-loading").hide();
                     $(".dashboard-sec-blank").show();
                 }, 1500);
             });
             $(".item-profile").click(function () {
                 $(".dashboard-sec-cls").hide();
-                $("#loader-div-cus").show();
+                $(".dash-loading").show();
                 setTimeout(function () {
-                    $("#loader-div-cus").hide();
-                    $(".dashboard-sec-blank").show();
+                    $(".dash-loading").hide();
+                    //If "This service will soon be live!!" is showing
+                    //Go to the top of this Script tag and delete that section
+                    $(".dashboard-sec-profile").show();
                 }, 1500);
             });
             $(".navig-item").click(function () {
@@ -854,26 +834,26 @@
             });
             $(".nav-sch").click(function () {
                 $(".nav-sch-fal").hide();
-                $("#loader-div-cus2").show();
+                $("#loader").show();
                 setTimeout(function () {
-                    $("#loader-div-cus2").hide();
+                    $("#loader").hide();
                     jQuery('.item-tele').click();
                     $(".nav-sch-tr").show();
                 }, 1500);
             });
             $(".nav-book").click(function () {
                 $(".nav-sch-fal").hide();
-                $("#loader-div-cus2").show();
+                $("#loader").show();
                 setTimeout(function () {
-                    $("#loader-div-cus2").hide();
+                    $("#loader").hide();
                     $(".nav-book-tr").show();
                 }, 1500);
             });
             $(".nav-profile").click(function () {
                 $(".nav-sch-fal").hide();
-                $("#loader-div-cus2").show();
+                $("#loader").show();
                 setTimeout(function () {
-                    $("#loader-div-cus2").hide();
+                    $("#loader").hide();
                     $(".nav-pro-tr").show();
                 }, 1500);
             });
@@ -909,15 +889,18 @@
                         <p> \
                             <small>Fees: <strong>' + res[i].fees + '</strong><br></small>'
                             if (res[i].available_from != null) {
-                                temp = temp + '<small>Regular Days:<strong> ' + res[i].available_from + ' - ' +
+                                temp = temp + '<small>Regular Days:<strong> ' + res[i].available_from +
+                                    ' - ' +
                                     res[i].available_to
                             }
                             if (res[i].available_from2 != null) {
-                                temp = temp + ' & ' + res[i].available_from2 + ' - ' + res[i].available_to2 +
+                                temp = temp + ' & ' + res[i].available_from2 + ' - ' + res[i]
+                                    .available_to2 +
                                     '</strong></small><br>';
                             }
                             if (res[i].special_day != null) {
-                                temp = temp + "<small>" + res[i].special_day + " : <b>" + res[i].special_from +
+                                temp = temp + "<small>" + res[i].special_day + " : <b>" + res[i]
+                                    .special_from +
                                     ' - ' + res[i].special_to + '</b>';
                             }
                             temp = temp + '</small></strong></p><br></div>';
@@ -958,16 +941,20 @@
                         $(".paramedic-results").empty();
                         for (i = 0; i < res.length; i++) {
                             temp = '<div class="col-lg-6 col-md-6 hvr-bob margin-bottom-45px"> \
-    <div class="background-white box-shadow"> \
-        <div class="padding-30px"> \
-            <h5 class="margin-tb-15px"><a class="text-dark" href="#">' + res[i].name + '</a></h5> \
-            <span class="text-grey-3"><b>' + res[i].type_id__name + '</b></span><br>'
+                                        <div class="background-white box-shadow"> \
+                                            <div class="padding-30px"> \
+                                                <h5 class="margin-tb-15px"><a class="text-dark" href="#">' + res[i]
+                                .name + '</a></h5> \
+                                                <span class="text-grey-3"><b>' + res[i].type_id__name +
+                                '</b></span><br>'
                             if (res[i].available_from != null) {
-                                temp = temp + '<span class="text-grey-6"><b>(' + res[i].available_from + ' - ' +
+                                temp = temp + '<span class="text-grey-6"><b>(' + res[i].available_from +
+                                    ' - ' +
                                     res[i].available_to + ' )</b></span><br>'
                             }
                             if (res[i].organization != null) {
-                                temp = temp + '<span class="text-grey-6">' + res[i].organization + '</span><br>'
+                                temp = temp + '<span class="text-grey-6">' + res[i].organization +
+                                    '</span><br>'
                             }
                             if (res[i].qualifications != null) {
                                 temp = temp + '<span class="text-grey-3">' + res[i].qualifications +
@@ -981,10 +968,10 @@
                                 temp = temp + '<span class="text-grey-1">' + res[i].address + '</span><br>'
                             }
                             temp = temp + '</div> \
-                    <div class="m-3" style="color:#007bff"><i class="fa fa-video-camera" aria-hidden="true"></i><i class="fa fa-phone" aria-hidden="true"></i></div> \
-                    <div paramedic-id="' + res[i].id + '" class="btn btn-primary offline" style="width:100%;border-radius:0px;">Schedule Call</div></a>\
-                </div> \
-            </div>'
+                                    <div class="m-3" style="color:#007bff"><i class="fa fa-video-camera" aria-hidden="true"></i><i class="fa fa-phone" aria-hidden="true"></i></div> \
+                                    <div paramedic-id="' + res[i].id + '" class="btn btn-primary offline" style="width:100%;border-radius:0px;">Schedule Call</div></a>\
+                                </div> \
+                            </div>'
 
                             $(".paramedic-results").append(temp);
                         }
@@ -1016,7 +1003,8 @@
                     dataType: 'json',
                     success: function (res) {
                         if (res) {
-                            window.location = "https://www.pdochealth.com/payment-booking?order_id=" +
+                            window.location =
+                                "https://www.pdochealth.com/payment-booking?order_id=" +
                                 res.order_id.id;
                         } else {
                             alert("Please create an account first.");
