@@ -74,7 +74,7 @@
           <!--            </div>-->
           <!--          </li>-->
           <li class="nav-item">
-            <a class="nav-link pl-md-3 pl-sm-0" href="#"><i class="fa fa-stethoscope"></i> &nbsp;Join
+            <a class="nav-link pl-md-3 pl-sm-0" href="{% url 'doctor_registration' %}"><i class="fa fa-stethoscope"></i> &nbsp;Join
               Us</a>
           </li>
           <li class="nav-item pl-md-5 pl-sm-0 pr-md-5 pr-sm-0">
@@ -101,8 +101,8 @@
         <div class="col-12 col-md-5 col-sm-12 pt-3  head-pl">
           <h1 class="big-heading" data-aos="fade-right" data-aos-duration="1000">PDOC Health</h1>
           <h3 class="md-white sm-dark" data-aos="fade-right" data-aos-duration="1000"><small>EDOC Medical
-              Services</small></h3>
-          <p>CIN - U74999OR2019PTC030248</p>
+              Services Pvt Ltd</small></h3>
+          <p style="font-size:12px">CIN - U74999OR2019PTC030248</p>
           <h6 class="mt-4 md-white sm-dark"><small>
               <p class=" lisp" data-aos="fade-right" data-aos-delay="400">
                 Care close to you.
@@ -538,10 +538,10 @@
           <div class="col-md-6 d-sm-none d-md-block">
             <div class="copyright-menu">
               <ul>
-                <li><a href="#">Home</a></li>
-                <li><a href="#">Doctors</a></li>
-                <li><a href="#">Articles</a></li>
-                <li><a href="#">Join Us</a>/li>
+                <li><a href="{% url 'index' %}">Home</a></li>
+                <li><a href="{% url 'doctors' %}">Doctors</a></li>
+                <li><a href="{% url 'blog_list' %}">Articles</a></li>
+                <li><a href="{% url 'doctor_registration' %}">Join Us</a>/li>
               </ul>
             </div>
           </div>
