@@ -2,6 +2,7 @@ import random
 import string
 import os
 
+import pytz
 from django.db.models import Q
 from django.views.static import serve
 from django.conf import settings
@@ -38,10 +39,6 @@ config = {
 }
 firebase = pyrebase.initialize_app(config)
 storage = firebase.storage()
-def handler404(request, exception, template_name="404.html"):
-    response = render(template_name)
-    response.status_code = 404
-    return response
 
 def get_doctors(request):
     doctors = Doctor.objects.all()
@@ -403,7 +400,9 @@ def patient_dashboard(request):
     scheduled_appointments=scheduled_appointments.values("doctor__name","doctor__type__name","doctor__hospital","time","slug","status","datetime","id")
     shortlisted_scheduled_appointments = []
     for appointment in scheduled_appointments:
-        now = datetime.datetime.utcnow().replace(tzinfo=utc)
+        now = datetime.datetime.utcnow().replace(tzinfo=pytz.timezone("Asia/Kolkata"))
+        tz = pytz.timezone("Asia/Calcutta")
+        appointment["time"] = appointment["time"].astimezone(pytz.timezone('Asia/Kolkata'))
         delta = now - appointment["time"]
         print("timedelta : ------------------------------")
         if delta.days < 15 :
@@ -823,3 +822,9 @@ def new_physical_appointment(request):
     patient_name = name
     email_notify(patient_name, doctor_name, customer_phone)
     return JsonResponse({"order_id": order_id}, safe=False)
+
+def handler404(request,exception):
+    return render(request, '404.html', status=404)
+
+def handler500(request):
+    return render(request, '500.html', status=500)
