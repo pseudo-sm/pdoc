@@ -417,10 +417,11 @@ button:focus {
     font-weight: 600;
     color: #fff;
     cursor: pointer;
-    outline:none;
+    outline: none;
     transition: all 0.3s linear;
 }
-.btnContact:hover{
+
+.btnContact:hover {
     background: #0D2149;
 }
 

@@ -2,13 +2,13 @@ function checkScroll() {
   var startY = $('.navbar').height() * 2; //The point where the navbar changes in px
 
   if ($(window).scrollTop() > startY) {
-    if(!(document.querySelector(".navbar").classList.contains("def-scrl"))){
+    if (!(document.querySelector(".navbar").classList.contains("def-scrl"))) {
       $('.navbar').addClass("scrld");
       $('.navbar').removeClass("unscrld");
     }
     $('.back-to-top').show(1000);
   } else {
-    if(!(document.querySelector(".navbar").classList.contains("def-scrl"))){
+    if (!(document.querySelector(".navbar").classList.contains("def-scrl"))) {
       $('.navbar').addClass("unscrld");
       $('.navbar').removeClass("scrld");
     }
@@ -16,8 +16,8 @@ function checkScroll() {
   }
 }
 var prevScrollpos = window.pageYOffset;
-window.onscroll = function() {
-var currentScrollPos = window.pageYOffset;
+window.onscroll = function () {
+  var currentScrollPos = window.pageYOffset;
   if (prevScrollpos > currentScrollPos) {
     $('.navbar').slideDown(200);
   } else {
@@ -67,16 +67,17 @@ AOS.init({
 
 function statsHide() {
   $("#mySidenav").hide();
-}; 
-document.onreadystatechange = function() { 
-  if (document.readyState !== "complete") { 
-      document.querySelector("body").style.visibility = "hidden"; 
-      document.querySelector("#loader").style.visibility = "visible"; 
-  } else { 
-      document.querySelector("#loader").style.display = "none"; 
-      document.querySelector("body").style.visibility = "visible"; 
-  } 
 };
+document.onreadystatechange = function () {
+  if (document.readyState !== "complete") {
+    document.querySelector("body").style.visibility = "hidden";
+    document.querySelector("#loader").style.visibility = "visible";
+  } else {
+    document.querySelector("#loader").style.display = "none";
+    document.querySelector("body").style.visibility = "visible";
+  }
+};
+
 function remove_alert() {
   alert = document.getElementsByClassName("alert")[0];
   alert.remove();
