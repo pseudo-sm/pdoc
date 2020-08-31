@@ -1,7 +1,6 @@
 import random
 import string
 import os
-
 import pytz
 from django.db.models import Q
 from django.views.static import serve
@@ -442,6 +441,7 @@ def zonal_admin_settlements(request):
             doctors[doctor]["appointments"] += 1
             doctors[doctor]["ids"] += ","+str(appointment.id)
             doctors[doctor]["fees"] += int(doctor.fees)
+
     return render(request,"Zonal Admin/settlements.html",{"doctors":doctors})
 
 def zonal_admin_doctors(request):

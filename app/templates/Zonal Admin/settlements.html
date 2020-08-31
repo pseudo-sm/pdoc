@@ -3,9 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="//cdn.rawgit.com/rainabba/jquery-table2excel/1.1.0/dist/jquery.table2excel.min.js"></script>
 </head>
 <body>
-<table border="2">
+<button id="download">Export to Excel</button>
+<table id="settlements" border="2">
     <tr>
         <td>Doctor Name</td>
         <td>Unpaid Appointments</td>
@@ -24,4 +27,12 @@
     {% endfor %}
 </table>
 </body>
+<script>
+$("#download").click(function() {
+    $("#settlements").table2excel({
+        filename: "settlements.xls"
+    });
+})
+
+</script>
 </html>
