@@ -82,3 +82,12 @@ function remove_alert() {
   alert = document.getElementsByClassName("alert")[0];
   alert.remove();
 }
+
+
+setTimeout(function(){
+    $("#snackbar").show(500);
+ }, 2000);
+
+function closeToast() {
+	$("#snackbar").hide(500);
+  }

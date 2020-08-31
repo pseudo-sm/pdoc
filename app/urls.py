@@ -87,6 +87,7 @@ urlpatterns = [
         path("statistics/",views.statistics,name="statistics"),
         path("email-contact-form/",views.email_contact_form,name="email_contact_form"),
         path("new-lead/",views.new_lead,name="new_lead"),
+        path("shop/<slug:name>",views.product_item,name="product_item"),
         path("",views.index,name="index"),
 ]
 from django.conf.urls.static import static

@@ -23,6 +23,21 @@
   <div id="loader-div">
     <div id="loader" class="center"></div> 
   </div>
+  <div id="snackbar" class="plusBG">
+    <div class="container shine-me pl-3 pt-2 pb-2">
+      <div class="row">
+        <div class="col-3 my-auto" onclick="location.href='{% url 'product_item' name='oxygize' %}'">
+          <img src="{% static  'product-img/oxy-png.png' %}"class="w-100"/>
+        </div>
+        <div class="col-7 my-auto text-center" onclick="location.href='{% url 'product_item' name='oxygize' %}'">
+          Checkout <strong>Oxygize</strong><br><i class="fa fa-shopping-cart secondary-text fa-12x" aria-hidden="true"></i>&nbsp;&nbsp; <span class="fa-12x">Shop Now</span>
+        </div>
+        <div class="col-2 my-auto">
+          <button  class="btn white-text float-right" onclick="closeToast()"><i class="fa fa-times-circle close-snack white-text" aria-hidden="true"></i></button>
+        </div>
+      </div>
+    </div>
+</div>
   <!-- header -->
   <nav class="navbar navbar-expand-lg navbar-light bg-bark fixed-top unscrld">
     <div class="container-fluid">
@@ -89,13 +104,13 @@
     </div>
   </nav>
   <!-- marquee -->
-  <section class="head pt-md-3  pl-md-5 pl-sm-0 overflow-hid">
+  <section class="head pt-md-3  pl-md-5 pl-sm-0 overflow-hid ">
     <div class="container-fluid pt-5 ">
       <div class="row no-gutters ">
         <marquee width="100%" direction="left" scrollamount="3" style="z-index: 99 !important;color: aliceblue;"
           class="mt-sm-5 mt-md-3">
           {% for link in links %}
-          | &nbsp;&nbsp;<a href="{{link.url}}" class="MarqA mt-3">{{link.title}}</a>
+          | &nbsp;&nbsp;<a href="{{link.url}}" class="MarqA mt-3 shine-me">{{link.title}}</a>
           &nbsp;&nbsp;| &nbsp;&nbsp;{% endfor %}
         </marquee>
         <div class="col-12 col-md-5 col-sm-12 pt-3  head-pl">

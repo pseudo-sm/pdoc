@@ -828,3 +828,7 @@ def handler404(request,exception):
 
 def handler500(request):
     return render(request, '500.html', status=500)
+
+def product_item(request,name):
+
+    return render(request,"shopping-item.html")
