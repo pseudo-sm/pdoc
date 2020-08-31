@@ -437,12 +437,12 @@ def zonal_admin_settlements(request):
         doctor = appointment.doctor
         fees = doctor.fees
         if doctors.get(doctor) is None:
-            doctors[doctor] = {"fees":int(doctor.fees),"appointments":1}
+            doctors[doctor] = {"fees":int(doctor.fees),"appointments":1,"ids":str(appointment.id)}
         else:
             doctors[doctor]["appointments"] += 1
+            doctors[doctor]["ids"] += ","+str(appointment.id)
             doctors[doctor]["fees"] += int(doctor.fees)
-
-    return render(request,"Zonal admin/settlements.html",{"doctors":doctors})
+    return render(request,"Zonal Admin/settlements.html",{"doctors":doctors})
 
 def zonal_admin_doctors(request):
     doctors = Doctor.objects.all()
