@@ -431,7 +431,7 @@ def zonal_admin(request):
     return render(request,"Zonal Admin/index.html",{"appointments":appointments[::-1]})
 
 def zonal_admin_settlements(request):
-    appointments = Appointments.objects.filter(payment_status=False)
+    appointments = Appointments.objects.filter(settlement=False)
     doctors = {}
     for appointment in appointments:
         doctor = appointment.doctor
