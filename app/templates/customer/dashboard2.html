@@ -510,7 +510,7 @@
                 <div class="row pl-3">
                     {% for prescription in prescriptions %}
                     <div class="col-6 col-md-3 com-sm-6 mb-3">
-                        <a href="#" class="pl-4 pt-4 pr-4 dashboard-doc-list text-center presc-li">
+                        <a href="{% url 'create_prescription_document' prescription=prescription.slug %}" class="pl-4 pt-4 pr-4 dashboard-doc-list text-center presc-li">
                             <i class="fa fa-hospital-o fa-3x"></i><br><br>
                             <p>Prescription Id - {{prescription.id}}</p>
                             <p>Appointment Booking Date - {{prescription.datetime}}</p>

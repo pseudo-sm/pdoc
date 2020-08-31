@@ -138,7 +138,7 @@ def doctor_pages(request,slug):
     terms = Others.objects.get(name="terms")
     this_type = Type.objects.get(name=category)
     doctors = Doctor.objects.filter(type=this_type)
-    return render(request,"doctors-pages.html",{"types":type,"terms":terms,"doctor_types":doctor_types,"paramedic_types":paramedic_types,"req_category":this_type.id})
+    return render(request,"doctors.html",{"types":type,"terms":terms,"doctor_types":doctor_types,"paramedic_types":paramedic_types,"req_category":this_type.id})
 
 def paramedic_pages(request,slug):
     category = slug.replace("-"," ")
