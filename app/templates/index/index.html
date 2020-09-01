@@ -60,34 +60,38 @@
           <li class="nav-item">
             <a class="nav-link" href="{% url 'physical_consultation' %}">Physical Consultation</a>
           </li>
+<!--          <li class="nav-item">-->
+<!--            <a class="nav-link" href="{% url 'blog_list' %}">Articles</a>-->
+<!--          </li>-->
+<!--          <li class="nav-item">-->
+<!--            <a class="nav-link" href="{% url 'important_links' %}">Important Links</a>-->
+<!--          </li>-->
+                    <li class="nav-item dropdown dmenu">
+                      <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                        More
+                      </a>
+                      <div class="dropdown-menu sm-menu">
+                        <a class="dropdown-item" href="{% url 'blog_list' %}">Articles</a>
+                        <a class="dropdown-item" href="{% url 'important_links' %}">Important Links</a>
+                        <a class="dropdown-item" href="{% url 'product_item' name='oxygize' %}">Shop</a>
+                      </div>
+                    </li>
           <li class="nav-item">
-            <a class="nav-link" href="{% url 'blog_list' %}">Articles</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'important_links' %}">Important Links</a>
-          </li>
-          <!--          <li class="nav-item dropdown dmenu">-->
-          <!--            <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">-->
-          <!--              More-->
-          <!--            </a>-->
-          <!--            <div class="dropdown-menu sm-menu">-->
-          <!--              <a class="dropdown-item" href="{% url 'blog_list' %}">Articles</a>-->
-          <!--              <a class="dropdown-item" href="{% url 'important_links' %}">Important Links</a>-->
-          <!--            </div>-->
-          <!--          </li>-->
-          <!--          <li class="nav-item dropdown dmenu">-->
-          <!--            <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">-->
-          <!--              Paramedics Signup-->
-          <!--            </a>-->
-          <!--            <div class="dropdown-menu sm-menu">-->
-          <!--              <a class="dropdown-item" href="{% url 'paramedic_health_and_fitness_advisor' %}">Health and Fitness Advise</a>-->
-          <!--              <a class="dropdown-item" href="{% url 'paramedic_physiotherapy' %}">Physiotherapist</a>-->
-          <!--              <a class="dropdown-item" href="{% url 'paramedic_clinical_pscyhiatry' %}">Clinical Psychiatry</a>-->
-          <!--              <a class="dropdown-item" href="{% url 'paramedic_yoga_guru' %}">Yoga Guru</a>-->
-          <!--              <a class="dropdown-item" href="#">Drug House</a>-->
-          <!--              <a class="dropdown-item" href="#">Diagnostics</a>-->
-          <!--            </div>-->
-          <!--          </li>-->
+                            <a class="nav-link" href="{% url 'about_us' %}">About Us</a>
+                        </li>
+<!--                    <li class="nav-item dropdown dmenu">-->
+<!--                      <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">-->
+<!--                        Paramedics Signup-->
+<!--                      </a>-->
+<!--                      <div class="dropdown-menu sm-menu">-->
+<!--                        <a class="dropdown-item" href="{% url 'paramedic_health_and_fitness_advisor' %}">Health and Fitness Advise</a>-->
+<!--                        <a class="dropdown-item" href="{% url 'paramedic_physiotherapy' %}">Physiotherapist</a>-->
+<!--                        <a class="dropdown-item" href="{% url 'paramedic_clinical_pscyhiatry' %}">Clinical Psychiatry</a>-->
+<!--                        <a class="dropdown-item" href="{% url 'paramedic_yoga_guru' %}">Yoga Guru</a>-->
+<!--                        <a class="dropdown-item" href="#">Drug House</a>-->
+<!--                        <a class="dropdown-item" href="#">Diagnostics</a>-->
+<!--                      </div>-->
+<!--                    </li>-->
           <li class="nav-item">
             <a class="nav-link pl-md-3 pl-sm-0" href="{% url 'doctor_registration' %}"><i class="fa fa-stethoscope"></i> &nbsp;Join
               Us</a>

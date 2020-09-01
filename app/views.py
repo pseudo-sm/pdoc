@@ -40,7 +40,7 @@ firebase = pyrebase.initialize_app(config)
 storage = firebase.storage()
 
 def get_doctors(request):
-    doctors = Doctor.objects.all()
+    doctors = Doctor.objects.all().order_by("name")
     if request.GET.get("type") == "0":
         print(doctors)
         return JsonResponse(list(doctors.values("name","type_id__name","image","education","practicing_year","special_day","special_from","special_to")),safe=False)
@@ -88,20 +88,20 @@ def doctors_cat(request):
     category = request.GET.get("category")
     type_service = request.GET.get("type")
     if category != "all":
-        type = Type.objects.get(id=int(category))
+        type = Type.objects.get(id=int(category)).order_by("name")
         if type_service is None:
-            doctors = Doctor.objects.filter(type=type)
+            doctors = Doctor.objects.filter(type=type).order_by("name")
         elif type_service=="telecall":
-            doctors = Doctor.objects.filter(type=type,telecalling=True)
+            doctors = Doctor.objects.filter(type=type,telecalling=True).order_by("name")
         elif type_service=="videocall":
-            doctors = Doctor.objects.filter(type=type,videoconferencing=True)
+            doctors = Doctor.objects.filter(type=type,videoconferencing=True).order_by("name")
     else:
         if type_service is None:
-            doctors = Doctor.objects.all()
+            doctors = Doctor.objects.all().order_by("name")
         elif type_service=="telecall":
-            doctors = Doctor.objects.filter(telecalling=True)
+            doctors = Doctor.objects.filter(telecalling=True).order_by("name")
         elif type_service=="videocall":
-            doctors = Doctor.objects.filter(videoconferencing=True)
+            doctors = Doctor.objects.filter(videoconferencing=True).order_by("name")
     doctors = doctors.values("id","name","type_id__name","education","practicing_year","direct_contact","phone","designation","hospital","address","available_from","available_to","available_from2","available_to2","special_day","special_from","special_to","fees")
     for doctor in doctors:
         if doctor["available_from"] is not None:
@@ -135,9 +135,9 @@ def doctor_pages(request,slug):
     category = slug.replace("-"," ")
     type = Type.objects.filter(type_category="1")
     terms = Others.objects.get(name="terms")
-    this_type = Type.objects.get(name=category)
-    doctors = Doctor.objects.filter(type=this_type)
-    return render(request,"doctors.html",{"types":type,"terms":terms,"doctor_types":doctor_types,"paramedic_types":paramedic_types,"req_category":this_type.id})
+    this_type = type.get(name=category)
+    doctors = Doctor.objects.filter(type=this_type).order_by("name")
+    return render(request,"doctors.html",{"types":type,"terms":terms,"doctor_types":doctor_types,"paramedic_types":paramedic_types,"req_category":this_type.id,"filter":True})
 
 def paramedic_pages(request,slug):
     category = slug.replace("-"," ")
@@ -157,7 +157,7 @@ def paramedics(request):
 
 def get_telecalldoctors(request):
 
-    doctors = Doctor.objects.filter(status=True)
+    doctors = Doctor.objects.filter(status=True).order_by("name")
     all_doctors = doctors.values("name","type_id__name","education","practicing_year","direct_contact","phone","designation","hospital","address","available_from","available_to")
     print(all_doctors)
     if request.GET.get("type") == "0":
@@ -409,9 +409,15 @@ def patient_dashboard(request):
     vdoctor = len(list(Doctor.objects.filter(videoconferencing=True)))
     tdoctor = len(list(Doctor.objects.filter(telecalling=True)))
     pmconsultancy = len(list(Paramedics.objects.filter()))
+    cdiagnostic = len(list(Diagnostic.objects.all()))
     if not_yet is not None:
-        return render(request,"customer/dashboard2.html",{"p":"true","vdoctor":vdoctor,"tdoctor":tdoctor,"pmconsultancy":pmconsultancy,"doctor_types":doctor_types,"paramedic_types":paramedic_types,"scheduled_appointments":shortlisted_scheduled_appointments,"logout":True,"prescriptions":prescriptions,"cprescription":len(prescriptions)})
-    return render(request,"customer/dashboard2.html",{"vdoctor":vdoctor,"tdoctor":tdoctor,"pmconsultancy":pmconsultancy,"doctor_types":doctor_types,"paramedic_types":paramedic_types,"scheduled_appointments":shortlisted_scheduled_appointments,"logout":True,"prescriptions":prescriptions,"cprescription":len(prescriptions)})
+        return render(request,"customer/dashboard2.html",{"p":"true","vdoctor":vdoctor,"tdoctor":tdoctor,"pmconsultancy":pmconsultancy,"doctor_types":doctor_types,"paramedic_types":paramedic_types,"scheduled_appointments":shortlisted_scheduled_appointments,"logout":True,"prescriptions":prescriptions,"cprescription":len(prescriptions),"cdiagnostic":cdiagnostic,"customer":customer})
+    return render(request,"customer/dashboard2.html",{"vdoctor":vdoctor,"tdoctor":tdoctor,"pmconsultancy":pmconsultancy,"doctor_types":doctor_types,"paramedic_types":paramedic_types,"scheduled_appointments":shortlisted_scheduled_appointments,"logout":True,"prescriptions":prescriptions,"cprescription":len(prescriptions),"cdiagnostic":cdiagnostic,"customer":customer})
+
+
+def diagnostic_cat(request):
+    diagnostics = list(Diagnostic_Test.objects.all().values("title","price"))
+    return JsonResponse(diagnostics,safe=False)
 
 def blog_list(request):
     articles = Article.objects.all()[::-1]
@@ -782,7 +788,7 @@ def get_diagnostic_cat(request):
     return JsonResponse({"diagnostics":diagnostics})
 
 def physical_consultation(request):
-    doctors = Doctor.objects.all()
+    doctors = Doctor.objects.all().order_by("name")
     doctors = doctors.values("id", "name", "type_id__name", "education", "practicing_year", "direct_contact", "phone",
                              "designation", "hospital", "address", "available_from", "available_to", "available_from2",
                              "available_to2", "special_day", "special_from", "special_to", "fees")
@@ -813,7 +819,6 @@ def new_physical_appointment(request):
         "currency": "INR",
         "receipt": "1",
         "payment_capture": 1,
-
     }
     order_id = client.order.create(data=data)
     new_appointment.razor_pay_order_id = order_id["id"]
@@ -832,3 +837,7 @@ def handler500(request):
 def product_item(request,name):
 
     return render(request,"shopping-item.html")
+
+def about(request):
+
+    return render(request,"about-us.html")

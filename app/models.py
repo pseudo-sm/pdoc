@@ -255,10 +255,15 @@ class Diagnostic(models.Model):
     account = models.ForeignKey(User,on_delete=models.CASCADE,null=True,blank=True)
     image = models.ImageField(upload_to="DiagnosticLogos/",null=True,blank=True)
 
+    def __str__(self):
+        return self.name
+
 class DiagnosticTestCategory(models.Model):
 
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=100)
+    def __str__(self):
+        return self.name
 
 class Diagnostic_Test(models.Model):
 
@@ -270,3 +275,6 @@ class Diagnostic_Test(models.Model):
     homepickup = models.BooleanField(default=False)
     provider = models.ForeignKey(Diagnostic,on_delete=models.CASCADE,null=True,blank=True)
     category = models.ForeignKey(DiagnosticTestCategory,on_delete=models.CASCADE,null=True,blank=True)
+
+    def __str__(self):
+        return self.title

@@ -189,8 +189,11 @@
 
     });
     $(document).ready(function() {
-
-        fetch("all");
+        {% if filter %}
+            fetch("{{req_category}}");
+        {% else %}
+            fetch("all");
+        {% endif %}
     });
 </script>
 

@@ -362,7 +362,7 @@
                     </div>
                     <div class="item-dignos-serv col-9 col-md-3 col-sm-9 mb-3 p-4 dashboard-items">
                         <i class="fa fa-medkit fa-2x"></i>
-                        <span class="float-right">2</span><br>
+                        <span class="float-right">{{cdiagnostic}}</span><br>
                         <span class="float-right">Diagnostic Service</span>
                     </div>
                     <div class="item-med-rec col-7 col-md-3 col-sm-7 mb-3 p-4 dashboard-items  d-md-block d-sm-none">
@@ -461,39 +461,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-12 col-md-4 com-sm-12 mb-3">
-                        <div class="pl-4 pt-4 pr-4 dashboard-doc-list">
-                            <span class="appoin-no"><small>Diagnostics</small></span><br><br>
-                            <p class="text-center">
-                                <strong>Clinic Name</strong><br>
-                                <small><strong>Address of the Clinic</strong></small><br>
-                                <small>Some Sub texts</small>
-                            </p><br>
-                            <p>
-                                <small>Regular Days:<strong> 10:00 - 17:00</strong><br>
-                                    Fees: <strong>250</strong><br></small>
-                            </p>
-                            <br>
-                        </div>
-                        <button class="btn btn-block dashboard-sch-btn">Schedule Call</button>
-                    </div>
-                    <div class="col-12 col-md-4 com-sm-12 mb-3">
-                        <div class="pl-4 pt-4 pr-4 dashboard-doc-list">
-                            <span class="appoin-no"><small>Diagnostics</small></span><br><br>
-                            <p class="text-center">
-                                <strong>Clinic Name</strong><br>
-                                <small><strong>Address of the Clinic</strong></small><br>
-                                <small>Some Sub texts</small>
-                            </p><br>
-                            <p>
-                                <small>Regular Days:<strong> 10:00 - 17:00</strong><br>
-                                    Fees: <strong>250</strong><br></small>
-                            </p>
-                            <br>
-                        </div>
-                        <button class="btn btn-block dashboard-sch-btn">Schedule Call</button>
-                    </div>
+                <div class="row" id="diagnostic-results">
+                    <!-- Diagnostic Results -->
                 </div>
             </div>
         </section>
@@ -542,11 +511,11 @@
                     </div>
                     <span style="width: 300px !important;" class="hr-r ml-3 mt-1 mb-3"></span>
                 </div>
-                <div class="row pl-3 pr-3">
+                <div class="row pl-3 pr-3" data-customer-id="{{customer.id}}">
                     <div class="col-12 col-md-6 col-sm-12 profile-box pl-2 pr-1 pt-3 pb-3 mb-5">
-                        Name: <strong>Anonymous Name</strong><br>
-                        Email: <strong>anonymous@domain.com</strong><br>
-                        Mobile No: <strong>+91-9861562796</strong>
+                        Name: <strong>{{customer.name}}</strong><br>
+                        Email: <strong>{{customer.email}}</strong><br>
+                        Mobile No: <strong>{{customer.phone}}</strong>
                     </div>
                 </div>
             </div>
@@ -686,12 +655,10 @@
         </script>
         <script>
             //    This service will soon be live!!
-            $(".dashboard-sec-dignos-serv").html("");
-            $(".dashboard-sec-dignos-serv").html(
-                "<h4 class='text-center pt-5 pb-5'>This service will soon be live!!</h4>");
-            $(".dashboard-sec-profile").html("");
-            $(".dashboard-sec-profile").html(
-                "<h4 class='text-center pt-5 pb-5'>This service will soon be live!!</h4>");
+
+            //$(".dashboard-sec-profile").html("");
+           // $(".dashboard-sec-profile").html(
+             //   "<h4 class='text-center pt-5 pb-5'>This service will soon be live!!</h4>");
             //    This service will soon be live!!  ENDS!!!!!
 
 
@@ -1062,6 +1029,35 @@
                 </div>
             </div>
         </div>
+    <script>
+        $.ajax({
+            url: "{% url 'diagnostic_cat'  %}",
+            data : {
+                'type':"all"
+            },
+            type: 'GET',
+            dataType: 'json',
+            success: function(res) {
+                for(i=0;i<res.length;i++){
+                $("#diagnostic-results").append(
+                              '<div class="col-12 col-md-4 com-sm-12 mb-3"> \
+                                <div class="pl-4 pt-4 pr-4 dashboard-doc-list"> \
+                                    <span class="appoin-no"><small>Diagnostics</small></span><br><br> \
+                                    <p class="text-center"> \
+                                        <strong>'+res[i]["title"]+'</strong><br> \
+                                    </p><br> \
+                                    <p> \
+                                            Fees: <strong>'+res[i]["price"]+'</strong><br></small> \
+                                    </p> \
+                                    <br> \
+                                </div> \
+                                <button class="btn btn-block dashboard-sch-btn">Schedule Call</button> \
+                            </div>'
+                    );
+                }
+            }
+        });
+    </script>
     </body>
     
 </html>
