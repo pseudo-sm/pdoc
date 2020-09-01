@@ -88,7 +88,7 @@ def doctors_cat(request):
     category = request.GET.get("category")
     type_service = request.GET.get("type")
     if category != "all":
-        type = Type.objects.get(id=int(category)).order_by("name")
+        type = Type.objects.get(id=int(category))
         if type_service is None:
             doctors = Doctor.objects.filter(type=type).order_by("name")
         elif type_service=="telecall":
