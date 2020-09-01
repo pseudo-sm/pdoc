@@ -315,8 +315,9 @@
     <section class="our-team-section bgDuo shopping-item">
         <div class="container">
             <div class="row mb-5 product-container plusBG">
-                <div class="col-12 text-center p-5">
-                    <div id="who-we-are" class="about-us-head"></div>
+                <div class="col-12 text-center">
+                    <div id="who-we-are" class="about-us-head d-sm-none d-md-block"></div>
+                    <h1 class="d-sm-block d-md-none">Who we are</h1>
                 </div>
                 <div class="col-12 col-md-4 col-sm-12">
                     <img src="{% static 'edoc-logo.png' %}" class="p-5 w-100 my-auto" alt="">
@@ -335,7 +336,8 @@
             </div>
             <div class="row mb-5 product-container plusBG">
                 <div class="col-12 text-center p-5">
-                    <div id="our-products" class="about-us-head"></div>
+                    <div id="our-products" class="about-us-head d-sm-none d-md-block"></div>
+                    <h1 class="d-sm-block d-md-none">Our Work</h1>
                 </div>
                 <div class="col-12 col-md-6 col-sm-12 right-alt text-center my-auto ">
                     <img class="altImg" src="{% static 'services/pdocAU.png' %}" alt="" srcset="" >
@@ -391,14 +393,15 @@
                     <img class="altImg" src="{% static 'services/trade.png' %}" alt="" srcset="" >
                 </div>
                 <div class="col-12 col-md-6 col-sm-12 my-auto altText-l">
-                <h2>EDOC Trade Company</h2>
+                <h2>EDOC Trade</h2>
                 <span class="hr-r ml-3"></span>
                 <h5><small>R & D is not just about building new products, Introducing new products to the old school market is also a form of R & D. EDOC Trade Company is dedicated to bring new and innovative products to the current market. A lot of technical innovation has already been made in other developed countries, we perform continuous research in order to find such products and make them available in the Indian market.</small></h5>
                 </div>
             </div>
             <div class="row text-center product-container plusBG">
                 <div class="col-12 text-center p-5">
-                    <div id="meet-our-team" class="about-us-head"></div>
+                    <div id="meet-our-team" class="about-us-head d-sm-none d-md-block"></div>
+                    <h1 class="d-sm-block d-md-none">Meet The Team</h1>
                 </div>
                 <div class="mt-2 col-6 col-lg-3 col-md-6 col-sm-6">
                     <div class="our-team">
@@ -764,7 +767,7 @@
                 </div>
                 <div class="col-12 col-md-5 col-sm-12 p-2  text-center my-auto">
                     <p style="color: rgb(151, 151, 151); text-align: justify;">
-                        PDoc is a revolution coming up in the
+                        PDOCHEALTH is a revolution coming up in the
                         Indian Healthcare sector. We are thriving
                         to bring technology to build robust solutions
                         in the domain. In this Pandemic we introduce
@@ -831,6 +834,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
         integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous">
     </script>
+    <script src="{% static 'index/script.js' %}"></script>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/svg.js/2.6.4/svg.js"></script>
     <script>

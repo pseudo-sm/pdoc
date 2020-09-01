@@ -441,26 +441,23 @@
         <!-- Diagnostic Center -->
         <section class="pt-3  plusBG dashboard-sec-cls dashboard-sec-dignos-serv nav-sch-fal">
             <div class="container">
-                <div class="row">
-                    <p class="filters  d-md-block d-sm-none mb-5">Filter By: &nbsp;&nbsp;
-                        <span class="fi filter-items filter-items-active doctor-filter-type" data-type="all">All</span>
-                        {% for type in doctor_types %}
-                        <span class="fi filter-items doctor-filter-type" data-type="{{type.id}}">{{type}}</span>
-                        {% endfor %}
-                    </p>
-                    <div class="dropdown dd d-md-none d-sm-block mb-3">
-                        <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
-                            aria-haspopup="true" aria-expanded="false">
-                            Filter By
-                        </button>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <a class="dropdown-itemdoctor-filter-type" data-type="all">All</a>
-                            {% for type in doctor_types %}
-                            <a class="dropdown-item doctor-filter-type" data-type="{{type.id}}">{{type}}</a>
-                            {% endfor %}
-                        </div>
-                    </div>
-                </div>
+<!--                <div class="row">-->
+<!--                    <p class="filters  d-md-block d-sm-none mb-5">Filter By: &nbsp;&nbsp;-->
+<!--                        <span class="fi filter-items filter-items-active doctor-filter-type" data-type="all">All</span>-->
+<!--                        {% for type in doctor_types %}-->
+<!--                        <span class="fi filter-items doctor-filter-type" data-type="{{type.id}}">{{type}}</span>-->
+<!--                        {% endfor %}-->
+<!--                    </p>-->
+<!--                    <div class="dropdown dd d-md-none d-sm-block mb-3">-->
+<!--                        <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"-->
+<!--                            aria-haspopup="true" aria-expanded="false">-->
+<!--                            Filter By-->
+<!--                        </button>-->
+<!--                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">-->
+<!--                            <a class="dropdown-itemdoctor-filter-type" data-type="all">All</a>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
                 <div class="row" id="diagnostic-results">
                     <!-- Diagnostic Results -->
                 </div>

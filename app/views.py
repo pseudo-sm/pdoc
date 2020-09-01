@@ -24,7 +24,7 @@ from django.contrib.postgres.search import SearchVector
 from django.contrib import messages
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
-doctor_types = Type.objects.filter(type_category=1)
+doctor_types = Type.objects.filter(type_category=1).order_by("name")
 paramedic_types = Type.objects.filter(type_category=2)
 client = razorpay.Client(auth=("rzp_live_7VShD4pzdX6r0m", "HFFXrT0KRIObgzB7SvU7JdZG"))
 
