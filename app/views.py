@@ -802,7 +802,7 @@ def physical_consultation(request):
         if doctor["special_day"] is not None:
             doctor["special_from"] = doctor["special_from"].strftime("%H:%M")
             doctor["special_to"] = doctor["special_to"].strftime("%H:%M")
-        doctor["fees"] = int(int(doctor["fees"]) * 0.12)
+        doctor["fees"] = int(int(doctor["fees"]) * 1.12)
     return render(request,"physical-consultation.html",{"doctors":doctors})
 
 def new_physical_appointment(request):

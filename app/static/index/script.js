@@ -87,6 +87,9 @@ function remove_alert() {
 setTimeout(function(){
     $("#snackbar").show(500);
  }, 2000);
+setTimeout(function(){
+    $("#snackbar").hide(500);
+ }, 6000);
 
 function closeToast() {
 	$("#snackbar").hide(500);
