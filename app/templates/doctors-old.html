@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en-US">
+{% load static %}
+{% include 'head.html' %}
+<link rel="stylesheet" href="{% static 'css/flag-icon.min.css' %}">
+<body>
+<!--<script src="https://kit.fontawesome.com/abca28b1e6.js" crossorigin="anonymous"></script>-->
+    <style>
+        .loader {
+          border: 16px solid #f3f3f3; /* Light grey */
+          border-top: 16px solid #3498db; /* Blue */
+          border-radius: 50%;
+          width: 120px;
+          height: 120px;
+          animation: spin 2s linear infinite;
+        }
+
+        @keyframes spin {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }
+    </style>
+
+    {% include 'navigation.html' %}
+    <!-- // Header  -->
+    <div id="page-title" class="padding-tb-30px gradient-white">
+        <div class="container">
+            <ol class="breadcrumb opacity-5">
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Pages</a></li>
+                <li class="active">Doctors</li>
+            </ol>
+            <h1 class="font-weight-300">Doctors</h1>
+        </div>
+    </div>
+<!--    <div class="col-md-8 container align-items-center box-shadow bg-white" >-->
+<!--            <div class="form-group">-->
+<!--                <input type="checkbox">-->
+<!--            </div>-->
+<!--    </div>-->
+<!--    FIlter starts-->
+    <style>
+        .row {
+  margin: 30px 0;
+}
+.hidden {
+  display: none;
+}
+    </style>
+    <div class="container">
+  <div class="row">
+    <div class="col-sm-12" style="padding-bottom:10px;">
+      <p>Filter by :
+      <button type="button" data-type="all" class="btn btn-default btn-xs btn-tag doctor-filter-type">All</button>
+      {% for type in types %}
+          <button type="button" data-type="{{type.id}}" class="btn btn-primary btn-xs btn-tag doctor-filter-type mt-2">{{type}}</button>
+      {% endfor %}
+      <script>
+          $(".doctor-filter-type").on('click',function(){
+                 id = $(this).attr('data-type');
+                fetch(id);
+                $(".doctor-filter-type").addClass("btn-primary");
+                $(this).removeClass('btn-primary');
+                $(".doctor-filter-type").addClass("btn-default");
+
+          });
+      </script>
+      </p>
+    </div>
+    </div>
+</div>
+
+
+<!--    FIlter Ends-->
+    <div class="margin-tb-30px ">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 col-sm-push-8 results" >
+                    <div class="row">
+                        <!-- Doctor -->
+                        <!-- // Doctor -->
+                    </div>
+                    
+                    <ul class="pagination pagination-md ">
+                        <li class="page-item disabled"><a class="page-link rounded-0" href="#" tabindex="-1">Previous</a></li>
+                        <li class="page-item"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item"><a class="page-link rounded-0" href="#">Next</a></li>
+                    </ul>
+
+                </div>
+                <div class="col-md-4 col-sm-push-4">
+
+                    <div class="background-white border-radius-10 margin-bottom-45px">
+                        <div class="padding-25px">
+                            <h3 class="margin-lr-20px"><i class="fas fa-search margin-right-10px text-main-color"></i> Search Specialization</h3>
+                            <!-- Listing Search -->
+                            <div class="listing-search">
+                                <div>
+                                    <div class="categories dropdown margin-bottom-20px">
+                                        <select class="listing-form d-block border-radius-10" id="type"  aria-haspopup="true" aria-expanded="false">
+                                            <option class="dropdown-item text-up-small" selected>--</option>
+                                            {% for type in types %}
+                                            <option class="dropdown-item text-up-small" data-value="{{type.id}}">{{type.name}}</option>
+                                            {% endfor %}
+                                        </select>
+                                    <button class="listing-bottom background-dark box-shadow border-radius-10" id="search" >Search Now</button>
+                                        <button class="listing-bottom background-dark box-shadow border-radius-10" onclick="location.reload()" >Reset</button>
+                                </div>
+                            </div>
+                            <!-- // Listing Search -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+        {% include 'paramedics-show/other-services.html' %}
+
+    {% include 'footer.html' %}
+</body>
+<script>
+    function calculate_experience(year){
+        var currentYear = (new Date).getFullYear();
+        year = parseInt(year);
+        return (currentYear-year);
+    }
+    function fetch(type){
+        $.ajax({
+        url: "{% url 'doctors_cat'  %}",
+        data : {
+            'category':type,
+        },
+        type: 'GET',
+        dataType: 'json',
+
+        success: function(res) {
+            $(".results").empty();
+            for(i=0;i<res.length;i++){
+            temp = '<div class="col-lg-6 col-md-6 hvr-bob margin-bottom-45px"> \
+                            <div class="background-white box-shadow"> \
+                                <div class="padding-30px"> \
+                                    <h5 class="margin-tb-15px"><a class="text-dark" href="#">'+res[i].name+'</a></h5> \
+                                    <span class="text-grey-3"><b>'+res[i].type_id__name+'</b></span><br> \
+                                    <span class="text-black-6" style="font-weight:bold;">'+res[i].designation+'</span><br> \
+                                    <span class="text-grey-4">'+res[i].hospital+'</span> \
+                                    <span class="text-grey-6">'+res[i].address+'</span> \
+                                    <br><span class="text-grey-6">'
+                if(res[i].available_from){
+                                temp = temp + '<b>Regular Days</b>: '+res[i].available_from+' - '+res[i].available_to;
+                }
+                if(res[i].available_from2){
+                                 temp = temp +' & '+res[i].available_from2+' - '+res[i].available_to2+'</span>';
+                }
+                else{
+                    temp = temp + '</span>';
+                }
+                if(res[i].special_day!=null)
+                {
+                    temp = temp + '<br><span class="text-grey-6"><b>'+res[i].special_day+'</b></span><span class="text-grey-6"> : '+res[i].special_from+' - '+res[i].special_to+'</span>';
+                }
+                temp = temp + '<br><br><span class="text-grey-6"><b> Fees : Rs. ' + res[i].fees+ '</b></span>'
+                temp = temp + '</div> \
+                                <div class="m-3" style="color:#007bff"><i class="fa fa-video mr-2" aria-hidden="true"></i><i class="fa fa-phone" aria-hidden="true"></i></div> \
+                                 <div doctor-id="'+res[i].id+'" class="btn btn-primary schedule-call" style="width:100%;border-radius:0px;">Schedule Call</div></a>\
+                            </div> \
+                        </div>'
+            $(".results").append(temp);
+            }
+
+        }
+    });
+    }
+    $(document).on('click', '.schedule-call', function(){
+            doctor = $(this).attr("doctor-id");
+            $("#call-now").attr("doctor",doctor);
+            $('#exampleModal').modal('toggle');
+    });
+
+    $("#search").click(function(){
+         $(".results").empty();
+         $(".results").append('<div class="loader"></div>');
+        area_list = [$("#area").find('option:selected').attr('data-value')];
+        keyword = $("#keywords").val();
+        type = $("#type").find('option:selected').attr('data-value');
+        fetch(area_list,keyword,type);
+
+    });
+    $(document).ready(function() {
+        {% if filter %}
+            fetch("{{req_category}}");
+        {% else %}
+            fetch("all");
+        {% endif %}
+    });
+</script>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Terms & Conditions</h5>
+                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">×</span>
+                </button>
+                    </div>
+                    <div class="modal-body" style="overflow-y:hidden;">
+                        <div class="form">
+                            <input class="form-control form-group" id="name" type="text" placeholder="name" required>
+                            <input class="form-control form-group" id="phone" type="text" placeholder="phone" required>
+                            <textarea class="form-control" type="text" id="query" placeholder="Describe your problem in short" required></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <h7>Continuing to call will mean that you accept our <a href="{% url 'terms' %}" style="text-decoration:underline;color:blue;">Terms & Conditions</a></h7>
+                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                        <a class="btn btn-primary" id="call-now" style="color:white;">Submit</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+{% include 'js.html' %}
+<script>
+    $(document).on('click', '#call-now', function(){
+            $(this).html('Submitting...');
+            doctor= $(this).attr("doctor");
+            name = $("#name").val();
+            phone = $("#phone").val();
+            query = $("textarea#query").val();
+            $.ajax({
+        url: "{% url 'new_lead'  %}",
+        data : {
+            'doctor':doctor,
+            'name':name,
+            'phone':phone,
+            'query':query,
+            'type':"1",
+        },
+        type: 'GET',
+        dataType: 'json',
+        success: function(res) {
+
+                $('#exampleModal').modal('toggle');
+                alert('PDOC Health will contact you shortly for confirmation!!');
+
+        }
+    });
+
+});
+</script>
+</html>

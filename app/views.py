@@ -13,7 +13,7 @@ import razorpay
 from django.views.decorators.csrf import csrf_exempt
 from docx.shared import Cm
 from docxtpl import DocxTemplate
-
+from django.db.models import Sum
 from .models import *
 import datetime
 from django.contrib import auth
@@ -82,7 +82,7 @@ def doctors_over_call(request):
 def doctors(request):
     type = Type.objects.filter(type_category="1")
     terms = Others.objects.get(name="terms")
-    return render(request,"doctors.html",{"types":type,"terms":terms,"doctor_types":doctor_types,"paramedic_types":paramedic_types})
+    return render(request,"doctors..html",{"types":type,"terms":terms,"doctor_types":doctor_types,"paramedic_types":paramedic_types})
 
 def doctors_cat(request):
     category = request.GET.get("category")
@@ -206,11 +206,15 @@ def important_links(request):
     return render(request,"important-links.html",{"links":links,"doctor_types":doctor_types,"paramedic_types":paramedic_types})
 
 def signup_customer(request):
+    if request.GET.get("login_false") == "1":
+        login_message = True
+    else:
+        login_message = False
     if request.user.is_authenticated:
         return redirect("/patient-dashboard/")
     terms = Terms.objects.all()
     terms = terms.last()
-    return render(request,"sign-up-customer.html",{"doctor_types":doctor_types,"paramedic_types":paramedic_types,"terms":terms})
+    return render(request,"sign-up-customer.html",{"doctor_types":doctor_types,"paramedic_types":paramedic_types,"terms":terms,"login_message":login_message})
 
 
 def payment(request):
@@ -237,7 +241,7 @@ def payment_booking(request):
         name = appointment.name
         phone = appointment.phone
     date = datetime.datetime.now().strftime("%m/%d/%Y")
-    return render(request,"payment-booking.html",{"order_id":order_id,"name":name,"phone":phone,"date":date,"fees":int(int(appointment.doctor.fees)*.12),"slug":appointment.slug,"status":appointment.payment_status})
+    return render(request,"payment-booking.html",{"order_id":order_id,"name":name,"phone":phone,"date":date,"fees":int(int(appointment.doctor.fees)*1.12),"slug":appointment.slug,"status":appointment.payment_status})
 
 
 def signup_customer_action(request):
@@ -403,7 +407,6 @@ def patient_dashboard(request):
         tz = pytz.timezone("Asia/Calcutta")
         appointment["time"] = appointment["time"].astimezone(pytz.timezone('Asia/Kolkata'))
         delta = now - appointment["time"]
-        print("timedelta : ------------------------------")
         if delta.days < 15 :
             shortlisted_scheduled_appointments.append(appointment)
     vdoctor = len(list(Doctor.objects.filter(videoconferencing=True)))
@@ -416,7 +419,7 @@ def patient_dashboard(request):
 
 
 def diagnostic_cat(request):
-    diagnostics = list(Diagnostic_Test.objects.all().values("title","price"))
+    diagnostics = list(Diagnostic_Test.objects.all().values("id","title", "price", "description", "provider__name", "homepickup"))
     return JsonResponse(diagnostics,safe=False)
 
 def blog_list(request):
@@ -783,6 +786,8 @@ def new_lead(request):
 def get_diagnostic_cat(request):
 
     category = request.GET.get("category")
+    print("category")
+    print(category)
     if category=="all":
         diagnostics = Diagnostic.objects.all().values()
     return JsonResponse({"diagnostics":diagnostics})
@@ -841,3 +846,21 @@ def product_item(request,name):
 def about(request):
 
     return render(request,"about-us.html")
+
+def zonal_admin_new(request):
+    all_appointments = Appointments.objects.all()
+    doctors = Doctor.objects.all()
+    total_revenue = all_appointments.aggregate(Sum('doctor__fees'))["doctor__fees__sum"]
+    customers = Customer.objects.all()
+    appointments = all_appointments.filter(datetime__year='2020', datetime__month='08')
+    appointments = all_appointments.filter(datetime__year='2020', datetime__month='08')
+    return render(request,"zonal admin 2/index.html",
+                  {
+                      "total_revenue":total_revenue,
+                      "profit":int(total_revenue)*0.12,
+                      "no_appointments":len(all_appointments),
+                      "no_doctors":len(doctors),
+                      "no_customers":len(customers),
+                      "appointments":appointments.values("datetime","doctor__name","id","doctor__fees","payment_status","customer__name")
+                  }
+                  )

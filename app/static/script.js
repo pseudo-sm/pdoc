@@ -12,7 +12,7 @@ var firebaseConfig = {
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 
-
+ 
 if (!location.hash) {
   location.hash = location.hash = window.location.pathname.split("/")[window.location.pathname.split("/").length - 1];
 }

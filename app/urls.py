@@ -91,6 +91,11 @@ urlpatterns = [
         path("new-lead/",views.new_lead,name="new_lead"),
         path("shop/<slug:name>",views.product_item,name="product_item"),
         path("",views.index,name="index"),
+
+
+
+
+        path("zonal-admin-new/",views.zonal_admin_new,name="zonal_admin_new"),
 ]
 from django.conf.urls.static import static
 

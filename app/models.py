@@ -182,6 +182,7 @@ class Appointments(models.Model):
     def __str__(self):
         return str(self.id)
 
+
 class ParamedicBookings(models.Model):
 
     id = models.AutoField(primary_key=True)
