@@ -695,68 +695,67 @@
         </div>
     </section>
     <!-- footer -->
-    <footer id="dk-footer" class="dk-footer pt-5 footer-nav-tr d-sm-none d-md-block">
+    <footer id="dk-footer overflow-hid" class="dk-footer pt-5  footer-nav-tr d-sm-none d-md-block">
         <div class="container">
-            <div class="row">
-                <div class="col-12 col-md-3 col-sm-12 text-center my-auto">
-                    <img style="width: 100%;" src="{% static 'index/site_images/logo.png' %}" alt="" srcset="">
-                </div>
-                <div class="col-12 col-md-5 col-sm-12 p-2  text-center my-auto">
-                    <p style="color: rgb(151, 151, 151); text-align: justify;">
-                        PDoc is a revolution coming up in the
-                        Indian Healthcare sector. We are thriving
-                        to bring technology to build robust solutions
-                        in the domain. In this Pandemic we introduce
-                        our emergency telecalling service 'Doctor-Over-Call'
-                        keeping our promise of bringing the right answers
-                        to your health needs.</p>
-                </div>
-                <div class="col-12 col-md-4 col-sm-12  text-center my-auto">
-                    <h2 style="color: white;">Follow Us:</h2>
-                    <a class="footico footico-f" href="#"><i class="fa fa-facebook "></i></a>
-                    <a class="footico footico-i" href="#"><i class="fa fa-instagram "></i></a>
-                    <a class="footico footico-l" href="#"><i class="fa fa-linkedin "></i></a>
-                    <a class="footico footico-t" href="#"><i class="fa fa-twitter "></i></a>
-                </div>
+          <div class="row">
+            <div class="col-12 col-md-3 col-sm-12 text-center my-auto">
+              <img style="width: 100%;" src="{% static 'index/site_images/logo.png' %}" alt="" srcset="">
             </div>
-            <hr style="background-color: rgba(139, 139, 139, 0.301);">
-            <div class="row pt-2 text-center">
-                <div class="col-12 col-md-11 col-sm-12 my-auto text-md-left text-sm-center">
-                    <p style="color: rgb(151, 151, 151);">
-                        Designed and Developed By &nbsp;<strong><a style="color: rgba(255, 255, 255, 0.582);"
-                                href="www.cavemendev.com"> CaveMenDev</a></strong>
-                    </p>
-                </div>
-                <div class="col-6 col-md-1 col-sm-6 text-center my-auto mx-auto mb-5">
-                    <a href="www.cavemendev.com"> <img style="width: 100%;"
-                            src="{% static 'index/site_images/cmd.png' %}" alt=""></a>
-                </div>
+            <div class="col-12 col-md-5 col-sm-12 p-2  text-center my-auto">
+              <p style="color: rgb(151, 151, 151); text-align: justify;">
+                PDoc is a revolution coming up in the
+                Indian Healthcare sector. We are thriving
+                to bring technology to build robust solutions
+                in the domain. In this Pandemic we introduce
+                our emergency telecalling service 'Doctor-Over-Call'
+                keeping our promise of bringing the right answers
+                to your health needs.</p>
             </div>
+            <div class="col-12 col-md-4 col-sm-12  text-center my-auto">
+              <h2 style="color: white;">Follow Us:</h2>
+              <a class="footico footico-f" href="#"><i class="fa fa-facebook "></i></a>
+              <a class="footico footico-i" href="#"><i class="fa fa-instagram "></i></a>
+              <a class="footico footico-l" href="#"><i class="fa fa-linkedin "></i></a>
+              <a class="footico footico-t" href="#"><i class="fa fa-twitter "></i></a>
+            </div>
+          </div>
+          <hr style="background-color: rgba(139, 139, 139, 0.301);">
+          <div class="row pt-2 text-center">
+            <div class="col-12 col-md-11 col-sm-12 my-auto text-md-left text-sm-center">
+              <p style="color: rgb(151, 151, 151);">
+                Designed and Developed By &nbsp;<strong><a style="color: rgba(255, 255, 255, 0.582);"
+                    href="www.cavemendev.com"> CaveMenDev</a></strong>
+              </p>
+            </div>
+            <div class="col-6 col-md-1 col-sm-6 text-center my-auto mx-auto mb-5">
+              <a href="www.cavemendev.com"> <img style="width: 100%;" src="{% static 'index/site_images/cmd.png' %}"
+                  alt=""></a>
+            </div>
+          </div>
         </div>
         <div class="copyright pt-3 pb-3">
             <div class="container">
-                <div class="row">
-                    <div class="col-md-6">
-                        <span>© 2020 PDOC Health | All Right Reserved.</span>
-                    </div>
-                    <div class="col-md-6 d-sm-none d-md-block">
-                        <div class="copyright-menu">
-                            <ul>
-                                <li><a href="#">Home</a></li>
-                                <li><a href="#">Doctors</a></li>
-                                <li><a href="#">Articles</a></li>
-                                <li><a href="#">Join Us</a>/li>
-                            </ul>
-                        </div>
-                    </div>
+              <div class="row">
+                <div class="col-md-4">
+                  <span>© 2020 PDOC Health | All Right Reserved.</span>
                 </div>
+                <div class="col-md-8 d-sm-none d-md-block">
+                  <div class="copyright-menu">
+                    <ul>
+                      <li><a href="{% url 'terms' %}">Terms & Conditions</a></li>
+                      <li><a href="{% url 'privacy_policy' %}">Privacy Policy</a></li>
+                      <li><a href="{% url 'refund_policy' %}">Refund Policy</a>/li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
             </div>
-        </div>
+          </div>
         <!-- Back to top -->
         <div id="back-to-top" class="back-to-top">
-            <button class="btn btn-dark" title="Back to Top" style="display: block;" onclick="topFunction()">
-                <i class="fa fa-angle-up"></i>
-            </button>
+          <button class="btn btn-dark" title="Back to Top" style="display: block;" onclick="topFunction()">
+            <i class="fa fa-angle-up"></i>
+          </button>
         </div>
     </footer>
     <!-- Mobile navigation bar -->

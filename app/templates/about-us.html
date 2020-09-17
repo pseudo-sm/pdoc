@@ -796,26 +796,24 @@
                 </div>
             </div>
         </div>
-        <div class="copyright">
+        <div class="copyright pt-3 pb-3">
             <div class="container">
-                <div class="row pb-3">
-                    <div class="col-md-6">
-                        <span>© 2020 PDOC Health | All Right Reserved.</span>
-                    </div>
-                    <div class="col-md-6 d-sm-none d-md-block">
-                        <div class="copyright-menu">
-                            <ul>
-                                <li><a href="#">Home</a></li>
-                                <li><a href="#">Doctors</a></li>
-                                <li><a href="#">Articles</a></li>
-                                <li><a href="#">Join Us</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
+              <div class="row">
+                <div class="col-md-4">
+                  <span>© 2020 PDOC Health | All Right Reserved.</span>
                 </div>
+                <div class="col-md-8 d-sm-none d-md-block">
+                  <div class="copyright-menu">
+                    <ul>
+                      <li><a href="{% url 'terms' %}">Terms & Conditions</a></li>
+                      <li><a href="{% url 'privacy_policy' %}">Privacy Policy</a></li>
+                      <li><a href="{% url 'refund_policy' %}">Refund Policy</a>/li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
             </div>
-        </div>
+          </div>
         <!-- Back to top -->
         <div id="back-to-top" class="back-to-top">
             <button class="btn btn-dark" title="Back to Top" style="display: block;" onclick="topFunction()">

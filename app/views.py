@@ -497,6 +497,14 @@ def terms(request):
     all_links = Links.objects.all()[::-1]
     return render(request,"terms.html",{"terms":terms,"links":all_links,"doctor_types":doctor_types,"paramedic_types":paramedic_types})
 
+def privacy_policy(request):
+    privacy_policy = Others.objects.get(name="privacy_policy")
+    return render(request,"privacy_policy.html",{"privacy_policy":privacy_policy})
+
+def refund_policy(request):
+    refund_policy = Others.objects.get(name="refund_policy")
+    return render(request,"refund_policy.html",{"refund_policy":refund_policy})    
+
 def book_appointment(request):
     if request.user.is_authenticated:
         doctor = request.GET.get("doctor")
