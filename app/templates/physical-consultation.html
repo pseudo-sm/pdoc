@@ -1,121 +1,264 @@
-<!DOCTYPE html>
-<html lang="en-US">
-{% load static %}
-{% include 'head.html' %}
-<link rel="stylesheet" href="{% static 'css/flag-icon.min.css' %}">
+<!doctype html>
+<html lang="en">
+
+<head>
+  <title>EDOC | PDOC Health</title>
+  <meta charset="utf-8">
+  {% load static %}
+  <link rel="shortcut icon" href="{% static 'site_images/logo-sqr.png' %}" type="image/x-icon">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="google" content="notranslate">
+  <link rel="stylesheet" href="{% static 'index/style.css' %}">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+    integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  <link rel="stylesheet"
+    href="https://owlcarousel2.github.io/OwlCarousel2/assets/owlcarousel/assets/owl.carousel.min.css">
+  <link rel="stylesheet"
+    href="https://owlcarousel2.github.io/OwlCarousel2/assets/owlcarousel/assets/owl.theme.default.min.css">
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <style>
+    .appoin-no {
+      border-bottom: solid .7px #0d2149;
+      padding-top: 2px;
+      padding-bottom: 2px;
+    }
+
+    .dashboard-sch-btn {
+      background-color: #0d2149;
+      color: white;
+      border: none;
+      border-radius: 0px !important;
+      border-bottom-left-radius: 5px !important;
+      border-bottom-right-radius: 5px !important;
+    }
+
+    .dashboard-sch-btn:hover {
+      color: #d1d1d1;
+      margin: 0px !important;
+    }
+
+    .dashboard-doc-list {
+        border: none;
+      border-radius: 25px;
+      box-shadow:inset 0px 0px 10px #0d214934;
+      background-color: white;
+      border-radius: 0px !important;
+      border-top-left-radius: 5px !important;
+      border-top-right-radius: 5px !important;
+      padding: 0px;
+
+      transition: all 0.3s linear;
+    }
+    .dashboard-doc-list:hover{
+      border: none;
+      border-radius: 15px;
+      box-shadow: 0px 0px 20px #0d214934;
+      transform:scale(1.01);
+    }
+
+    @media only screen and (min-width: 600px) {
+      .medical-name{
+        min-height: 3em !important;
+      }
+    }
+    .greyBG{
+        background-color: rgba(128, 128, 128, 0.116);
+    }
+  </style>
+</head>
+
 <body>
-<!--<script src="https://kit.fontawesome.com/abca28b1e6.js" crossorigin="anonymous"></script>-->
-    <style>
-        .loader {
-          border: 16px solid #f3f3f3; /* Light grey */
-          border-top: 16px solid #3498db; /* Blue */
-          border-radius: 50%;
-          width: 120px;
-          height: 120px;
-          animation: spin 2s linear infinite;
-        }
-
-        @keyframes spin {
-          0% { transform: rotate(0deg); }
-          100% { transform: rotate(360deg); }
-        }
-    </style>
-
-    {% include 'navigation.html' %}
-    <!-- // Header  -->
-    <div id="page-title" class="padding-tb-30px gradient-white">
-        <div class="container">
-            <ol class="breadcrumb opacity-5">
-                <li><a href="#">Home</a></li>
-                <li><a href="#">Pages</a></li>
-                <li class="active">Doctors</li>
-            </ol>
-            <h1 class="font-weight-300">Doctors</h1>
-        </div>
+  <div id="loader-div">
+    <div id="loader" class="center"></div>
+  </div>
+  <!-- header -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-bark fixed-top unscrld">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">
+        <img src="{% static 'index/site_images/logo.png' %}" height="60" alt=""> <a href="#"
+          class="d-sm-none d-md-block">PDOCHEALTH</a>
+      </a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+        aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'index' %}">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'doctors' %}">Doctors</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'physical_consultation' %}">Physical Consultation</a>
+          </li>
+<!--          <li class="nav-item">-->
+<!--            <a class="nav-link" href="{% url 'blog_list' %}">Articles</a>-->
+<!--          </li>-->
+<!--          <li class="nav-item">-->
+<!--            <a class="nav-link" href="{% url 'important_links' %}">Important Links</a>-->
+<!--          </li>-->
+                    <li class="nav-item dropdown dmenu">
+                      <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                        More
+                      </a>
+                      <div class="dropdown-menu sm-menu">
+                        <a class="dropdown-item" href="{% url 'blog_list' %}">Articles</a>
+                        <a class="dropdown-item" href="{% url 'important_links' %}">Important Links</a>
+                        <a class="dropdown-item" href="{% url 'product_item' name='oxygize' %}">Shop</a>
+                      </div>
+                    </li>
+          <li class="nav-item">
+                            <a class="nav-link" href="{% url 'about_us' %}">About Us</a>
+                        </li>
+<!--                    <li class="nav-item dropdown dmenu">-->
+<!--                      <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">-->
+<!--                        Paramedics Signup-->
+<!--                      </a>-->
+<!--                      <div class="dropdown-menu sm-menu">-->
+<!--                        <a class="dropdown-item" href="{% url 'paramedic_health_and_fitness_advisor' %}">Health and Fitness Advise</a>-->
+<!--                        <a class="dropdown-item" href="{% url 'paramedic_physiotherapy' %}">Physiotherapist</a>-->
+<!--                        <a class="dropdown-item" href="{% url 'paramedic_clinical_pscyhiatry' %}">Clinical Psychiatry</a>-->
+<!--                        <a class="dropdown-item" href="{% url 'paramedic_yoga_guru' %}">Yoga Guru</a>-->
+<!--                        <a class="dropdown-item" href="#">Drug House</a>-->
+<!--                        <a class="dropdown-item" href="#">Diagnostics</a>-->
+<!--                      </div>-->
+<!--                    </li>-->
+          <li class="nav-item">
+            <a class="nav-link pl-md-3 pl-sm-0" href="{% url 'doctor_registration' %}"><i class="fa fa-stethoscope"></i> &nbsp;Join
+              Us</a>
+          </li>
+          <li class="nav-item pl-md-5 pl-sm-0 pr-md-5 pr-sm-0">
+            {% if logout %}
+            <a class="nav-link pc-btn pl-4 pr-4" href="{% url 'logout' %}">Logout</a>
+            {% else %}
+            <a class="nav-link pc-btn pl-4 pr-4" href="{% url 'signup_customer' %}">Patient Corner</a>
+            {% endif %}
+          </li>
+        </ul>
+      </div>
     </div>
-<!--    <div class="col-md-8 container align-items-center box-shadow bg-white" >-->
-<!--            <div class="form-group">-->
-<!--                <input type="checkbox">-->
-<!--            </div>-->
-<!--    </div>-->
-<!--    FIlter starts-->
-    <style>
-        .row {
-  margin: 30px 0;
-}
-.hidden {
-  display: none;
-}
-    </style>
-
-
-<!--    FIlter Ends-->
-    <div class="margin-tb-30px ">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-8 col-sm-push-8 results" >
-                    <div class="row">
-                        {% for doctor in doctors %}
-                        <div class="col-lg-6 col-md-6 hvr-bob margin-bottom-45px">
-                            <div class="background-white box-shadow">
-                                <div class="padding-30px">
-                                    <h5 class="margin-tb-15px"><a class="text-dark" href="#">{{doctor.name}}</a></h5>
-                                    <span class="text-grey-3"><b>{{doctor.type_id__name}}</b></span><br>
-                                    <span class="text-black-6" style="font-weight:bold;">{{doctor.designation}}</span><br>
-                                    <span class="text-grey-4">{{doctor.hospital}}</span>
-                                    <span class="text-grey-6">{{doctor.address}}</span>
-                                    <br>
-                                    <br><br><span class="text-grey-6"><b> Booking Fees : Rs. {{doctor.fees}}</b></span></div>
-<!--                                <div class="m-3" style="color:#007bff"><svg class="svg-inline&#45;&#45;fa fa-video fa-w-18 mr-2" aria-hidden="true" data-prefix="fa" data-icon="video" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" data-fa-i2svg=""><path fill="currentColor" d="M528 64h-12.118a48 48 0 0 0-33.941 14.059L384 176v-64c0-26.51-21.49-48-48-48H48C21.49 64 0 85.49 0 112v288c0 26.51 21.49 48 48 48h288c26.51 0 48-21.49 48-48v-64l97.941 97.941A48 48 0 0 0 515.882 448H528c26.51 0 48-21.49 48-48V112c0-26.51-21.49-48-48-48z"></path></svg>&lt;!&ndash; <i class="fa fa-video mr-2" aria-hidden="true"></i> &ndash;&gt;<svg class="svg-inline&#45;&#45;fa fa-phone fa-w-16" aria-hidden="true" data-prefix="fa" data-icon="phone" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M493.397 24.615l-104-23.997c-11.314-2.611-22.879 3.252-27.456 13.931l-48 111.997a24 24 0 0 0 6.862 28.029l60.617 49.596c-35.973 76.675-98.938 140.508-177.249 177.248l-49.596-60.616a24 24 0 0 0-28.029-6.862l-111.997 48C3.873 366.516-1.994 378.08.618 389.397l23.997 104C27.109 504.204 36.748 512 48 512c256.087 0 464-207.532 464-464 0-11.176-7.714-20.873-18.603-23.385z"></path></svg>&lt;!&ndash; <i class="fa fa-phone" aria-hidden="true"></i> &ndash;&gt;</div>-->
-                                <div doctor-id="{{doctor.id}}" class="btn btn-primary book-appointment" style="width:100%;border-radius:0px;">Book Appointment</div>
-                            </div>
-                        </div>
-                        {% endfor %}
-                    </div>
-                    
-                    <ul class="pagination pagination-md ">
-                        <li class="page-item disabled"><a class="page-link rounded-0" href="#" tabindex="-1">Previous</a></li>
-                        <li class="page-item"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                        <li class="page-item"><a class="page-link rounded-0" href="#">Next</a></li>
-                    </ul>
-
-                </div>
-                <div class="col-md-4 col-sm-push-4">
-
-                    <div class="background-white border-radius-10 margin-bottom-45px">
-                        <div class="padding-25px">
-                            <h3 class="margin-lr-20px"><i class="fas fa-search margin-right-10px text-main-color"></i> Search Specialization</h3>
-                            <!-- Listing Search -->
-                            <div class="listing-search">
-                                <div>
-                                    <div class="categories dropdown margin-bottom-20px">
-                                        <select class="listing-form d-block border-radius-10" id="type"  aria-haspopup="true" aria-expanded="false">
-                                            <option class="dropdown-item text-up-small" selected>--</option>
-                                            {% for type in types %}
-                                            <option class="dropdown-item text-up-small" data-value="{{type.id}}">{{type.name}}</option>
-                                            {% endfor %}
-                                        </select>
-                                    <button class="listing-bottom background-dark box-shadow border-radius-10" id="search" >Search Now</button>
-                                        <button class="listing-bottom background-dark box-shadow border-radius-10" onclick="location.reload()" >Reset</button>
-                                </div>
-                            </div>
-                            <!-- // Listing Search -->
-                        </div>
-                    </div>
-                </div>
+  </nav>
+  <!-- search -->
+  <section class="pt-5 mt-5  plusBG greyBG">
+    <div class="container p-5">
+        <div class="row">
+            <div class="col-10">
+                <input class="form-control" type="text" name="" id="" placeholder="Enter Keyword">
+            </div>
+            <div class="col-2">
+                <input class="form-control btn btn-block btn-outline-primary" type="submit" name="" id="">
             </div>
         </div>
     </div>
+  </section>
+  <!--doctor list -->
+  <section class="pt-3  plusBG ">
+    <div class="container">
+      <div class="row doctors-results">
+          {% for doctor in doctors %}
+        <div class="col-12 col-md-4 col-sm-12 mb-3">
+            <div class="pl-4 pt-4 pr-4 dashboard-doc-list">
+                <span class="appoin-no"><small>{{doctor.type_id__name}}</small></span><br><br>
+                        <p class="text-center">
+                            <strong>{{doctor.name}}</strong><br>
+                            <small><strong>{{doctor.designation}}</strong></small><br>
+                            <small><p class="text-center medical-name">{{doctor.hospital}}</p></small>
+                        <small></small><p class=" medical-name"><small>Booking Fees : {{doctor.booking_fees}}<br>
+               Total Fees (To be paid later) : {{doctor.fees}}</p></small>
+                </p><br>
+            </div>
+            <button class="btn btn-block dashboard-sch-btn book-appointment" doctor-id="{{doctor.id}}" >Book Appointment</button></div>
+          {% endfor %}
+      </div>
+    </div>
+  </section>
+  <!-- footer -->
+  <footer id="dk-footer overflow-hid" class="dk-footer pt-5">
+    <div class="container">
+      <div class="row">
+        <div class="col-12 col-md-3 col-sm-12 text-center my-auto">
+          <img style="width: 100%;" src="{% static 'index/site_images/logo.png' %}" alt="" srcset="">
+        </div>
+        <div class="col-12 col-md-5 col-sm-12 p-2  text-center my-auto">
+          <p style="color: rgb(151, 151, 151); text-align: justify;">
+            PDoc is a revolution coming up in the
+            Indian Healthcare sector. We are thriving
+            to bring technology to build robust solutions
+            in the domain. In this Pandemic we introduce
+            our emergency telecalling service 'Doctor-Over-Call'
+            keeping our promise of bringing the right answers
+            to your health needs.</p>
+        </div>
+        <div class="col-12 col-md-4 col-sm-12  text-center my-auto">
+          <h2 style="color: white;">Follow Us:</h2>
+          <a class="footico footico-f" href="#"><i class="fa fa-facebook "></i></a>
+          <a class="footico footico-i" href="#"><i class="fa fa-instagram "></i></a>
+          <a class="footico footico-l" href="#"><i class="fa fa-linkedin "></i></a>
+          <a class="footico footico-t" href="#"><i class="fa fa-twitter "></i></a>
+        </div>
+      </div>
+      <hr style="background-color: rgba(139, 139, 139, 0.301);">
+      <div class="row pt-2 text-center">
+        <div class="col-12 col-md-11 col-sm-12 my-auto text-md-left text-sm-center">
+          <p style="color: rgb(151, 151, 151);">
+            Designed and Developed By &nbsp;<strong><a style="color: rgba(255, 255, 255, 0.582);"
+                href="www.cavemendev.com"> CaveMenDev</a></strong>
+          </p>
+        </div>
+        <div class="col-6 col-md-1 col-sm-6 text-center my-auto mx-auto mb-5">
+          <a href="www.cavemendev.com"> <img style="width: 100%;" src="{% static 'index/site_images/cmd.png' %}"
+              alt=""></a>
+        </div>
+      </div>
+    </div>
+    <div class="copyright pt-3 pb-3">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6">
+            <span>© 2020 PDOC Health | All Right Reserved.</span>
+          </div>
+          <div class="col-md-6 d-sm-none d-md-block">
+            <div class="copyright-menu">
+              <ul>
+                <li><a href="{% url 'index' %}">Home</a></li>
+                <li><a href="{% url 'doctors' %}">Doctors</a></li>
+                <li><a href="{% url 'blog_list' %}">Articles</a></li>
+                <li><a href="{% url 'doctor_registration' %}">Join Us</a>/li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Back to top -->
+    <div id="back-to-top" class="back-to-top">
+      <button class="btn btn-dark" title="Back to Top" style="display: block;" onclick="topFunction()">
+        <i class="fa fa-angle-up"></i>
+      </button>
+    </div>
+  </footer>
+  <!-- Scripts -->
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"
+    integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
+    integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+    integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous">
+  </script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+    integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous">
+  </script>
+  <script src="https://owlcarousel2.github.io/OwlCarousel2/assets/owlcarousel/owl.carousel.js"></script>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script src="{% static 'index/script.js' %}"></script>
+  <script>
 
-        {% include 'paramedics-show/other-services.html' %}
 
-    {% include 'footer.html' %}
-</body>
-<script>
-
-</script>
+  </script>
 
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-scrollable" role="document">
@@ -134,17 +277,15 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <h7>The booking amount is to be paid online with compulsion</h7>
+                        <h7>Continuing to call will mean that you accept our <a href="{% url 'terms' %}" style="text-decoration:underline;color:blue;">Terms & Conditions</a></h7>
                         <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
                         <a class="btn btn-primary" id="call-now" style="color:white;">Submit</a>
                     </div>
                 </div>
             </div>
         </div>
-
-{% include 'js.html' %}
 <script>
-$(document).on('click', '.book-appointment', function(){
+    $(document).on('click', '.book-appointment', function(){
             doctor = $(this).attr("doctor-id");
             $("#call-now").attr("doctor",doctor);
             $('#exampleModal').modal('toggle');
@@ -176,4 +317,7 @@ $(document).on('click', '.book-appointment', function(){
 
 });
 </script>
+</body>
+
+
 </html>

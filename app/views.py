@@ -82,7 +82,7 @@ def doctors_over_call(request):
 def doctors(request):
     type = Type.objects.filter(type_category="1")
     terms = Others.objects.get(name="terms")
-    return render(request,"doctors..html",{"types":type,"terms":terms,"doctor_types":doctor_types,"paramedic_types":paramedic_types})
+    return render(request,"doctors.html",{"types":type,"terms":terms,"doctor_types":doctor_types,"paramedic_types":paramedic_types})
 
 def doctors_cat(request):
     category = request.GET.get("category")
@@ -137,6 +137,7 @@ def doctor_pages(request,slug):
     terms = Others.objects.get(name="terms")
     this_type = type.get(name=category)
     doctors = Doctor.objects.filter(type=this_type).order_by("name")
+    print(this_type.id)
     return render(request,"doctors.html",{"types":type,"terms":terms,"doctor_types":doctor_types,"paramedic_types":paramedic_types,"req_category":this_type.id,"filter":True})
 
 def paramedic_pages(request,slug):
@@ -241,7 +242,12 @@ def payment_booking(request):
         name = appointment.name
         phone = appointment.phone
     date = datetime.datetime.now().strftime("%m/%d/%Y")
-    return render(request,"payment-booking.html",{"order_id":order_id,"name":name,"phone":phone,"date":date,"fees":int(int(appointment.doctor.fees)*1.12),"slug":appointment.slug,"status":appointment.payment_status})
+    context = {"order_id":order_id,"name":name,"phone":phone,"date":date,"slug":appointment.slug,"status":appointment.payment_status}
+    if appointment.type=="3":
+        context["fees"] = int(int(appointment.doctor.fees) * .12)
+    else:
+        context["fees"] = int(int(appointment.doctor.fees) * 1.12)
+    return render(request,"payment-booking.html",context)
 
 
 def signup_customer_action(request):
@@ -815,7 +821,7 @@ def physical_consultation(request):
         if doctor["special_day"] is not None:
             doctor["special_from"] = doctor["special_from"].strftime("%H:%M")
             doctor["special_to"] = doctor["special_to"].strftime("%H:%M")
-        doctor["fees"] = int(int(doctor["fees"]) * 1.12)
+        doctor["booking_fees"] = int(int(doctor["fees"]) * .12)
     return render(request,"physical-consultation.html",{"doctors":doctors})
 
 def new_physical_appointment(request):
