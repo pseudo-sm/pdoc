@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.sitemaps',
     'app',
     'tinymce',
+
 ]
 
 MIDDLEWARE = [

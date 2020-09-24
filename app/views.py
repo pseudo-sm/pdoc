@@ -766,9 +766,13 @@ def statistics(request):
     return JsonResponse(data,safe=False)
 
 def index(request):
+    index_cms = list(IndexCms.objects.all().values())
+    index_cms_data = {}
+    for item in index_cms:
+        index_cms_data.update({item["name"]:item["value"]})
     all_links = Links.objects.all()[::-1]
     feedbacks = Feedback.objects.filter(Q(status_doctor=True) | Q(status_patient=True))
-    return render(request,"index/index.html",{"links":all_links,"doctor_types":doctor_types,"paramedic_types":paramedic_types,"feedbacks":feedbacks})
+    return render(request,"index/index.html",{"links":all_links,"doctor_types":doctor_types,"paramedic_types":paramedic_types,"feedbacks":feedbacks,"index_cms":index_cms_data})
 
 
 def email_contact_form(request):
@@ -878,3 +882,45 @@ def zonal_admin_new(request):
                       "appointments":appointments.values("datetime","doctor__name","id","doctor__fees","payment_status","customer__name")
                   }
                   )
+
+
+def cms(request):
+    if request.user.is_superuser:
+        index_cms = list(IndexCms.objects.all().values())
+        index_cms_data = {}
+        index_cms_images_data = {}
+        index_images = list(CmsImages.objects.all().values())
+        for item in index_cms:
+            index_cms_data.update({item["name"]: item["value"]})
+        for item in index_images:
+            index_cms_images_data.update({item["name"]: item["alt"]})
+        return render(request,"cms/index.html",{"doctor_types":doctor_types,"paramedic_types":paramedic_types,"index_cms":index_cms_data,"alt":index_cms_images_data})
+    else:
+        return render(request,"cms/login.html")
+
+@csrf_exempt
+def cms_image(request):
+    name = request.POST.get("name")
+    alt = request.POST.get("alt")
+    cms_image = CmsImages(name=name,alt=alt)
+    cms_image.save()
+    return JsonResponse(True,safe=False)
+
+
+
+def login_action(request):
+    username = request.POST.get("username")
+    password = request.POST.get("password")
+    user = auth.authenticate(request,username=username,password=password)
+    auth.login(request,user)
+    return redirect("/cms/")
+
+@csrf_exempt
+def update_cms(request):
+    cms_data = json.loads(request.POST.get("data"))
+    all_index = IndexCms.objects.all()
+    for key in cms_data:
+        this_index = all_index.get(name=key)
+        this_index.value = cms_data[key]
+        this_index.save()
+    return JsonResponse(True,safe=False)

@@ -279,3 +279,20 @@ class Diagnostic_Test(models.Model):
 
     def __str__(self):
         return self.title
+
+class IndexCms(models.Model):
+
+    name = models.CharField(max_length=1000)
+    value = models.TextField()
+
+    def __str__(self):
+        return self.name
+
+class CmsImages(models.Model):
+
+    image = models.FileField(upload_to="cms/",null=True,blank=True)
+    name = models.CharField(max_length=100)
+    alt = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.name

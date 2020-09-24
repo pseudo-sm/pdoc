@@ -28,7 +28,10 @@ sitemaps = {
 
 
 urlpatterns = [
-        url(r'^sitemap\.xml/$', sitemap, {'sitemaps' : sitemaps } , name='sitemap'),
+        path("cms/",views.cms,name="cms"),
+        path("login-action/",views.login_action,name="login_action"),
+        path("update-cms/",views.update_cms,name="update_cms"),
+        path("update-cms-image/",views.cms_image,name="update_cms_image"),
         path("logout/",views.logout,name="logout"),
         path("about-us/",views.about,name="about_us"),
         path("diagnostic-cat/",views.diagnostic_cat,name="diagnostic_cat"),
