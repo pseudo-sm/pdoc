@@ -32,6 +32,7 @@ urlpatterns = [
         path("login-action/",views.login_action,name="login_action"),
         path("update-cms/",views.update_cms,name="update_cms"),
         path("update-cms-image/",views.cms_image,name="update_cms_image"),
+        path("update-index-meta/",views.cms_index_meta,name="update_index_meta"),
         path("logout/",views.logout,name="logout"),
         path("about-us/",views.about,name="about_us"),
         path("diagnostic-cat/",views.diagnostic_cat,name="diagnostic_cat"),

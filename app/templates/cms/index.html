@@ -101,6 +101,9 @@
             <button class="nav-link pc-btn pl-4 pr-4" id="save">Save</button>
           </li>
           <li class="nav-item pl-md-5 pl-sm-0 pr-md-5 pr-sm-0">
+            <button class="nav-link pc-btn pl-4 pr-4" id="add-meta" data-target="#metaModal" data-toggle="modal">Add Meta</button>
+          </li>
+          <li class="nav-item pl-md-5 pl-sm-0 pr-md-5 pr-sm-0">
             <a class="nav-link pc-btn pl-4 pr-4" href="{% url 'logout' %}">Logout</a>
           </li>
         </ul>
@@ -803,6 +806,27 @@
                 </div>
             </div>
         </div>
+        <div class="modal fade" id="metaModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="metaModalLabel">Add Meta Content</h5>
+                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">×</span>
+                </button>
+                    </div>
+                    <div class="modal-body" style="overflow-y:hidden;">
+                      Meta Keywords : <input type="text" class="form-control" id="meta-keywords" value="{{meta.keywords}}">
+                      Meta Description : <textarea id="meta-description" class="form-control">{{meta.description}}</textarea>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                        <button class="btn btn-primary" type="button" id="save-meta">Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <script>
           $("#edit-how-we-work-images").click(function() {
             $('#exampleModal').modal('toggle');
@@ -857,6 +881,25 @@
               }
             });
 
+       });
+
+       $("#save-meta").click(function() {
+          keywords = $("#meta-keywords").val();
+          description = $("#meta-description").val();
+          console.log(keywords);
+          console.log(description);
+          $.ajax({
+              url: "{% url 'update_index_meta' %}",
+              type: 'POST',
+              data: {
+                "keywords":keywords,
+                "description":description
+              },
+              dataType: 'json',
+              success: function (res) {
+                  alert('saved');
+              }
+            });
        });
         </script>
 

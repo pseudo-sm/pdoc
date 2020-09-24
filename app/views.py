@@ -768,11 +768,14 @@ def statistics(request):
 def index(request):
     index_cms = list(IndexCms.objects.all().values())
     index_cms_data = {}
+    keywords = IndexCms.objects.get(name="meta_keywords")
+    description = IndexCms.objects.get(name="meta_description")
+    meta = {"keywords":keywords.value,"description":description.value}
     for item in index_cms:
         index_cms_data.update({item["name"]:item["value"]})
     all_links = Links.objects.all()[::-1]
     feedbacks = Feedback.objects.filter(Q(status_doctor=True) | Q(status_patient=True))
-    return render(request,"index/index.html",{"links":all_links,"doctor_types":doctor_types,"paramedic_types":paramedic_types,"feedbacks":feedbacks,"index_cms":index_cms_data})
+    return render(request,"index/index.html",{"links":all_links,"doctor_types":doctor_types,"paramedic_types":paramedic_types,"feedbacks":feedbacks,"index_cms":index_cms_data,"meta":meta})
 
 
 def email_contact_form(request):
@@ -890,13 +893,28 @@ def cms(request):
         index_cms_data = {}
         index_cms_images_data = {}
         index_images = list(CmsImages.objects.all().values())
+        keywords = IndexCms.objects.get(name="meta_keywords")
+        description = IndexCms.objects.get(name="meta_description")
+        meta = {"keywords":keywords.value,"description":description.value}
         for item in index_cms:
             index_cms_data.update({item["name"]: item["value"]})
         for item in index_images:
             index_cms_images_data.update({item["name"]: item["alt"]})
-        return render(request,"cms/index.html",{"doctor_types":doctor_types,"paramedic_types":paramedic_types,"index_cms":index_cms_data,"alt":index_cms_images_data})
+        return render(request,"cms/index.html",{"doctor_types":doctor_types,"paramedic_types":paramedic_types,"index_cms":index_cms_data,"alt":index_cms_images_data,"meta":meta})
     else:
         return render(request,"cms/login.html")
+
+@csrf_exempt
+def cms_index_meta(request):
+    keywords = request.POST.get("keywords")
+    description = request.POST.get("description")
+    keywords_obj = IndexCms.objects.get(name="meta_keywords")
+    description_obj = IndexCms.objects.get(name="meta_description")
+    keywords_obj.value = keywords
+    keywords_obj.save()
+    description_obj.value = description
+    description_obj.save()
+    return JsonResponse(True,safe=False)
 
 @csrf_exempt
 def cms_image(request):
