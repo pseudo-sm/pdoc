@@ -49,9 +49,9 @@
       background-color: tomato !important;
     }
     .dashboard-doc-list {
-        border: none;
+      border: none;
       border-radius: 25px;
-      box-shadow:inset 0px 0px 10px #0d214934;
+      box-shadow:inset 0px 0px 10px #0d214934; 
       background-color: white;
       border-radius: 0px !important;
       border-top-left-radius: 5px !important;
@@ -79,9 +79,46 @@
 </head>
 
 <body>
-  <div id="loader-div">
-    <div id="loader" class="center"></div>
+  <!-- loader -->
+  <div id="overlay">
+    <div id="progstat"></div>
+    <div id="progress"></div>
   </div>
+  <script>
+    // loader
+    ;(function(){
+      function id(v){return document.getElementById(v); }
+      function loadbar() {
+        var ovrl = id("overlay"),
+            prog = id("progress"),
+            stat = id("progstat"),
+            img = document.images,
+            c = 0;
+            tot = img.length;
+    
+        function imgLoaded(){
+          c += 1;
+          var perc = ((100/tot*c) << 0) +"%";
+          prog.style.width = perc;
+          stat.innerHTML = "Loading "+ perc;
+          if(c===tot) return doneLoading();
+        }
+        function doneLoading(){
+          ovrl.style.opacity = 0;
+          setTimeout(function(){ 
+            ovrl.style.display = "none";
+          }, 1200);
+        }
+        for(var i=0; i<tot; i++) {
+          var tImg     = new Image();
+          tImg.onload  = imgLoaded;
+          tImg.onerror = imgLoaded;
+          tImg.src     = img[i].src;
+        }    
+      }
+      document.addEventListener('DOMContentLoaded', loadbar, false);
+    }());
+  </script>
   <!-- header -->
   <nav class="navbar navbar-expand-lg navbar-light bg-bark fixed-top scrld def-scrl">
     <div class="container-fluid">
@@ -378,21 +415,6 @@
     });
 
 });
-
-function searching() {
-    var input, filter, temx, i, txtValue;
-    input = document.getElementById("inputval");
-    filter = input.value.toUpperCase();
-    for (i = 0; i < $(".docs-col").length ; i++) {
-        temx = $(".docs-col")[i];
-        txtValue = temx.textContent || temx.innerText;
-        if (txtValue.toUpperCase().indexOf(filter) > -1) {
-          $(".docs-col")[i].style.display = "";
-        } else {
-          $(".docs-col")[i].style.display = "none";
-        }
-    }
-}
 </script>
 </body>
 

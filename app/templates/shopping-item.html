@@ -53,8 +53,8 @@
             }
         }
 
-        .yellow{
-            color: rgb(254,203,108);
+        .yellow {
+            color: rgb(254, 203, 108);
         }
 
         .grey-text {
@@ -105,71 +105,117 @@
 </head>
 
 <body>
+    <!-- loader -->
+    <div id="overlay">
+        <div id="progstat"></div>
+        <div id="progress"></div>
+    </div>
+    <script>
+        // loader
+        ;
+        (function () {
+            function id(v) {
+                return document.getElementById(v);
+            }
+
+            function loadbar() {
+                var ovrl = id("overlay"),
+                    prog = id("progress"),
+                    stat = id("progstat"),
+                    img = document.images,
+                    c = 0;
+                tot = img.length;
+
+                function imgLoaded() {
+                    c += 1;
+                    var perc = ((100 / tot * c) << 0) + "%";
+                    prog.style.width = perc;
+                    stat.innerHTML = "Loading " + perc;
+                    if (c === tot) return doneLoading();
+                }
+
+                function doneLoading() {
+                    ovrl.style.opacity = 0;
+                    setTimeout(function () {
+                        ovrl.style.display = "none";
+                    }, 1200);
+                }
+                for (var i = 0; i < tot; i++) {
+                    var tImg = new Image();
+                    tImg.onload = imgLoaded;
+                    tImg.onerror = imgLoaded;
+                    tImg.src = img[i].src;
+                }
+            }
+            document.addEventListener('DOMContentLoaded', loadbar, false);
+        }());
+    </script>
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-bark fixed-top scrld  def-scrl">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="#">
-        <img src="{% static 'index/site_images/logo.png' %}" height="60" alt=""> <a href="#"
-          class="d-sm-none d-md-block">PDOCHEALTH</a>
-      </a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
-        aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarResponsive">
-        <ul class="navbar-nav ml-auto">
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'index' %}">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'doctors' %}">Doctors</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'physical_consultation' %}">Physical Consultation</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'blog_list' %}">Articles</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'important_links' %}">Important Links</a>
-          </li>
-          <!--          <li class="nav-item dropdown dmenu">-->
-          <!--            <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">-->
-          <!--              More-->
-          <!--            </a>-->
-          <!--            <div class="dropdown-menu sm-menu">-->
-          <!--              <a class="dropdown-item" href="{% url 'blog_list' %}">Articles</a>-->
-          <!--              <a class="dropdown-item" href="{% url 'important_links' %}">Important Links</a>-->
-          <!--            </div>-->
-          <!--          </li>-->
-          <!--          <li class="nav-item dropdown dmenu">-->
-          <!--            <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">-->
-          <!--              Paramedics Signup-->
-          <!--            </a>-->
-          <!--            <div class="dropdown-menu sm-menu">-->
-          <!--              <a class="dropdown-item" href="{% url 'paramedic_health_and_fitness_advisor' %}">Health and Fitness Advise</a>-->
-          <!--              <a class="dropdown-item" href="{% url 'paramedic_physiotherapy' %}">Physiotherapist</a>-->
-          <!--              <a class="dropdown-item" href="{% url 'paramedic_clinical_pscyhiatry' %}">Clinical Psychiatry</a>-->
-          <!--              <a class="dropdown-item" href="{% url 'paramedic_yoga_guru' %}">Yoga Guru</a>-->
-          <!--              <a class="dropdown-item" href="#">Drug House</a>-->
-          <!--              <a class="dropdown-item" href="#">Diagnostics</a>-->
-          <!--            </div>-->
-          <!--          </li>-->
-          <li class="nav-item">
-            <a class="nav-link pl-md-3 pl-sm-0" href="{% url 'doctor_registration' %}"><i class="fa fa-stethoscope"></i> &nbsp;Join
-              Us</a>
-          </li>
-          <li class="nav-item pl-md-5 pl-sm-0 pr-md-5 pr-sm-0">
-            {% if logout %}
-            <a class="nav-link pc-btn pl-4 pr-4" href="{% url 'logout' %}">Logout</a>
-            {% else %}
-            <a class="nav-link pc-btn pl-4 pr-4" href="{% url 'signup_customer' %}">Patient Corner</a>
-            {% endif %}
-          </li>
-        </ul>
-      </div>
-    </div>
-  </nav>
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <img src="{% static 'index/site_images/logo.png' %}" height="60" alt=""> <a href="#"
+                    class="d-sm-none d-md-block">PDOCHEALTH</a>
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'index' %}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'doctors' %}">Doctors</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'physical_consultation' %}">Physical Consultation</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'blog_list' %}">Articles</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'important_links' %}">Important Links</a>
+                    </li>
+                    <!--          <li class="nav-item dropdown dmenu">-->
+                    <!--            <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">-->
+                    <!--              More-->
+                    <!--            </a>-->
+                    <!--            <div class="dropdown-menu sm-menu">-->
+                    <!--              <a class="dropdown-item" href="{% url 'blog_list' %}">Articles</a>-->
+                    <!--              <a class="dropdown-item" href="{% url 'important_links' %}">Important Links</a>-->
+                    <!--            </div>-->
+                    <!--          </li>-->
+                    <!--          <li class="nav-item dropdown dmenu">-->
+                    <!--            <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">-->
+                    <!--              Paramedics Signup-->
+                    <!--            </a>-->
+                    <!--            <div class="dropdown-menu sm-menu">-->
+                    <!--              <a class="dropdown-item" href="{% url 'paramedic_health_and_fitness_advisor' %}">Health and Fitness Advise</a>-->
+                    <!--              <a class="dropdown-item" href="{% url 'paramedic_physiotherapy' %}">Physiotherapist</a>-->
+                    <!--              <a class="dropdown-item" href="{% url 'paramedic_clinical_pscyhiatry' %}">Clinical Psychiatry</a>-->
+                    <!--              <a class="dropdown-item" href="{% url 'paramedic_yoga_guru' %}">Yoga Guru</a>-->
+                    <!--              <a class="dropdown-item" href="#">Drug House</a>-->
+                    <!--              <a class="dropdown-item" href="#">Diagnostics</a>-->
+                    <!--            </div>-->
+                    <!--          </li>-->
+                    <li class="nav-item">
+                        <a class="nav-link pl-md-3 pl-sm-0" href="{% url 'doctor_registration' %}"><i
+                                class="fa fa-stethoscope"></i> &nbsp;Join
+                            Us</a>
+                    </li>
+                    <li class="nav-item pl-md-5 pl-sm-0 pr-md-5 pr-sm-0">
+                        {% if logout %}
+                        <a class="nav-link pc-btn pl-4 pr-4" href="{% url 'logout' %}">Logout</a>
+                        {% else %}
+                        <a class="nav-link pc-btn pl-4 pr-4" href="{% url 'signup_customer' %}">Patient Corner</a>
+                        {% endif %}
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
     <!-- Product info -->
     <section class=" bgDuo shopping-item">
         <div class="container">
@@ -231,17 +277,17 @@
                         portable compressed
                         oxygen gas filled in a canister. The air
                         we breathe contains only 21% oxygen. However, in oxygize, the oxygen gas is 100% pure oxygen.
-<!--                        <small><a class="call-us" target="_blank" href="https://oxygize.in/">Know More...</a></small>-->
+                        <!--                        <small><a class="call-us" target="_blank" href="https://oxygize.in/">Know More...</a></small>-->
                     </h5>
                     <h6 class="mt-4">In Stock</h6>
                     <p class="mt-4">
                         <span class="fa fa-star yellow"></span>
                         <span class="fa fa-star yellow"></span>
                         <span class="fa fa-star yellow"></span>
-                        <span class="fa fa-star yellow"></span> 
+                        <span class="fa fa-star yellow"></span>
                         <span class="fa fa-star yellow"></span>
                         <span> &nbsp;&nbsp;&nbsp;(4.97 - 172 reviews)</span>
-                      </p>
+                    </p>
                     <p class="quantity mt-2" style="display:none;">Quantity &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         <button class="btn rem angle"><span class="fa fa-minus"></span></button>&nbsp;&nbsp;&nbsp;&nbsp;
                         <span id="quant">1</span>&nbsp;&nbsp;&nbsp;&nbsp;
@@ -296,22 +342,22 @@
         </div>
         <div class="copyright pt-3 pb-3">
             <div class="container">
-              <div class="row">
-                <div class="col-md-4">
-                  <span>© 2020 PDOC Health | All Right Reserved.</span>
+                <div class="row">
+                    <div class="col-md-4">
+                        <span>© 2020 PDOC Health | All Right Reserved.</span>
+                    </div>
+                    <div class="col-md-8 d-sm-none d-md-block">
+                        <div class="copyright-menu">
+                            <ul>
+                                <li><a href="{% url 'terms' %}">Terms & Conditions</a></li>
+                                <li><a href="{% url 'privacy_policy' %}">Privacy Policy</a></li>
+                                <li><a href="{% url 'refund_policy' %}">Refund Policy</a>/li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
-                <div class="col-md-8 d-sm-none d-md-block">
-                  <div class="copyright-menu">
-                    <ul>
-                      <li><a href="{% url 'terms' %}">Terms & Conditions</a></li>
-                      <li><a href="{% url 'privacy_policy' %}">Privacy Policy</a></li>
-                      <li><a href="{% url 'refund_policy' %}">Refund Policy</a>/li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
             </div>
-          </div>
+        </div>
         <!-- Back to top -->
         <div id="back-to-top" class="back-to-top">
             <button class="btn btn-dark" title="Back to Top" style="display: block;" onclick="topFunction()">

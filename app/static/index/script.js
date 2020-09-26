@@ -1,3 +1,13 @@
+// document.onreadystatechange = function () {
+//   if (document.readyState !== "complete") {
+//     document.querySelector("body").style.visibility = "hidden";
+//     document.querySelector("#loader-div").style.visibility = "visible";
+//     document.querySelector("#loader-div").style.backgroundColor = "white";
+//   } else {
+//     document.querySelector("#loader-div").style.visibility = "hidden";
+//     document.querySelector("body").style.visibility = "visible";
+//   }
+// };
 function checkScroll() {
   var startY = $('.navbar').height() * 2; //The point where the navbar changes in px
 
@@ -68,15 +78,7 @@ AOS.init({
 function statsHide() {
   $("#mySidenav").hide();
 };
-document.onreadystatechange = function () {
-  if (document.readyState !== "complete") {
-    document.querySelector("body").style.visibility = "hidden";
-    document.querySelector("#loader").style.visibility = "visible";
-  } else {
-    document.querySelector("#loader").style.display = "none";
-    document.querySelector("body").style.visibility = "visible";
-  }
-};
+
 
 function remove_alert() {
   alert = document.getElementsByClassName("alert")[0];
@@ -94,3 +96,17 @@ setTimeout(function(){
 function closeToast() {
 	$("#snackbar").hide(500);
   }
+  function searching() {
+    var input, filter, temx, i, txtValue;
+    input = document.getElementById("inputval");
+    filter = input.value.toUpperCase();
+    for (i = 0; i < $(".docs-col").length ; i++) {
+        temx = $(".docs-col")[i];
+        txtValue = temx.textContent || temx.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+          $(".docs-col")[i].style.display = "";
+        } else {
+          $(".docs-col")[i].style.display = "none";
+        }
+    }
+}
