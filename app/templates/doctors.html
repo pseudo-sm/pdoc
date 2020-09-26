@@ -33,12 +33,21 @@
       border-bottom-left-radius: 5px !important;
       border-bottom-right-radius: 5px !important;
     }
-
+    .ser-sch-btn{
+      background-color: #0d2149;
+      color: white;
+      border: none;
+      border-radius: 0px !important;
+      border-radius: 5px !important;
+    }
     .dashboard-sch-btn:hover {
       color: #d1d1d1;
       margin: 0px !important;
     }
-
+    .ser-sch-btn:hover{
+      color: #ffffff !important;
+      background-color: tomato !important;
+    }
     .dashboard-doc-list {
         border: none;
       border-radius: 25px;
@@ -74,7 +83,7 @@
     <div id="loader" class="center"></div>
   </div>
   <!-- header -->
-  <nav class="navbar navbar-expand-lg navbar-light bg-bark fixed-top unscrld">
+  <nav class="navbar navbar-expand-lg navbar-light bg-bark fixed-top scrld def-scrl">
     <div class="container-fluid">
       <a class="navbar-brand" href="#">
         <img src="{% static 'index/site_images/logo.png' %}" height="60" alt=""> <a href="#"
@@ -144,14 +153,14 @@
   </nav>
   <!-- search -->
   <section class="pt-5 mt-5  plusBG greyBG">
-    <div class="container p-5">
+    <div class="container pt-5 pb-5">
         <div class="row">
-            <div class="col-10">
-                <input class="form-control" type="text" name="" id="" placeholder="Enter Keyword">
+            <div class="col-12">
+                <input class="form-control p-4  " type="text" name="" onkeyup="searching()" id="inputval" placeholder="Enter Keyword">
             </div>
-            <div class="col-2">
-                <input class="form-control btn btn-block btn-outline-primary" type="submit" name="" id="">
-            </div>
+            <!-- <div class="col-2">
+                <input class="form-control btn btn-block btn-outline-primary ser-sch-btn" type="submit" name="Search" value="Search" id="">
+            </div> -->
         </div>
     </div>
   </section>
@@ -257,7 +266,7 @@
                         result.empty();
                         for (i = 0; i < res.length; i++) {
 
-                            temp = '<div class="col-12 col-md-4 col-sm-12 mb-3"> \
+                            temp = '<div class="col-12 col-md-4 col-sm-12 mb-3 docs-col"> \
                         <div class="pl-4 pt-4 pr-4 dashboard-doc-list"> \
                         <span class="appoin-no"><small>' + res[i].type_id__name + '</small></span><br><br> \
                         <p class="text-center"> \
@@ -369,6 +378,21 @@
     });
 
 });
+
+function searching() {
+    var input, filter, temx, i, txtValue;
+    input = document.getElementById("inputval");
+    filter = input.value.toUpperCase();
+    for (i = 0; i < $(".docs-col").length ; i++) {
+        temx = $(".docs-col")[i];
+        txtValue = temx.textContent || temx.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+          $(".docs-col")[i].style.display = "";
+        } else {
+          $(".docs-col")[i].style.display = "none";
+        }
+    }
+}
 </script>
 </body>
 
