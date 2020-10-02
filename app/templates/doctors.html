@@ -15,8 +15,8 @@
   <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
   <link rel="stylesheet" href="{% static 'index/style.css' %}">
   <style>
-    .appoin-no {
-      border-bottom: solid .7px #0d2149;
+    .appoin-no{
+      border-bottom: #0d2149 solid 0.5px;
       padding-top: 2px;
       padding-bottom: 2px;
     }
@@ -29,25 +29,29 @@
       border-bottom-left-radius: 5px !important;
       border-bottom-right-radius: 5px !important;
     }
-    .ser-sch-btn{
+
+    .ser-sch-btn {
       background-color: #0d2149;
       color: white;
       border: none;
       border-radius: 0px !important;
       border-radius: 5px !important;
     }
+
     .dashboard-sch-btn:hover {
       color: #d1d1d1;
       margin: 0px !important;
     }
-    .ser-sch-btn:hover{
+
+    .ser-sch-btn:hover {
       color: #ffffff !important;
       background-color: tomato !important;
     }
+
     .dashboard-doc-list {
       border: none;
       border-radius: 25px;
-      box-shadow:inset 0px 0px 10px #0d214934; 
+      box-shadow: inset 0px 0px 10px #0d214934;
       background-color: white;
       border-radius: 0px !important;
       border-top-left-radius: 5px !important;
@@ -56,20 +60,23 @@
 
       transition: all 0.3s linear;
     }
-    .dashboard-doc-list:hover{
+
+    .dashboard-doc-list-main:hover .dashboard-doc-list,
+    .dashboard-doc-list-main:hover .dashboard-sch-btn {
       border: none;
       border-radius: 15px;
       box-shadow: 0px 0px 20px #0d214934;
-      transform:scale(1.01);
+      transform: scale(1.01);
     }
 
     @media only screen and (min-width: 600px) {
-      .medical-name{
+      .medical-name {
         min-height: 3em !important;
       }
     }
-    .greyBG{
-        background-color: rgba(128, 128, 128, 0.116);
+
+    .greyBG {
+      background-color: rgba(128, 128, 128, 0.116);
     }
   </style>
 </head>
@@ -185,15 +192,12 @@
     </div>
   </nav>
   <!-- search -->
-  <section class="pt-5 mt-5  plusBG greyBG">
-    <div class="container pt-5 pb-5">
+  <section class="pt-5 mt-5  plusBG greyBG search-sec">
+    <div class="container pt-md-4 pb-md-5 pt-1 pb-4">
         <div class="row">
             <div class="col-12">
                 <input class="form-control p-4  " type="text" name="" onkeyup="searching()" id="inputval" placeholder="Enter Keyword">
             </div>
-            <!-- <div class="col-2">
-                <input class="form-control btn btn-block btn-outline-primary ser-sch-btn" type="submit" name="Search" value="Search" id="">
-            </div> -->
         </div>
     </div>
   </section>
@@ -290,7 +294,7 @@
                         result.empty();
                         for (i = 0; i < res.length; i++) {
 
-                            temp = '<div class="col-12 col-md-4 col-sm-12 mb-3 docs-col"> \
+                            temp = '<div class="col-12 col-md-4 col-sm-12 mb-3 docs-col dashboard-doc-list-main"> \
                         <div class="pl-4 pt-4 pr-4 dashboard-doc-list"> \
                         <span class="appoin-no"><small>' + res[i].type_id__name + '</small></span><br><br> \
                         <p class="text-center"> \

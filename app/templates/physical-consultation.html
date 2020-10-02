@@ -28,39 +28,40 @@
       border-radius: 0px !important;
       border-bottom-left-radius: 5px !important;
       border-bottom-right-radius: 5px !important;
-    }
-
-    .dashboard-sch-btn:hover {
-      color: #d1d1d1;
-      margin: 0px !important;
+      transition: all 0.3s linear;
     }
 
     .dashboard-doc-list {
-        border: none;
+      border: none;
       border-radius: 25px;
-      box-shadow:inset 0px 0px 10px #0d214934;
+      box-shadow: inset 0px 0px 10px #0d214934;
       background-color: white;
       border-radius: 0px !important;
       border-top-left-radius: 5px !important;
       border-top-right-radius: 5px !important;
       padding: 0px;
-
       transition: all 0.3s linear;
     }
-    .dashboard-doc-list:hover{
+
+    .dashboard-doc-list-main:hover .dashboard-doc-list, .dashboard-doc-list-main:hover .dashboard-sch-btn{
       border: none;
       border-radius: 15px;
       box-shadow: 0px 0px 20px #0d214934;
-      transform:scale(1.01);
+      transform: scale(1.01);
+    }
+
+    .appoin-no{
+      border-bottom: #0d2149 solid 0.5px;
     }
 
     @media only screen and (min-width: 600px) {
-      .medical-name{
+      .medical-name {
         min-height: 3em !important;
       }
     }
-    .greyBG{
-        background-color: rgba(128, 128, 128, 0.116);
+
+    .greyBG {
+      background-color: rgba(128, 128, 128, 0.116);
     }
   </style>
 </head>
@@ -177,14 +178,11 @@
   </nav>
   <!-- search -->
   <section class="pt-5 mt-5  plusBG greyBG">
-    <div class="container p-5">
+    <div class="container  pt-md-4 pb-md-5 pt-1 pb-4">
         <div class="row">
             <div class="col-12">
                 <input class="form-control" type="text" onkeyup="searching()" name="" id="inputval" placeholder="Enter Keyword">
             </div>
-            <!-- <div class="col-2">
-                <input class="form-control btn btn-block btn-outline-primary" type="submit" name="" id="">
-            </div> -->
         </div>
     </div>
   </section>
@@ -193,7 +191,7 @@
     <div class="container">
       <div class="row doctors-results">
           {% for doctor in doctors %}
-        <div class="col-12 col-md-4 col-sm-12 mb-3 docs-col">
+        <div class="col-12 col-md-4 col-sm-12 mb-3 docs-col dashboard-doc-list-main">
             <div class="pl-4 pt-4 pr-4 dashboard-doc-list">
                 <span class="appoin-no"><small>{{doctor.type_id__name}}</small></span><br><br>
                         <p class="text-center">
@@ -280,10 +278,6 @@
   <script src="https://owlcarousel2.github.io/OwlCarousel2/assets/owlcarousel/owl.carousel.js"></script>
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
   <script src="{% static 'index/script.js' %}"></script>
-  <script>
-
-
-  </script>
 
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-scrollable" role="document">
@@ -308,7 +302,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+</div>
 <script>
     $(document).on('click', '.book-appointment', function(){
             doctor = $(this).attr("doctor-id");

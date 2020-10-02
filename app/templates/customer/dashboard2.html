@@ -65,8 +65,8 @@
             flex-wrap: nowrap;
         }
 
-        .appoin-no {
-            border-bottom: solid .7px #0d2149;
+        .appoin-no{
+            border-bottom: #0d2149 solid 0.5px;
             padding-top: 2px;
             padding-bottom: 2px;
         }
@@ -138,12 +138,9 @@
             border-radius: 0px !important;
             border-bottom-left-radius: 5px !important;
             border-bottom-right-radius: 5px !important;
+            transition: all 0.3s linear;
         }
 
-        .dashboard-sch-btn:hover {
-            color: #d1d1d1;
-            margin: 0px !important;
-        }
 
         .dashboard-doc-list {
             border: none;
@@ -157,7 +154,7 @@
             transition: all 0.3s linear;
         }
 
-        .dashboard-doc-list:hover {
+        .dashboard-doc-list-main:hover .dashboard-doc-list,.dashboard-doc-list-main:hover .dashboard-sch-btn{
             border: none;
             border-radius: 15px;
             box-shadow: 0px 0px 20px #0d214934;
@@ -1067,7 +1064,7 @@
                     result.empty();
                     for (i = 0; i < res.length; i++) {
 
-                        temp = '<div class="col-12 col-md-4 col-sm-12 mb-3"> \
+                        temp = '<div class="col-12 col-md-4 col-sm-12 mb-3 dashboard-doc-list-main"> \
                         <div class="pl-4 pt-4 pr-4 dashboard-doc-list"> \
                         <span class="appoin-no"><small>' + res[i].type_id__name + '</small></span><br><br> \
                         <p class="text-center"> \
