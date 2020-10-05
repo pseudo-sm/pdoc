@@ -800,7 +800,7 @@ def new_lead(request):
     lead.save()
     body = "Doctor : {}\n Name : {}\n Phone : {}\n Query : {}  ".format(doctor,name,phone,query)
     email_msg = EmailMessage("New Lead", body, settings.EMAIL_HOST_USER,
-                             ["saswath@pdochealth.com"])
+                             ["saswath@pdochealth.com","care@pdochealth.com"])
     email_msg.send(fail_silently=False)
     return JsonResponse(True,safe=False)
 
