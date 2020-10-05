@@ -440,8 +440,6 @@ def zonal_admin(request):
     appointments = Appointments.objects.filter(Q(status="0") | Q(status="3"))
     # paramedic_bookings = ParamedicBookings.objects.filter(status="0")
     appointments = appointments.values("id","name","phone","datetime","doctor__name","doctor__phone","query","type","status","payment_status")
-    for row in appointments:
-        print(row["payment_status"],row["id"])
     return render(request,"Zonal Admin/index.html",{"appointments":appointments[::-1]})
 
 def zonal_admin_settlements(request):

@@ -26,7 +26,7 @@
                 <th>Revisit</th>
             </tr>
             {% for appointment in appointments %}
-            <tr class="doctor-row-{{appointment.id}}" {% if appointment.payment_status %} style="background-color:red;color:white;" {% endif %}>
+            <tr class="doctor-row-{{appointment.id}}" {% if appointment.payment_status %}  {% else %} style="background-color:red;color:white;" {% endif %}>
                 <td>{{appointment.id}}</td>
                 <td>{{appointment.name}}</td>
                 <td>{{appointment.phone}}</td>
