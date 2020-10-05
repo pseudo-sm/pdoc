@@ -26,7 +26,7 @@ from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 doctor_types = Type.objects.filter(type_category=1).order_by("name")
 paramedic_types = Type.objects.filter(type_category=2)
-client = razorpay.Client(auth=("rzp_live_7VShD4pzdX6r0m", "HFFXrT0KRIObgzB7SvU7JdZG"))
+client = razorpay.Client(auth=("rzp_live_Be03UWX2NInES3", "18RCEKnakhHbq5C6tD60fYch"))
 
 import pyrebase
 
