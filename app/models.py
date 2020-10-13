@@ -296,3 +296,7 @@ class CmsImages(models.Model):
 
     def __str__(self):
         return self.name
+
+class OTP(models.Model):
+    phone = models.CharField(max_length=100)
+    otp = models.CharField(max_length=10)

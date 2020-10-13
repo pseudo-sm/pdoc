@@ -2,6 +2,7 @@ import random
 import string
 import os
 import pytz
+import requests
 from django.db.models import Q
 from django.views.static import serve
 from django.conf import settings
@@ -215,7 +216,7 @@ def signup_customer(request):
         return redirect("/patient-dashboard/")
     terms = Terms.objects.all()
     terms = terms.last()
-    return render(request,"sign-up-customer.html",{"doctor_types":doctor_types,"paramedic_types":paramedic_types,"terms":terms,"login_message":login_message})
+    return render(request,"signup-customer-2.html",{"doctor_types":doctor_types,"paramedic_types":paramedic_types,"terms":terms,"login_message":login_message})
 
 
 def payment(request):
@@ -940,3 +941,51 @@ def update_cms(request):
         this_index.value = cms_data[key]
         this_index.save()
     return JsonResponse(True,safe=False)
+
+def generate_otp(phone):
+    OTP.objects.filter(phone=phone).delete()
+    otp_no = random.randint(100000,999999)
+    otp = OTP(phone=phone,otp=otp_no)
+    otp.save()
+    return otp_no
+
+def send_otp(request):
+    phone = request.GET.get("phone")
+    customers = Customer.objects.filter(phone=phone)
+    if len(customers) > 0:
+
+        url = "https://http-api.d7networks.com/send"
+        otp = generate_otp(phone)
+        querystring = {
+            "username": "nkup4859",
+            "password": "eIhE4FZP",
+            "from": "pdochealth",
+            "content": "{} is your otp for verification on www.pdochealth.com".format(otp),
+            "dlr-method": "POST",
+            "dlr-url": "https://4ba60af1.ngrok.io/receive",
+            "dlr": "yes",
+            "dlr-level": "3",
+            "to": "+91"+phone
+        }
+        headers = {
+            'cache-control': "no-cache"
+        }
+        response = requests.request("GET", url, headers=headers, params=querystring)
+        print(response)
+        print(response.content)
+        print(response.content)
+        return JsonResponse(True,safe=False)
+    else:
+        return JsonResponse(False,safe=False)
+
+def otp_login(request):
+
+    phone = request.GET.get("phone")
+    otp = request.GET.get("otp")
+    verified = OTP.objects.filter(otp=otp,phone=phone)
+    if len(verified) > 0:
+        customer = Customer.objects.get(phone=phone)
+        auth.login(request,customer.user_id)
+        return JsonResponse({"status":True},safe=False)
+    else:
+        return JsonResponse({"status":False},safe=False)
