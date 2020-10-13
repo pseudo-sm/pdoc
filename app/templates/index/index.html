@@ -34,7 +34,7 @@
             img = document.images,
             c = 0;
             tot = img.length;
-    
+
         function imgLoaded(){
           c += 1;
           var perc = ((100/tot*c) << 0) +"%";
@@ -44,7 +44,7 @@
         }
         function doneLoading(){
           ovrl.style.opacity = 0;
-          setTimeout(function(){ 
+          setTimeout(function(){
             ovrl.style.display = "none";
           }, 1200);
         }
@@ -53,7 +53,7 @@
           tImg.onload  = imgLoaded;
           tImg.onerror = imgLoaded;
           tImg.src     = img[i].src;
-        }    
+        }
       }
       document.addEventListener('DOMContentLoaded', loadbar, false);
     }());
@@ -219,7 +219,7 @@
               <br><small>{{index_cms.how_to_head_sub}}</small>
             </h3>
           </div>
-          
+
           <!--          <img class="mt-5" style="width: 80%;" src="{% static 'index/site_images/tv.png' %}" alt="" srcset="">-->
           <div class="container-lg my-3 ">
             <div id="myCarousel" class="carousel slide" data-ride="carousel">
@@ -568,7 +568,7 @@
       </style>
       <div class="container contact-loader">
         <div id="loader-div">
-          <div id="loader" class="center"></div> 
+          <div id="loader" class="center"></div>
         </div>
       </div>
     </section>
@@ -766,7 +766,7 @@
             }
         }
       }
-                
+
       if (proceed) {
         $("#message").css('border-color', 'white');
         $("#phone").css('border-color', 'white');
