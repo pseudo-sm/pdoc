@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en-US">
+{% load static %}
+{% include 'head.html' %}
+<body>
+    <style>
+        .loader {
+          border: 16px solid #f3f3f3; /* Light grey */
+          border-top: 16px solid #3498db; /* Blue */
+          border-radius: 50%;
+          width: 120px;
+          height: 120px;
+          animation: spin 2s linear infinite;
+        }
+
+        @keyframes spin {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }
+    </style>
+
+    {% include 'navigation.html' %}
+    <!-- // Header  -->
+    <div id="page-title" class="padding-tb-30px gradient-white">
+        <div class="container">
+            <ol class="breadcrumb opacity-5">
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Paramedics</a></li>
+                <li class="active">Clinical Psychiatry </li>
+            </ol>
+            <h1 class="font-weight-300">Clinical Psychiatry</h1>
+        </div>
+    </div>
+
+
+    <div class="margin-tb-30px ">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 col-sm-push-8 results" >
+                    <div class="row">
+                    {% for clinical_psychiatry in clinical_psychiatrys %}
+                        <div class="col-lg-6 col-md-6 hvr-bob margin-bottom-45px">
+                            <div class="background-white box-shadow">
+                                <div class="padding-30px">
+                                    <h5 class="margin-tb-15px"><a class="text-dark" href="#">{{clinical_psychiatry.name}} ({{clinical_psychiatry.qualifications}})</a></h5>
+                                    <span class="text-grey-3"><b>{{clinical_psychiatry.designation}} | {{clinical_psychiatry.organization}}</b></span><br>
+                                    <strong>Achievements : </strong><span class="text-black-3">{{clinical_psychiatry.achievements}}</span><br>
+                                    <strong>About : </strong><span class="text-grey-4">{{clinical_psychiatry.about}}</span><br>
+                                    <strong>Address : </strong><span class="text-grey-6">{{clinical_psychiatry.address}}</span>
+                                </div>
+                                 <div data-phone="{{phone}}"  class="btn btn-primary call" style="width:100%;border-radius:0px;">Call Now({{phone}})</div></a>
+                            </div>
+                        </div>
+                    {% endfor %}
+                    </div>
+<!--                    <ul class="pagination pagination-md ">-->
+<!--                        <li class="page-item disabled"><a class="page-link rounded-0" href="#" tabindex="-1">Previous</a></li>-->
+<!--                        <li class="page-item"><a class="page-link" href="#">1</a></li>-->
+<!--                        <li class="page-item"><a class="page-link" href="#">2</a></li>-->
+<!--                        <li class="page-item"><a class="page-link" href="#">3</a></li>-->
+<!--                        <li class="page-item"><a class="page-link rounded-0" href="#">Next</a></li>-->
+<!--                    </ul>-->
+
+                </div>
+
+        </div>
+    </div>
+
+    {% include 'paramedics-show/other-services.html' %}
+    {% include 'footer.html' %}
+</body>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Terms & Conditions</h5>
+                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">×</span>
+                </button>
+                    </div>
+                    <div class="modal-body" style="overflow-y:hidden;">{{terms.value}}</div>
+                    <div class="modal-footer">
+                        <h7>Continuing to call will mean that you accept our Terms & Conditions</h7>
+                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                        <a class="btn btn-primary" id="call-now" href="">Call</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+{% include 'js.html' %}
+<script>
+    $(document).on('click', '.call', function(){
+            phone= $(this).attr("data-phone");
+            $("#call-now").attr("href","tel:+91"+phone);
+            $('#exampleModal').modal('toggle');
+});
+</script>
+</html>

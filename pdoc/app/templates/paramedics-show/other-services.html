@@ -1,0 +1,23 @@
+{% load static %}
+{% load string_ops %}
+<div class="container" style="padding:10%;">
+            <center><h3>Other Services</h3></center>
+        <div class="row">
+                <div class="col-lg-12">
+                    <div class="row" >
+                        {% for type in doctor_types %}
+                        <div class="col-md-3 col-6 sm-mb-30px wow fadeInUp" style="margin-bottom:15px;">
+                            <a href="{% url 'doctor_pages' slug=type.name|replace_filter %}" class="d-block border-radius-15 hvr-float hvr-sh2">
+                                <div class="background-main-color text-white border-radius-15 padding-20px text-center opacity-hover-7">
+                                    <div class="icon margin-bottom-15px opacity-7">
+                                        <img src="{{type.image.url}}" alt="doctors" style="max-width:25%;">
+                                    </div>
+                                    {{type.name}}
+                                </div>
+                            </a>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+        </div>
+        </div>

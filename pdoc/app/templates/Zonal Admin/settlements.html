@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="//cdn.rawgit.com/rainabba/jquery-table2excel/1.1.0/dist/jquery.table2excel.min.js"></script>
+</head>
+<body>
+<button id="download">Export to Excel</button>
+<table id="settlements" border="2">
+    <tr>
+        <td>Doctor Name</td>
+        <td>Unpaid Appointments</td>
+        <td>Total unpaid Amount</td>
+        <td>Payment Method</td>
+        <td>Appointment Ids</td>
+    </tr>
+    {% for doctor,details in doctors.items %}
+        <tr>
+            <td>{{doctor.name}}</td>
+            <td>{{details.appointments}}</td>
+            <td>{{details.fees}}</td>
+            <td>{{doctor.payment_method}}</td>
+            <td>{{details.ids}}</td>
+        </tr>
+    {% endfor %}
+</table>
+</body>
+<script>
+$("#download").click(function() {
+    $("#settlements").table2excel({
+        filename: "settlements.xls"
+    });
+})
+
+</script>
+</html>

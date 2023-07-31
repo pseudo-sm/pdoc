@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>PDOCHAELTH | OOPS</title>
+</head>
+<style>
+  @import url("https://fonts.googleapis.com/css?family=Fira+Code&display=swap");
+
+  * {
+    margin: 0;
+    padding: 0;
+    font-family: "Fira Code", monospace;
+  }
+
+  body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #ecf0f1;
+  }
+
+  .container {
+    text-align: center;
+    margin: auto;
+    padding: 4em;
+  }
+
+  .container img {
+    width: 256px;
+    height: 225px;
+  }
+
+  .container h1 {
+    margin-top: 1rem;
+    font-size: 35px;
+    text-align: center;
+  }
+
+  .container h1 span {
+    font-size: 60px;
+  }
+
+  .container p {
+    margin-top: 1rem;
+  }
+
+  .container p.info {
+    margin-top: 4em;
+    font-size: 12px;
+  }
+
+  .container p.info a {
+    text-decoration: none;
+    color: #5454ce;
+  }
+</style>
+
+<body>
+
+  <!-- loader -->
+  <div id="overlay">
+    <div id="progstat"></div>
+    <div id="progress"></div>
+  </div>
+  <script>
+    // loader
+    ;(function(){
+      function id(v){return document.getElementById(v); }
+      function loadbar() {
+        var ovrl = id("overlay"),
+            prog = id("progress"),
+            stat = id("progstat"),
+            img = document.images,
+            c = 0;
+            tot = img.length;
+    
+        function imgLoaded(){
+          c += 1;
+          var perc = ((100/tot*c) << 0) +"%";
+          prog.style.width = perc;
+          stat.innerHTML = "Loading "+ perc;
+          if(c===tot) return doneLoading();
+        }
+        function doneLoading(){
+          ovrl.style.opacity = 0;
+          setTimeout(function(){ 
+            ovrl.style.display = "none";
+          }, 1200);
+        }
+        for(var i=0; i<tot; i++) {
+          var tImg     = new Image();
+          tImg.onload  = imgLoaded;
+          tImg.onerror = imgLoaded;
+          tImg.src     = img[i].src;
+        }    
+      }
+      document.addEventListener('DOMContentLoaded', loadbar, false);
+    }());
+  </script>
+  <div class="container">
+    <img src="https://i.imgur.com/qIufhof.png" />
+
+    <h1>
+      <span>500</span> <br />
+      Internal server error
+    </h1>
+    <p>We are currently trying to fix the problem.</p>
+    <p class="info">
+      Take Me
+      <a href="https://www.kapwing.com/404-illustrations" target="_blank">HOME</a>
+      <p> If you were trying to login please visit <a href="{% url 'logout' %}">this link</a></p>
+    </p>
+  </div>
+
+</body>
+
+</html>

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <style>
+        @import url(//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css);
+        @import url('//fonts.googleapis.com/css?family=Roboto:500');
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: url(https://subtlepatterns.com/patterns/sativa.png);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        #star-widget {
+            display: flex;
+            flex-direction: row-reverse;
+            justify-content: center;
+        }
+
+        #star-widget * {
+            transition: .25s;
+        }
+
+        #star-widget input {
+            display: none;
+        }
+
+        #star-widget label {
+            padding: 4px;
+        }
+
+        #star-widget label:before {
+            font-family: FontAwesome;
+            content: "\f006";
+            font-size: 2.1em;
+            color: rgb(6, 182, 114);
+        }
+
+        #star-widget label:hover~label:before,
+        #star-widget input:checked~label:before,
+        #star-widget input:not(:checked)~label:hover:before {
+            content: "\f005";
+        }
+    </style>
+</head>
+
+<body>
+    <!-- loader -->
+    <div id="overlay">
+        <div id="progstat"></div>
+        <div id="progress"></div>
+      </div>
+      <script>
+        // loader
+        ;(function(){
+          function id(v){return document.getElementById(v); }
+          function loadbar() {
+            var ovrl = id("overlay"),
+                prog = id("progress"),
+                stat = id("progstat"),
+                img = document.images,
+                c = 0;
+                tot = img.length;
+        
+            function imgLoaded(){
+              c += 1;
+              var perc = ((100/tot*c) << 0) +"%";
+              prog.style.width = perc;
+              stat.innerHTML = "Loading "+ perc;
+              if(c===tot) return doneLoading();
+            }
+            function doneLoading(){
+              ovrl.style.opacity = 0;
+              setTimeout(function(){ 
+                ovrl.style.display = "none";
+              }, 1200);
+            }
+            for(var i=0; i<tot; i++) {
+              var tImg     = new Image();
+              tImg.onload  = imgLoaded;
+              tImg.onerror = imgLoaded;
+              tImg.src     = img[i].src;
+            }    
+          }
+          document.addEventListener('DOMContentLoaded', loadbar, false);
+        }());
+      </script>
+    <div class="container">
+        <div class="row text-center  h-100 pt-5" style="margin-top: 15%;">
+            <div class="col-10 col-md-6 col-sm-10   mx-auto my-auto mt-5 "
+                style="background-color: white;border-radius: 10px;padding: 10px;">
+                
+                <form id="star-widget">
+                    <input id="star-widget__input5" type="radio" name="star-rating" class="rate-star" value="5" checked>
+                    <label for="star-widget__input5" title="Excellent"></label>
+
+                    <input id="star-widget__input4" type="radio" name="star-rating" class="rate-star" value="4">
+                    <label for="star-widget__input4" title="Good"></label>
+
+                    <input id="star-widget__input3" type="radio" name="star-rating" class="rate-star" value="3">
+                    <label for="star-widget__input3" title="So so"></label>
+
+                    <input id="star-widget__input2" type="radio" name="star-rating" class="rate-star" value="2">
+                    <label for="star-widget__input2" title="Bad"></label>
+
+                    <input id="star-widget__input1" type="radio" name="star-rating" class="rate-star" value="1">
+                    <label for="star-widget__input1" title="Very bad"></label>
+                </form>
+                <div class="col-12 mt-4">
+                    <textarea class="w-100" name="suggestion" id="comments" cols="20" rows="5" placeholder="Any suggestion?"
+                        style="background-color:whitesmoke;border: solid 0.5px rgba(134, 134, 134, 0.267);border-radius: 10px;padding: 10px;"></textarea>
+                </div>
+                <div class="col-12 mb-3 mt-3"> <button class="btn btn-block btn-small btn-primary" id="submit">Submit</button></div>
+
+            </div>
+        </div>
+    </div>
+</body>
+    <script src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
+
+<script>
+
+$("#submit").click(function(){
+    meeting = "{{prescription_slug}}";
+    $(".rate-star").each(function(item) {
+        max = 0;
+        if($(this).is(":checked")){
+            console.log($(this).val());
+        }
+    });
+    comments = $("#comments").val();
+    $.ajax({
+    url: "/feedback-submit/",
+    data: {
+      'prescription': meeting,
+      'rating': max,
+      'comments': comments,
+    },
+    type: 'GET',
+    dataType: 'json',
+    success: function (res) {
+      window.location = "{% url 'patient_dashboard' %}";
+    }
+  });
+});
+
+</script>
+</html>

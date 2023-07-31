@@ -1,0 +1,929 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>PDOC Health | About US</title>
+    <meta charset="utf-8">
+    {% load static %}
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="google" content="notranslate">
+    <link rel="stylesheet" href="{% static 'index/style.css' %}">
+    <link rel="shortcut icon" href="{% static 'site_images/logo-sqr.png' %}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+        integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+        integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <style>
+        @media only screen and (min-width: 600px) {
+            .bgDuo {
+                background-image: url({% static 'bgDuo.png' %});
+                background-repeat: no-repeat;
+                background-size: 100% 100%;
+            }
+        }
+
+        .shopping-item {
+            margin-top: 4.7%;
+            padding-top: 4%;
+            padding-bottom: 4%;
+        }
+
+        .product-container {
+            background-color: white;
+            box-shadow: 0px 0px 15px #0d21493d;
+            border-radius: 2px;
+            padding: 3%;
+
+        }
+
+        @media only screen and (max-width: 600px) {
+            .shopping-item {
+                margin-top: 20%;
+                padding-top: 4%;
+                padding-bottom: 4%;
+            }
+
+            .product-container {
+                background-color: rgba(255, 255, 255, 0);
+                box-shadow: 0px 0px 0px #ffffff3d;
+                border-radius: 0px;
+                padding: 3%;
+
+            }
+        }
+
+        .primary-text {
+            color: #0d2149;
+        }
+
+        .our-team-section {
+            position: relative;
+            padding-top: 40px;
+            padding-bottom: 40px;
+        }
+
+        .our-team-section:before {
+            position: absolute;
+            top: -0;
+            left: 0;
+            content: " ";
+            width: 100%;
+            height: 100px;
+            float: left;
+            z-index: 99;
+        }
+
+        .our-team {
+            padding: 30px 0 40px;
+            background: #f9f9f9;
+            text-align: center;
+            overflow: hidden;
+            position: relative;
+            border-bottom: 5px solid #0D2149;
+        }
+
+        .our-team:hover {
+            border-bottom: 5px solid #2f2f2f;
+        }
+
+        .our-team .pic {
+            display: inline-block;
+            width: 130px;
+            height: 130px;
+            margin-bottom: 30px;
+            z-index: 1;
+            position: relative;
+        }
+
+        .our-team .pic:before {
+            content: "";
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: #0D2149;
+            position: absolute;
+            bottom: 135%;
+            right: 0;
+            left: 0;
+            opacity: 1;
+            transform: scale(3);
+            transition: all 0.3s linear 0s;
+        }
+
+        .our-team:hover .pic:before {
+            height: 100%;
+            background: #2f2f2f;
+        }
+
+        .our-team .pic:after {
+            content: "";
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: #ffffff00;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 1;
+            transition: all 0.3s linear 0s;
+        }
+
+        .our-team:hover .pic:after {
+            background: #D95D39;
+        }
+
+        .our-team .pic img {
+            width: 100%;
+            height: auto;
+            border-radius: 50%;
+            transform: scale(1);
+            transition: all 0.9s ease 0s;
+            box-shadow: 0 0 0 14px #f7f5ec;
+            transform: scale(0.7);
+            position: relative;
+            z-index: 2;
+        }
+
+        .our-team:hover .pic img {
+            box-shadow: 0 0 0 14px #f7f5ec;
+            transform: scale(0.7);
+        }
+
+        .our-team .team-content {
+            margin-bottom: 10px;
+        }
+
+        .our-team .title {
+            font-size: 22px;
+            font-weight: 700;
+            color: #4e5052;
+            letter-spacing: 1px;
+            text-transform: capitalize;
+            margin-bottom: 5px;
+        }
+
+        .our-team .post {
+            display: block;
+            font-size: 15px;
+            color: #4e5052;
+            text-transform: capitalize;
+        }
+
+        .our-team .social {
+            width: 100%;
+            padding: 0;
+            margin: 0;
+            background: #2f2f2f;
+            position: absolute;
+            bottom: -100px;
+            left: 0;
+            transition: all 0.5s ease 0s;
+        }
+
+        .our-team:hover .social {
+            bottom: 0;
+        }
+
+        .our-team .social li {
+            display: inline-block;
+        }
+
+        .our-team .social li a {
+            display: block;
+            padding: 10px;
+            font-size: 17px;
+            color: #fff;
+            transition: all 0.3s ease 0s;
+        }
+
+        .our-team .social li a:hover {
+            color: #2f2f2f;
+            background: #f7f5ec;
+        }
+
+        @media only screen and (max-width: 990px) {
+            .our-team {
+                margin-bottom: 30px;
+            }
+        }
+
+        /* meet the team */
+        svg {
+            max-width: 100%;
+            height: auto;
+        }
+
+        svg text {
+            fill: #0D2149;
+        }
+
+        .path {
+            animation: dash 5s ease-in-out infinite;
+        }
+
+        .about-us-head {
+            transform: rotateX(180deg);
+            color: #0D2149 !important;
+        }
+
+        @keyframes dash {
+            from {
+                stroke-dashoffset: 3000;
+            }
+
+            to {
+                stroke-dashoffset: 950;
+            }
+        }
+
+        .quotes {
+            position: absolute;
+            color: #0D2149;
+            font-size: 5em;
+        }
+
+        .leftq {
+            top: -25px;
+            left: 5px;
+        }
+
+        .rightq {
+            bottom: -10px;
+            right: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- loader -->
+    <div id="overlay">
+        <div id="progstat"></div>
+        <div id="progress"></div>
+    </div>
+    <script>
+    // loader
+    ;(function(){
+        function id(v){return document.getElementById(v); }
+        function loadbar() {
+        var ovrl = id("overlay"),
+            prog = id("progress"),
+            stat = id("progstat"),
+            img = document.images,
+            c = 0;
+            tot = img.length;
+    
+        function imgLoaded(){
+            c += 1;
+            var perc = ((100/tot*c) << 0) +"%";
+            prog.style.width = perc;
+            stat.innerHTML = "Loading "+ perc;
+            if(c===tot) return doneLoading();
+        }
+        function doneLoading(){
+            ovrl.style.opacity = 0;
+            setTimeout(function(){ 
+            ovrl.style.display = "none";
+            }, 1200);
+        }
+        for(var i=0; i<tot; i++) {
+            var tImg     = new Image();
+            tImg.onload  = imgLoaded;
+            tImg.onerror = imgLoaded;
+            tImg.src     = img[i].src;
+        }    
+        }
+        document.addEventListener('DOMContentLoaded', loadbar, false);
+    }());
+    </script>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-bark fixed-top scrld def-scrl">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="{% url 'index' %}">
+                    <img src="{% static 'index/site_images/logo.png' %}" height="40" alt="pdochealth"> <a href="{% url 'index' %}"
+                      class="d-sm-none d-md-block">PDOCHEALTH</a>
+                  </a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+                    aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'index' %}">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'doctors' %}">Doctors</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'physical_consultation' %}">Physical Consultation</a>
+                        </li>
+                        <li class="nav-item">
+<!--            <a class="nav-link" href="{% url 'blog_list' %}">Articles</a>-->
+<!--          </li>-->
+<!--          <li class="nav-item">-->
+<!--            <a class="nav-link" href="{% url 'important_links' %}">Important Links</a>-->
+<!--          </li>-->
+                    <li class="nav-item dropdown dmenu">
+                      <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                        More
+                      </a>
+                      <div class="dropdown-menu sm-menu">
+                        <a class="dropdown-item" href="{% url 'blog_list' %}">Articles</a>
+                        <a class="dropdown-item" href="{% url 'important_links' %}">Important Links</a>
+                        <a class="dropdown-item" href="{% url 'product_item' name='oxygize' %}">Shop</a>
+                      </div>
+                    </li>
+
+
+                        <li class="nav-item">
+                            <a class="nav-link pl-md-3 pl-sm-0" href="{% url 'doctor_registration' %}"><i class="fa fa-stethoscope"></i> &nbsp;Join
+                                Us</a>
+                        </li>
+                        <li class="nav-item pl-md-5 pl-sm-0 pr-md-5 pr-sm-0">
+                            {% if logout %}
+                            <a class="nav-link pc-btn pl-4 pr-4" href="{% url 'logout' %}">Logout</a>
+                            {% else %}
+                            <a class="nav-link pc-btn pl-4 pr-4" href="{% url 'signup_customer' %}">Patient Corner</a>
+                            {% endif %}
+                        </li>
+                    </ul>
+                </div>
+            </div>
+    </nav>
+    <!-- Product info -->
+    <section class="our-team-section bgDuo shopping-item">
+        <div class="container">
+            <div class="row mb-5 product-container plusBG">
+                <div class="col-12 text-center">
+                    <div id="who-we-are" class="about-us-head d-sm-none d-md-block"></div>
+                    <h1 class="d-sm-block d-md-none">Who we are</h1>
+                </div>
+                <div class="col-12 col-md-4 col-sm-12">
+                    <img src="{% static 'edoc-logo.png' %}" class="p-5 w-100 my-auto" alt="">
+                </div>
+                <div class="col-12 col-md-8 col-sm-12 my-auto text-justify">
+                    <blockquote>
+                        <span class="leftq quotes">&ldquo;</span>
+                        <p class="pl-5 pr-5 text-justify">Society seeks science to ease life, Hence technology came into action for necessary helps with all human values.
+                            At EDOC, we are trying their best to bridge the gap between modern medicine, related innovations of updated technology to serve the deserved ones,
+                            to revolutionize the healthcare system in India by bringing continuous innovation.
+                            Starting from software required to manage hospitals, clinics, pharmacies and other healthcare units all the way up to using
+                            Artificial Intelligence and IOT to build revolutionizing solutions in the field of healthcare and lifestyle management.</p>
+                        <span class="rightq quotes">&bdquo; </span>
+                    </blockquote>
+                </div>
+            </div>
+            <div class="row mb-5 product-container plusBG">
+                <div class="col-12 text-center p-5">
+                    <div id="our-products" class="about-us-head d-sm-none d-md-block"></div>
+                    <h1 class="d-sm-block d-md-none">Our Work</h1>
+                </div>
+                <div class="col-12 col-md-6 col-sm-12 right-alt text-center my-auto ">
+                    <img class="altImg" src="{% static 'services/pdocAU.png' %}" alt="" srcset="" >
+                </div>
+                <div class="col-12 col-md-6 col-sm-12 my-auto altText-l">
+                <h2>PDOCHEALTH</h2>
+                <span class="hr-r ml-3"></span>
+                <h5 class="text-justify"><small>The pandemic has caused so many inconveniences. One of them is reaching out to a doctor when required.
+                    Many hospitals have closed down OPDs and a lot of people are now in need. In this situation pdochealth is a
+                    platform that allows people to consult a doctor over video call in your smart devices in just a few clicks.
+                    You can receive the doctors’ prescription and diagnosis summary live during the call, take a fully qualified
+                    copy of the prescription so that you can conveniently purchase the medicines. Upload old medical records,
+                    add more files during the live call if asked for. You can also find diagnostic tests and a lot more services
+                    are on their way. </small></h5>
+                </div>
+                <div class="col-12 col-md-6 col-sm-12 right-alt text-center my-auto ">
+                    <img class="altImg" src="{% static 'services/psha.png' %}" alt="" srcset="" >
+                </div>
+                <div class="col-12 col-md-6 col-sm-12 my-auto altText-l">
+                    <h2>P-SHA</h2>
+                    <span class="hr-r ml-3"></span>
+                    <h5><small>P-SHA (Palm Sized Health Assistant) is here to ease management of lifestyle diseases like Blood Pressure, Diabetes,
+                        Apnea etc. Using Artificial Intelligence and Data Analytics for reporting thereby reducing the effort in diagnosis and
+                        emergency detection. This ground breaking research is on its way to be patented. </small></h5>
+                </div>
+                <div class="col-12 col-md-6 col-sm-12 right-alt text-center my-auto ">
+                    <img class="altImg" src="{% static 'services/aisana.png' %}" alt="" srcset="" >
+                </div>
+                <div class="col-12 col-md-6 col-sm-12 my-auto altText-l">
+                <h2><span class="secondary-text">Ai</span>sana</h2>
+                <span class="hr-r ml-3"></span>
+                <h5><small>Imagine AI teaching you Yoga. With the ease of finding a trainer in your free time and also with the accuracy of AI.
+                    AI-sana is an upcoming platform by EDOC where you can perform yoga while being guided by an AI in real time. Set your goals
+                    and you can perform yoga anytime any day with just a camera enabled device. </small></h5>
+                </div>
+                <div class="col-12 col-md-6 col-sm-12 right-alt text-center my-auto ">
+                    <img class="altImg" src="{% static 'services/RD.png' %}" alt="" srcset="" >
+                </div>
+                <div class="col-12 col-md-6 col-sm-12 my-auto altText-l">
+                <h2>Research and Development</h2>
+                <span class="hr-r ml-3"></span>
+                <h5><small>Our dedicated R & D team continuously conducts research to build state of the art medical devices using advanced technologies using IOT and Artificial Intelligence. In the pipeline we have remote ICU monitoring and management, Bluetooth enabled glucometer with Cloud Monitoring, Patient Follow up on the cloud, IVF treatment support using Data Analytics etc</small></h5>
+                </div>
+                <div class="col-12 col-md-6 col-sm-12 right-alt text-center my-auto ">
+                    <img class="altImg" src="{% static 'services/techno.png' %}" alt="" srcset="" >
+                </div>
+                <div class="col-12 col-md-6 col-sm-12 my-auto altText-l">
+                <h2>EDOC Technologies</h2>
+                <span class="hr-r ml-3"></span>
+                <h5><small>Indian Healthcare market has not yet completely accepted software as a positive change. We at EDOC promote and build web applications, mobile applications so that management, diagnosis, treatment outcome, becomes easy. Centralization using software can greatly reduce manual and tedious efforts in the healthcare system.</small></h5>
+                </div>
+                <div class="col-12 col-md-6 col-sm-12 right-alt text-center my-auto ">
+                    <img class="altImg" src="{% static 'services/trade.png' %}" alt="" srcset="" >
+                </div>
+                <div class="col-12 col-md-6 col-sm-12 my-auto altText-l">
+                <h2>EDOC Trade</h2>
+                <span class="hr-r ml-3"></span>
+                <h5><small>R & D is not just about building new products, Introducing new products to the old school market is also a form of R & D. EDOC Trade Company is dedicated to bring new and innovative products to the current market. A lot of technical innovation has already been made in other developed countries, we perform continuous research in order to find such products and make them available in the Indian market.</small></h5>
+                </div>
+            </div>
+            <div class="row text-center product-container plusBG">
+                <div class="col-12 text-center p-5">
+                    <div id="meet-our-team" class="about-us-head d-sm-none d-md-block"></div>
+                    <h1 class="d-sm-block d-md-none">Meet The Team</h1>
+                </div>
+                <div class="mt-2 col-6 col-lg-3 col-md-6 col-sm-6">
+                    <div class="our-team">
+                        <div class="pic">
+                            <img src="https://thumbs.dreamstime.com/b/default-avatar-profile-vector-user-profile-default-avatar-profile-vector-user-profile-profile-179376714.jpg">
+                        </div>
+                        <div class="team-content">
+                            <h6 class="">Dr Chidananda Dash</h6>
+                            <span class="post">Mentor</span>
+                        </div>
+                        <ul class="social">
+                            <li>
+                                <a href="#" target="_blank" class="fa fa-facebook"></a>
+                            </li>
+                            <li>
+                                <a href="#" class="fa fa-twitter"></a>
+                            </li>
+                            <li>
+                                <a href="#" class="fa fa-google-plus"></a>
+                            </li>
+                            <li>
+                                <a href="#" class="fa fa-linkedin"></a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="mt-2 col-6 col-lg-3 col-md-6 col-sm-6">
+                    <div class="our-team">
+                        <div class="pic">
+                            <img src="https://thumbs.dreamstime.com/b/default-avatar-profile-vector-user-profile-default-avatar-profile-vector-user-profile-profile-179376714.jpg">
+                        </div>
+                        <div class="team-content">
+                            <h6 >Dr Padmalaya Thakur</h6>
+                            <span class="post">Advisor</span>
+                        </div>
+                        <ul class="social">
+                            <li>
+                                <a href="#" class="fa fa-facebook"></a>
+                            </li>
+                            <li>
+                                <a href="#" class="fa fa-twitter"></a>
+                            </li>
+                            <li>
+                                <a href="#" class="fa fa-google-plus"></a>
+                            </li>
+                            <li>
+                                <a href="#" class="fa fa-linkedin"></a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="mt-2 col-6 col-lg-3 col-md-6 col-sm-6">
+                    <div class="our-team">
+                        <div class="pic">
+                            <img src="https://thumbs.dreamstime.com/b/default-avatar-profile-vector-user-profile-default-avatar-profile-vector-user-profile-profile-179376714.jpg">
+                        </div>
+                        <div class="team-content">
+                            <h6 >Ramita Dash</h6>
+                            <span class="post">Director</span>
+                        </div>
+                        <ul class="social">
+                            <li>
+                                <a href="#" class="fa fa-facebook"></a>
+                            </li>
+                            <li>
+                                <a href="#" class="fa fa-twitter"></a>
+                            </li>
+                            <li>
+                                <a href="#" class="fa fa-google-plus"></a>
+                            </li>
+                            <li>
+                                <a href="#" class="fa fa-linkedin"></a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="mt-2 col-6 col-lg-3 col-md-6 col-sm-6">
+                    <div class="our-team">
+                        <div class="pic">
+                            <img src="https://thumbs.dreamstime.com/b/default-avatar-profile-vector-user-profile-default-avatar-profile-vector-user-profile-profile-179376714.jpg">
+                        </div>
+                        <div class="team-content">
+                            <h6 >Sunil Rath</h6>
+                            <span class="post">Marketing</span>
+                        </div>
+                        <ul class="social">
+                            <li>
+                                <a href="#" class="fa fa-facebook"></a>
+                            </li>
+                            <li>
+                                <a href="#" class="fa fa-twitter"></a>
+                            </li>
+                            <li>
+                                <a href="#" class="fa fa-google-plus"></a>
+                            </li>
+                            <li>
+                                <a href="#" class="fa fa-linkedin"></a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="mt-2 col-6 col-lg-3 col-md-6 col-sm-6">
+                    <div class="our-team">
+                        <div class="pic">
+                            <img src="https://thumbs.dreamstime.com/b/default-avatar-profile-vector-user-profile-default-avatar-profile-vector-user-profile-profile-179376714.jpg">
+                        </div>
+                        <div class="team-content">
+                            <h6 >Rashmi Rath</h6>
+                            <span class="post">Director</span>
+                        </div>
+                        <ul class="social">
+                            <li>
+                                <a href="#" class="fa fa-facebook"></a>
+                            </li>
+                            <li>
+                                <a href="#" class="fa fa-twitter"></a>
+                            </li>
+                            <li>
+                                <a href="#" class="fa fa-google-plus"></a>
+                            </li>
+                            <li>
+                                <a href="#" class="fa fa-linkedin"></a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="mt-2 col-6 col-lg-3 col-md-6 col-sm-6">
+                    <div class="our-team">
+                        <div class="pic">
+                            <img src="https://thumbs.dreamstime.com/b/default-avatar-profile-vector-user-profile-default-avatar-profile-vector-user-profile-profile-179376714.jpg">
+                        </div>
+                        <div class="team-content">
+                            <h6 >Ramananda Dash</h6>
+                            <span class="post">Logstics / Supply Chain </span>
+                        </div>
+                        <ul class="social">
+                            <li>
+                                <a href="#" class="fa fa-facebook"></a>
+                            </li>
+                            <li>
+                                <a href="#" class="fa fa-twitter"></a>
+                            </li>
+                            <li>
+                                <a href="#" class="fa fa-google-plus"></a>
+                            </li>
+                            <li>
+                                <a href="#" class="fa fa-linkedin"></a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="mt-2 col-6 col-lg-3 col-md-6 col-sm-6">
+                    <div class="our-team">
+                        <div class="pic">
+                            <img src="https://thumbs.dreamstime.com/b/default-avatar-profile-vector-user-profile-default-avatar-profile-vector-user-profile-profile-179376714.jpg">
+                        </div>
+                        <div class="team-content">
+                            <h6 >Rozalin Dash</h6>
+                            <span class="post">Enterprise Relationship</span>
+                        </div>
+                        <ul class="social">
+                            <li>
+                                <a href="#" class="fa fa-facebook"></a>
+                            </li>
+                            <li>
+                                <a href="#" class="fa fa-twitter"></a>
+                            </li>
+                            <li>
+                                <a href="#" class="fa fa-google-plus"></a>
+                            </li>
+                            <li>
+                                <a href="#" class="fa fa-linkedin"></a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="mt-2 col-6 col-lg-3 col-md-6 col-sm-6">
+                    <div class="our-team">
+                        <div class="pic">
+                            <img src="https://thumbs.dreamstime.com/b/default-avatar-profile-vector-user-profile-default-avatar-profile-vector-user-profile-profile-179376714.jpg">
+                        </div>
+                        <div class="team-content">
+                            <h6 >Krishnanda Dash</h6>
+                            <span class="post">Finance</span>
+                        </div>
+                        <ul class="social">
+                            <li>
+                                <a href="#" target="_blank" class="fa fa-facebook"></a>
+                            </li>
+                            <li>
+                                <a href="#" class="fa fa-twitter"></a>
+                            </li>
+                            <li>
+                                <a href="#" class="fa fa-google-plus"></a>
+                            </li>
+                            <li>
+                                <a href="#" class="fa fa-linkedin"></a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="mt-2 col-6 col-lg-3 col-md-6 col-sm-6">
+                    <div class="our-team">
+                        <div class="pic">
+                            <img src="https://thumbs.dreamstime.com/b/default-avatar-profile-vector-user-profile-default-avatar-profile-vector-user-profile-profile-179376714.jpg">
+                        </div>
+                        <div class="team-content">
+                            <h6 >Dr Siba Narayan Rath</h6>
+                            <span class="post">Advisor</span>
+                        </div>
+                        <ul class="social">
+                            <li>
+                                <a href="#" target="_blank" class="fa fa-facebook"></a>
+                            </li>
+                            <li>
+                                <a href="#" class="fa fa-twitter"></a>
+                            </li>
+                            <li>
+                                <a href="#" class="fa fa-google-plus"></a>
+                            </li>
+                            <li>
+                                <a href="#" class="fa fa-linkedin"></a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="mt-2 col-6 col-lg-3 col-md-6 col-sm-6">
+                    <div class="our-team">
+                        <div class="pic">
+                            <img src="https://thumbs.dreamstime.com/b/default-avatar-profile-vector-user-profile-default-avatar-profile-vector-user-profile-profile-179376714.jpg">
+                        </div>
+                        <div class="team-content">
+                            <h6 >Satyajit Rath</h6>
+                            <span class="post">Advisor</span>
+                        </div>
+                        <ul class="social">
+                            <li>
+                                <a href="#" class="fa fa-facebook"></a>
+                            </li>
+                            <li>
+                                <a href="#" class="fa fa-twitter"></a>
+                            </li>
+                            <li>
+                                <a href="#" class="fa fa-google-plus"></a>
+                            </li>
+                            <li>
+                                <a href="#" class="fa fa-linkedin"></a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="mt-2 col-6 col-lg-3 col-md-6 col-sm-6">
+                    <div class="our-team">
+                        <div class="pic">
+                            <img src="https://thumbs.dreamstime.com/b/default-avatar-profile-vector-user-profile-default-avatar-profile-vector-user-profile-profile-179376714.jpg">
+                        </div>
+                        <div class="team-content">
+                            <h6 >Subhashis Dash</h6>
+                            <span class="post">Digital Marketing</span>
+                        </div>
+                        <ul class="social">
+                            <li>
+                                <a href="#" class="fa fa-facebook"></a>
+                            </li>
+                            <li>
+                                <a href="#" class="fa fa-twitter"></a>
+                            </li>
+                            <li>
+                                <a href="#" class="fa fa-google-plus"></a>
+                            </li>
+                            <li>
+                                <a href="#" class="fa fa-linkedin"></a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="mt-2 col-6 col-lg-3 col-md-6 col-sm-6">
+                    <div class="our-team">
+                        <div class="pic">
+                            <img src="https://thumbs.dreamstime.com/b/default-avatar-profile-vector-user-profile-default-avatar-profile-vector-user-profile-profile-179376714.jpg">
+                        </div>
+                        <div class="team-content">
+                            <h6 >Aditya Jena</h6>
+                            <span class="post">Technology </span>
+                        </div>
+                        <ul class="social">
+                            <li>
+                                <a href="#" class="fa fa-facebook"></a>
+                            </li>
+                            <li>
+                                <a href="#" class="fa fa-twitter"></a>
+                            </li>
+                            <li>
+                                <a href="#" class="fa fa-google-plus"></a>
+                            </li>
+                            <li>
+                                <a href="#" class="fa fa-linkedin"></a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="d-sm-none d-md-block mt-2 col-6 col-lg-3 col-md-6 col-sm-6">
+                </div>
+                <div class="mt-2 col-6 col-lg-3 col-md-6 col-sm-6">
+                    <div class="our-team">
+                        <div class="pic">
+                            <img src="https://thumbs.dreamstime.com/b/default-avatar-profile-vector-user-profile-default-avatar-profile-vector-user-profile-profile-179376714.jpg">
+                        </div>
+                        <div class="team-content">
+                            <h6 >Mrugank Ray</h6>
+                            <span class="post">Technology</span>
+                        </div>
+                        <ul class="social">
+                            <li>
+                                <a href="#" target="_blank" class="fa fa-facebook"></a>
+                            </li>
+                            <li>
+                                <a href="#" class="fa fa-twitter"></a>
+                            </li>
+                            <li>
+                                <a href="#" class="fa fa-google-plus"></a>
+                            </li>
+                            <li>
+                                <a href="#" class="fa fa-linkedin"></a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="mt-2 col-6 col-lg-3 col-md-6 col-sm-6">
+                    <div class="our-team">
+                        <div class="pic">
+                            <img src="https://thumbs.dreamstime.com/b/default-avatar-profile-vector-user-profile-default-avatar-profile-vector-user-profile-profile-179376714.jpg">
+                        </div>
+                        <div class="team-content">
+                            <h6 >Saswath Mishra</h6>
+                            <span class="post">Technology</span>
+                        </div>
+                        <ul class="social">
+                            <li>
+                                <a href="#" class="fa fa-facebook"></a>
+                            </li>
+                            <li>
+                                <a href="#" class="fa fa-twitter"></a>
+                            </li>
+                            <li>
+                                <a href="#" class="fa fa-google-plus"></a>
+                            </li>
+                            <li>
+                                <a href="#" class="fa fa-linkedin"></a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- footer -->
+    <footer id="dk-footer overflow-hid" class="dk-footer pt-5">
+        <div class="container">
+          <div class="row">
+            <div class="col-12 col-md-3 col-sm-12 text-center my-auto">
+              <img style="width: 80%;" src="{% static 'index/site_images/logo.png' %}" alt="{{alt.footer_logo}}" srcset="">
+            </div>
+            <div class="col-12 col-md-5 col-sm-12 p-2  text-center my-auto">
+              <p style="color: rgb(151, 151, 151); text-align: justify;">
+                PDoc is a revolution coming up in the
+                Indian Healthcare sector. We are thriving
+                to bring technology to build robust solutions
+                in the domain. In this Pandemic we introduce
+                our emergency telecalling service 'Doctor-Over-Call'
+                keeping our promise of bringing the right answers
+                  to your health needs.</p>
+            </div>
+            <div class="col-12 col-md-4 col-sm-12  text-center my-auto">
+              <h2 style="color: white;">Follow Us:</h2>
+              <a class="footico footico-f" href="https://www.facebook.com/pdochealth/"><i class="fa fa-facebook "></i></a>
+              <a class="footico footico-i" href="https://www.instagram.com/pdochealth/"><i class="fa fa-instagram "></i></a>
+    <!--          <a class="footico footico-l" href="#"><i class="fa fa-linkedin "></i></a>-->
+              <a class="footico footico-t" href="https://twitter.com/edocmed1"><i class="fa fa-twitter "></i></a>
+            </div>
+          </div>
+          <hr style="background-color: rgba(139, 139, 139, 0.301);">
+          <div class="row pt-2 text-center">
+            <div class="col-12 col-md-11 col-sm-12 my-auto text-md-left text-sm-center">
+              <p style="color: rgb(151, 151, 151);">
+                Designed and Developed By &nbsp;<strong><a style="color: rgba(255, 255, 255, 0.582);"
+                    href="www.cavemendev.com"> CaveMenDev</a></strong>
+              </p>
+            </div>
+            <div class="col-6 col-md-1 col-sm-6 text-center my-auto mx-auto mb-5">
+              <a href="www.cavemendev.com"> <img style="width: 100%;" src="{% static 'index/site_images/cmd.png' %}"
+                  alt=""></a>
+            </div>
+          </div>
+        </div>
+        <div class="copyright pt-3 pb-3">
+          <div class="container">
+            <div class="row">
+              <div class="col-md-4">
+                <span>© 2020 PDOC Health | All Right Reserved.</span>
+              </div>
+              <div class="col-md-8 d-sm-none d-md-block">
+                <div class="copyright-menu">
+                  <ul>
+                    <li><a href="{% url 'terms' %}">Terms & Conditions</a></li>
+                    <li><a href="{% url 'privacy_policy' %}">Privacy Policy</a></li>
+                    <li><a href="{% url 'refund_policy' %}">Refund Policy</a>/li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Back to top -->
+        <div id="back-to-top" class="back-to-top">
+          <button class="btn btn-dark" title="Back to Top" style="display: block;" onclick="topFunction()">
+            <i class="fa fa-angle-up"></i>
+          </button>
+        </div>
+    </footer>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://owlcarousel2.github.io/OwlCarousel2/assets/owlcarousel/owl.carousel.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="{% static 'index/script.js' %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/svg.js/2.6.4/svg.js"></script>
+    <script>
+        var meetTeam = SVG("meet-our-team").size(420, 100);
+
+        var rect = meetTeam.rect(420, 100).attr({ fill: "transparent" });
+        rect
+        .stroke({ color: "#0D2149", width: 8 })
+        .attr({
+        "stroke-dashoffset": 3000,
+        "stroke-dasharray": 1025,
+        "stroke-linecap": "round",
+        "stroke-linejoin": "round"
+        })
+        .addClass("path");
+
+        var text = meetTeam.text("MEET THE TEAM");
+        text.font({ anchor: "middle", size: 40, family: "sans-serif" });
+        text.move(205, 27).rotate(180).flip("y");
+
+
+        //our products
+        var ourProducts = SVG("our-products").size(420, 100);
+
+        var rect2 = ourProducts.rect(420, 100).attr({ fill: "transparent" });
+        rect2
+        .stroke({ color: "#0D2149", width: 8 })
+        .attr({
+        "stroke-dashoffset": 3000,
+        "stroke-dasharray": 1025,
+        "stroke-linecap": "round",
+        "stroke-linejoin": "round"
+        })
+        .addClass("path");
+
+        var text2 = ourProducts.text("Our Work");
+        text2.font({ anchor: "middle", size: 40, family: "sans-serif" });
+        text2.move(205, 27).rotate(180).flip("y");
+
+        //who we are
+        var whoWeAre = SVG("who-we-are").size(420, 100);
+
+        var rect3 = whoWeAre.rect(420, 100).attr({ fill: "transparent" });
+        rect3
+        .stroke({ color: "#0D2149", width: 8 })
+        .attr({
+        "stroke-dashoffset": 3000,
+        "stroke-dasharray": 1025,
+        "stroke-linecap": "round",
+        "stroke-linejoin": "round"
+        })
+        .addClass("path");
+
+        var text3 = whoWeAre.text("WHO WE ARE");
+        text3.font({ anchor: "middle", size: 40, family: "sans-serif" });
+        text3.move(205, 27).rotate(180).flip("y");
+    </script>
+</body>
+
+</html>

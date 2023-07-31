@@ -1,0 +1,104 @@
+{% load static %}
+{% load string_ops %}
+<link rel="stylesheet" href="{% static 'css/flag-icon.min.css' %}">
+<header class="background-white box-shadow">
+        <div class="container header-in">
+                <div class="row">
+                    <div class="col-lg-2 col-md-12"><div id="logo" class="d-inline-block margin-tb-5px"  style="font-size:10px;color:#007bff;"><img src="{% static 'logo.png' %}" style="max-width:100px;" alt="pdoc"> </br>Edoc Medical Services</div>
+                        <a class="mobile-toggle padding-13px background-main-color" href="#"><i class="fas fa-bars"></i></a>
+                    </div>
+                    <div class="col-lg-7 col-md-12 position-inherit">
+                        <ul id="menu-main" class="nav-menu float-lg-right link-padding-tb-20px">
+                            <li><a href="{% url 'index' %}" style="font-weight:bold;">Home</a></li>
+                            <li><a href="{% url 'doctors' %}" style="font-weight:bold;">Doctors</a></li>
+                            <li><a href="{% url 'paramedics' %}" style="font-weight:bold;">Paramedics</a></li>
+                            <li><a href="{% url 'physical_consultation' %}" style="font-weight:bold;">Physical Consultation</a></li>
+                            <li><a href="{% url 'blog_list' %}" style="font-weight:bold;">Articles</a></li>
+                            <li><a href="{% url 'important_links' %}" style="font-weight:bold;">Important Links</a></li>
+
+<!--                            <li><a href="#">Conact Us</a></li>-->
+                        </ul>
+                    </div>
+                    <div class="col-lg-3 col-md-12">
+                        <hr class="margin-bottom-0px d-block d-sm-none">
+                        {% if logout %}
+                        <a href="{% url 'logout' %}" class="btn btn-sm border-radius-30 margin-tb-15px text-white background-second-color  box-shadow float-right padding-lr-20px margin-left-30px">
+                            Logout
+                        </a>
+                        {% else %}
+                        <a href="{% url 'signup_customer' %}" class="btn btn-sm border-radius-30 margin-tb-15px text-white background-second-color  box-shadow float-right padding-lr-20px margin-left-30px">
+                            Patient Corner
+                        </a>
+                        {% endif %}
+                        <a href="{% url 'doctor_registration' %}" class="margin-tb-20px d-inline-block text-up-small float-left float-lg-right"><i class="fas fa-stethoscope"></i>  Join Us</a>
+                    </div>
+                </div>
+
+        </div>
+    </header>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light" style="float:right;">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+<!--      <li class="nav-item">-->
+<!--        <a class="nav-link" href="#">Link</a>-->
+<!--      </li>-->
+        <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Doctors
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            {% for type in doctor_types %}
+            <a class="dropdown-item" href="{% url 'doctor_pages' slug=type.name|replace_filter %}">{{type.name}}</a>
+            {% endfor %}
+            <!--          <div class="dropdown-divider"></div>-->
+<!--          <a class="dropdown-item" href="#">Something else here</a>-->
+        </div>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Paramedic Consultancy
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            {% for type in paramedic_types %}
+                <a class="dropdown-item" href="{% url 'paramedic_pages' slug=type.name|replace_filter %}">{{type.name}}</a>
+            {% endfor %}
+            <!--          <div class="dropdown-divider"></div>-->
+<!--          <a class="dropdown-item" href="#">Something else here</a>-->
+        </div>
+      </li>
+
+        <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Paramedic Signup
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="{% url 'paramedic_health_and_fitness_advisor' %}">Health & Fitness Advisors </a>
+            <a class="dropdown-item" href="{% url 'paramedic_physiotherapy' %}">Physiotherapist</a>
+            <a class="dropdown-item" href="{% url 'paramedic_clinical_pscyhiatry' %}">Clinical Psychiatry</a>
+            <a class="dropdown-item" href="{% url 'paramedic_yoga_guru' %}">Yoga Guru</a>
+            <a class="dropdown-item" href="{% url 'paramedic_drug_house' %}">Drug House</a>
+            <a class="dropdown-item" href="{% url 'paramedic_diagnostics' %}">Diagnostics</a>
+<!--          <div class="dropdown-divider"></div>-->
+<!--          <a class="dropdown-item" href="#">Something else here</a>-->
+        </div>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<style>
+    .text-up-small {
+    font-size: 16px;
+}
+
+body{
+    font-size: 16px;
+}
+header ul.nav-menu > li > a{
+font-size:15px;
+}
+</style>

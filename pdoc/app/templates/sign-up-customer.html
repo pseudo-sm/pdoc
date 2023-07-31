@@ -1,0 +1,516 @@
+{% if loging_message %}
+<script>
+    $(".alert-cust").show();
+    $("#alert-message").html("");
+    $("#alert-message").html("You have to login first !!");
+    $("html, body").animate({
+        scrollTop: 0
+    }, "fast");
+</script>
+{% endif %}
+
+<!doctype html>
+<html lang="en">
+
+<head>
+    {% load static %}
+    {% if p %}
+    <script>
+        alert('Its not time yet :( !, If there is anything urgent please try to call an ambulance.');
+    </script>
+    {% endif %}
+    <title>Authentication | PDOC Health</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="google" content="notranslate">
+    <link rel="stylesheet" href="{% static 'index/style.css' %}">
+    <link rel="shortcut icon" href="{% static 'index/site_images/logo-sqr.png' %}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://owlcarousel2.github.io/OwlCarousel2/assets/owlcarousel/assets/owl.carousel.min.css">
+    <link rel="stylesheet" href="https://owlcarousel2.github.io/OwlCarousel2/assets/owlcarousel/assets/owl.theme.default.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/connectycube@x.x.x/dist/connectycube.min.js"></script>
+    <style>
+        #loader-div {
+            width: 100% !important;
+            height: 100% !important;
+            display: none;
+            padding-left: 45%;
+
+        }
+
+        @media only screen and (max-width: 600px) {
+            #loader-div-ls {
+                margin-top: 25%;
+            }
+        }
+
+        #loader-div-ls {
+            width: 100% !important;
+            height: 100% !important;
+            display: none;
+            padding-left: 45%;
+            padding-top: 5%;
+        }
+
+        #loader {
+            border: 7px solid #f3f3f3;
+            border-radius: 50%;
+            border-top: 12px solid #D95D39;
+            width: 70px;
+            height: 70px;
+            animation: spin 1s linear infinite;
+        }
+
+        #loader2 {
+            border: 7px solid #f3f3f3;
+            border-radius: 50%;
+            border-top: 12px solid #D95D39;
+            width: 70px;
+            height: 70px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- loader -->
+    <div id="overlay">
+        <div id="progstat"></div>
+        <div id="progress"></div>
+    </div>
+    <script>
+        // loader
+        ;
+        (function () {
+            function id(v) {
+                return document.getElementById(v);
+            }
+
+            function loadbar() {
+                var ovrl = id("overlay"),
+                    prog = id("progress"),
+                    stat = id("progstat"),
+                    img = document.images,
+                    c = 0;
+                tot = img.length;
+
+                function imgLoaded() {
+                    c += 1;
+                    var perc = ((100 / tot * c) << 0) + "%";
+                    prog.style.width = perc;
+                    stat.innerHTML = "Loading " + perc;
+                    if (c === tot) return doneLoading();
+                }
+
+                function doneLoading() {
+                    ovrl.style.opacity = 0;
+                    setTimeout(function () {
+                        ovrl.style.display = "none";
+                    }, 1200);
+                }
+                for (var i = 0; i < tot; i++) {
+                    var tImg = new Image();
+                    tImg.onload = imgLoaded;
+                    tImg.onerror = imgLoaded;
+                    tImg.src = img[i].src;
+                }
+            }
+            document.addEventListener('DOMContentLoaded', loadbar, false);
+        }());
+    </script>
+    <script>
+        const CREDENTIALS = {
+            appId: 2671,
+            authKey: "SYV6fw6DLk86t3v",
+            authSecret: "Nq3KJNcmpn9u3Mj"
+        };
+
+        ConnectyCube.init(CREDENTIALS);
+
+
+        ConnectyCube.createSession()
+            .then((session) => {
+                console.log('session intiated');
+            })
+            .catch((error) => {
+                console.log('some error happened');
+            });
+    </script>
+    <!-- header -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-bark fixed-top scrld def-scrl">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{% url 'index' %}">
+                <img src="{% static 'index/site_images/logo.png' %}" height="40" alt="pdochealth"> <a href="{% url 'index' %}"
+                  class="d-sm-none d-md-block">PDOCHEALTH</a>
+              </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'index' %}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'doctors' %}">Doctors</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'physical_consultation' %}">Physical Consultation</a>
+                    </li>
+                    <li class="nav-item">
+                        <!--            <a class="nav-link" href="{% url 'blog_list' %}">Articles</a>-->
+                        <!--          </li>-->
+                        <!--          <li class="nav-item">-->
+                        <!--            <a class="nav-link" href="{% url 'important_links' %}">Important Links</a>-->
+                        <!--          </li>-->
+                    <li class="nav-item dropdown dmenu">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                            More
+                        </a>
+                        <div class="dropdown-menu sm-menu">
+                            <a class="dropdown-item" href="{% url 'blog_list' %}">Articles</a>
+                            <a class="dropdown-item" href="{% url 'important_links' %}">Important Links</a>
+                            <a class="dropdown-item" href="{% url 'product_item' name='oxygize' %}">Shop</a>
+                        </div>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link pl-md-3 pl-sm-0" href="{% url 'doctor_registration' %}"><i
+                                class="fa fa-stethoscope"></i> &nbsp;Join
+                            Us</a>
+                    </li>
+                    <li class="nav-item pl-md-5 pl-sm-0 pr-md-5 pr-sm-0">
+                        {% if logout %}
+                        <a class="nav-link pc-btn pl-4 pr-4" href="{% url 'logout' %}">Logout</a>
+                        {% else %}
+                        <a class="nav-link pc-btn pl-4 pr-4" href="{% url 'signup_customer' %}">Patient Corner</a>
+                        {% endif %}
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- login/signup -->
+    <section class=" pt-5 pb-5 plusBG auth-sec">
+        <div class="container pt-md-5 shadowed-box">
+            <div class="row pl-md-5 mr-md-5">
+                <div class="alert alert-danger w-100 alert-cust hide-loader-login">
+                    <a class="close" id="close" href="#" data-dismiss="alert" onclick="remove_alert()">×</a>
+                    <span id="alert-message"></span>
+                </div>
+                {% for message in messages %}
+                <div class="alert alert-danger w-100 hide-loader-login">
+                    <a class="close" id="close" href="#" data-dismiss="alert" onclick="remove_alert()">×</a>
+                    {{ message }}
+                </div>
+                {% endfor %}
+            </div>
+            <div class="row">
+                <div id="loader-div-ls">
+                    <div id="loader2" class=""></div>
+                </div>
+                <div class="col-lg-6 p-md-5 pt-5 pb-5 log-me">
+                    <h4 class="mb-3 hide-loader-login">LogIn</h4>
+                    <form action="{% url 'login' %}" method="post" class="hide-loader-login">
+                        {% csrf_token %}
+                        <div class="form-output">
+                            <p style="color:red;display:none;" class="warning">Please make sure you have filled
+                                all fields!!</p>
+                            <div class="form-group label-floating">
+                                <label class="control-label" for="email">Email</label>
+                                <input class="form-control" name="email" placeholder="ex - yourname@gmail.com"
+                                    id="login-email" type="email">
+                            </div>
+                            <div class="form-group label-floating">
+                                <label class="control-label" for="password">Password</label>
+                                <input class="form-control" name="password" placeholder="password" id="login-password"
+                                    type="password">
+                            </div>
+                        </div>
+                        <button class="pt-2 pb-2 prime-btn btn-block hide-loader" id="login">Login</button>
+                    </form>
+                    <p class="sign-me-clk  mt-5 mb-4 hide-loader-login">New to Pdoc ? Click here to <span
+                            class="secondary-text h5">&nbsp;Signup.</span></p>
+                </div>
+                <div class="col-lg-6 p-md-5 d-sm-none d-md-block log-me">
+                    <img src="{% static 'index/site_images/loginBG.jpg' %}" alt="pdoc"
+                        class="pl-5 pr-5 w-100 hide-loader-login">
+                </div>
+                <div class="col-lg-6 p-md-5 pt-5 d-none sign-me">
+                    <h4 class="mb-3 hide-loader-login">SignUp</h4>
+                    <div class="form-output">
+                        <p style="color:red;display:none;" class="warning">Please make sure you have filled
+                            all fields!!
+                        </p>
+                        <div class="form-group label-floating hide-loader-login">
+                            <label class="control-label" for="name">Your Name</label>
+                            <input class="form-control" placeholder="Your Full Name" id="name" type="text">
+                        </div>
+
+                        <div class="form-group label-floating hide-loader-login">
+                            <label class="control-label" for="email">Email</label>
+                            <input class="form-control" placeholder="ex - yourname@gmail.com" id="email" type="email">
+                        </div>
+
+                        <div class="form-group label-floating hide-loader-login">
+                            <label class="control-label" for="password">Password</label>
+                            <input class="form-control" placeholder="password" id="password" type="password">
+                        </div>
+
+                        <div class="form-group label-floating hide-loader-login">
+                            <label class="control-label" for="phone">Phone</label>
+                            <input class="form-control" placeholder="Mobile" type="text" id="phone">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 p-md-5 d-none sign-me">
+                    <div class="form-output">
+                        <div class="form-group label-floating hide-loader-login">
+                            <label class="control-label" for="query">Query</label>
+                            <textarea class="form-control" style="height: 190px;"
+                                placeholder="Describe the problem in detail.." id="query"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-group pb-3 pt-3 hide-loader-login">
+                        <div class="form-check">
+                            <input class="form-check-input is-invalid" type="checkbox" value="" id="toc" required>
+                            <label class="form-check-label" for="toc">
+                                Agree to <a href="!#" data-toggle="modal" data-target="#exampleModalLong">terms and
+                                    conditions</a>. You must agree before submitting.
+                            </label>
+                        </div>
+                    </div>
+                    <button class="pt-2 pb-2 prime-btn btn-block hide-loader-login" id="submit">Signup</button>
+                </div>
+                <div class="col-lg-6 pl-md-5 pb-5 pt-5 pt-md-0 d-none sign-me">
+                    <p class="log-me-clk mb-4 hide-loader-login">Already a Customer ? Click here to <span
+                            class="secondary-text h5">&nbsp;LogIn.</span></p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document" style="overflow-y: initial !important">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Terms and Conditions</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" style="height: 250px;overflow-y: auto;">
+                    {{terms.terms|safe}}
+                </div>
+                <div class="modal-footer">
+                    Thank You
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- footer -->
+    <footer id="dk-footer overflow-hid" class="dk-footer pt-5">
+        <div class="container">
+          <div class="row">
+            <div class="col-12 col-md-3 col-sm-12 text-center my-auto">
+              <img style="width: 80%;" src="{% static 'index/site_images/logo.png' %}" alt="{{alt.footer_logo}}" srcset="">
+            </div>
+            <div class="col-12 col-md-5 col-sm-12 p-2  text-center my-auto">
+              <p style="color: rgb(151, 151, 151); text-align: justify;">
+                PDoc is a revolution coming up in the
+                Indian Healthcare sector. We are thriving
+                to bring technology to build robust solutions
+                in the domain. In this Pandemic we introduce
+                our emergency telecalling service 'Doctor-Over-Call'
+                keeping our promise of bringing the right answers
+                  to your health needs.</p>
+            </div>
+            <div class="col-12 col-md-4 col-sm-12  text-center my-auto">
+              <h2 style="color: white;">Follow Us:</h2>
+              <a class="footico footico-f" href="https://www.facebook.com/pdochealth/"><i class="fa fa-facebook "></i></a>
+              <a class="footico footico-i" href="https://www.instagram.com/pdochealth/"><i class="fa fa-instagram "></i></a>
+    <!--          <a class="footico footico-l" href="#"><i class="fa fa-linkedin "></i></a>-->
+              <a class="footico footico-t" href="https://twitter.com/edocmed1"><i class="fa fa-twitter "></i></a>
+            </div>
+          </div>
+          <hr style="background-color: rgba(139, 139, 139, 0.301);">
+          <div class="row pt-2 text-center">
+            <div class="col-12 col-md-11 col-sm-12 my-auto text-md-left text-sm-center">
+              <p style="color: rgb(151, 151, 151);">
+                Designed and Developed By &nbsp;<strong><a style="color: rgba(255, 255, 255, 0.582);"
+                    href="www.cavemendev.com"> CaveMenDev</a></strong>
+              </p>
+            </div>
+            <div class="col-6 col-md-1 col-sm-6 text-center my-auto mx-auto mb-5">
+              <a href="www.cavemendev.com"> <img style="width: 100%;" src="{% static 'index/site_images/cmd.png' %}"
+                  alt=""></a>
+            </div>
+          </div>
+        </div>
+        <div class="copyright pt-3 pb-3">
+          <div class="container">
+            <div class="row">
+              <div class="col-md-4">
+                <span>© 2020 PDOC Health | All Right Reserved.</span>
+              </div>
+              <div class="col-md-8 d-sm-none d-md-block">
+                <div class="copyright-menu">
+                  <ul>
+                    <li><a href="{% url 'terms' %}">Terms & Conditions</a></li>
+                    <li><a href="{% url 'privacy_policy' %}">Privacy Policy</a></li>
+                    <li><a href="{% url 'refund_policy' %}">Refund Policy</a>/li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Back to top -->
+        <div id="back-to-top" class="back-to-top">
+          <button class="btn btn-dark" title="Back to Top" style="display: block;" onclick="topFunction()">
+            <i class="fa fa-angle-up"></i>
+          </button>
+        </div>
+    </footer>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://owlcarousel2.github.io/OwlCarousel2/assets/owlcarousel/owl.carousel.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="{% static 'index/script.js' %}"></script>
+    <script>
+        $("#login").on("click", function () {
+            $(".hide-loader-login").hide();
+            $("#loader-div-ls").show();
+        });
+        $('input:checkbox').change(function () {
+            if ($(this).is(":checked")) {
+                $("#submit").prop("disabled", false);
+            } else {
+                $("#submit").prop("disabled", true);;
+            }
+        });
+        $(document).ready(function () {
+            $("#submit").prop("disabled", true);
+        });
+        $(".sign-me-clk").on("click", function () {
+            $(".log-me").addClass("d-none");
+            $(".log-me").removeClass("d-md-block");
+            $(".sign-me").removeClass("d-none");
+        });
+        $(".log-me-clk").on("click", function () {
+            $(".log-me").removeClass("d-none");
+            $(".log-me").addClass("d-md-block");
+            $(".sign-me").addClass("d-none");
+        });
+        $("#submit").on("click", function () {
+            name = $("#name").val();
+            email = $("#email").val();
+            password = $("#password").val();
+            phone = $("#phone").val();
+            query = $("textarea#query").val();
+            status = "true";
+
+
+            if (name.match(/^[A-Za-z\s]{1,}[\.]{0,1}[A-Za-z\s]{0,}$/) == null) {
+                $("#name").css("border-color", "red");
+                $(".alert-cust").show();
+                $("#alert-message").html("");
+                $("#alert-message").html("Invalid Name");
+                $("html, body").animate({
+                    scrollTop: 0
+                }, "fast");
+                status = "false";
+            } else {
+                $("#name").css("border-color", "green");
+                if (email.match(/^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/) == null) {
+                    $("#email").css("border-color", "red");
+                    $(".alert-cust").show();
+                    $("#alert-message").html("");
+                    $("#alert-message").html("Invalid Email");
+                    $("html, body").animate({
+                        scrollTop: 0
+                    }, "fast");
+                    status = "false";
+                } else {
+                    $("#email").css("border-color", "green");
+                    if (password.match(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/) == null) {
+                        $("#password").css("border-color", "red");
+                        $(".alert-cust").show();
+                        $("#alert-message").html("");
+                        $("#alert-message").html(
+                            "Password Must be of 8 characters containing atleast one alphabet, one number or one special symbol. Ex. 'Password@7' "
+                            );
+                        $("html, body").animate({
+                            scrollTop: 0
+                        }, "fast");
+                        status = "false";
+                    } else {
+                        $("#password").css("border-color", "green");
+                        if (phone.match(/^(\+91[\-\s]?)?[0]?(91)?[6789]\d{9}$/) == null) {
+                            $("#phone").css("border-color", "red");
+                            $(".alert-cust").show();
+                            $("#alert-message").html("");
+                            $("#alert-message").html("Invalid Phone No,");
+                            $("html, body").animate({
+                                scrollTop: 0
+                            }, "fast");
+                            status = "false";
+                        } else {
+                            $("#phone").css("border-color", "green");
+                            if (query == "") {
+                                $("textarea#query").css("border-color", "red");
+                                $(".alert-cust").show();
+                                $("#alert-message").html("");
+                                $("#alert-message").html("Invalid Query");
+                                $("html, body").animate({
+                                    scrollTop: 0
+                                }, "fast");
+                                status = "false";
+                            } else {
+                                $("textarea#query").css("border-color", "green");
+                            }
+                        }
+                    }
+                }
+            }
+
+
+
+
+            if (status == "true") {
+                $(".hide-loader-login").hide();
+                $('#loader-div-ls').show();
+                $.ajax({
+                    url: "{% url 'signup_customer_action' %}",
+                    type: "GET",
+                    data: {
+                        "name": name,
+                        "email": email,
+                        "password": password,
+                        "phone": phone,
+                        "query": query,
+                    },
+                    dataType: "json",
+                    success: function (order) {
+                        console.log(order);
+                        window.location = "http://www.pdochealth.com/patient-dashboard";
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+
+</html>

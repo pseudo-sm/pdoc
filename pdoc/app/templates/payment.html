@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+    <!-- loader -->
+    <div id="overlay">
+        <div id="progstat"></div>
+        <div id="progress"></div>
+      </div>
+      <script>
+        // loader
+        ;(function(){
+          function id(v){return document.getElementById(v); }
+          function loadbar() {
+            var ovrl = id("overlay"),
+                prog = id("progress"),
+                stat = id("progstat"),
+                img = document.images,
+                c = 0;
+                tot = img.length;
+        
+            function imgLoaded(){
+              c += 1;
+              var perc = ((100/tot*c) << 0) +"%";
+              prog.style.width = perc;
+              stat.innerHTML = "Loading "+ perc;
+              if(c===tot) return doneLoading();
+            }
+            function doneLoading(){
+              ovrl.style.opacity = 0;
+              setTimeout(function(){ 
+                ovrl.style.display = "none";
+              }, 1200);
+            }
+            for(var i=0; i<tot; i++) {
+              var tImg     = new Image();
+              tImg.onload  = imgLoaded;
+              tImg.onerror = imgLoaded;
+              tImg.src     = img[i].src;
+            }    
+          }
+          document.addEventListener('DOMContentLoaded', loadbar, false);
+        }());
+      </script>
+<div class="section d-flex p-3 justify-content-center" style="background-color:blue;">
+<img src="https://www.pdochealth.com/static/logo.png" style="max-width:300px">
+</div>
+<div class="container mt-3 d-flex justify-content-center">
+    <p>Please Do Not Reload The Page After Clicking the Pay Button Below!</p>
+</div>
+<div class="section d-flex p-3 justify-content-center">
+    <table class="table">
+        <tr>
+            <td>One Time Registration Fees</td>
+            <td>Date</td>
+            <td>Name</td>
+            <td>Payment Status</td>
+        </tr>
+        <tr>
+            <td>Rs.30</td>
+            <td>{{date}}</td>
+            <td>{{name}}</td>
+            <td id="payment-status"></td>
+        </tr>
+    </table>
+</div>
+<div class="section d-flex p-3 justify-content-center" >
+    <button class="btn btn-primary w-100" id="rzp-button1">Pay</button>
+</div>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script>
+var payment_id;
+var order_id;
+var signature;
+var options = {
+    "key": "rzp_live_Be03UWX2NInES3",
+    "amount": "3000",
+    "currency": "INR",
+    "name": "PDOCHEALTH",
+    "description": "Registration",
+    "image": "https://www.pdochealth.com/static/logo.png",
+    "order_id": "{{order_id}}", //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+    "handler": function (response){
+         payment_id = response.razorpay_payment_id;
+         order_id = response.razorpay_order_id;
+         signature = response.razorpay_signature;
+        $.ajax({
+              url: "{% url 'payment_status' %}",
+              type: "GET",
+              data: {
+                "payment_id" : payment_id,
+                "order_id" : order_id,
+                "signature" : signature,
+               },
+              dataType: "json",
+              success: function(order){
+                alert('Succesful ,Explore our services at patient-corner');
+                window.location="http://www.pdochealth.com/signup/";
+              }
+            });
+
+    },
+    "prefill": {
+        "name": "{{name}}",
+        "email": "{{username}}",
+        "contact": "{{phone}}"
+    },
+    "notes": {
+        "address": "Edoc Medical Services Private Limited"
+    },
+    "theme": {
+        "color": "blue"
+    }
+};
+var rzp1 = new Razorpay(options);
+document.getElementById('rzp-button1').onclick = function(e){
+    rzp1.open();
+    e.preventDefault();
+}
+$.ajax({
+        url: "{% url 'payment_status' %}",
+        data : {
+            'order_id':"{{order_id}}",
+            'signature':"{{signature_id}}",
+            'payment_id':"{{payment_id}}",
+        },
+        type: 'GET',
+        dataType: 'json',
+
+        success: function(res) {
+            console.log(res);
+            if(res){
+               $("#payment-status").html("Paid");
+               }
+              else {
+              $("#payment-status").html("Not Paid");
+              }
+        }
+    });
+</script>
+</body>
+</html>

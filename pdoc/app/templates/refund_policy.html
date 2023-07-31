@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="en">
+{% load string_ops %}
+{% load static %}
+<head>
+  <title>Refund Policy</title>
+  <meta charset="utf-8">
+  <link rel="shortcut icon" href="{% static 'index/site_images/logo-sqr.png' %}">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="stylesheet" href="{% static 'index/style.css' %}">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+    integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  <link rel="stylesheet"
+    href="https://owlcarousel2.github.io/OwlCarousel2/assets/owlcarousel/assets/owl.carousel.min.css">
+  <link rel="stylesheet"
+    href="https://owlcarousel2.github.io/OwlCarousel2/assets/owlcarousel/assets/owl.theme.default.min.css">
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+</head>
+
+<body>
+  <!-- loader -->
+  <div id="overlay">
+    <div id="progstat"></div>
+    <div id="progress"></div>
+  </div>
+  <script>
+    // loader
+    ;(function(){
+      function id(v){return document.getElementById(v); }
+      function loadbar() {
+        var ovrl = id("overlay"),
+            prog = id("progress"),
+            stat = id("progstat"),
+            img = document.images,
+            c = 0;
+            tot = img.length;
+    
+        function imgLoaded(){
+          c += 1;
+          var perc = ((100/tot*c) << 0) +"%";
+          prog.style.width = perc;
+          stat.innerHTML = "Loading "+ perc;
+          if(c===tot) return doneLoading();
+        }
+        function doneLoading(){
+          ovrl.style.opacity = 0;
+          setTimeout(function(){ 
+            ovrl.style.display = "none";
+          }, 1200);
+        }
+        for(var i=0; i<tot; i++) {
+          var tImg     = new Image();
+          tImg.onload  = imgLoaded;
+          tImg.onerror = imgLoaded;
+          tImg.src     = img[i].src;
+        }    
+      }
+      document.addEventListener('DOMContentLoaded', loadbar, false);
+    }());
+  </script>
+  <!-- header -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-bark fixed-top scrld def-scrl">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="{% url 'index' %}">
+        <img src="{% static 'index/site_images/logo.png' %}" height="40" alt="pdochealth"> <a href="{% url 'index' %}"
+          class="d-sm-none d-md-block">PDOCHEALTH</a>
+      </a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+        aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'index' %}">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'doctors' %}">Doctors</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'physical_consultation' %}">Physical Consultation</a>
+          </li>
+<!--          <li class="nav-item">-->
+<!--            <a class="nav-link" href="{% url 'blog_list' %}">Articles</a>-->
+<!--          </li>-->
+<!--          <li class="nav-item">-->
+<!--            <a class="nav-link" href="{% url 'important_links' %}">Important Links</a>-->
+<!--          </li>-->
+                    <li class="nav-item dropdown dmenu">
+                      <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                        More
+                      </a>
+                      <div class="dropdown-menu sm-menu">
+                        <a class="dropdown-item" href="{% url 'blog_list' %}">Articles</a>
+                        <a class="dropdown-item" href="{% url 'important_links' %}">Important Links</a>
+                        <a class="dropdown-item" href="{% url 'product_item' name='oxygize' %}">Shop</a>
+                      </div>
+                    </li>
+          <li class="nav-item">
+                            <a class="nav-link" href="{% url 'about_us' %}">About Us</a>
+                        </li>
+<!--                    <li class="nav-item dropdown dmenu">-->
+<!--                      <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">-->
+<!--                        Paramedics Signup-->
+<!--                      </a>-->
+<!--                      <div class="dropdown-menu sm-menu">-->
+<!--                        <a class="dropdown-item" href="{% url 'paramedic_health_and_fitness_advisor' %}">Health and Fitness Advise</a>-->
+<!--                        <a class="dropdown-item" href="{% url 'paramedic_physiotherapy' %}">Physiotherapist</a>-->
+<!--                        <a class="dropdown-item" href="{% url 'paramedic_clinical_pscyhiatry' %}">Clinical Psychiatry</a>-->
+<!--                        <a class="dropdown-item" href="{% url 'paramedic_yoga_guru' %}">Yoga Guru</a>-->
+<!--                        <a class="dropdown-item" href="#">Drug House</a>-->
+<!--                        <a class="dropdown-item" href="#">Diagnostics</a>-->
+<!--                      </div>-->
+<!--                    </li>-->
+          <li class="nav-item">
+            <a class="nav-link pl-md-3 pl-sm-0" href="{% url 'doctor_registration' %}"><i class="fa fa-stethoscope"></i> &nbsp;Join
+              Us</a>
+          </li>
+          <li class="nav-item pl-md-5 pl-sm-0 pr-md-5 pr-sm-0">
+            {% if logout %}
+            <a class="nav-link pc-btn pl-4 pr-4" href="{% url 'logout' %}">Logout</a>
+            {% else %}
+            <a class="nav-link pc-btn pl-4 pr-4" href="{% url 'signup_customer' %}">Patient Corner</a>
+            {% endif %}
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  
+  <!-- Terms -->
+  <section class="plusBG pt-5 mt-5 pb-5 mb-5 overflow-hid">
+      <div class="container">
+          <div class="row">
+            <div class="col-12 pt-5">
+                <h3>Refund Policy
+                  <br><small>Read Carefully</small>
+                </h3>
+              </div>
+              <span class="hr-r ml-3 mt-3 mb-3"></span>
+              <div class="col-12 pt-4">
+                {{refund_policy.value|safe}}
+              </div>
+          </div>
+      </div>
+
+  </section>
+  
+  <!-- footer -->
+  <footer id="dk-footer overflow-hid" class="dk-footer pt-5">
+    <div class="container">
+      <div class="row">
+        <div class="col-12 col-md-3 col-sm-12 text-center my-auto">
+          <img style="width: 80%;" src="{% static 'index/site_images/logo.png' %}" alt="{{alt.footer_logo}}" srcset="">
+        </div>
+        <div class="col-12 col-md-5 col-sm-12 p-2  text-center my-auto">
+          <p style="color: rgb(151, 151, 151); text-align: justify;">
+            PDoc is a revolution coming up in the
+            Indian Healthcare sector. We are thriving
+            to bring technology to build robust solutions
+            in the domain. In this Pandemic we introduce
+            our emergency telecalling service 'Doctor-Over-Call'
+            keeping our promise of bringing the right answers
+              to your health needs.</p>
+        </div>
+        <div class="col-12 col-md-4 col-sm-12  text-center my-auto">
+          <h2 style="color: white;">Follow Us:</h2>
+          <a class="footico footico-f" href="https://www.facebook.com/pdochealth/"><i class="fa fa-facebook "></i></a>
+          <a class="footico footico-i" href="https://www.instagram.com/pdochealth/"><i class="fa fa-instagram "></i></a>
+<!--          <a class="footico footico-l" href="#"><i class="fa fa-linkedin "></i></a>-->
+          <a class="footico footico-t" href="https://twitter.com/edocmed1"><i class="fa fa-twitter "></i></a>
+        </div>
+      </div>
+      <hr style="background-color: rgba(139, 139, 139, 0.301);">
+      <div class="row pt-2 text-center">
+        <div class="col-12 col-md-11 col-sm-12 my-auto text-md-left text-sm-center">
+          <p style="color: rgb(151, 151, 151);">
+            Designed and Developed By &nbsp;<strong><a style="color: rgba(255, 255, 255, 0.582);"
+                href="www.cavemendev.com"> CaveMenDev</a></strong>
+          </p>
+        </div>
+        <div class="col-6 col-md-1 col-sm-6 text-center my-auto mx-auto mb-5">
+          <a href="www.cavemendev.com"> <img style="width: 100%;" src="{% static 'index/site_images/cmd.png' %}"
+              alt=""></a>
+        </div>
+      </div>
+    </div>
+    <div class="copyright pt-3 pb-3">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-4">
+            <span>© 2020 PDOC Health | All Right Reserved.</span>
+          </div>
+          <div class="col-md-8 d-sm-none d-md-block">
+            <div class="copyright-menu">
+              <ul>
+                <li><a href="{% url 'terms' %}">Terms & Conditions</a></li>
+                <li><a href="{% url 'privacy_policy' %}">Privacy Policy</a></li>
+                <li><a href="{% url 'refund_policy' %}">Refund Policy</a>/li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Back to top -->
+    <div id="back-to-top" class="back-to-top">
+      <button class="btn btn-dark" title="Back to Top" style="display: block;" onclick="topFunction()">
+        <i class="fa fa-angle-up"></i>
+      </button>
+    </div>
+  </footer>
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script src="https://owlcarousel2.github.io/OwlCarousel2/assets/owlcarousel/owl.carousel.js"></script>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script src="{% static 'index/script.js' %}"></script>
+</a>
+</body>
+
+</html>

@@ -1,0 +1,807 @@
+<!doctype html>
+<html lang="en">
+{% load string_ops %}
+{% load static %}
+<head>
+  <title>EDOC | PDOC Health</title>
+  <meta charset="utf-8">
+  <link rel="shortcut icon" href="{% static 'index/site_images/logo-sqr.png' %}">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="{{meta.description}}">
+  <meta name="keywords" content="{{meta.keywords}}">
+  <link rel="stylesheet" href="{% static 'index/style.css' %}">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://owlcarousel2.github.io/OwlCarousel2/assets/owlcarousel/assets/owl.carousel.min.css">
+  <link rel="stylesheet" href="https://owlcarousel2.github.io/OwlCarousel2/assets/owlcarousel/assets/owl.theme.default.min.css">
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+</head>
+
+<body>
+  <!-- loader -->
+  <div id="overlay">
+    <div id="progstat"></div>
+    <div id="progress"></div>
+  </div>
+  <script>
+    // loader
+    ;(function(){
+      function id(v){return document.getElementById(v); }
+      function loadbar() {
+        var ovrl = id("overlay"),
+            prog = id("progress"),
+            stat = id("progstat"),
+            img = document.images,
+            c = 0;
+            tot = img.length;
+
+        function imgLoaded(){
+          c += 1;
+          var perc = ((100/tot*c) << 0) +"%";
+          prog.style.width = perc;
+          stat.innerHTML = "Loading "+ perc;
+          if(c===tot) return doneLoading();
+        }
+        function doneLoading(){
+          ovrl.style.opacity = 0;
+          setTimeout(function(){
+            ovrl.style.display = "none";
+          }, 1200);
+        }
+        for(var i=0; i<tot; i++) {
+          var tImg     = new Image();
+          tImg.onload  = imgLoaded;
+          tImg.onerror = imgLoaded;
+          tImg.src     = img[i].src;
+        }
+      }
+      document.addEventListener('DOMContentLoaded', loadbar, false);
+    }());
+  </script>
+  <div id="snackbar" class="plusBG">
+    <div class="container shine-me pl-3 pt-2 pb-2">
+      <div class="row">
+        <div class="col-3 my-auto" onclick="location.href='{% url 'product_item' name='oxygize' %}'">
+          <img src="{% static  'product-img/oxy-png.png' %}"class="w-100"/>
+        </div>
+        <div class="col-7 my-auto text-center" onclick="location.href='{% url 'product_item' name='oxygize' %}'">
+          Checkout <strong>Oxygize</strong><br><i class="fa fa-shopping-cart secondary-text fa-12x" aria-hidden="true"></i>&nbsp;&nbsp; <span class="fa-12x">Shop Now</span>
+        </div>
+        <div class="col-2 my-auto">
+          <button  class="btn white-text float-right" onclick="closeToast()"><i class="fa fa-times-circle close-snack white-text" aria-hidden="true"></i></button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- header -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-bark fixed-top unscrld">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="{% url 'index' %}">
+        <img src="{% static 'index/site_images/logo.png' %}" height="40" alt="pdochealth"> <a href="{% url 'index' %}"
+          class="d-sm-none d-md-block">PDOCHEALTH</a>
+      </a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+        aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'index' %}">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'doctors' %}">Doctors</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'physical_consultation' %}">Physical Consultation</a>
+          </li>
+<!--          <li class="nav-item">-->
+<!--            <a class="nav-link" href="{% url 'blog_list' %}">Articles</a>-->
+<!--          </li>-->
+<!--          <li class="nav-item">-->
+<!--            <a class="nav-link" href="{% url 'important_links' %}">Important Links</a>-->
+<!--          </li>-->
+                    <li class="nav-item dropdown dmenu">
+                      <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                        More
+                      </a>
+                      <div class="dropdown-menu sm-menu">
+                        <a class="dropdown-item" href="{% url 'blog_list' %}">Articles</a>
+                        <a class="dropdown-item" href="{% url 'important_links' %}">Important Links</a>
+                        <a class="dropdown-item" href="{% url 'product_item' name='oxygize' %}">Shop</a>
+                      </div>
+                    </li>
+          <li class="nav-item">
+                            <a class="nav-link" href="{% url 'about_us' %}">About Us</a>
+                        </li>
+<!--                    <li class="nav-item dropdown dmenu">-->
+<!--                      <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">-->
+<!--                        Paramedics Signup-->
+<!--                      </a>-->
+<!--                      <div class="dropdown-menu sm-menu">-->
+<!--                        <a class="dropdown-item" href="{% url 'paramedic_health_and_fitness_advisor' %}">Health and Fitness Advise</a>-->
+<!--                        <a class="dropdown-item" href="{% url 'paramedic_physiotherapy' %}">Physiotherapist</a>-->
+<!--                        <a class="dropdown-item" href="{% url 'paramedic_clinical_pscyhiatry' %}">Clinical Psychiatry</a>-->
+<!--                        <a class="dropdown-item" href="{% url 'paramedic_yoga_guru' %}">Yoga Guru</a>-->
+<!--                        <a class="dropdown-item" href="#">Drug House</a>-->
+<!--                        <a class="dropdown-item" href="#">Diagnostics</a>-->
+<!--                      </div>-->
+<!--                    </li>-->
+          <li class="nav-item">
+            <a class="nav-link pl-md-3 pl-sm-0" href="{% url 'doctor_registration' %}"><i class="fa fa-stethoscope"></i> &nbsp;Join
+              Us</a>
+          </li>
+          <li class="nav-item pl-md-5 pl-sm-0 pr-md-5 pr-sm-0">
+            {% if logout %}
+            <a class="nav-link pc-btn pl-4 pr-4" href="{% url 'logout' %}">Logout</a>
+            {% else %}
+            <a class="nav-link pc-btn pl-4 pr-4" href="{% url 'signup_customer' %}">Patient Corner</a>
+            {% endif %}
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <!-- marquee -->
+  <section class="head pt-md-3  pl-md-5 pl-sm-0 overflow-hid ">
+    <div class="container-fluid pt-5 ">
+      <div class="row no-gutters ">
+        <marquee width="100%" direction="left" scrollamount="3" style="z-index: 99 !important;color: aliceblue;"
+          class="mt-sm-5 mt-md-3">
+          {% for link in links %}
+          | &nbsp;&nbsp;<a href="{{link.url}}" class="MarqA mt-3 shine-me">{{link.title}}</a>
+          &nbsp;&nbsp;| &nbsp;&nbsp;{% endfor %}
+        </marquee>
+        <div class="col-12 col-md-5 col-sm-12 pt-3  head-pl">
+          <h1 class="big-heading" data-aos="fade-right" data-aos-duration="1000">{{index_cms.first_head}}</h1>
+          <h3 class="md-white sm-dark" data-aos="fade-right" data-aos-duration="1000"><small>{{index_cms.first_head_sub}}</small></h3>
+          <p style="font-size:12px" data-aos="fade-right" data-aos-delay="400">{{index_cms.incorporation}}</p>
+          <h6 class="mt-4 md-white sm-dark"><small>
+              <p class=" lisp" data-aos="fade-right" data-aos-delay="400">
+                {{index_cms.first_para}}
+              </p>
+            </small></h6>
+            <a class="pt-2 pb-2 pc-btn pl-4 pr-4 w-auto d-sm-block d-md-none" href="{% url 'signup_customer' %}" >Patient Corner</a>
+        </div>
+        <!-- <div class="col-12 col-md-2 col-sm-12 my-auto"></div> -->
+        <div class="col-12 col-md-7 col-sm-12 text-center my-auto" data-aos="fade-left" data-aos-duration="1000">
+          <img class="bg1-img" class="w-sm-100" src="{% static 'index/site_images/mainIco.png' %}" alt="{{alt.carousel_item}}">
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- Types -->
+  <section class="plusBG mt-5 overflow-hid" data-aos="fade-up" data-aos-duration="1000">
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <h3>{{index_cms.head_doctor_display}}
+            <br><small>{{index_cms.head_doctor_display_sub}}</small>
+          </h3>
+        </div>
+        <span class="hr-r ml-3 mt-3 mb-3"></span>
+        <div class="container-fluid">
+          <div class="row no-gutters">
+            {% for type in doctor_types %}
+            <a href="{% url 'doctor_pages' slug=type.name|replace_filter %}"
+              class="col-4 col-md-2 col-sm-4 text-center tog-div">
+              <img class="tog-img" src="{{type.image.url}}" alt="{{type.name}} for video consultancy">
+              <p style="color: #0D2149;">{{type.name}}</p>
+            </a>
+            {% endfor %}
+          </div>
+        </div>
+        <!--        <div class="col-12  mt-4" data-aos="fade-up">-->
+        <!--          <h3>-->
+        <!--            <br><small>Consult with top <strong>Paramedic Consultancy</strong> through Video</small>-->
+        <!--          </h3>-->
+        <!--        </div>-->
+        <!--        <span class="hr-r ml-3 mt-3 mb-3" data-aos="fade-up"></span>-->
+        <!--        <div class="container-fluid" data-aos="fade-up">-->
+        <!--          <div class="row no-gutters">-->
+        <!--            -->
+        <!--            <div class="col-4 col-md-2 col-sm-4 text-center tog-div">-->
+        <!--              <img class="tog-img" src="./media/type/categorie-4.svg" alt="name">-->
+        <!--              <p>Pharmacies</p>-->
+        <!--            </div>-->
+        <!--          </div>-->
+      </div>
+    </div>
+    </div>
+  </section>
+  <!-- How We Works -->
+  <section class="bg2 mt-5 overflow-hid">
+    <div class="container">
+      <div class="row">
+        <div class="col-12 col-md-8 col-sm-12 text-left">
+          <div class="col-12 bg2-1-h md-white">
+            <h3 class="md-white">{{index_cms.how_to_head}}
+              <br><small>{{index_cms.how_to_head_sub}}</small>
+            </h3>
+          </div>
+
+          <!--          <img class="mt-5" style="width: 80%;" src="{% static 'index/site_images/tv.png' %}" alt="" srcset="">-->
+          <div class="container-lg my-3 ">
+            <div id="myCarousel" class="carousel slide" data-ride="carousel">
+              <!-- Carousel indicators -->
+              <ol class="carousel-indicators">
+                <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                <li data-target="#myCarousel" data-slide-to="1"></li>
+                <li data-target="#myCarousel" data-slide-to="2"></li>
+                <li data-target="#myCarousel" data-slide-to="3"></li>
+                <li data-target="#myCarousel" data-slide-to="4"></li>
+                <li data-target="#myCarousel" data-slide-to="5"></li>
+                <li data-target="#myCarousel" data-slide-to="6"></li>
+                <li data-target="#myCarousel" data-slide-to="7"></li>
+                <li data-target="#myCarousel" data-slide-to="8"></li>
+                <li data-target="#myCarousel" data-slide-to="9"></li>
+              </ol>
+              <!-- Wrapper for carousel items -->
+              <div class="carousel-inner">
+                <div class="carousel-item active">
+                  <img src="{% static 'How-to-pdoc/1.png' %}" style="max-width:100%;" alt="{{alt.how_to_1}}">
+                </div>
+                <div class="carousel-item">
+                  <img src="{% static 'How-to-pdoc/2.png' %}" style="max-width:100%;" alt="{{alt.how_to_2}}">
+                </div>
+                <div class="carousel-item">
+                  <img src="{% static 'How-to-pdoc/3.png' %}" style="max-width:100%;" alt="{{alt.how_to_3}}">
+                </div>
+                <div class="carousel-item">
+                  <img src="{% static 'How-to-pdoc/4.png' %}" style="max-width:100%;" alt="{{alt.how_to_4}}">
+                </div>
+                <div class="carousel-item">
+                  <img src="{% static 'How-to-pdoc/5.png' %}" style="max-width:100%;" alt="{{alt.how_to_5}}">
+                </div>
+                <div class="carousel-item">
+                  <img src="{% static 'How-to-pdoc/6.png' %}" style="max-width:100%;" alt="{{alt.how_to_6}}">
+                </div>
+                <div class="carousel-item">
+                  <img src="{% static 'How-to-pdoc/7.png' %}" style="max-width:100%;" alt="{{alt.how_to_7}}">
+                </div>
+                <div class="carousel-item">
+                  <img src="{% static 'How-to-pdoc/8.png' %}" style="max-width:100%;" alt="{{alt.how_to_8}}">
+                </div>
+                <div class="carousel-item">
+                  <img src="{% static 'How-to-pdoc/9.png' %}" style="max-width:100%;" alt="{{alt.how_to_9}}">
+                </div>
+
+              </div>
+              <!-- Carousel controls -->
+              <a class="carousel-control-prev" href="#myCarousel" data-slide="prev">
+                <span class="carousel-control-prev-icon"></span>
+              </a>
+              <a class="carousel-control-next" href="#myCarousel" data-slide="next">
+                <span class="carousel-control-next-icon"></span>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-md-4 col-sm-12 bg-2-2" data-aos="fade-left" data-aos-duration="1500">
+          <div class="container-fluid ">
+            <div class="row no-gutters ">
+              <div class="col-4 px-4  ">
+                <img style="width: 100%;" src="{% static 'index/site_images/signin.png' %}" alt="{{alt.step_signing}}">
+              </div>
+              <div class="col-8">
+                <h4 class="bg-2-h "><small>{{index_cms.head_step_1}}</small> <br>{{index_cms.head_step_1_sub}}</h4>
+              </div>
+            </div>
+            <div class="row no-gutters mt-2">
+              <div class="col-4 px-4">
+                <img style="width: 100%;"src="{% static 'index/site_images/book.png' %}" alt="{{alt.step_book}}">
+              </div>
+              <div class="col-8">
+                <h4 class="bg-2-h"><small>{{index_cms.head_step_2}}</small> <br>{{index_cms.head_step_2_sub}}</h4>
+              </div>
+            </div>
+            <div class="row no-gutters mt-2">
+              <div class="col-4 px-4">
+                <img style="width: 100%;"src="{% static 'index/site_images/consult.png' %}" alt="{{alt.step_consult}}">
+              </div>
+              <div class="col-8">
+                <h4 class="bg-2-h"><small>{{index_cms.head_step_3}}</small> <br>{{index_cms.head_step_2_sub}}</h4>
+              </div>
+            </div>
+            <div class="row no-gutters mt-2">
+              <div class="col-4 px-4">
+                <img style="width: 100%;"src="{% static 'index/site_images/prescription.png' %}" alt="{{alt.step_prescription}}">
+              </div>
+              <div class="col-8">
+                <h4 class="bg-2-h"><small>{{index_cms.head_step_4}}</small> <br>{{index_cms.head_step_4_sub}}</h4>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- Features -->
+  <section class="plusBG pt-5 pb-5 overflow-hid">
+    <div class="container">
+      <div class="row mb-5">
+        <div class="col-12 col-md-6 col-sm-12 right-alt text-center d-md-none d-sm-block  my-auto p-md-5">
+          <img class="altImg" src="{% static 'index/site_images/featVC.png' %}" alt="{{alt.feature_video_call_mobile}}" srcset="" data-aos="fade-left">
+        </div>
+        <div class="col-12 col-md-6 col-sm-12 my-auto altText-r">
+          <h2>{{index_cms.feature_head_1}}</h2>
+          <span class="hr-r ml-3 mt-3 mb-3"></span>
+          <h5><small>{{index_cms.feature_description_1}}</small></h5>
+        </div>
+        <div class="col-12 col-md-6 col-sm-12 right-alt text-left d-md-block d-sm-none  my-auto p-md-5">
+          <img class="altImg" src="{% static 'index/site_images/featVC.png' %}" alt="{{alt.feature_video_call_mobile}}" srcset="" data-aos="fade-left">
+        </div>
+      </div>
+
+      <div class="row mb-5">
+        <div class="col-12 col-md-6 col-sm-12 right-alt text-center my-auto p-md-5">
+          <img class="altImg" src="{% static 'index/site_images/featDocs.png' %}" alt="{{alt.feature_docs}}" srcset=""
+            data-aos="fade-right">
+        </div>
+        <div class="col-12 col-md-6 col-sm-12 my-auto altText-l">
+          <h2>{{index_cms.feature_head_2}}</h2>
+          <span class="hr-r ml-3 mt-3 mb-3"></span>
+          <h5><small>{{index_cms.feature_description_2}}</small></h5>
+        </div>
+      </div>
+
+      <div class="row mb-5">
+        <div class="col-12 col-md-6 col-sm-12 right-alt text-center d-md-none d-sm-block  my-auto p-md-5">
+          <img class="altImg" src="{% static 'index/site_images/featPresc.png' %}" alt="{{alt.feature_prescription}}" srcset=""
+            data-aos="fade-left">
+        </div>
+        <div class="col-12 col-md-6 col-sm-12 my-auto altText-r">
+          <h2>{{index_cms.feature_head_3}}</h2>
+          <span class="hr-r ml-3 mt-3 mb-3"></span>
+          <h5><small>{{index_cms.feature_description_3}}</small></h5>
+        </div>
+        <div class="col-12 col-md-6 col-sm-12 right-alt text-left d-md-block d-sm-none  my-auto p-md-5">
+          <img class="altImg" src="{% static 'index/site_images/featPresc.png' %}" alt="{{alt.feature_prescription_mobile}}" srcset=""
+            data-aos="fade-left">
+        </div>
+      </div>
+
+      <div class="row mb-5">
+        <div class="col-12 col-md-6 col-sm-12 right-alt text-center my-auto p-md-5">
+          <img class="altImg" src="{% static 'index/site_images/featResc.png' %}" alt="{{alt.feature_reconsultation}}" srcset=""
+            data-aos="fade-right">
+        </div>
+        <div class="col-12 col-md-6 col-sm-12 my-auto altText-l">
+          <h2>{{index_cms.feature_head_4}} </h2>
+          <span class="hr-r ml-3 mt-3 mb-3"></span>
+          <h5><small>{{index_cms.feature_description_4}}</small></h5>
+        </div>
+      </div>
+
+      <div class="row mb-5">
+        <div class="col-12 col-md-6 col-sm-12 right-alt text-center d-md-none d-sm-block  my-auto p-md-5">
+          <img class="altImg" src="{% static 'index/site_images/featRx.png' %}" alt="{{alt.feature_video_call_mobile}}" srcset="" data-aos="fade-left">
+        </div>
+        <div class="col-12 col-md-6 col-sm-12 my-auto altText-r">
+          <h2>Digital Prescription</h2>
+          <span class="hr-r ml-3 mt-3 mb-3"></span>
+          <h5><small>Of course why not a digital prescription !!!. To get the diagnosis summary along with the medicines
+              prescribed by the doctor download the digital prescription in the "Patient Corner" (Records) Section with
+              just a click.</small></h5><br>
+              <a class="pt-2 pb-2 pc-btn pl-4 pr-4 w-auto" href="{% static 'index/site_images/Prescription-www.pdochealth.com.pdf' %}" download="">Download a Demo Prescription</a>
+        </div>
+        <div class="col-12 col-md-6 col-sm-12 right-alt text-left d-md-block d-sm-none  my-auto p-md-5">
+          <img class="altImg" src="{% static 'index/site_images/featRx.png' %}" alt="{{alt.feature_video_call_mobile}}" srcset="" data-aos="fade-left">
+        </div>
+      </div>
+
+    </div>
+  </section>
+  <!-- Mission and Vision -->
+  <section class="plusBG pt-5 pb-5 overflow-hid" data-aos="fade-up">
+    <div class="container misvis p-5">
+      <div class="row p-3">
+        <div class="col-12 col-md-4 col-sm-12 text-center">
+          <i class="fa fa-map-marker fa-5x"></i><br><br>
+          <h4>{{index_cms.icon_head_1}}<br><br>
+            <h5><small>{{index_cms.icon_description_1}}</small></h5>
+          </h4>
+        </div>
+        <div class="col-12 col-md-4 col-sm-12 text-center">
+          <i class="fa fa-bolt fa-5x"></i><br><br>
+          <h4>{{index_cms.icon_head_2}}<br><br>
+            <h5><small>{{index_cms.icon_description_2}}</small></h5>
+          </h4>
+        </div>
+        <div class="col-12 col-md-4 col-sm-12 text-center">
+          <i class="fa fa-search fa-5x"></i><br><br>
+          <h4>{{index_cms.icon_head_3}}<br><br>
+            <h5><small>{{index_cms.icon_description_3}}
+                </small></h5>
+          </h4>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- Testimonial -->
+  <!--  <section class="plusBG">-->
+  <!--    <div class="testimonial1 py-5 bg-light">-->
+  <!--      <div class="container">-->
+  <!--        <div class="row justify-content-center">-->
+  <!--          <div class="col-md-8 text-center">-->
+  <!--            <h4 class="my-3">Check what our Customers are Saying</h4>-->
+  <!--            <h6 class="subtitle font-weight-normal">You can relay on our amazing features list and also our customer-->
+  <!--              services will be great experience for you without doubt</h6>-->
+  <!--          </div>-->
+  <!--        </div>-->
+  <!--        &lt;!&ndash; Row  &ndash;&gt;-->
+  <!--        <div class="owl-carousel owl-theme testi1 mt-4">-->
+  <!--          &lt;!&ndash; item &ndash;&gt;-->
+  <!--          <div class="item">-->
+  <!--            <div class="card card-shadow border-0 mb-4">-->
+  <!--              <div class="card-body">-->
+  <!--                <div class="position-relative thumb bg-success-gradiant d-inline-block text-white mb-4"><img-->
+  <!--                    src="https://www.wrappixel.com/demos/ui-kit/wrapkit/assets/images/testimonial/1.jpg" alt="wrapkit"-->
+  <!--                    class="thumb-img position-absolute rounded-circle" /> Michelle Anderson</div>-->
+  <!--                <h5 class="font-weight-light">You can relay on our amazing features list and also our customer services-->
+  <!--                  will be great experience. You can relay on our amazing features.</h5>-->
+  <!--                <span class="devider d-inline-block my-3"></span>-->
+  <!--                <h6 class="font-weight-normal">Managing Director, Theme Designer</h6>-->
+  <!--              </div>-->
+  <!--            </div>-->
+  <!--          </div>-->
+  <!--          &lt;!&ndash; item &ndash;&gt;-->
+  <!--          &lt;!&ndash; item &ndash;&gt;-->
+  <!--          <div class="item">-->
+  <!--            <div class="card card-shadow border-0 mb-4">-->
+  <!--              <div class="card-body">-->
+  <!--                <div class="position-relative thumb bg-success-gradiant d-inline-block text-white mb-4"><img-->
+  <!--                    src="https://www.wrappixel.com/demos/ui-kit/wrapkit/assets/images/testimonial/2.jpg" alt="wrapkit"-->
+  <!--                    class="thumb-img position-absolute rounded-circle" /> Michelle Anderson</div>-->
+  <!--                <h5 class="font-weight-light">You can relay on our amazing features list and also our customer services-->
+  <!--                  will be great experience. You can relay on our amazing features.</h5>-->
+  <!--                <span class="devider d-inline-block my-3"></span>-->
+  <!--                <h6 class="font-weight-normal">CEO, Theme Designer</h6>-->
+  <!--              </div>-->
+  <!--            </div>-->
+  <!--          </div>-->
+  <!--          &lt;!&ndash; item &ndash;&gt;-->
+  <!--          &lt;!&ndash; item &ndash;&gt;-->
+  <!--          <div class="item">-->
+  <!--            <div class="card card-shadow border-0 mb-4">-->
+  <!--              <div class="card-body">-->
+  <!--                <div class="position-relative thumb bg-success-gradiant d-inline-block text-white mb-4"><img-->
+  <!--                    src="https://www.wrappixel.com/demos/ui-kit/wrapkit/assets/images/testimonial/3.jpg" alt="wrapkit"-->
+  <!--                    class="thumb-img position-absolute rounded-circle" /> Michelle Anderson</div>-->
+  <!--                <h5 class="font-weight-light">You can relay on our amazing features list and also our customer services-->
+  <!--                  will be great experience. You can relay on our amazing features.</h5>-->
+  <!--                <span class="devider d-inline-block my-3"></span>-->
+  <!--                <h6 class="font-weight-normal">Managing Director, Theme Designer</h6>-->
+  <!--              </div>-->
+  <!--            </div>-->
+  <!--          </div>-->
+  <!--          &lt;!&ndash; item &ndash;&gt;-->
+  <!--          &lt;!&ndash; item &ndash;&gt;-->
+  <!--          <div class="item">-->
+  <!--            <div class="card card-shadow border-0 mb-4">-->
+  <!--              <div class="card-body">-->
+  <!--                <div class="position-relative thumb bg-success-gradiant d-inline-block text-white mb-4"><img-->
+  <!--                    src="https://www.wrappixel.com/demos/ui-kit/wrapkit/assets/images/testimonial/1.jpg" alt="wrapkit"-->
+  <!--                    class="thumb-img position-absolute rounded-circle" /> Michelle Anderson</div>-->
+  <!--                <h5 class="font-weight-light">You can relay on our amazing features list and also our customer services-->
+  <!--                  will be great experience. You can relay on our amazing features.</h5>-->
+  <!--                <span class="devider d-inline-block my-3"></span>-->
+  <!--                <h6 class="font-weight-normal">Managing Director, Theme Designer</h6>-->
+  <!--              </div>-->
+  <!--            </div>-->
+  <!--          </div>-->
+  <!--          &lt;!&ndash; item &ndash;&gt;-->
+  <!--        </div>-->
+  <!--      </div>-->
+  <!--    </div>-->
+  <!--  </section>-->
+  <!-- suggesation -->
+  <section class="overflow-hid p-5 primaryBG plusBG" data-aos="fade-up">
+    <div class="container">
+      <div class="row">
+        <div class="col-12 col-sm-12 col-md-6 text-center text-md-right my-auto">
+          <h3 class="md-white">{{index_cms.browser_banner_head}}
+            <br><small>{{index_cms.browser_banner_sub}}</small>
+          </h3>
+        </div>
+        <div class="col-12 col-sm-12 col-md-6 my-auto">
+          <div class="container-fluid">
+            <div class="row no-gutters">
+              <div class="col-3 p-2 p-md-3 p-sm-2">
+                <img class="w-100" src="{% static 'index/site_images/chrome_logo.png' %}" alt="{{alt.chrome}}">
+              </div>
+              <div class="col-3 p-2 p-md-3 p-sm-2">
+                <img class="w-100" src="{% static 'index/site_images/firefox_logo.png' %}" alt="{{alt.firefox}}">
+              </div>
+              <div class="col-3 p-2 p-md-3 p-sm-2">
+                <img class="w-100" src="{% static 'index/site_images/safari_logo.png' %}" alt="{{alt.safari}}">
+              </div>
+              <div class="col-3 p-2 p-md-3 p-sm-2">
+                <img class="w-100" src="{% static 'index/site_images/edge_logo.png' %}" alt="{{alt.edge}}">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="suggesation-box overflow-hid" style="background-color:#0d21491f;padding-top: 7%;" data-aos="fade-up">
+    <section class="plusBG pt-5 pb-5">
+      <div class="container contact-form">
+        <h3 class="pt-5">Drop Us a Message</h3>
+        <div class="row pb-5">
+          <div class="alert alert-danger w-100 alert-cust">
+            <a class="close" id="close" href="#" data-dismiss="alert" onclick="remove_alert()">×</a>
+            <span id="alert-message"></span>
+        </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <input type="text" name="txtName" id="name" class="form-control" placeholder="Your Name" value=""
+                required />
+            </div>
+            <div class="form-group">
+              <input type="email" name="txtEmail" id="email" class="form-control" placeholder="Your Email" value=""
+                required />
+            </div>
+            <div class="form-group">
+              <input type="text" name="txtPhone" id="phone" class="form-control" placeholder="Your Phone Number"
+                value="" required />
+            </div>
+
+          </div>
+          <div class="col-md-6 text-right">
+            <div class="form-group">
+              <textarea name="txtMsg" id="message" class="form-control" placeholder="Your Message ( within 100 words )"
+                style="width: 100%; min-height: 150px;" required></textarea>
+            </div>
+            <div class="form-group">
+              <input type="submit" id="contact-submit" name="btnSubmit" class="btnContact btn-block"
+                value="Send Message" />
+            </div>
+          </div>
+        </div>
+      </div>
+      <style>
+        .contact-loader{
+          display: none;
+        }
+      </style>
+      <div class="container contact-loader">
+        <div id="loader-div">
+          <div id="loader" class="center"></div>
+        </div>
+      </div>
+    </section>
+  </section>
+  <!-- footer -->
+  <footer id="dk-footer overflow-hid" class="dk-footer pt-5">
+    <div class="container">
+      <div class="row">
+        <div class="col-12 col-md-3 col-sm-12 text-center my-auto">
+          <img style="width: 100%;" src="{% static 'index/site_images/logo.png' %}" alt="{{alt.footer_logo}}" srcset="">
+        </div>
+        <div class="col-12 col-md-5 col-sm-12 p-2  text-center my-auto">
+          <p style="color: rgb(151, 151, 151); text-align: justify;">
+            {{index_cms.footer_description}}</p>
+        </div>
+        <div class="col-12 col-md-4 col-sm-12  text-center my-auto">
+          <h2 style="color: white;">Follow Us:</h2>
+          <a class="footico footico-f" href="https://www.facebook.com/pdochealth/"><i class="fa fa-facebook "></i></a>
+          <a class="footico footico-i" href="https://www.instagram.com/pdochealth/"><i class="fa fa-instagram "></i></a>
+<!--          <a class="footico footico-l" href="#"><i class="fa fa-linkedin "></i></a>-->
+          <a class="footico footico-t" href="https://twitter.com/edocmed1"><i class="fa fa-twitter "></i></a>
+        </div>
+      </div>
+      <hr style="background-color: rgba(139, 139, 139, 0.301);">
+      <div class="row pt-2 text-center">
+        <div class="col-12 col-md-11 col-sm-12 my-auto text-md-left text-sm-center">
+          <p style="color: rgb(151, 151, 151);">
+            Designed and Developed By &nbsp;<strong><a style="color: rgba(255, 255, 255, 0.582);"
+                href="www.cavemendev.com"> CaveMenDev</a></strong>
+          </p>
+        </div>
+        <div class="col-6 col-md-1 col-sm-6 text-center my-auto mx-auto mb-5">
+          <a href="www.cavemendev.com"> <img style="width: 100%;" src="{% static 'index/site_images/cmd.png' %}"
+              alt=""></a>
+        </div>
+      </div>
+    </div>
+    <div class="copyright pt-3 pb-3">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-4">
+            <span>© 2020 PDOC Health | All Right Reserved.</span>
+          </div>
+          <div class="col-md-8 d-sm-none d-md-block">
+            <div class="copyright-menu">
+              <ul>
+                <li><a href="{% url 'terms' %}">Terms & Conditions</a></li>
+                <li><a href="{% url 'privacy_policy' %}">Privacy Policy</a></li>
+                <li><a href="{% url 'refund_policy' %}">Refund Policy</a>/li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Back to top -->
+    <div id="back-to-top" class="back-to-top">
+      <button class="btn btn-dark" title="Back to Top" style="display: block;" onclick="topFunction()">
+        <i class="fa fa-angle-up"></i>
+      </button>
+    </div>
+  </footer>
+<!--  <div id="mySidenav" class="sidenav w-auro">-->
+<!--    <a id="about">-->
+<!--      <div class="container-fluid W-100">-->
+<!--        <div class="row text-center">-->
+<!--          <span class="badge" onclick="statsHide()">x</span>-->
+<!--          <div class="col-4 sitem1 px-1 py-2">-->
+<!--            <span class="sideHide"><span id="doctors" class="insNo"></span> Doctors</span>-->
+<!--          </div>-->
+<!--          <div class="col-5 sitem2 px-1 py-2">-->
+<!--            <span class="sideHide"><span id="appointments" class="insNo"></span> Appointments</span>-->
+<!--          </div>-->
+<!--          <div class="col-3 sitem3 px-1 py-2">-->
+<!--            <span class="sideHide"><span id="users" class="insNo"></span> Users</span>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </a>-->
+<!--  </div>-->
+<!--  <div class="stats-bar">-->
+<!--    <a href="#" class="smitem1">-->
+<!--      <div class="container-fluid">-->
+<!--        <div class="row no-gutters">-->
+<!--          <div class="col-12 text-center pl-2">-->
+<!--            <span class="sideHide"><span id="doctors">14</span><br>Doctors</span>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </a>-->
+<!--    <a href="#" class="smitem2">-->
+<!--      <div class="container-fluid">-->
+<!--        <div class="row no-gutters">-->
+<!--          <div class="col-12 text-center pl-2">-->
+<!--            <span class="sideHide"><span id="appointments">10</span><br>Appointments</span>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </a>-->
+<!--    <a href="#" class="smitem3">-->
+<!--      <div class="container-fluid">-->
+<!--        <div class="row no-gutters">-->
+
+<!--          <div class="col-12 text-center pl-2">-->
+<!--            <span class="sideHide"><span id="users">9</span><br>Users</span>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </a>-->
+<!--  </div>-->
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script src="https://owlcarousel2.github.io/OwlCarousel2/assets/owlcarousel/owl.carousel.js"></script>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script src="{% static 'index/script.js' %}"></script>
+  <script>
+    $.ajax({
+      url: "/statistics/",
+      type: 'GET',
+      dataType: 'json',
+      success: function (res) {
+        users = res.users;
+        doctors = res.doctors;
+        appointments = res.appointments;
+        $("#doctors").html(doctors);
+        $("#users").html(users);
+        $("#appointments").html(appointments);
+      }
+    });
+    var maxWords = 100, msz_status;
+    $('textarea#message').on("keyup keydown paste change", function (e) {
+    var words = $.trim(this.value).split(/\s+/)
+    if (words.length > maxWords) {
+        $(".alert-cust").show();
+        $("#alert-message").html("");
+        $("#alert-message").html("Only " + maxWords + " words are allowed.");
+        $("textarea#message").css("border-color", "red");
+        $("html, body").animate({ scrollTop: $(".suggesation-box").offset().top }, "fast");
+        msz_status = false;
+    } else {
+      $("textarea#message").css("border-color", "green");
+        $("#alert-message").html("");
+        $(".alert-cust").hide();
+        msz_status = true;
+      }
+    });
+    $("#contact-submit").click(function () {
+      name = $("#name").val();
+      email = $("#email").val();
+      phone = $("#phone").val();
+      message = $("textarea#message").val();
+      proceed = true;
+      if ( name.match(/^[A-Za-z\s]{1,}[\.]{0,1}[A-Za-z\s]{0,}$/) == null) {
+        $("#name").css("border-color", "red");
+        $(".alert-cust").show();
+        $("#alert-message").html("");
+        $("#alert-message").html("Invalid Name");
+        $("html, body").animate({ scrollTop: $(".suggesation-box").offset().top }, "fast");
+        proceed = false;
+        }
+      else{
+        $("#name").css("border-color", "green");
+        if (email.match(/^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/) == null) {
+          $("#email").css("border-color", "red");
+          $(".alert-cust").show();
+          $("#alert-message").html("");
+          $("#alert-message").html("Invalid Email");
+          $("html, body").animate({ scrollTop: $(".suggesation-box").offset().top }, "fast");
+          proceed = false;
+        }
+        else{
+          $("#email").css("border-color", "green");
+          if (phone.match(/^(\+91[\-\s]?)?[0]?(91)?[6789]\d{9}$/) == null) {
+                $("#phone").css("border-color", "red");
+                $(".alert-cust").show();
+                $("#alert-message").html("");
+                $("#alert-message").html("Invalid Phone No,");
+                $("html, body").animate({ scrollTop: $(".suggesation-box").offset().top }, "fast");
+                proceed = false;
+            }
+            else{
+                $("#phone").css("border-color", "green");
+                if (msz_status == false) {
+                    $("textarea#message").css("border-color", "red");
+                    $(".alert-cust").show();
+                    $("#alert-message").html("");
+                    $("#alert-message").html("Invalid Query. Must be within 100 appropiate words.");
+                    $("html, body").animate({ scrollTop: $(".suggesation-box").offset().top }, "fast");
+                    proceed = false;
+                }
+                else{
+                    $("textarea#message").css("border-color", "green");
+                }
+            }
+        }
+      }
+
+      if (proceed) {
+        $("#message").css('border-color', 'white');
+        $("#phone").css('border-color', 'white');
+        $("#name").css('border-color', 'white');
+        $("#email").css('border-color', 'white');
+        $(".contact-form").hide();
+        $(".contact-loader").show();
+        $.ajax({
+          url: "{% url 'email_contact_form' %}",
+          data: {
+            'name': name,
+            'email': email,
+            'phone': phone,
+            'message': message,
+          },
+          type: 'GET',
+          dataType: 'json',
+          success: function (res) {
+            $(".contact-form").show();
+            $(".contact-loader").hide();
+            $(".contact-form").text("");
+            $(".contact-form").html('<h2 class="text-center pl-5 pr-5 pb-5">Our team will shortly contact you !!</h2>');
+          }
+        });
+      }
+    });
+  </script>
+<!-- <script>
+  window.onbeforeunload = function() {
+    return "Bye now!";
+}
+</script> -->
+<a href="https://api.whatsapp.com/send?phone=+919137134979&text=Hey, I need some help with using the platform." class="float" target="_blank">
+  <i class="fa fa-whatsapp my-float"></i>
+</a>
+</body>
+
+</html>
